@@ -1,33 +1,18 @@
 import './App.css';
+import { Routes, Route } from 'react-router-dom'; 
+import Home from './pages/Home/Home';
+import CourseList from './pages/CourseList/CourseList';
+import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHome/AdminDashboardHome';
 
 function App() {
   return (
-		<div className='App'>
-			<h1 className='text-2xl'>ulearnwebapp</h1>
-			<div className='carousel rounded-box'>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-				<div className='carousel-item'>
-					<img src='https://placeimg.com/400/300/arch' alt='Burger' />
-				</div>
-			</div>
-		</div>
+		<>
+			<Routes>
+				<Route index element={ <Home /> } />
+				<Route path='/course-list' element={ <CourseList /> } />
+				<Route path='/admin/dashboard' element= { <AdminDashboardHome /> } />
+			</Routes>
+		</>
   );
 }
 
