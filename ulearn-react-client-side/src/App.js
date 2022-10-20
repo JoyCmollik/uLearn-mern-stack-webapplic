@@ -11,6 +11,7 @@ function App() {
   return (
 		<>
 			<Routes>
+			
 				<Route index element={ <Home /> } />
 				<Route path='course-list' element={ <CourseList /> } />
 				<Route path='auth' element={<Auth />} >
