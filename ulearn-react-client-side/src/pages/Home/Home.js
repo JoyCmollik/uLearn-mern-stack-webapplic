@@ -1,9 +1,14 @@
 import React from 'react';
+import Hero from '../../components/Home/Hero/Hero';
+import Navbar from '../../components/layout/Navbar/Navbar';
 
 const Home = () => {
 	return (
 		<div className='text-2xl'>
-			<h2>Home update</h2>
+			<>
+				<Navbar />
+				<Hero />
+			</>
 		</div>
 	);
 };
