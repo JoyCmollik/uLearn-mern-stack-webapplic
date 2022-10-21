@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ['./src/**/*.{js,jsx,ts,tsx}'],
-<<<<<<< HEAD
 	theme: {
 		extend: {
 			colors: {
@@ -12,11 +11,6 @@ module.exports = {
 				brand: '#F79903',
 			},
 		},
-=======
-	theme: {},
-	daisyui: {
-		themes: false,
->>>>>>> dev-shahida
 	},
 	plugins: [require('daisyui')],
 };
