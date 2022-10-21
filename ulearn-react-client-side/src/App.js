@@ -4,8 +4,8 @@ import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
 import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHome/AdminDashboardHome';
 import Auth from './pages/Auth/Auth';
-import Login from './components/Auth/Login/Login';
-import Register from './components/Auth/Register/Register';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
 
 function App() {
   return (
