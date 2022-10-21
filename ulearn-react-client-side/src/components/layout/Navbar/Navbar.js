@@ -20,8 +20,8 @@ const Navbar = () => {
 
 	return (
 		<>
-			<nav className=' container mx-auto '>
-				<section className='flex flex-wrap justify-between py-4 mx-5 '>
+			<nav className=' container mx-auto border border-red-400'>
+				<section className='flex flex-wrap justify-between py-2 mx-5 '>
 					{/* logo and title */}
 					<article className='flex items-center gap-x-4 '>
 						<div className='w-12'>
