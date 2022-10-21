@@ -8,7 +8,7 @@ const DropDownMenu = ({ name }) => {
 				className={`flex items-center gap-1 ${
 					name === 'pages'
 						? 'border-0'
-						: 'border-2 border-gray-400 rounded-md py-2 px-3 text-base  font-semibold bg-gray-400 text-white'
+						: 'border border-gray-400 rounded-md py-2 px-6 text-base text-black  font-semibold bg-secondary '
 				}`}
 				aria-current='page'
 			>

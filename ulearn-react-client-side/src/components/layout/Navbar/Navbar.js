@@ -20,7 +20,7 @@ const Navbar = () => {
 
 	return (
 		<>
-			<nav className=' container mx-auto border border-red-400'>
+			<nav className=' container mx-auto  '>
 				<section className='flex flex-wrap justify-between py-2 mx-5 '>
 					{/* logo and title */}
 					<article className='flex items-center gap-x-4 '>
@@ -107,7 +107,7 @@ const Navbar = () => {
 								{/* profile*/}
 								<ProfileDropDown />
 								<li>
-									<button className='bg-orange-500 text-white py-2 px-4 rounded-md mx-1'>
+									<button className='bg-primary  border-primary text-white py-2 px-4 rounded-md mx-1'>
 										Sign In
 									</button>
 								</li>
