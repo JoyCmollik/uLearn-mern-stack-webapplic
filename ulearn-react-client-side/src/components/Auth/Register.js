@@ -1,10 +1,37 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import authImg from '../../images/auth_vector.svg';
+import role_learner from '../../images/role_leaner.svg';
+import role_creator from '../../images/role_creator.svg';
+import role_client from '../../images/role_client.svg';
+
+const userRoles = [
+	{
+		title: 'Learner',
+		img: role_learner,
+		role: 'learner',
+	},
+	{
+		title: 'Content Creator',
+		img: role_creator,
+		role: 'content-creator',
+	},
+	{
+		title: 'Client',
+		img: role_client,
+		role: 'client',
+	},
+];
 
 const Register = () => {
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
+
+	// local functionalities
+	const handleUserRole = (role) => {
+		setUserRole((prevRole) => role);
+	};
+
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
 			{/* left side of the page */}
@@ -92,15 +119,25 @@ const Register = () => {
 						</div>
 						{/* roles */}
 						<div className='col-span-12 grid grid-cols-3 gap-4'>
-							<div className='p-2 border border-primary'>
-								Learner
-							</div>
-							<div className='p-2 border border-primary'>
-								Content Creator
-							</div>
-							<div className='p-2 border border-primary'>
-								Client
-							</div>
+							{userRoles.map(({ title, role, img }, roleIdx) => (
+								<div
+									key={roleIdx}
+									className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
+										userRole === role &&
+										'bg-primary text-white drop-shadow-2xl'
+									}`}
+									onClick={() => handleUserRole(role)}
+								>
+									<img
+										className='object-cover w-14 mx-auto'
+										src={img}
+										alt='role learner'
+									/>
+									<h5 className='text-lg font-medium'>
+										{title}
+									</h5>
+								</div>
+							))}
 						</div>
 						{/* agreement */}
 						<div className='col-span-12'>
@@ -119,7 +156,12 @@ const Register = () => {
 							</div>
 						</div>
 						{/* submit button */}
-						<button className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg' type='submit'>Sign Up</button>
+						<button
+							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
+							type='submit'
+						>
+							Sign Up
+						</button>
 					</form>
 				</div>
 			</div>

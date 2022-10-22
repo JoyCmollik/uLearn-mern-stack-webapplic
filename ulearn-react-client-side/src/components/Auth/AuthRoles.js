@@ -15,19 +15,19 @@ const userRoles = [
 	{
 		title: 'Content Creator',
 		img: contentImg,
-		desc: "Experience LearnDash from the learner's perspective.",
+		desc: "Flourish your creativity and talent with your creations by choosing us.",
 		role: 'content-creator',
 	},
 	{
 		title: 'Client',
 		img: clientImg,
-		desc: "Experience LearnDash from the learner's perspective.",
+		desc: "Make your business grow exponentially by our deals.",
 		role: 'client',
 	},
 ];
 
 const AuthRoles = () => {
-  return (
+	return (
 		<div className='min-h-screen flex flex-col'>
 			{/* auth navbar */}
 			<AuthNav />
@@ -55,7 +55,10 @@ const AuthRoles = () => {
 							<div className='p-8 space-y-4'>
 								<h4 className='text-2xl'>{title}</h4>
 								<p className='text-gray-500 w-3/4'>{desc}</p>
-								<Link to={`/auth/register/${role}`}>
+								<Link
+									className='block'
+									to={`/auth/register/${role}`}
+								>
 									<button className='block w-full py-2 border border-primary text-primary text-lg font-medium rounded-[40px] transition ease-in-out duration-200 hover:bg-primary hover:text-white'>
 										Register as a {title}
 									</button>
@@ -66,7 +69,7 @@ const AuthRoles = () => {
 				</div>
 			</div>
 		</div>
-  );
-}
+	);
+};
 
-export default AuthRoles
+export default AuthRoles;
