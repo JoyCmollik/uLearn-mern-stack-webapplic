@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../Images/ULearn_Logo.png';
+import logo from '../../../images/ULearn_Logo.png';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 
 import DropDownMenu from '../../Home/DropDownMenu/DropDownMenu';
@@ -87,7 +87,7 @@ const Navbar = () => {
 									<DropDownMenu name='pages' />{' '}
 								</li>
 								{navigation.map((nav) => (
-									<li>
+									<li key={nav.id}>
 										<Link
 											to={nav.to}
 											className='ml-4 '
