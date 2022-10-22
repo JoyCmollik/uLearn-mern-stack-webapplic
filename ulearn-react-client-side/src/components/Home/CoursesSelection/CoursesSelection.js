@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { MdOutlineScreenSearchDesktop } from 'react-icons/md';
 import NestedLink from '../NestedLink/NestedLink';
 
@@ -7,7 +7,7 @@ const nestedlinks = [
 	{ id: 21, to: '/home/development', text: 'Development' },
 	{ id: 22, to: '/home/business', text: 'Business' },
 	{ id: 23, to: '/home/software', text: 'Software' },
-	{ id: 23, to: '/home/Design', text: 'Design' },
+	{ id: 24, to: '/home/Design', text: 'Design' },
 ];
 
 const CoursesSelection = () => {
@@ -25,7 +25,7 @@ const CoursesSelection = () => {
 					</h2>
 				</article>
 				<article className='flex flex-col md:flex-row justify-between items-center'>
-					<p className='text-sm'>
+					<p className='text-sm ml-10'>
 						CHOOSE FROM 5,000 ONLINE VIDEO COURSES WITH NEW
 						ADDITIONS
 					</p>

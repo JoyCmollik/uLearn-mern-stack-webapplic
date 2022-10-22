@@ -8,8 +8,13 @@ const CourseCard = (props) => {
 
 	return (
 		<div className='card w-72 bg-white  shadow-xl mx-auto border border-gray-200 box-border'>
-			<figure className='px-3 pt-3'>
+			<figure className='px-3 pt-3 relative'>
 				<img src={img} alt='course' className='rounded-xl' />
+				<div className='absolute top-3 right-4'>
+					<button className='btn-sm btn-active btn-ghost text-white font-semibold'>
+						$ {price}
+					</button>
+				</div>
 			</figure>
 			<div className='card-body'>
 				<p className='text-xs text-left capitalize bg-primary text-white w-16 py-1 px-2 rounded-md'>
@@ -29,7 +34,7 @@ const CourseCard = (props) => {
 						type='radio'
 						name='rating-2'
 						className='mask mask-star-2 bg-orange-400'
-						checked
+						readOnly
 					/>
 					<input
 						type='radio'
