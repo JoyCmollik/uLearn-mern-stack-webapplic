@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import heroImage from '../../../Images/hero.png';
+import heroImage from '../../../images/hero.png';
 
 import { SiGooglescholar } from 'react-icons/si';
 import Categories from '../Categories/Categories';
@@ -32,9 +32,9 @@ const categories = [
 
 const Hero = () => {
 	return (
-		<section className=''>
+		<section className='mb-56 md:mb-0'>
 			<div className='hero min-h-screen bg-base-200 pb-28 relative'>
-				<div className='hero-content flex justify-between '>
+				<div className='hero-content flex justify-between  '>
 					<article className=''>
 						<small className=''>Come for Learn</small>
 						<h1 className='text-5xl font-bold text mt-5'>
@@ -62,10 +62,10 @@ const Hero = () => {
 					</article>
 				</div>
 				{/* categories */}
-				<div className='absolute bottom-1 '>
-					<article className='flex flex-wrap text-center space-x-7 '>
+				<div className='absolute bottom-1 mr-auto md:mr-0 top-96  mt-56 md:mt-28 '>
+					<article className='flex flex-col md:flex-row flex-wrap  space-x-7 md:space-y-0 space-y-7   '>
 						{categories.map((category) => (
-							<Categories keys={category.id} {...category} />
+							<Categories key={category.id} {...category} />
 						))}
 					</article>
 				</div>
