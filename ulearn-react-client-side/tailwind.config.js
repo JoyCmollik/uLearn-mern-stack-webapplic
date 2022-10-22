@@ -9,6 +9,7 @@ module.exports = {
 				dark: '#1E1E1E',
 				light: '#EBF0F5',
 				brand: '#F79903',
+				brand2: '#ED6F2E',
 			},
 		},
 	},
