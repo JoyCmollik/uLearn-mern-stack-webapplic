@@ -15,15 +15,15 @@ const CoursesSelection = () => {
 						ADDITIONS
 					</p>
 					{/* course nested route */}
-					{/* <div className='flex flex-row'>
+					<div className='flex flex-row'>
 						<Link to='/home/development'>Development</Link>
 						<Link to='/home/business'>Business </Link>
 						<Link to='/home/software'>IT& Software </Link>
 						<Link to='/home/Design'>Design </Link>
-					</div> */}
+					</div>
 				</div>
 			</div>
-			{/* 	<Outlet /> */}
+			<Outlet />
 		</section>
 	);
 };
