@@ -33,7 +33,7 @@ const categories = [
 const Hero = () => {
 	return (
 		<section className='mb-56 md:mb-0'>
-			<div className='hero min-h-screen bg-base-200 pb-28 relative'>
+			<div className='hero min-h-screen bg-base-200 pb-28  relative'>
 				<div className='hero-content flex justify-between  '>
 					<article className=''>
 						<small className=''>Come for Learn</small>
@@ -63,7 +63,7 @@ const Hero = () => {
 				</div>
 				{/* categories */}
 				<div className='absolute bottom-1 mr-auto md:mr-0 top-96  mt-56 md:mt-28 '>
-					<article className='flex flex-col md:flex-row flex-wrap  space-x-7 md:space-y-0 space-y-7   '>
+					<article className='flex flex-col md:flex-row flex-wrap  space-x-7 md:space-y-0 space-y-7  '>
 						{categories.map((category) => (
 							<Categories key={category.id} {...category} />
 						))}
