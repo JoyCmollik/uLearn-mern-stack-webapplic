@@ -7,11 +7,15 @@ const CourseCard = (props) => {
 		props.course;
 
 	return (
-		<div className='card w-72 bg-white  shadow-xl mx-auto border border-gray-200 box-border'>
+		<div className='card w-72 bg-white drop-shadow-md mx-auto border border-gray-200'>
 			<figure className='px-3 pt-3 relative'>
-				<img src={img} alt='course' className='rounded-xl' />
+				<img
+					src={img}
+					alt='course'
+					className='rounded-xl object-cover'
+				/>
 				<div className='absolute top-3 right-4'>
-					<button className='btn-sm btn-active btn-ghost text-white font-semibold'>
+					<button className='btn-sm btn-active btn-ghost text-white font-semibold rounded-lg'>
 						$ {price}
 					</button>
 				</div>
