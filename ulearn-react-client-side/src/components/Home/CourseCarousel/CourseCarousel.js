@@ -4,7 +4,7 @@ import CourseCard from '../CoursesCard/CourseCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
 import { Navigation } from 'swiper';
-import { HiChevronRight, HiOutlineChevronLeft } from 'react-icons/hi2'
+import { HiChevronRight, HiOutlineChevronLeft } from 'react-icons/hi2';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -36,8 +36,12 @@ const CourseCarousel = ({ courses }) => {
 				))}
 			</Swiper>
 			{/* buttons */}
-			<button className='prev z-10 absolute top-[35%] -left-4 p-3 rounded-full bg-white drop-shadow-lg transform transition duration-200 hover:scale-[1.1] hover:text-primary' ><HiOutlineChevronLeft /></button>
-			<button className='next z-10 absolute top-[35%] -right-4 p-3 rounded-full bg-white drop-shadow-lg transform transition duration-200 hover:scale-[1.1] hover:text-primary' ><HiChevronRight /></button>
+			<button className='prev z-10 absolute top-[35%] -left-4 p-3 rounded-full bg-white drop-shadow-lg transform transition duration-200 hover:scale-[1.1] hover:text-primary'>
+				<HiOutlineChevronLeft />
+			</button>
+			<button className='next z-10 absolute top-[35%] -right-4 p-3 rounded-full bg-white drop-shadow-lg transform transition duration-200 hover:scale-[1.1] hover:text-primary'>
+				<HiChevronRight />
+			</button>
 			{/* <div className='carousel w-full'>
 				<div id='slide1' className='carousel-item relative w-full'>
 					<div className='flex flex-wrap mx-auto md:flex-none md:flex-nowrap'>
