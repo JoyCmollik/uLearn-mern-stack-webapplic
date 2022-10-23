@@ -145,7 +145,7 @@ const Register = () => {
 								<label className='label cursor-pointer space-x-2'>
 									<input
 										type='checkbox'
-										className='checkbox checkbox-primary'
+										className='checkbox checkbox-sm indeterminate:bg-primar'
 									/>
 									<span className='label-text'>
 										By clicking Create account, I agree that
