@@ -1,12 +1,16 @@
-import React from 'react';
-import { FaQuoteRight } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { TfiQuoteRight } from 'react-icons/tfi';
+import { Divider, Rate } from 'antd';
 const ReviewCard = ({ title, name, position, desc }) => {
+	const reviews = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+	const [value, setValue] = useState(3);
 	return (
-		<div className='w-96 mb-5 md:mb-0'>
+		<div className='w-96 mb-5 md:mb-0 mx-auto'>
 			<div className='flex  gap-3 ml-5 '>
 				<p>
-					<FaQuoteRight className='text-6xl text-gray-500' />
+					<TfiQuoteRight className='text-6xl text-gray-400 font-light' />
 				</p>
+				{/* --------------------name & position------------------------ */}
 				<div className=''>
 					<h3 className='text-base font-bold'>{name}</h3>
 					<h4 className='text-sm text-dark tracking-[.35em]'>
@@ -14,41 +18,28 @@ const ReviewCard = ({ title, name, position, desc }) => {
 					</h4>
 				</div>
 			</div>
-			<div className='border border-gray-300 mt-2 mb-5'></div>
+			<Divider />
 			<div className='flex flex-col space-y-4'>
+				{/* ----------------------title&description---------------------------- */}
 				<div className='flex flex-col space-y-6'>
-					<h4 className='font-semibold'>{title}</h4>
-					<p className='text-lg'>{desc}</p>
+					<h4 className='font-semibold text-xl'>{title}</h4>
+					<p className='text-base w-[310px]'>{desc}</p>
 				</div>
-				{/* rating */}
-				<div className='rating'>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
+				{/*-----------------------------rating--------------------------- */}
+				<span>
+					<Rate
+						tooltips={reviews}
+						onChange={setValue}
+						value={value}
 					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-						readOnly
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-				</div>
+					{value ? (
+						<span className='ant-rate-text'>
+							{reviews[value - 1]}
+						</span>
+					) : (
+						''
+					)}
+				</span>
 			</div>
 		</div>
 	);
