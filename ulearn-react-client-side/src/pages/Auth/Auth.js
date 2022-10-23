@@ -6,14 +6,14 @@ import Register from '../../components/Auth/Register';
 
 const Auth = () => {
 	return (
-    <>
-		<Routes>
-			<Route index element={<AuthRoles />} />
-			<Route path='auth/login' element={<Login />} />
-			<Route path='register/:role' element={<Register />} />
-		</Routes>
-    <Outlet />
-    </>
+		<>
+			<Routes>
+				<Route index element={<AuthRoles />} />
+				<Route path='login' element={<Login />} />
+				<Route path='register/:role' element={<Register />} />
+			</Routes>
+			<Outlet />
+		</>
 	);
 };
 
