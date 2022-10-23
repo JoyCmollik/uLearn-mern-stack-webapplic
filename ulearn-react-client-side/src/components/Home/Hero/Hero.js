@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import heroImage from '../../../images/hero.png';
 
 import { SiGooglescholar } from 'react-icons/si';
@@ -35,6 +35,7 @@ const Hero = () => {
 				<div className='flex flex-col md:flex-row justify-center items-center'>
 					<div className='flex flex-wrap flex-col md:flex-row justify-center space-x-4 items-center'>
 						<article className=''>
+							{/* --------------------title------------------------------ */}
 							<small className='text-xs font-semibold tracking-[.65em]'>
 								Come for Learn
 							</small>
@@ -54,7 +55,10 @@ const Hero = () => {
 								Browse Chrome
 							</button>
 						</article>
+
 						<article>
+							{/* ------------------------image-------------------------- */}
+
 							<img
 								src={heroImage}
 								alt=''
@@ -62,7 +66,7 @@ const Hero = () => {
 							/>
 						</article>
 					</div>
-					{/* categories */}
+					{/*----------------------------categories------------------------------*/}
 					<div className='md:absolute top-3/4 mt-10 md:mt-24 mx-auto mb-20 md:mb-0'>
 						<article className='flex flex-wrap flex-col gap-5 md:flex-row justify-center items-center '>
 							{categories.map((category) => (

@@ -12,24 +12,24 @@ const nestedlinks = [
 
 const CoursesSelection = () => {
 	return (
-		<section className='border border-black  container mx-auto min-h-screen'>
-			{/* title and icon */}
-			<div className='flex flex-col space-y-5 md:space-y-0 mx-20'>
+		<section className=' min-h-screen  mx-auto container md:pt-14 mb-20'>
+			<div className='flex flex-col space-y-5 md:space-y-0  px-20'>
+				{/*--------------------------- title and icon---------------------- */}
 				<article className='flex  flex-row items-center  space-x-5 mb-4 text-dark font-medium '>
 					<MdOutlineScreenSearchDesktop className='text-6xl text-left' />
 
-					<h2 className='text-[41px]  md:whitespace-nowrap   '>
+					<h2 className='text-[41px]  md:whitespace-nowrap  leading-10 '>
 						A Broad Selection Of
 						<br />
 						Courses.
 					</h2>
 				</article>
-				<article className='flex flex-col md:flex-row justify-between items-center'>
-					<p className='text-sm ml-10'>
+				<article className='flex flex-col md:flex-row justify-between items-center '>
+					<p className='text-sm pl-20'>
 						CHOOSE FROM 5,000 ONLINE VIDEO COURSES WITH NEW
 						ADDITIONS
 					</p>
-					{/* course nested route */}
+					{/*----------------------- course nested route------------------- */}
 					<div className='flex flex-row text-base font-bold  gap-5 text-gray-700'>
 						{nestedlinks.map((link) => (
 							<NestedLink key={link.id} {...link} />

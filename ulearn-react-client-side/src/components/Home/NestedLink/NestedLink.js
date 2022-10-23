@@ -8,8 +8,8 @@ const NestedLink = ({ to, text }) => {
 			aria-current='page'
 			className={({ isActive }) =>
 				isActive
-					? ' text-black  line-through decoration-brand2 decoration-solid decoration-2 capitalize'
-					: undefined
+					? ' text-black line-through decoration-brand2 decoration-solid decoration-2 capitalize'
+					: 'no-underline'
 			}
 		>
 			{text}

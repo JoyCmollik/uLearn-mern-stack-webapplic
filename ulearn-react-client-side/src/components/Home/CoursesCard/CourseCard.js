@@ -1,84 +1,55 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { BiTimeFive, BiNotepad } from 'react-icons/bi';
-
+import { Avatar, Divider, Rate } from 'antd';
 const CourseCard = (props) => {
-	const { id, title, price, avatar, img, time, lecture, status } =
-		props.course;
+	const { title, price, avatar, img, time, lecture, status } = props.course;
+	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+	const [value, setValue] = useState(3);
 
 	return (
-		<div className='card w-72 bg-white drop-shadow-md mx-auto border border-gray-200'>
-			<figure className='px-3 pt-3 relative'>
+		<div className='w-72 bg-white drop-shadow-md mx-auto border border-gray-200 rounded-lg'>
+			<div className='px-4 pt-4 relative'>
+				{/* ----------------------card image--------------------------- */}
 				<img
 					src={img}
 					alt='course'
 					className='rounded-xl object-cover'
 				/>
+				{/* -------------------------$course price---------------------------- */}
 				<div className='absolute top-3 right-4'>
-					<button className='btn-sm btn-active btn-ghost text-white font-semibold rounded-lg'>
+					<button className='btn-sm btn-active bg-green-600 text-white font-semibold rounded-lg'>
 						$ {price}
 					</button>
 				</div>
-			</figure>
-			<div className='card-body'>
+			</div>
+			<div className='px-5 py-3'>
 				<p className='text-xs text-left capitalize bg-primary text-white w-16 py-1 px-2 rounded-md'>
 					{status}
 				</p>
 				<h2 className='card-title text-base font-semibold text-dark'>
 					{title}
 				</h2>
-				{/* rating */}
-				<div className='rating  rating-sm mb-4'>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-						readOnly
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<input
-						type='radio'
-						name='rating-2'
-						className='mask mask-star-2 bg-orange-400'
-					/>
-					<span className='text-sm ml-5'>(2) reviews</span>
+				{/* ------------------------rating-------------------- */}
+				<span>
+					<Rate tooltips={desc} onChange={setValue} value={value} />
+					{value ? (
+						<span className='ant-rate-text'>{desc[value - 1]}</span>
+					) : (
+						''
+					)}
+				</span>
+				{/*------------------------- avatar-------------------- */}
+				<div className='flex mt-3 '>
+					<Avatar.Group>
+						<Avatar src={avatar} />
+						<Avatar
+							style={{ background: 'white' }}
+							src='https://joeschmoe.io/api/v1/random'
+						/>
+					</Avatar.Group>
 				</div>
-				{/* avatar */}
-				<div className='flex justify-between'>
-					<div className='avatar-group -space-x-6'>
-						<div className='avatar'>
-							<div className='w-8'>
-								<img src={avatar} alt='avatar' />
-							</div>
-						</div>
-						<div className='avatar'>
-							<div className='w-8'>
-								<img src={avatar} alt='avatar' />
-							</div>
-						</div>
-					</div>
-					<div>
-						<button className='btn btn-sm text-xs btn-link text-primary no-underline'>
-							view
-						</button>
-					</div>
-				</div>
-				<div className='border border-gray-300 my-2 h-0'></div>
-				{/* card footer */}
+				<Divider />
+				{/*-------------------------- card footer----------------------- */}
 				<div className='flex justify-between'>
 					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary'>
 						<BiTimeFive />

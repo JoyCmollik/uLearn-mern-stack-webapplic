@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
 import { Navigation } from 'swiper';
 import { HiChevronRight, HiOutlineChevronLeft } from 'react-icons/hi2';
-
+import './CourseCarousel.css';
 // Import Swiper styles
 import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -13,10 +13,10 @@ import 'swiper/css';
 const CourseCarousel = ({ courses }) => {
 	const [swiper, setSwiper] = useState();
 	return (
-		<div className='carousel-container relative'>
+		<div className='carousel-container relative px-16'>
 			<Swiper
 				spaceBetween={10}
-				slidesPerView={5}
+				slidesPerView={4}
 				navigation={{
 					prevEl: '.prev',
 					nextEl: '.next',
