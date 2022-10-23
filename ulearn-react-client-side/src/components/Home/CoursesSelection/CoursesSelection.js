@@ -12,7 +12,7 @@ const nestedlinks = [
 
 const CoursesSelection = () => {
 	return (
-		<section className='bg-base-100 pt-96 md:pt-24 container mx-auto min-h-screen'>
+		<section className='border border-black  container mx-auto min-h-screen'>
 			{/* title and icon */}
 			<div className='flex flex-col space-y-5 md:space-y-0 mx-20'>
 				<article className='flex  flex-row items-center  space-x-5 mb-4 text-dark font-medium '>

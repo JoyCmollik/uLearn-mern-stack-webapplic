@@ -13,8 +13,7 @@ const Home = () => {
 		<>
 			<Layout>
 				<NavigationBar theme='light' />
-
-				<Content>
+				<Content style={{ background: '#dbeafe' }}>
 					<Hero />
 					<CoursesSelection />
 					<CustomerReview />
