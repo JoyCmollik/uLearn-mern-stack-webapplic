@@ -4,10 +4,10 @@ import { MdOutlineScreenSearchDesktop } from 'react-icons/md';
 import NestedLink from '../NestedLink/NestedLink';
 
 const nestedlinks = [
-	{ id: 21, to: '/home/development', text: 'Development' },
-	{ id: 22, to: '/home/business', text: 'Business' },
-	{ id: 23, to: '/home/software', text: 'Software' },
-	{ id: 24, to: '/home/Design', text: 'Design' },
+	{ id: 21, to: '/development', text: 'Development' },
+	{ id: 22, to: '/business', text: 'Business' },
+	{ id: 23, to: '/software', text: 'Software' },
+	{ id: 24, to: '/Design', text: 'Design' },
 ];
 
 const CoursesSelection = () => {

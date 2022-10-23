@@ -17,13 +17,14 @@ function App() {
 	return (
 		<>
 			<Routes>
-				<Route index element={<Home />} />
-				<Route path='home' element={<Home />}>
+				<Route path='/*' element={<Home />}>
+					<Route index element={<DevelopmentCourse />} />
 					<Route path='development' element={<DevelopmentCourse />} />
 					<Route path='business' element={<BusinessCourse />} />
 					<Route path='software' element={<SoftwareCourse />} />
 					<Route path='design' element={<DesignCourse />} />
 				</Route>
+				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
 				<Route path='auth/*' element={<Auth />} />
 				<Route
