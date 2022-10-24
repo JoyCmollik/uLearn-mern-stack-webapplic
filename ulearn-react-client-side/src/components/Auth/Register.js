@@ -124,7 +124,7 @@ const Register = () => {
 									key={roleIdx}
 									className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
 										userRole === role &&
-										'bg-primary text-white drop-shadow-2xl'
+										'bg-light text-white drop-shadow-md border-primary'
 									}`}
 									onClick={() => handleUserRole(role)}
 								>
@@ -133,7 +133,7 @@ const Register = () => {
 										src={img}
 										alt='role learner'
 									/>
-									<h5 className='text-lg font-medium'>
+									<h5 className='text-lg font-light'>
 										{title}
 									</h5>
 								</div>
