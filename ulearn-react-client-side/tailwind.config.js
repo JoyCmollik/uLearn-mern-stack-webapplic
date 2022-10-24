@@ -4,12 +4,17 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: '#285AF4',
-				secondary: '#F4F4F4',
-				dark: '#1E1E1E',
-				light: '#EBF0F5',
-				brand: '#F79903',
-				brand2: '#ED6F2E',
+				primary: '#1F53F3',
+				secondary: '#9937FC',
+				font1: '#303345',
+				font2: '#77787C',
+				para: '#A3A6AA',
+				light: '#F4F9FC',
+				light2: '#EFEFEF',
+				warning: '#FED81D',
+				error: '#FF0000',
+				brand1: '#FF1D7C',
+				brand2: '#1CD767',
 			},
 		},
 	},

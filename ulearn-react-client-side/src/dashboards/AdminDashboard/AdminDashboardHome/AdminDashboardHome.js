@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+import image from '../../../images/dashboard_background.svg';
 
 const AdminDashboardHome = () => {
-  return (
-    <div>AdminDashboardHome</div>
-  )
-}
+	return (
+		<div
+			style={{ background: `url(${image}) center/cover no-repeat` }}
+			className='min-h-screen'
+		>
+    AdminHome
+		</div>
+	);
+};
 
-export default AdminDashboardHome
+export default AdminDashboardHome;
