@@ -13,7 +13,7 @@ import 'swiper/css';
 const CourseCarousel = ({ courses }) => {
 	const [swiper, setSwiper] = useState();
 	return (
-		<div className='carousel-container relative px-16'>
+		<div className='carousel-container relative '>
 			<Swiper
 				spaceBetween={10}
 				slidesPerView={4}
