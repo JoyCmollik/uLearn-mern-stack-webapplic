@@ -1,0 +1,16 @@
+[data-theme='compact']
+	.site-collapse-custom-collapse
+	.site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+	margin-bottom: 24px;
+	overflow: hidden;
+	background: #f3f3f3;
+	border: 0px;
+	border-radius: 2px;
+}
+.ant-collapse-content-box {
+	color: #222;
+}
+.ant-collapse-header-text {
+	background: #f3f3f3;
+}

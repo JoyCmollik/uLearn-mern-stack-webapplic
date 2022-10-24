@@ -53,7 +53,7 @@ const DropDownButton = ({ name }) => {
 			className={`flex items-center  ${
 				name === 'pages'
 					? 'border-0 text-black font-bold text-base'
-					: 'border border-gray-400 rounded-md  px-24 md:px-6 py-2 md:py-1 text-base text-black  font-semibold bg-secondary '
+					: 'border border-gray-400 rounded-md  px-24 md:px-6 py-2 md:py-1 text-base text-black  font-semibold bg-light '
 			}`}
 		>
 			<a href='/xyz' onClick={(e) => e.preventDefault()}>
