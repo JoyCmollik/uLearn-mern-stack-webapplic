@@ -4,11 +4,10 @@ import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
 import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHome/AdminDashboardHome';
 import Auth from './pages/Auth/Auth';
-import DevelopmentCourse from './components/Home/Courses/DevelopmentCourse/DevelopmentCourse';
-import BusinessCourse from './components/Home/Courses/BusinessCourse/BusinessCourse';
-import SoftwareCourse from './components/Home/Courses/SoftwareCourse/SoftwareCourse';
-import DesignCourse from './components/Home/Courses/DesignCourse/DesignCourse';
-
+import DevelopmentCourse from './components/Home/BoardSectionOfCourse/Courses/DevelopmentCourse/DevelopmentCourse';
+import BusinessCourse from './components/Home/BoardSectionOfCourse/Courses/BusinessCourse/BusinessCourse';
+import SoftwareCourse from './components/Home/BoardSectionOfCourse/Courses/SoftwareCourse/SoftwareCourse';
+import DesignCourse from './components/Home/BoardSectionOfCourse/Courses/DesignCourse/DesignCourse';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
