@@ -2,7 +2,7 @@ import React from 'react';
 import heroImage from '../../../images/hero.png';
 
 import { SiGooglescholar } from 'react-icons/si';
-import Categories from '../Categories/Categories';
+import Categories from '../BoardSectionOfCourse/Categories/Categories';
 
 const categories = [
 	{
