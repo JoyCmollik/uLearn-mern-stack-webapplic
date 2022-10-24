@@ -3,7 +3,7 @@ import CollapseItems from '../CollapseItems/CollapseItems';
 
 const FrequentlyAskQuestions = () => {
 	return (
-		<section className='container mx-auto min-h-screen border-box'>
+		<section className='container mx-auto min-h-screen border-box mb-20'>
 			<div className='flex flex-row justify-center px-20 space-x-8'>
 				<article className='w-[431px]'>
 					{/*----------------------title-------------------------*/}
