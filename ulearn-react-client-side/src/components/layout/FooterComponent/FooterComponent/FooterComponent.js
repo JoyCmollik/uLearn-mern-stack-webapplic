@@ -46,7 +46,7 @@ const FooterComponent = () => {
 		<section className='min-h-full container mx-auto'>
 			<div className='flex flex-row items-center pl-20 py-16 space-x-16'>
 				{/* --------------------- logo and title ------------------------*/}
-				<article className='flex flex-col justify-start items-start border border-black space-y-4 '>
+				<article className='flex flex-col justify-start items-start space-y-4 '>
 					<article className='flex items-center space-x-2 '>
 						<div className=''>
 							<img src={logo} alt='' />
