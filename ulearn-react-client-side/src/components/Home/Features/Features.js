@@ -32,7 +32,7 @@ const Features = () => {
 					return (
 						<article key={id} className='border-box '>
 							<div
-								className={` ${bgColor} flex px-[25px] rounded-md shadow-sm pt-[30px] pb-5`}
+								className={` ${bgColor} flex px-[25px] rounded-md shadow-md pt-[30px] pb-5`}
 							>
 								{/*---------------title--------------------*/}
 								<div className='flex flex-col justify-start items-start space-y-4'>

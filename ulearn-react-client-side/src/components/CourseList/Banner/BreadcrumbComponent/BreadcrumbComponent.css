@@ -1,0 +1,15 @@
+.ant-breadcrumb ol .ant-breadcrumb-link {
+	color: white;
+	font-size: 14px;
+}
+/* .ant-breadcrumb ol li {
+  text-align: center;
+} */
+.ant-breadcrumb ol .ant-breadcrumb-separator {
+	color: white;
+	font-size: 14px;
+}
+.ant-breadcrumb ol .ant-breadcrumb-link a {
+	color: white;
+	font-size: 14px;
+}
