@@ -8,6 +8,7 @@ import CoursesSelection from '../../components/Home/BoardSectionOfCourse/Courses
 import CustomerReview from '../../components/Home/ReviewsSection/CustomerReviews/CustomerReview';
 import FrequentlyAskQuestions from '../../components/Home/FAQ/FrequentlyAskQuestions/FrequentlyAskQuestions';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
+import Features from '../../components/Home/Features/Features';
 
 const { Footer, Content } = Layout;
 const Home = () => {
@@ -15,13 +16,14 @@ const Home = () => {
 		<>
 			<Layout>
 				<NavigationBar theme='light' />
-				<Content style={{ background: '#e3edf9' }}>
+				<Content style={{ background: '#EFEFEF' }}>
 					<Hero />
 					<CoursesSelection />
 					<CustomerReview />
 					<FrequentlyAskQuestions />
+					<Features />
 				</Content>
-				<Footer style={{ background: '#F79903' }}>
+				<Footer style={{ background: '#040453' }}>
 					<FooterComponent />
 				</Footer>
 			</Layout>
