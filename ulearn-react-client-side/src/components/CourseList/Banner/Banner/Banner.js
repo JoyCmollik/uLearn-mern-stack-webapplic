@@ -7,6 +7,7 @@ const Banner = () => {
 			<div className='text-light mx-auto text-center  flex flex-col items-center justify-center'>
 				{/*-------------------title-------------------------*/}
 				<h3 className='text-light text-[41px] text-center'>Courses</h3>
+				{/*---------------------breadcrumb----------------------*/}
 				<BreadcrumbComponents />
 			</div>
 		</div>
