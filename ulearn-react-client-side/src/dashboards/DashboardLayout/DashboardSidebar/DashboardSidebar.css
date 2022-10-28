@@ -1,18 +1,14 @@
-<<<<<<< HEAD
-.admin-dashboard-links .ant-collapse-content > .ant-collapse-content-box {
-    padding: 0 8px !important;
-}
-=======
-[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel,
+[data-theme='compact']
+	.site-collapse-custom-collapse
+	.site-collapse-custom-panel,
 .site-collapse-custom-collapse .site-collapse-custom-panel {
-  margin: 0px !important;
-  padding: 0px !important;
-  overflow: hidden;
-  border: 0px;
-  border-radius: 2px;
+	margin: 0px !important;
+	padding: 0px !important;
+	overflow: hidden;
+	border: 0px;
+	border-radius: 2px;
 }
 
 .ant-collapse-content > .ant-collapse-content-box {
-    padding: 0 8px;
+	padding: 0 8px;
 }
->>>>>>> dev-shahida

@@ -1,19 +1,8 @@
 import { Collapse } from 'antd';
-import React from 'react'
+import React from 'react';
 
-<<<<<<< HEAD
-const CollapsedSideLinksContainer = ({children}) => {
-  return (
-		<Collapse
-			expandIconPosition='end'
-			ghost
-			style={{ padding: '0 !important' }}
-			accordion
-		>
-			{children}
-=======
 const CollapsedSideLinksContainer = () => {
-  return (
+	return (
 		<Collapse
 			defaultActiveKey={['1']}
 			expandIconPosition='end'
@@ -50,9 +39,8 @@ const CollapsedSideLinksContainer = () => {
 					</Panel>
 				</Collapse>
 			</Panel> */}
->>>>>>> dev-shahida
 		</Collapse>
-  );
-}
+	);
+};
 
-export default CollapsedSideLinksContainer
+export default CollapsedSideLinksContainer;

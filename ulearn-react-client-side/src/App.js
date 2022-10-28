@@ -9,6 +9,7 @@ import BusinessCourse from './components/Home/BoardSectionOfCourse/Courses/Busin
 import SoftwareCourse from './components/Home/BoardSectionOfCourse/Courses/SoftwareCourse/SoftwareCourse';
 import DesignCourse from './components/Home/BoardSectionOfCourse/Courses/DesignCourse/DesignCourse';
 import Report from './dashboards/AdminDashboard/Report/Report';
+import CourseDetail from './pages/CourseDetail/CourseDetail';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -26,6 +27,10 @@ function App() {
 				</Route>
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
+				<Route
+					path='course-list/:courseId'
+					element={<CourseDetail />}
+				/>
 				<Route path='auth/*' element={<Auth />} />
 				<Route
 					path='admin/dashboard/*'

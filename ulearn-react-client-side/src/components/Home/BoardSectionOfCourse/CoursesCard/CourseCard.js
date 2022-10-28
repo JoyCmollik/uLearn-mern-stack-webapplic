@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { BiTimeFive, BiNotepad } from 'react-icons/bi';
 import { Avatar, Divider, Rate } from 'antd';
 import { TbExternalLink } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 const CourseCard = (props) => {
-	const { title, price, avatar, img, time, lecture, status } = props.course;
+	const navigate = useNavigate();
+	const handleDetailPage = (id) => {
+		navigate(`/course-list/${id}`);
+	};
+	const { title, price, avatar, img, time, lecture, status, id } =
+		props.course;
 	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 	const [value, setValue] = useState(3);
 
@@ -48,7 +54,10 @@ const CourseCard = (props) => {
 							src='https://joeschmoe.io/api/v1/random'
 						/>
 					</Avatar.Group>
-					<button className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'>
+					<button
+						onClick={() => handleDetailPage(id)}
+						className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'
+					>
 						<TbExternalLink className='text-base mr-2 text-primary' />{' '}
 						view
 					</button>
