@@ -5,8 +5,8 @@
 	margin-bottom: 24px;
 	overflow: hidden;
 	background: #f3f3f3;
-	border: 0px;
-	border-radius: 2px;
+	border: 0;
+	border-radius: 4px;
 }
 .ant-collapse-content-box {
 	color: #222;

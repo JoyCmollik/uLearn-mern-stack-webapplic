@@ -16,7 +16,7 @@ const Home = () => {
 		<>
 			<Layout>
 				<NavigationBar theme='light' />
-				<Content style={{ background: '#EFEFEF' }}>
+				<Content style={{ background: 'white' }}>
 					<Hero />
 					<CoursesSelection />
 					<CustomerReview />

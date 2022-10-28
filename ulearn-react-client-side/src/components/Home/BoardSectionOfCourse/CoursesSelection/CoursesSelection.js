@@ -30,10 +30,14 @@ const CoursesSelection = () => {
 						ADDITIONS
 					</p>
 					{/*----------------------- course nested route------------------- */}
-					<div className='flex flex-row text-base font-bold  gap-5 text-gray-700'>
-						{nestedlinks.map((link) => (
-							<NestedLink key={link.id} {...link} />
-						))}
+					<div>
+						<ul className='grid grid-cols-4 text-base font-bold  gap-5 text-gray-700'>
+							{nestedlinks.map((link) => (
+								<li key={link.id}>
+									<NestedLink {...link} />
+								</li>
+							))}
+						</ul>
 					</div>
 				</article>
 			</div>

@@ -3,7 +3,7 @@ import FilteredCards from '../FilteredCards/FilteredCards';
 import FilterMenu from '../FilterMenu/FilterMenu';
 import { BiFilterAlt } from 'react-icons/bi';
 const FilterCourse = () => {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(true);
 	return (
 		<section className='min-h-screen border-box mb-20'>
 			{/*------------------filter button toggle----------  */}
@@ -16,15 +16,17 @@ const FilterCourse = () => {
 					<BiFilterAlt className='inline text-sm ' /> filter
 				</button>
 				<div className='container mx-auto '>
-					<div className='flex '>
+					{/*------------------filterMenu----------  */}
+					<div className='grid grid-cols-12 '>
 						{show && (
-							<article className='w-[260px]'>
+							<aside className='col-span-3'>
 								<FilterMenu />
-							</article>
+							</aside>
 						)}
-						<article className='border-t border-gray-300  '>
+						{/*------------------filtercards----------  */}
+						<div className='border-t border-gray-300 col-span-9 '>
 							<FilteredCards show={show} />
-						</article>
+						</div>
 					</div>
 				</div>
 			</div>

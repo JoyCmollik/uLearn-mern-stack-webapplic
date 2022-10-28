@@ -29,19 +29,24 @@ const reviews = [
 
 const CustomerReview = () => {
 	return (
-		<section className=' pt-24 container mx-auto min-h-screen mb-20'>
-			{/* title */}
-			<article className='px-14 mx-auto '>
-				<AiOutlineComment className='text-6xl mx-auto text-purple-800' />
-				<h2 className='capitalize font-bold text-4xl text-center my-4'>
-					what our valuable customer says
-				</h2>
-				<div className='flex flex-wrap flex-col md:flex-row-reverse items-center mx-auto justify-center  mt-16'>
+		<section className=' min-h-screen '>
+			<div className='container mx-auto py-[110px]'>
+				<div className=''>
+					<div className='flex justify-center'>
+						<AiOutlineComment className='text-6xl text-purple-800 mb-[18px]' />
+					</div>
+					{/*------------------------title----------------------------*/}
+					<h2 className='capitalize font-bold text-4xl text-center pb-20'>
+						what our valuable customer says
+					</h2>
+				</div>
+				{/*------------------------review card----------------------------*/}
+				<div className='grid grid-cols-3 gap-6'>
 					{reviews.map((review) => (
 						<ReviewCard key={review.id} {...review} />
 					))}
 				</div>
-			</article>
+			</div>
 		</section>
 	);
 };

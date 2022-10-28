@@ -43,12 +43,12 @@ const CollapseItems = () => {
 				return (
 					<Panel
 						header={
-							<Space className='text-[#040453] hover:text-violet-500'>
+							<Space className='text-[#040453] hover:text-violet-500 '>
 								{header.que}
 							</Space>
 						}
 						key={header.id}
-						className='site-collapse-custom-panel text-lg font-semibold px-[30px]   '
+						className='site-collapse-custom-panel text-lg font-semibold  '
 					>
 						<p className='font-normal p-30 text-sm leading-[25px] blue-6 '>
 							{header.text}

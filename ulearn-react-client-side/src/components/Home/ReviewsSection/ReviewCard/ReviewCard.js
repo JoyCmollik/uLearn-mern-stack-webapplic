@@ -5,10 +5,10 @@ const ReviewCard = ({ title, name, position, desc }) => {
 	const reviews = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 	const [value, setValue] = useState(3);
 	return (
-		<div className='w-96 mb-5 md:mb-0 mx-auto'>
-			<div className='flex  gap-3 ml-5 '>
+		<div className='mx-auto rounded-lg'>
+			<div className='flex space-x-3'>
 				<p>
-					<TfiQuoteRight className='text-6xl text-gray-400 font-light' />
+					<TfiQuoteRight className='text-6xl text-font1 font-light' />
 				</p>
 				{/* --------------------name & position------------------------ */}
 				<div className=''>
@@ -18,12 +18,12 @@ const ReviewCard = ({ title, name, position, desc }) => {
 					</h4>
 				</div>
 			</div>
-			<Divider />
+			<Divider className='bg-gray-300' />
 			<div className='flex flex-col space-y-4'>
 				{/* ----------------------title&description---------------------------- */}
 				<div className='flex flex-col space-y-6'>
 					<h4 className='font-semibold text-xl'>{title}</h4>
-					<p className='text-base w-[310px]'>{desc}</p>
+					<p className='text-base '>{desc}</p>
 				</div>
 				{/*-----------------------------rating--------------------------- */}
 				<span>

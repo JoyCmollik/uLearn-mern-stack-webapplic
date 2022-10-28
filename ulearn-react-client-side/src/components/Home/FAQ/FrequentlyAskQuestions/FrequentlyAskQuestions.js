@@ -3,15 +3,15 @@ import CollapseItems from '../CollapseItems/CollapseItems';
 
 const FrequentlyAskQuestions = () => {
 	return (
-		<section className='container mx-auto min-h-screen border-box mb-20'>
-			<div className='flex flex-row justify-center px-20 space-x-8'>
-				<article className='w-[431px]'>
+		<section className='container mx-auto min-h-screen'>
+			<div className='grid grid-cols-1 md:grid-cols-2 justify-items-end'>
+				<article className=''>
 					{/*----------------------title-------------------------*/}
-					<h2 className='text-[41px] capitalize'>
+					<h2 className='text-[41px] capitalize '>
 						Frequently ask <br /> question
 					</h2>
-					<p className='text-sm whitespace-nowrap'>
-						CHOOSE FROM 5,000 ONLINE VIDEO COURSES WITH NEW <br />
+					<p className='text-sm '>
+						CHOOSE FROM 5,000 ONLINE VIDEO COURSES WITH NEW
 						ADDITIONS
 					</p>
 					{/*----------------------Collapse-------------------------*/}
@@ -19,7 +19,7 @@ const FrequentlyAskQuestions = () => {
 						<CollapseItems />
 					</div>
 				</article>
-				<article>
+				<article className=' '>
 					{/*----------------------image-------------------------*/}
 					<img
 						src='https://lmszai.zainikthemes.com/uploads_demo/setting/faq-img.jpg'
