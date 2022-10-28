@@ -16,7 +16,7 @@ const CourseCarousel = ({ courses }) => {
 		<div className='carousel-container relative '>
 			<Swiper
 				spaceBetween={10}
-				slidesPerView={4}
+				slidesPerView={5}
 				navigation={{
 					prevEl: '.prev',
 					nextEl: '.next',

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { BiTimeFive, BiNotepad } from 'react-icons/bi';
 import { Avatar, Divider, Rate } from 'antd';
+import { TbExternalLink } from 'react-icons/tb';
 const CourseCard = (props) => {
 	const { title, price, avatar, img, time, lecture, status } = props.course;
 	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 	const [value, setValue] = useState(3);
 
 	return (
-		<div className='w-72 bg-white drop-shadow-md mx-auto border border-gray-200 rounded-lg'>
+		<div className=' bg-white drop-shadow-md mx-auto border border-gray-200 rounded-lg'>
 			<div className='px-4 pt-4 relative'>
 				{/* ----------------------card image--------------------------- */}
 				<img
@@ -39,7 +40,7 @@ const CourseCard = (props) => {
 					)}
 				</span>
 				{/*------------------------- avatar-------------------- */}
-				<div className='flex mt-3 '>
+				<div className='flex mt-3 justify-between'>
 					<Avatar.Group>
 						<Avatar src={avatar} />
 						<Avatar
@@ -47,6 +48,10 @@ const CourseCard = (props) => {
 							src='https://joeschmoe.io/api/v1/random'
 						/>
 					</Avatar.Group>
+					<button className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'>
+						<TbExternalLink className='text-base mr-2 text-primary' />{' '}
+						view
+					</button>
 				</div>
 				<Divider />
 				{/*-------------------------- card footer----------------------- */}

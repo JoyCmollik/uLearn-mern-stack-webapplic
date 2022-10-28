@@ -1,57 +1,76 @@
-import { Pagination, Rate } from 'antd';
+import { Avatar, Pagination, Rate } from 'antd';
 import React, { useState } from 'react';
-
+import { BiTimeFive } from 'react-icons/bi';
+import { BsFillPlayCircleFill } from 'react-icons/bs';
+import { RiClosedCaptioningFill } from 'react-icons/ri';
+import { TbExternalLink } from 'react-icons/tb';
 const filterCategories = [
 	{
 		id: 73,
-		img: 'https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg',
-		title: `Javascript: Understanding The Weird Part...`,
-		instructor: 'Johnny Depp',
-		levels: 'Level 1',
-		rating: '5',
-		price: '50.00',
+		img: 'https://demo.creativeitem.com/academy/uploads/thumbnails/course_thumbnails/optimized/course_thumbnail_default_11651968000.jpg',
+		title: 'Wordpress for Beginners - Master Wordpress Quickly',
+		subtitle:
+			'In 2020, build a beautiful responsive Wordpress site that lo...',
+		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
+
+		time: '01:10:09',
+		lecture: '12',
+		status: 'beginner',
+		language: 'English',
+		price: '$50.00',
+		rating: '1',
 	},
 	{
 		id: 74,
-		img: 'https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg',
-		title: `Javascript: Understanding The Weird Part...`,
-		instructor: 'Johnny Depp',
-		levels: 'Level 1',
-		rating: '5',
-		price: '50.00',
+		img: 'https://demo.creativeitem.com/academy/uploads/thumbnails/course_thumbnails/optimized/course_thumbnail_default_11651968000.jpg',
+		title: 'Wordpress for Beginners - Master Wordpress Quickly',
+		subtitle:
+			'In 2020, build a beautiful responsive Wordpress site that lo...',
+		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
+
+		time: '01:10:09',
+		lecture: '12',
+		status: 'beginner',
+		language: 'English',
+		price: 'Free',
+		rating: '0',
 	},
 	{
 		id: 75,
-		img: 'https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg',
-		title: `Javascript: Understanding The Weird Part...`,
-		instructor: 'Johnny Depp',
-		levels: 'Level 1',
+		img: 'https://demo.creativeitem.com/academy/uploads/thumbnails/course_thumbnails/optimized/course_thumbnail_default_11651968000.jpg',
+		title: 'Wordpress for Beginners - Master Wordpress Quickly',
+		subtitle:
+			'In 2020, build a beautiful responsive Wordpress site that lo...',
+		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
+
+		time: '01:10:09',
+		lecture: '12',
+		status: 'beginner',
+		language: 'English',
+		price: '$50.00',
 		rating: '0',
-		price: '50.00',
 	},
 	{
 		id: 76,
-		img: 'https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg',
-		title: `Javascript: Understanding The Weird Part...`,
-		instructor: 'Johnny Depp',
-		levels: 'Level 1',
-		rating: '0',
-		price: '50.00',
-	},
-	{
-		id: 77,
-		img: 'https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg',
-		title: `Javascript: Understanding The Weird Part...`,
-		instructor: 'Johnny Depp',
-		levels: 'Level 1',
-		rating: '0',
-		price: '50.00',
+		img: 'https://demo.creativeitem.com/academy/uploads/thumbnails/course_thumbnails/optimized/course_thumbnail_default_11651968000.jpg',
+		title: 'Wordpress for Beginners - Master Wordpress Quickly',
+		subtitle:
+			'In 2020, build a beautiful responsive Wordpress site that lo...',
+		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
+
+		time: '01:10:09',
+		lecture: '12',
+		status: 'beginner',
+		language: 'English',
+		price: 'Free',
+		rating: '1',
 	},
 ];
 
-const FilteredCards = ({ show }) => {
-	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
-	const [value, setValue] = useState(3);
+const FilteredCards = () => {
+	//rating
+
+	const [value, setValue] = useState(5);
 	//pagination
 	const [current, setCurrent] = useState(1);
 	const onChange = (page) => {
@@ -59,76 +78,123 @@ const FilteredCards = ({ show }) => {
 		setCurrent(page);
 	};
 	return (
-		<section className='p-5 '>
-			<div
-				className={`${
-					!show
-						? 'grid grid-cols-4  gap-4 items-center justify-center mb-16'
-						: 'grid grid-cols-3  gap-4  items-center justify-center mb-16'
-				}`}
-			>
+		<section className='p-4 '>
+			<div className=''>
 				{filterCategories.map((category) => {
 					const {
 						img,
 						title,
-						instructor,
+						subtitle,
 						price,
+						avatar,
+						lecture,
+						time,
+						status,
 						rating,
-						levels,
+						language,
 						id,
 					} = category;
 					return (
 						<div
 							key={id}
-							className='w-72 bg-white drop-shadow-md mx-auto border border-gray-200 rounded-lg '
+							className='  rounded-lg grid grid-cols-9  '
 						>
-							<div className='px-4 pt-4 '>
-								{/* ----------------------card image--------------------------- */}
+							{/* ----------------------card image--------------------------- */}
+							<div className=' col-span-2 py-[10px] pl-[10px]'>
 								<img
 									src={img}
 									alt='course'
-									className='rounded-xl object-cover'
+									className='rounded-xl '
 								/>
 							</div>
-							<div className='px-5 py-3'>
-								<h2 className='card-title text-base font-semibold text-dark'>
+							{/* ----------------------card body--------------------------- */}
+							<article className='py-[10px] px-[20px] col-span-4 '>
+								{/* ----------------------card title--------------------------- */}
+								<h2 className='card-title text-base font-semibold text-dark whitespace-nowrap'>
 									{title}
 								</h2>
-								<p className='text-xs text-left capitalize text-font2  py-1  rounded-md'>
-									{instructor} | {levels}
-								</p>
-								{/* ------------------------rating-------------------- */}
-								<span>
-									<Rate
-										tooltips={desc}
-										onChange={setValue}
-										value={value}
-									/>
-									{value ? (
-										<span className='ant-rate-text'>
-											{desc[value - 1]}
+								<h3 className='text-[13px]  capitalize text-font2 whitespace-nowrap'>
+									{subtitle}
+								</h3>
+								{/* ----------------------icons--------------------------- */}
+								<div className='flex space-x-4 items-center'>
+									<p className='flex items-center'>
+										<BsFillPlayCircleFill className='inline-block text-base mr-2 text-font2' />
+										<span className='text-sm'>
+											{lecture}
+											lessons
 										</span>
-									) : (
-										''
-									)}
-								</span>
-								{/* -------------------------$course price---------------------------- */}
-								<div className=''>
-									<p className='font-semibold text-font2'>
-										$ {price}
+									</p>
+									<p className='flex items-center'>
+										<BiTimeFive className='inline-block text-base mr-2 text-font2' />
+										<span className='text-sm'>
+											{time} Hours
+										</span>
+									</p>
+									<p className='flex items-center'>
+										<RiClosedCaptioningFill className='inline-block text-base mr-2 text-font2' />
+										<span className='text-sm'>
+											{language}
+										</span>
 									</p>
 								</div>
-							</div>
+								{/*------------------------- status and view-------------------- */}
+								<div className='flex space-x-6'>
+									<p className='text-[13px]  capitalize bg-primary text-white py-1 px-4 rounded-md'>
+										{status}
+									</p>
+									<p className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'>
+										<TbExternalLink className='text-base mr-2 text-primary' />{' '}
+										view
+									</p>
+								</div>
+								{/*------------------------- avatar-------------------- */}
+								<div className=''>
+									<Avatar.Group>
+										<Avatar src={avatar} />
+										<Avatar
+											style={{ background: 'white' }}
+											src='https://joeschmoe.io/api/v1/random'
+										/>
+									</Avatar.Group>
+								</div>
+							</article>
+							{/*----------------------------card footer---------------------------*/}
+							<article className='col-span-3 pt-[10px] pb-[15px] px-[25px] flex flex-col justify-end items-end'>
+								{/* -------------------------$course price---------------------------- */}
+								<p className='font-semibold  text-lg text-black'>
+									{price}
+								</p>
+								{/* ------------------------rating-------------------- */}
+								<p>
+									<span>
+										<Rate
+											onChange={setValue}
+											value={value}
+										/>
+										{value ? (
+											<span className='ant-rate-text'>
+												{value}
+											</span>
+										) : (
+											''
+										)}
+									</span>
+								</p>
+								<p className='text-[13px]'>{rating} Ratings</p>
+							</article>
 						</div>
 					);
 				})}
 			</div>
 			{/*-------------------------pagination-------------------------*/}
-			<Pagination
-				current={current}
-				onChange={onChange}
-				total={200 / 10}
-			/>
+			<div className='mt-16'>
+				<Pagination
+					current={current}
+					onChange={onChange}
+					total={200 / 10}
+				/>
+			</div>
 		</section>
 	);
 };
