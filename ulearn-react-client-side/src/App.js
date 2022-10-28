@@ -8,6 +8,7 @@ import DevelopmentCourse from './components/Home/BoardSectionOfCourse/Courses/De
 import BusinessCourse from './components/Home/BoardSectionOfCourse/Courses/BusinessCourse/BusinessCourse';
 import SoftwareCourse from './components/Home/BoardSectionOfCourse/Courses/SoftwareCourse/SoftwareCourse';
 import DesignCourse from './components/Home/BoardSectionOfCourse/Courses/DesignCourse/DesignCourse';
+import Report from './dashboards/AdminDashboard/Report/Report';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -27,9 +28,11 @@ function App() {
 				<Route path='course-list' element={<CourseList />} />
 				<Route path='auth/*' element={<Auth />} />
 				<Route
-					path='admin/dashboard'
+					path='admin/dashboard/*'
 					element={<AdminDashboardHome />}
-				/>
+				>
+					<Route path='report/revenue' element={<Report />}></Route>
+				</Route>
 			</Routes>
 		</>
 	);

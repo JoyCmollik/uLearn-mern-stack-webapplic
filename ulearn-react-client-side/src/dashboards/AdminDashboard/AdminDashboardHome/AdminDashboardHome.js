@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import image from '../../../images/dashboard_background.svg';
 import DashboardSidebar from '../../DashboardLayout/DashboardSidebar/DashboardSidebar';
 import { MdOutlineDashboard } from 'react-icons/md';
@@ -30,9 +30,7 @@ const AdminDashboardHome = () => {
 
 				{/* dashboard right panel */}
 				<div className='col-span-10 bg-light'>
-					<Routes>
-						<Route></Route>
-					</Routes>
+					<Outlet />
 				</div>
 			</div>
 		</div>
