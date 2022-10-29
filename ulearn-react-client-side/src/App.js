@@ -2,14 +2,15 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
-import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHome/AdminDashboardHome';
 import Auth from './pages/Auth/Auth';
 import DevelopmentCourse from './components/Home/BoardSectionOfCourse/Courses/DevelopmentCourse/DevelopmentCourse';
 import BusinessCourse from './components/Home/BoardSectionOfCourse/Courses/BusinessCourse/BusinessCourse';
 import SoftwareCourse from './components/Home/BoardSectionOfCourse/Courses/SoftwareCourse/SoftwareCourse';
 import DesignCourse from './components/Home/BoardSectionOfCourse/Courses/DesignCourse/DesignCourse';
-import Report from './dashboards/AdminDashboard/Report/Report';
 import CourseDetail from './pages/CourseDetail/CourseDetail';
+import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardComponent/AdminDashboardComponent';
+import Report from './dashboards/AdminDashboard/Report/Report';
+import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHomePage/AdminDashboardHome/AdminDashboardHome';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -34,9 +35,10 @@ function App() {
 				<Route path='auth/*' element={<Auth />} />
 				<Route
 					path='admin/dashboard/*'
-					element={<AdminDashboardHome />}
+					element={<AdminDashboardComponent />}
 				>
-					<Route path='report/revenue' element={<Report />}></Route>
+					<Route index element={<AdminDashboardHome />} />
+					<Route path='report/revenue' element={<Report />} />
 				</Route>
 			</Routes>
 		</>
