@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './DashboardSidebar.css';
 import SideBarLink from '../SideBarLink/SideBarLink';
 import {
@@ -16,6 +16,7 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { FaUsersCog } from 'react-icons/fa';
 import { Collapse } from 'antd';
 import CollapsedSideLinksContainer from '../CollapsedSideLinksContainer/CollapsedSideLinksContainer';
+import { useLocation } from 'react-router-dom';
 const { Panel } = Collapse;
 
 // local component
@@ -28,12 +29,19 @@ const PanelHeader = ({ icon, title }) => {
 };
 
 const DashboardSidebar = () => {
-	let pathname = window.location.pathname;
+	const location = useLocation();
+	const [pathname, setPathName] = useState(location.pathname);
+
+	useEffect(() => {
+		setPathName(window.location.pathname);
+	}, [location])
+	
+	console.log(pathname);
 
 	return (
 		<div className='space-y-10'>
 			{/*****--------------logo---------------*****/}
-			<div className='logo-container p-2 rounded-lg bg-white text-center'>
+			<div className='logo-container rounded-lg bg-white text-center'>
 				<h2 className='font-semibold text-2xl m-0'>
 					<span className='text-primary font-bold'>u</span>
 					<span className='text-brand font-bold'>L</span>earn
@@ -109,14 +117,14 @@ const DashboardSidebar = () => {
 						key='1'
 						style={{ padding: '0 !important' }}
 						className={`${
-							pathname.includes('revenue') &&
-							'border-l-4 border-primary bg-gradient-to-r from-light to-transparent'
+							pathname.includes('/report') &&
+							'bg-gradient-to-t from-light via-transparent to-transparent'
 						}`}
 					>
-						<SideBarLink to='/admin/revenue'>
+						<SideBarLink to='/admin/dashboard/report/revenue'>
 							<FaUsersCog size={20} /> <span>Admin Revenue</span>
 						</SideBarLink>
-						<SideBarLink to='/admin/purchase-history'>
+						<SideBarLink to='/admin/report/purchase-history'>
 							<MdPersonAddAlt size={20} />{' '}
 							<span>Purchase History</span>
 						</SideBarLink>
