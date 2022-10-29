@@ -5,20 +5,7 @@ import { MdOutlineDashboard } from 'react-icons/md';
 import DashboardSidebar from '../../DashboardLayout/DashboardSidebar/DashboardSidebar';
 import DashboardHeader from '../../DashboardLayout/DashboardHeader/DashboardHeader';
 
-const adminDashboardLinks = [
-	{
-		icon: <MdOutlineDashboard size={20} />,
-		to: '/admin/dashboard',
-		title : 'Dashboard'
-	},
-	{
-		icon: <MdOutlineDashboard size={20} />,
-		to: '/admin/dashboard',
-		title : 'Dashboard'
-	},
-]
-
-const AdminDashboardHome = () => {
+const AdminDashboardComponent = () => {
 	return (
 		<div className='min-h-screen'>
 			<div className='admin-dash-container grid grid-cols-12 gap-8 min-h-screen'>
@@ -37,4 +24,4 @@ const AdminDashboardHome = () => {
 	);
 };
 
-export default AdminDashboardHome;
+export default AdminDashboardComponent;
