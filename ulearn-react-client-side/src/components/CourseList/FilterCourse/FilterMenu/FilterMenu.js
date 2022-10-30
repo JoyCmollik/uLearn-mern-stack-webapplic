@@ -80,7 +80,7 @@ const FilterMenu = () => {
 			defaultActiveKey={['1']}
 			onChange={onChange}
 			expandIcon={({ isActive }) => (
-				<Space className='rounded-full  border border-[#5f5f76] pb-1 px-2'>
+				<Space className='rounded-full  border border-[#5f5f76] pb-1 px-2  '>
 					<UpOutlined
 						style={{
 							fontSize: '8px',
@@ -95,12 +95,12 @@ const FilterMenu = () => {
 			{/*--------------------------categories-------------------------------*/}
 			<Panel
 				header={
-					<Space className='text-[17px]  text-[#040453] font-medium py-1 px-2'>
+					<Space className='text-[17px]  text-[#040453] font-medium py-1 px-2  filterMenu-header-text'>
 						Categories
 					</Space>
 				}
 				key='1'
-				className='collapseHeader'
+				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<Collapse
 					style={{ background: '#EFEFEF' }}
@@ -138,7 +138,7 @@ const FilterMenu = () => {
 									</Space>
 								}
 								key={category.id}
-								className='site-collapse-custom-panel collapseHeader'
+								className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 							>
 								<div className='flex space-y-3 flex-col'>
 									{category.text.map((text, index) => (
@@ -162,7 +162,7 @@ const FilterMenu = () => {
 					</Space>
 				}
 				key='4'
-				className='site-collapse-custom-panel   collapseHeader'
+				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<div className='flex space-y-3 flex-col'>
 					{courseLevels.map((level, index) => (
@@ -180,7 +180,7 @@ const FilterMenu = () => {
 					</Space>
 				}
 				key='5'
-				className='site-collapse-custom-panel   collapseHeader'
+				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<div className='flex space-y-3 flex-col'>
 					{ratings.reverse().map((rating, index) => (
@@ -203,7 +203,7 @@ const FilterMenu = () => {
 					</Space>
 				}
 				key='6'
-				className='site-collapse-custom-panel   collapseHeader'
+				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<div className='flex flex-col space-y-3 items-start'>
 					{priceValues.map((priceValue, index) => {
@@ -243,7 +243,7 @@ const FilterMenu = () => {
 					</Space>
 				}
 				key='7'
-				className='site-collapse-custom-panel   collapseHeader'
+				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<div className='flex space-y-3 flex-col'>
 					{duration.map((time, index) => (

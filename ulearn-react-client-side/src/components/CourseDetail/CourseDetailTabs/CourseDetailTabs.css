@@ -1,0 +1,32 @@
+/* .ant-tabs-card >  .ant-tabs-tab {
+	For tabs border 
+	border-color: 1px solid black;
+} */
+
+/* to change the border bottom of tabs */
+.courseTabStyle .ant-tabs-nav .ant-tabs-nav-wrap {
+	border-bottom: 1px solid #dfdddc;
+
+	border-radius: 5px;
+	color: rgb(82, 82, 108);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.ant-tabs-ink-bar {
+	background: rgb(94, 63, 215);
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+	color: #363636 !important;
+	font-weight: 500;
+}
+.ant-tabs-tab .ant-tabs-tab-btn:hover {
+	color: #363636;
+}
+.ant-tabs-nav-wrap {
+	padding-top: 8px;
+	padding-left: 30px;
+}
+.ant-tabs-tab {
+	padding-bottom: 20px;
+}

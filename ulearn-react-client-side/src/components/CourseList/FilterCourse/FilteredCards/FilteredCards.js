@@ -4,6 +4,7 @@ import { BiTimeFive } from 'react-icons/bi';
 import { BsFillPlayCircleFill } from 'react-icons/bs';
 import { RiClosedCaptioningFill } from 'react-icons/ri';
 import { TbExternalLink } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 const filterCategories = [
 	{
 		id: 73,
@@ -73,6 +74,7 @@ const FilteredCards = () => {
 	const [value, setValue] = useState(5);
 	//pagination
 	const [current, setCurrent] = useState(1);
+	const navigate = useNavigate();
 	const onChange = (page) => {
 		console.log(page);
 		setCurrent(page);
@@ -139,14 +141,21 @@ const FilteredCards = () => {
 									</p>
 								</div>
 								{/*------------------------- status and view-------------------- */}
-								<div className='flex space-x-6'>
-									<p className='text-[13px]  capitalize bg-primary text-white py-1 px-4 rounded-md'>
+								<div className='flex items-center space-x-6'>
+									<p className='text-[13px]  capitalize bg-primary text-white py-1  px-4 rounded-md'>
 										{status}
 									</p>
-									<p className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'>
-										<TbExternalLink className='text-base mr-2 text-primary' />{' '}
-										view
-									</p>
+									<div className='mb-3'>
+										<button
+											onClick={() =>
+												navigate(`/course-list/${id}`)
+											}
+											className='text-[13px] capitalize  bg-blue-100 hover:bg-primary text-primary hover:text-white py-1 px-4  rounded-md  font-medium '
+										>
+											<TbExternalLink className='text-base mr-2  inline-block' />{' '}
+											view
+										</button>
+									</div>
 								</div>
 								{/*------------------------- avatar-------------------- */}
 								<div className=''>
@@ -166,7 +175,7 @@ const FilteredCards = () => {
 									{price}
 								</p>
 								{/* ------------------------rating-------------------- */}
-								<p>
+								<div>
 									<span>
 										<Rate
 											onChange={setValue}
@@ -180,7 +189,7 @@ const FilteredCards = () => {
 											''
 										)}
 									</span>
-								</p>
+								</div>
 								<p className='text-[13px]'>{rating} Ratings</p>
 							</article>
 						</div>

@@ -4,7 +4,7 @@ import CollapseItems from '../CollapseItems/CollapseItems';
 const FrequentlyAskQuestions = () => {
 	return (
 		<section className='container mx-auto min-h-screen'>
-			<div className='grid grid-cols-1 md:grid-cols-2 justify-items-end'>
+			<div className='grid grid-cols-1 md:grid-cols-2 '>
 				<article className=''>
 					{/*----------------------title-------------------------*/}
 					<h2 className='text-[41px] capitalize '>
@@ -19,12 +19,14 @@ const FrequentlyAskQuestions = () => {
 						<CollapseItems />
 					</div>
 				</article>
-				<article className=' '>
+				<article className='flex flex-row-reverse'>
 					{/*----------------------image-------------------------*/}
-					<img
-						src='https://lmszai.zainikthemes.com/uploads_demo/setting/faq-img.jpg'
-						alt='temporaryImage'
-					/>
+					<div>
+						<img
+							src='https://lmszai.zainikthemes.com/uploads_demo/setting/faq-img.jpg'
+							alt='temporaryImage'
+						/>
+					</div>
 				</article>
 			</div>
 		</section>

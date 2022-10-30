@@ -17,9 +17,9 @@
 	margin-right: 3px;
 	color: rgb(255, 192, 20);
 }
-.ant-collapse-content {
+.filterMenu-collapse-content .ant-collapse-content {
 	background: #efefef;
 }
-.collapseHeader .ant-collapse-header-text {
+.filterMenu-header-text .ant-collapse-header-text {
 	background-color: #efefef;
 }

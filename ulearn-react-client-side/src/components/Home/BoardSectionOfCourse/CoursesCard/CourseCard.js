@@ -56,10 +56,9 @@ const CourseCard = (props) => {
 					</Avatar.Group>
 					<button
 						onClick={() => handleDetailPage(id)}
-						className='text-[13px]  capitalize  bg-blue-100 text-primary py-1 px-4 rounded-md flex items-center font-medium'
+						className='text-[13px]  capitalize  bg-blue-100 hover:bg-primary text-primary hover:text-white py-1 px-4 rounded-md flex items-center font-medium '
 					>
-						<TbExternalLink className='text-base mr-2 text-primary' />{' '}
-						view
+						<TbExternalLink className='text-base mr-2 ' /> view
 					</button>
 				</div>
 				<Divider />

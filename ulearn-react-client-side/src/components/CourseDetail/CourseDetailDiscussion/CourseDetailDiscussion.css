@@ -1,0 +1,22 @@
+.courseDetailCommentAuthorName
+	.ant-comment-content
+	.ant-comment-content-author
+	.ant-comment-content-author-name {
+	font-size: 18px;
+	line-height: 19px;
+	font-weight: 600;
+	color: #040453;
+}
+
+.courseDetail-author-time
+	.ant-comment-content
+	.ant-comment-content-author
+	.ant-comment-content-author-time {
+	color: gray;
+	font-size: 12px;
+	font-weight: 500;
+}
+.ant-list-header {
+	color: #222;
+	font-weight: 500;
+}

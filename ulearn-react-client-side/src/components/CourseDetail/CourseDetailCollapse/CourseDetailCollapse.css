@@ -1,0 +1,47 @@
+[data-theme='compact']
+	.site-collapse-custom-collapse
+	.site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+	margin-bottom: 24px;
+	overflow: hidden;
+
+	border: 0px;
+	border-radius: 2px;
+}
+.ant-collapse-content-box {
+	color: #222;
+}
+
+.course-detail-collapse-content .ant-collapse-content {
+	background: white;
+}
+.collapseHeader .ant-collapse-header-text {
+	background-color: white;
+}
+
+/*----------------------------modal---------------------------------------*/
+.course-detail-modal-header .ant-modal-header {
+	background: transparent;
+	border: 0;
+}
+.course-detail-modal-close .ant-modal-close-x {
+	background-color: transparent;
+	color: white;
+	padding-bottom: 40px;
+
+	font-size: 18px;
+}
+.course-detail-modal-content .ant-modal-content {
+	background: transparent;
+	padding: 0;
+	margin: 0;
+}
+.course-detail-modal-footer .ant-modal-footer {
+	display: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+.course-detail-modal-body .ant-modal-body {
+	padding: 0;
+}
