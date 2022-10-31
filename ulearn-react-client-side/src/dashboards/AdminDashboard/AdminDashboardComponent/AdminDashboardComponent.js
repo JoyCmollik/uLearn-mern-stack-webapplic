@@ -15,7 +15,7 @@ const AdminDashboardComponent = () => {
 				</div>
 
 				{/*****--------------dashboard right panel---------------*****/}
-				<div className='col-span-10 bg-light p-5'>
+				<div className='col-span-10 bg-light p-5 space-y-10'>
 					<DashboardHeader />
 					<Outlet />
 				</div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './DashboardSidebar.css';
+// components
+import CollapsedSideLinksContainer from '../CollapsedSideLinksContainer/CollapsedSideLinksContainer';
 import SideBarLink from '../SideBarLink/SideBarLink';
+// icons
 import {
 	MdOutlineDashboard,
 	MdHdrWeak,
@@ -14,9 +17,9 @@ import { BsWindowDock } from 'react-icons/bs';
 import { TbCertificate } from 'react-icons/tb';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { FaUsersCog } from 'react-icons/fa';
-import { Collapse } from 'antd';
-import CollapsedSideLinksContainer from '../CollapsedSideLinksContainer/CollapsedSideLinksContainer';
 import { useLocation } from 'react-router-dom';
+// library components
+import { Collapse } from 'antd';
 const { Panel } = Collapse;
 
 // local component

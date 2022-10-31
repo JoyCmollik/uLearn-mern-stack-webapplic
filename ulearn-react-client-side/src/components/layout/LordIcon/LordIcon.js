@@ -1,14 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-const LordIcon = ({src, size}) => {
-  return (
+const LordIcon = ({ src, size, primary, secondary }) => {
+	return (
 		<lord-icon
 			src={src}
 			trigger='hover'
-			colors='primary:#f79903,secondary:#285af4'
+			colors={`primary:${primary ? primary : '#f79903'},secondary:${
+				secondary ? secondary : '#285af4'
+			}`}
 			style={{ width: `${size}px`, height: `${size}px` }}
 		/>
-  );
-}
+	);
+};
 
 export default LordIcon;
