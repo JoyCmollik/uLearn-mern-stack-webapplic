@@ -1,3 +1,7 @@
 .admin-dashboard-links .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 24px !important;
 }
+
+.admin-dashboard-links .ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+    border-radius: 16px;
+}
