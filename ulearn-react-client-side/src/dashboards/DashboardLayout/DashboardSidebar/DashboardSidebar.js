@@ -42,7 +42,7 @@ const DashboardSidebar = () => {
 	console.log(pathname);
 
 	return (
-		<div className='space-y-10'>
+		<div className='space-y-10 sticky top-10'>
 			{/*****--------------logo---------------*****/}
 			<div className='logo-container rounded-lg bg-white text-center'>
 				<h2 className='font-semibold text-2xl m-0'>
