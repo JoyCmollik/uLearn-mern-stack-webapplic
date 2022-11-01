@@ -11,6 +11,7 @@ import CourseDetail from './pages/CourseDetail/CourseDetail';
 import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardComponent/AdminDashboardComponent';
 import Report from './dashboards/AdminDashboard/Report/Report';
 import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHomePage/AdminDashboardHome/AdminDashboardHome';
+import ManageProfile from './dashboards/DashboardShared/ManageProfile/ManageProfile';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -39,6 +40,7 @@ function App() {
 				>
 					<Route index element={<AdminDashboardHome />} />
 					<Route path='report/revenue' element={<Report />} />
+					<Route path='manage-profile' element={<ManageProfile />} />
 				</Route>
 			</Routes>
 		</>
