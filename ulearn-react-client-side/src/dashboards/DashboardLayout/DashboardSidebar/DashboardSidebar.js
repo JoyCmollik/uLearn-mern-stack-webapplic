@@ -235,7 +235,7 @@ const DashboardSidebar = () => {
 				<SideBarLink to='/admin/settings'>
 					<AiOutlineSetting size={20} /> <span>Settings</span>
 				</SideBarLink>
-				<SideBarLink to='/admin/manage-profile'>
+				<SideBarLink to='/admin/dashboard/manage-profile'>
 					<MdOutlineManageAccounts size={20} />{' '}
 					<span>Manage Profile</span>
 				</SideBarLink>
