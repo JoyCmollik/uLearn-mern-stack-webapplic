@@ -68,18 +68,18 @@ const DashboardSidebar = () => {
 						key='1'
 						style={{ padding: '0 !important' }}
 					>
-						<SideBarLink to='/admin/manage-courses'>
+						<SideBarLink to='/admin/dashboard/manage-courses'>
 							<FaUsersCog size={20} /> <span>Manage Courses</span>
 						</SideBarLink>
-						<SideBarLink to='/admin/add-new-courses'>
+						<SideBarLink to='/admin/dashboard/manage-courses/add'>
 							<MdPersonAddAlt size={20} />{' '}
 							<span>Add New Courses</span>
 						</SideBarLink>
-						<SideBarLink to='/admin/course-category'>
+						<SideBarLink to='/admin/dashboard/manage-courses/categories'>
 							<MdPersonAddAlt size={20} />{' '}
 							<span>Course Category</span>
 						</SideBarLink>
-						<SideBarLink to='/admin/manage-coupons'>
+						<SideBarLink to='/admin/dashboard/manage-courses/coupons'>
 							<MdPersonAddAlt size={20} /> <span>Coupons</span>
 						</SideBarLink>
 					</Panel>

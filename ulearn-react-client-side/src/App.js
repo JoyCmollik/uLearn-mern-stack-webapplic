@@ -12,6 +12,11 @@ import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardC
 import Report from './dashboards/AdminDashboard/Report/Report';
 import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHomePage/AdminDashboardHome/AdminDashboardHome';
 import ManageProfile from './dashboards/DashboardShared/ManageProfile/ManageProfile';
+import ManageCourses from './dashboards/DashboardShared/Courses/ManageCourses/ManageCourses';
+import CoursesComponent from './dashboards/DashboardShared/Courses/CoursesComponent/CoursesComponent';
+import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/AddNewCourses';
+import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
+import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -40,6 +45,12 @@ function App() {
 				>
 					<Route index element={<AdminDashboardHome />} />
 					<Route path='report/revenue' element={<Report />} />
+					<Route path='manage-courses' element={<CoursesComponent />}>
+						<Route index element={<ManageCourses />} />
+						<Route path='add' element={<AddNewCourse />} />
+						<Route path='categories' element={<CoursesCategory />} />
+						<Route path='coupons' element={<Coupons />} />
+					</Route>
 					<Route path='manage-profile' element={<ManageProfile />} />
 				</Route>
 			</Routes>
