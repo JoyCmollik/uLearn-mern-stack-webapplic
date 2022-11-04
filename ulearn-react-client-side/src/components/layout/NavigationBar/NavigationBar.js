@@ -37,19 +37,19 @@ const NavigationBar = () => {
 					zIndex: 2,
 					width: '100%',
 					height: '90px',
-					padding: '5px 0',
+					paddingTop: '6px',
 				}}
 			>
-				<section className='container mx-auto  box-border mt-2  bg-white '>
-					<div className='flex flex-row items-center mx-10 justify-between'>
+				<section className='container mx-auto  box-border  bg-white shadow-sm pt-2'>
+					<div className='flex justify-between md:grid md:grid-cols-12 md:gap-4 items-center'>
 						{/* --------------------- logo and title ------------------------*/}
-						<article className='flex items-center space-x-2  '>
+						<article className='col-span-2 flex items-center space-x-2 '>
 							<div className=''>
 								<img src={logo} alt='' />
 							</div>
 							<h2 className='font-bold text-2xl'>ULearn</h2>
 						</article>
-						<article className=' flex-row items-center hidden md:flex '>
+						<article className='col-span-5 hidden items-center space-x-6 md:flex'>
 							{/*--------------------Course Drop Down Button-------------------------*/}
 
 							<DropDownButton name={'course'} />
@@ -57,56 +57,55 @@ const NavigationBar = () => {
 							{/*--------------------Search Field-------------------------*/}
 							<SearchField />
 						</article>
-						<div className='flex-row space-x-5 hidden md:flex'>
-							{/* -------------- navigation links -------------------------------*/}
-							<article className='flex items-center'>
-								<ul className='flex flex-row items-center space-x-5 mb-[-3px]  capitalize '>
-									<li>
-										{/*--------------------Pages Drop Down Button-------------------------*/}
-										<DropDownButton name={'pages'} />
-									</li>
-									{navigation.map((nav) => (
-										<li key={nav.id}>
-											<Link
-												to={nav.to}
-												className='text-black font-bold text-base'
-												aria-current='page'
-											>
-												{nav.name}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</article>
-							<article className='flex flex-row items-center space-x-4  py-2  '>
-								{/*-----------------notification icon--------------------- */}
 
-								<MdNotificationsNone className='text-3xl ' />
+						{/* -------------- navigation links -------------------------------*/}
 
-								{/*------------------cart---------------------------------*/}
+						<ul className='col-span-3 hidden items-center space-x-4 capitalize justify-end  -mb-2 md:flex'>
+							<li>
+								{/*--------------------Pages Drop Down Button-------------------------*/}
+								<DropDownButton name={'pages'} />
+							</li>
+							{navigation.map((nav) => (
+								<li key={nav.id}>
+									<Link
+										to={nav.to}
+										className='text-black font-bold text-base'
+										aria-current='page'
+									>
+										{nav.name}
+									</Link>
+								</li>
+							))}
+						</ul>
 
-								<FiShoppingBag className='text-2xl' />
+						<article className='col-span-2 items-center space-x-4 justify-end pr-2 hidden md:flex'>
+							{/*-----------------notification icon--------------------- */}
 
-								{/*-------------------avatar------------------------------*/}
+							<MdNotificationsNone className='text-3xl ' />
 
-								<Avatar
-									src='https://joeschmoe.io/api/v1/random'
-									style={{ border: '1px solid black' }}
-								/>
-								{/*--------------------signin btn---------------------------*/}
+							{/*------------------cart---------------------------------*/}
 
-								<Button
-									style={{
-										background: '#F79903',
-										color: 'white',
-										borderRadius: '5px',
-										border: '1px solid #F789903',
-									}}
-								>
-									Sign In
-								</Button>
-							</article>
-						</div>
+							<FiShoppingBag className='text-2xl' />
+
+							{/*-------------------avatar------------------------------*/}
+
+							<Avatar
+								src='https://joeschmoe.io/api/v1/random'
+								style={{ border: '1px solid black' }}
+							/>
+							{/*--------------------signin btn---------------------------*/}
+
+							<Button
+								style={{
+									background: '#F79903',
+									color: 'white',
+									borderRadius: '5px',
+									border: '1px solid #F789903',
+								}}
+							>
+								Sign In
+							</Button>
+						</article>
 
 						{/*----------- sidebar ---------------------*/}
 						<article className='md:hidden'>

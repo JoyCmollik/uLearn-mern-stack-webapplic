@@ -87,7 +87,6 @@ const CourseDetailCollapse = ({ curriculum }) => {
 												preview
 											</button>
 											<Modal
-												title='...'
 												open={isModalOpen}
 												onOk={handleOk}
 												onCancel={handleCancel}
