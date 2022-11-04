@@ -3,7 +3,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 const SearchField = () => {
 	return (
-		<div className='flex items-center bg-white border border-gray-500 rounded-full gap-2 text-base py-2 ml:0 md:ml-8  w-full '>
+		<div className='flex items-center bg-white border border-gray-500 rounded-full gap-2 text-base py-2 ml:0   w-full '>
 			<AiOutlineSearch className='text-xl ml-3 inline-block text-gray-500 ' />
 			<input
 				type='text'
