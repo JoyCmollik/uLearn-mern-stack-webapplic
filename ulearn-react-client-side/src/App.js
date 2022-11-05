@@ -17,6 +17,7 @@ import CoursesComponent from './dashboards/DashboardShared/Courses/CoursesCompon
 import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/AddNewCourses';
 import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
+import CourseContent from './pages/CourseContent/CourseContent';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -32,6 +33,10 @@ function App() {
 					<Route path='software' element={<SoftwareCourse />} />
 					<Route path='design' element={<DesignCourse />} />
 				</Route>
+				<Route
+					path='course-content/:contentId'
+					element={<CourseContent />}
+				/>
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
 				<Route
@@ -48,7 +53,10 @@ function App() {
 					<Route path='manage-courses' element={<CoursesComponent />}>
 						<Route index element={<ManageCourses />} />
 						<Route path='add' element={<AddNewCourse />} />
-						<Route path='categories' element={<CoursesCategory />} />
+						<Route
+							path='categories'
+							element={<CoursesCategory />}
+						/>
 						<Route path='coupons' element={<Coupons />} />
 					</Route>
 					<Route path='manage-profile' element={<ManageProfile />} />
