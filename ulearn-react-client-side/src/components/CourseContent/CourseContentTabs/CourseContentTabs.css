@@ -1,0 +1,29 @@
+.course-content-Tab-style .ant-tabs-nav .ant-tabs-nav-wrap {
+	border-bottom: 1px solid #dfdddc;
+
+	border-radius: 5px;
+	color: rgb(82, 82, 108);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.course-content-tabs-ink-bar .ant-tabs-ink-bar {
+	background: black;
+}
+
+.course-content-active-color
+	.ant-tabs-tab.ant-tabs-tab-active
+	.ant-tabs-tab-btn {
+	color: #222 !important;
+	font-weight: 500;
+}
+.course-content-tabs-btn .ant-tabs-tab .ant-tabs-tab-btn:hover {
+	color: #363636;
+}
+.course-content-tabs-nav-wrap .ant-tabs-nav-wrap {
+	padding-top: 8px;
+	padding-left: 30px;
+}
+.course-content-tabs-tab .ant-tabs-tab {
+	padding-bottom: 10px;
+}

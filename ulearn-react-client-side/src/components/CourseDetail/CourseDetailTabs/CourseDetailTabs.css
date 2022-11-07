@@ -13,20 +13,23 @@
 	font-weight: 500;
 }
 
-.ant-tabs-ink-bar {
+.course-detail-tabs-ink-bar .ant-tabs-ink-bar {
 	background: rgb(94, 63, 215);
 }
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+
+.course-detail-active-color
+	.ant-tabs-tab.ant-tabs-tab-active
+	.ant-tabs-tab-btn {
 	color: #363636 !important;
 	font-weight: 500;
 }
-.ant-tabs-tab .ant-tabs-tab-btn:hover {
+.course-detail-tabs-btn .ant-tabs-tab .ant-tabs-tab-btn:hover {
 	color: #363636;
 }
-.ant-tabs-nav-wrap {
+.course-detail-tabs-nav-wrap .ant-tabs-nav-wrap {
 	padding-top: 8px;
 	padding-left: 30px;
 }
-.ant-tabs-tab {
+.course-detail-tabs-tab .ant-tabs-tab {
 	padding-bottom: 20px;
 }

@@ -203,7 +203,7 @@ const CourseDetailTabs = () => {
 				{/*-----------------------tabs--------------------------*/}
 				<div className='col-span-8 border -mt-8 bg-white rounded'>
 					<Tabs
-						className='courseTabStyle courseDetailTabActiveLink '
+						className='courseTabStyle course-detail-active-color course-detail-tabs-ink-bar course-detail-tabs-btn course-detail-tabs-nav-wrap course-detail-tabs-tab'
 						defaultActiveKey='1'
 						onChange={onChange}
 						items={[
