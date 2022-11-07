@@ -18,6 +18,8 @@ import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/Add
 import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 import CourseContent from './pages/CourseContent/CourseContent';
+import CourseContentDetail from './components/CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
+
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -36,6 +38,10 @@ function App() {
 				<Route
 					path='course-content/:contentId'
 					element={<CourseContent />}
+				/>
+				<Route
+					path='course-content-detail/:contentDetailId'
+					element={<CourseContentDetail />}
 				/>
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />

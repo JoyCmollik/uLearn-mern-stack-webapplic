@@ -71,8 +71,8 @@ const CourseContentTabsCourse = () => {
 	} else {
 		icon = <BsFillCheckCircleFill className='text-2xl ' />;
 	} */
-	const handleDetailPage = () => {
-		navigate('/');
+	const handleDetailPage = (id) => {
+		navigate(`/course-content-detail/${id}`);
 	};
 	return (
 		<section className=' mx-auto pt-6 px-4'>
@@ -97,7 +97,7 @@ const CourseContentTabsCourse = () => {
 						} = content;
 						return (
 							<div
-								onClick={handleDetailPage}
+								onClick={() => handleDetailPage(id)}
 								key={id}
 								className='flex items-center justify-between border-b-2  border-[#dfdddc]  py-4'
 							>
