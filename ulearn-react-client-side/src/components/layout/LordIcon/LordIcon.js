@@ -5,8 +5,8 @@ const LordIcon = ({ src, size, primary, secondary }) => {
 		<lord-icon
 			src={src}
 			trigger='hover'
-			colors={`primary:${primary ? primary : '#f79903'},secondary:${
-				secondary ? secondary : '#285af4'
+			colors={`primary:${primary ? primary : '#1F53F3'},secondary:${
+				secondary ? secondary : '#303345'
 			}`}
 			style={{ width: `${size}px`, height: `${size}px` }}
 		/>

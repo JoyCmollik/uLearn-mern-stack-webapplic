@@ -3,9 +3,8 @@ import { Outlet } from 'react-router-dom';
 
 const CoursesComponent = () => {
 	return (
-		<div>
+		<div className='p-4 bg-white rounded-lg'>
 			<Outlet />
-			loaded
 		</div>
 	);
 };
