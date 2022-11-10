@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import ManageProfile from '../../ManageProfile/ManageProfile';
 import { Steps, Tabs } from 'antd';
 
 const { Step } = Steps;
@@ -49,6 +48,8 @@ const AddNewCourses = () => {
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (currKey) => {
+		console.log(currKey);
+		if(!steps.length) return;
 		// default termination
 		if (
 			steps[currKey].currStatus === 'process' ||
@@ -71,7 +72,7 @@ const AddNewCourses = () => {
 	return (
 		<div className='grid grid-cols-12 gap-8'>
 			<div className='col-span-10'>
-				<Tabs onChange={handleSteps()}>
+				<Tabs onChange={handleSteps}>
 					<Tabs.TabPane tab='Basic' key='1'>
 						Content 1
 					</Tabs.TabPane>

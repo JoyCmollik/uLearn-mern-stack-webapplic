@@ -68,7 +68,7 @@ const DashboardSidebar = () => {
 						key='1'
 						style={{ padding: '0 !important' }}
 					>
-						<SideBarLink to='/admin/dashboard/manage-courses'>
+						<SideBarLink to='/admin/dashboard/manage-courses' end >
 							<FaUsersCog size={20} /> <span>Manage Courses</span>
 						</SideBarLink>
 						<SideBarLink to='/admin/dashboard/manage-courses/add'>
