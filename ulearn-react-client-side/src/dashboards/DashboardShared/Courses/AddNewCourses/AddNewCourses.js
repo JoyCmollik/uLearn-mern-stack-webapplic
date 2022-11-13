@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
+import { HiCog, HiOutlineDocumentDuplicate } from 'react-icons/hi2';
 import { Steps, Tabs, Button, Checkbox, Form, Input } from 'antd';
 import {
 	AddBasic,
@@ -59,7 +59,7 @@ const initialSteps = [
 ];
 
 const AddNewCourses = () => {
-	const [current, setCurrent] = useState(0);
+	const [courseData, setCourseData] = useState({});
 	const [steps, setSteps] = useState([...initialSteps]);
 	const [tabActiveKey, setTabActiveKey] = useState('1');
 
@@ -77,58 +77,78 @@ const AddNewCourses = () => {
 		setSteps(() => newSteps);
 	};
 
-	// functionality -> will change the current tab
+	// functionality -> will change the current tab by click event on the button set explicitly
 	const handleActiveTab = (currKey) => {
+		handleSteps(currKey);
 		setTabActiveKey(() => currKey);
 	};
 
-	console.log(steps);
 	return (
-		<div className='grid grid-cols-12 gap-8 min-h-[80vh]'>
-			<div className=' col-span-9 '>
-				<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
-					<Tabs.TabPane tab='Basic' key='1'>
-						<AddBasic handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Requirements' key='2'>
-						<AddRequirement handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Outcomes' key='3'>
-						<AddOutcomes handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Pricing' key='4'>
-						<AddPricing handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Media' key='5'>
-						<AddMedia handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Seo' key='6'>
-						<AddSeo handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-					<Tabs.TabPane tab='Finish' key='7'>
-						<AddFinishing handleActiveTab={handleActiveTab} />
-					</Tabs.TabPane>
-				</Tabs>
+		<div className='space-y-8'>
+			{/*****--------------Courses Header---------------*****/}
+			<div className='flex justify-between items-center'>
+				{/* header */}
+				<h4 className='text-xl font-medium'>Add Course</h4>
+				{/* add new course */}
+				<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
+					<HiCog size={20} /> <span>My Courses</span>
+				</button>
 			</div>
-			<div className='col-span-3 border-[0.5px] rounded-lg p-4 mt-[62px] '>
-				<Steps size='small' current={current} direction='vertical'>
-					{steps.map(
-						({ title, currStatus, description, icon }, _idx) => (
-							<Step
-								title={title}
-								status={currStatus}
-								// icon={icon}
-								description={
-									Number(tabActiveKey) === _idx + 1 ? (
-										<p className='text-sm text-font2 mt-2'>
-											{description}
-										</p>
-									) : null
-								}
-							/>
-						)
-					)}
-				</Steps>
+			<div className='grid grid-cols-12 gap-8 min-h-[71vh] '>
+				<div className='col-span-3 border-[0.5px] rounded-lg p-4 bg-light shadow-sm text-white '>
+					<Steps size='small' direction='vertical'>
+						{steps.map(
+							(
+								{ title, currStatus, description, icon },
+								_idx
+							) => (
+								<Step
+									title={title}
+									status={currStatus}
+									// icon={icon}
+									description={
+										Number(tabActiveKey) === _idx + 1 ? (
+											<p className='text-sm text-font2 mt-2'>
+												{description}
+											</p>
+										) : null
+									}
+								/>
+							)
+						)}
+					</Steps>
+				</div>
+				<div className=' col-span-9 '>
+						<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
+							<Tabs.TabPane tab='Basic' key='1'>
+								<AddBasic handleActiveTab={handleActiveTab} />
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Requirements' key='2'>
+								<AddRequirement
+									handleActiveTab={handleActiveTab}
+								/>
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Outcomes' key='3'>
+								<AddOutcomes
+									handleActiveTab={handleActiveTab}
+								/>
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Pricing' key='4'>
+								<AddPricing handleActiveTab={handleActiveTab} />
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Media' key='5'>
+								<AddMedia handleActiveTab={handleActiveTab} />
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Seo' key='6'>
+								<AddSeo handleActiveTab={handleActiveTab} />
+							</Tabs.TabPane>
+							<Tabs.TabPane tab='Finish' key='7'>
+								<AddFinishing
+									handleActiveTab={handleActiveTab}
+								/>
+							</Tabs.TabPane>
+						</Tabs>
+				</div>
 			</div>
 		</div>
 	);
