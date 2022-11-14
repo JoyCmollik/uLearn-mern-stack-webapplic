@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import './CourseContentTabs.css';
-import { TbH4 } from 'react-icons/tb';
+
 import CourseContentTabsCourse from '../CourseContentTabsCourse/CourseContentTabsCourse';
 import CourseContentTabsDiscussion from '../CourseContentTabsDiscussion/CourseContentTabsDiscussion';
 const onChange = (key) => {
