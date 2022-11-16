@@ -6,7 +6,6 @@ const AddMedia = ({ handleActiveTab }) => {
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
 			{/* input item */}
-			{/* input item */}
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Course Overview URL</label>
 				<Input size='large' name='title' />
