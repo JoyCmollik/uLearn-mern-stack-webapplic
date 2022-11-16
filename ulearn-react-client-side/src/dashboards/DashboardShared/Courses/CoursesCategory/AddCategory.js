@@ -1,5 +1,5 @@
-import { Button, Input, PageHeader, Upload } from 'antd';
 import React from 'react';
+import { Button, Input, PageHeader, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 import addCategory from '../../../../images/add_category.svg';
 
