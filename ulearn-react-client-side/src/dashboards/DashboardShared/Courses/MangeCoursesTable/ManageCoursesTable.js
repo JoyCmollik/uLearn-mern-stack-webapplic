@@ -92,6 +92,7 @@ const columns = [
 		),
 	},
 ];
+
 const data = [
 	{
 		_id: '1',
