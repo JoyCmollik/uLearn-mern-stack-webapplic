@@ -56,16 +56,22 @@ function App() {
 				>
 					<Route index element={<AdminDashboardHome />} />
 					<Route path='report/revenue' element={<Report />} />
-					<Route path='manage-courses/*' element={<CoursesComponent />}>
+					<Route
+						path='manage-courses/*'
+						element={<CoursesComponent />}
+					>
 						<Route index element={<ManageCourses />} />
 						<Route path='add' element={<AddNewCourse />} />
 						<Route
-							path='categories'
+							path='categories/*'
 							element={<CoursesCategory />}
 						/>
-						<Route path='coupons' element={<Coupons />} />
+						<Route path='coupons/*' element={<Coupons />} />
 					</Route>
-					<Route path='manage-profile' element={<ManageProfile />} />
+					<Route
+						path='manage-profile/*'
+						element={<ManageProfile />}
+					/>
 				</Route>
 			</Routes>
 		</>
