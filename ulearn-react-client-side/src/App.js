@@ -36,7 +36,7 @@ function App() {
 					<Route path='design' element={<DesignCourse />} />
 				</Route>
 				<Route
-					path='course-content/:contentId'
+					path='course-content/:contentId/*'
 					element={<CourseContent />}
 				/>
 				<Route

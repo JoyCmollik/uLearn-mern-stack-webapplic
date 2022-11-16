@@ -81,7 +81,7 @@ const CourseContentDiscussionList = () => {
 					</div>
 					{/*--------------add new topic---------------------*/}
 					<div>
-						<Link to='/courseContent/addTopic'>
+						<Link to='addTopic'>
 							<button className='text-sm font-bold text-white px-6 py-2 bg-zinc-800 rounded-full'>
 								New Topic
 							</button>
