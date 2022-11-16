@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { CgArrowsScrollV, CgSelect } from 'react-icons/cg';
+import React, { useEffect, useState } from 'react';
+import { CgArrowsScrollV, CgNotes, CgSelect } from 'react-icons/cg';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 const operatorTable = [
 	{
@@ -54,6 +55,17 @@ const operatorTable = [
 
 const CourseContentDetailTutorial = () => {
 	const [show, setShow] = useState(false);
+	const [showTableContent, setShowTableContent] = useState(false);
+	const [headings, setHeadings] = useState([]);
+	useEffect(() => {
+		const elements = Array.from(document.getElementsByTagName('h3'))
+			.filter((element) => element.id)
+			.map((element) => ({
+				id: element.id,
+				text: element.textContent ?? '',
+			}));
+		setHeadings(elements);
+	}, []);
 	return (
 		<div className='pt-6'>
 			{/*----------------------title and image-------------------------------*/}
@@ -97,7 +109,9 @@ const CourseContentDetailTutorial = () => {
 							variable assignment, and arithmetic operators.
 						</span>
 						{/*----------------content title-------------------*/}
-						<h3 className='text-2xl pt-8'>Hello, Python!</h3>
+						<h3 id='main-title' className='text-2xl pt-8'>
+							Hello, Python!
+						</h3>
 						<div className='flex flex-col space-y-3 pb-8'>
 							<span className='block text-sm'>
 								Python was named for the British comedy troupe
@@ -778,7 +792,9 @@ const CourseContentDetailTutorial = () => {
 						</div>
 						{/*----------------content2 title-------------------*/}
 						<div className='pl-14 pb-8'>
-							<h3 className='text-2xl pt-8'>Your Turn</h3>
+							<h3 id='secondary-title' className='text-2xl pt-8'>
+								Your Turn
+							</h3>
 
 							<span className='block text-sm'>
 								Now is your chance.{' '}
@@ -795,7 +811,57 @@ const CourseContentDetailTutorial = () => {
 					</div>
 
 					{/*----------------table of contents------------------*/}
-					<div className='col-span-4 '>Table of Contents</div>
+					<div className='col-span-4 flex justify-end '>
+						{
+							<nav className='fixed '>
+								<div
+									onClick={() =>
+										setShowTableContent(!showTableContent)
+									}
+								>
+									<div>
+										{showTableContent ? (
+											<div className='flex items-center space-x-32 pb-4'>
+												<h4 className='text-base font-semibold'>
+													Table of Contents
+												</h4>
+												<div className='pb-2'>
+													<IoIosArrowForward className='text-lg ' />
+												</div>
+											</div>
+										) : (
+											<div className='flex items-center'>
+												<IoIosArrowBack className='text-base font-bold' />
+												<CgNotes className='text-base font-bold' />
+											</div>
+										)}
+									</div>
+								</div>
+								{showTableContent && (
+									<ul className='flex flex-col justify-center space-y-3'>
+										{headings.map((heading) => (
+											<li
+												key={heading.id}
+												className={`${
+													heading.text ===
+													'Hello, Python!'
+														? 'border-l-4 rounded-sm border-black pl-5'
+														: 'border-l-4 border-white pl-5'
+												}`}
+											>
+												<a
+													href={`#${heading.id}`}
+													className='text-black hover:text-primary'
+												>
+													{heading.text}
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
+							</nav>
+						}
+					</div>
 				</div>
 			</div>
 		</div>
