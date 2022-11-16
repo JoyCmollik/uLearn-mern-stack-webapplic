@@ -55,7 +55,7 @@ const operatorTable = [
 
 const CourseContentDetailTutorial = () => {
 	const [show, setShow] = useState(false);
-	const [showTableContent, setShowTableContent] = useState(false);
+	const [showTableContent, setShowTableContent] = useState(true);
 	const [headings, setHeadings] = useState([]);
 	useEffect(() => {
 		const elements = Array.from(document.getElementsByTagName('h3'))
