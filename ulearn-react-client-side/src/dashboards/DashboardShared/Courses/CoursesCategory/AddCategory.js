@@ -1,6 +1,7 @@
 import { Button, Input, PageHeader, Upload } from 'antd';
 import React from 'react';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
+import addCategory from '../../../../images/add-files-animate.svg';
 
 const AddCategory = () => {
 	return (
@@ -41,15 +42,14 @@ const AddCategory = () => {
 									</p>
 								</Upload.Dragger>
 							</div>
-							<Button
-								className='col-span-12 mt-4'
-								type='primary'
-							>
+							<Button className='col-span-12 mt-4' type='primary'>
 								Add Category
 							</Button>
 						</form>
 					</div>
-					<div className='col-span-7'></div>
+					<div className='col-span-7'>
+						<img src="../../../../images/add-files-animate.svg" alt="" />
+					</div>
 				</div>
 			</PageHeader>
 		</div>
