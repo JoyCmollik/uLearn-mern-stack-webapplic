@@ -8,7 +8,7 @@ const AddPricing = ({ handleActiveTab }) => {
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Course Price</label>
 				<InputNumber
-					style={{ width: '100% !important' }}
+					style={{ width: '400px !important' }}
 					size='large'
 					name='title'
 				/>
@@ -17,7 +17,7 @@ const AddPricing = ({ handleActiveTab }) => {
 				<Checkbox>Check if this is a free course.</Checkbox>
 			</div>
 			<Button
-				onClick={() => handleActiveTab('3')}
+				onClick={() => handleActiveTab('5')}
 				className='col-span-2 mt-4'
 				type='primary'
 			>
