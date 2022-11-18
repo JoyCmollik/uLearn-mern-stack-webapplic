@@ -4,8 +4,12 @@ import {
 	SmileOutlined,
 	BellOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Button, Dropdown, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { BsFilter } from 'react-icons/bs';
+import { Tabs } from 'antd';
+import CourseContentTabsDiscussionAll from './CourseContentTabsDiscussionAll';
 
 const menu = (
 	<Menu
@@ -50,10 +54,14 @@ const menu = (
 		]}
 	/>
 );
+
 const CourseContentDiscussionList = () => {
+	const onChange = (key) => {
+		console.log(key);
+	};
 	return (
-		<div>
-			<article className='grid grid-cols-2 justify-between px-5'>
+		<section className='px-5'>
+			<article className='grid grid-cols-2 justify-between pb-8 pt-4'>
 				{/*------------------title--------------------*/}
 				<div>
 					<h2 className='text-2xl'>Discussion</h2>
@@ -90,8 +98,70 @@ const CourseContentDiscussionList = () => {
 				</div>
 			</article>
 
-			{/*search*/}
-		</div>
+			{/*----------------------------------search-----------------------------*/}
+			<div className='flex items-center justify-between space-x-3 bg-white border border-gray-300  rounded-full py-2 px-4 mb-6'>
+				<div>
+					<AiOutlineSearch className='text-xl ml-3 inline-block text-gray-500 ' />
+					<input
+						type='text'
+						placeholder='Search discussions...'
+						className='text-base text-black focus:outline-none m-1 '
+					/>
+				</div>
+				<div className='flex items-center space-x-3'>
+					<BsFilter className='text-xl ml-3 inline-block text-black ' />
+					<button className='font-bold text-base'>Filters</button>
+				</div>
+			</div>
+			{/*----------------------------------Tabs-----------------------------*/}
+			<article className=' '>
+				<div className=' '>
+					<Tabs
+						defaultActiveKey='1'
+						onChange={onChange}
+						tabBarExtraContent={
+							<Dropdown overlay={menu} className=''>
+								<a
+									href='/xyz'
+									onClick={(e) => e.preventDefault()}
+								>
+									<div className='flex  space-x-3 items-center'>
+										<h4 className='text-sm font-bold'>
+											Hotness
+										</h4>
+										<CaretDownOutlined
+											className='pb-1 '
+											style={{ color: 'black' }}
+										/>
+									</div>
+								</a>
+							</Dropdown>
+						}
+						items={[
+							{
+								label: `All`,
+								key: '1',
+								children: (
+									<div>
+										<CourseContentTabsDiscussionAll />
+									</div>
+								),
+							},
+							{
+								label: `Owned`,
+								key: '2',
+								children: `Content of Tab Pane 2`,
+							},
+							{
+								label: `Bookmarks`,
+								key: '3',
+								children: `Content of Tab Pane 3`,
+							},
+						]}
+					/>
+				</div>
+			</article>
+		</section>
 	);
 };
 
