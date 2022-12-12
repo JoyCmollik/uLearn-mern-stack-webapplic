@@ -19,6 +19,7 @@ import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 import CourseContent from './pages/CourseContent/CourseContent';
 import CourseContentDetail from './components/CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
+import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
 
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
@@ -28,6 +29,7 @@ function App() {
 	return (
 		<>
 			<Routes>
+				{/*****--------------Home Routes---------------*****/}
 				<Route path='/*' element={<Home />}>
 					<Route index element={<DevelopmentCourse />} />
 					<Route path='development' element={<DevelopmentCourse />} />
@@ -35,6 +37,7 @@ function App() {
 					<Route path='software' element={<SoftwareCourse />} />
 					<Route path='design' element={<DesignCourse />} />
 				</Route>
+				{/*****--------------Course Content Show Routes---------------*****/}
 				<Route
 					path='course-content/:contentId/*'
 					element={<CourseContent />}
@@ -49,7 +52,9 @@ function App() {
 					path='course-list/:courseId'
 					element={<CourseDetail />}
 				/>
+				{/*****--------------Authentication Routes---------------*****/}
 				<Route path='auth/*' element={<Auth />} />
+				{/*****--------------Admin Dashboard Index Routes---------------*****/}
 				<Route
 					path='admin/dashboard/*'
 					element={<AdminDashboardComponent />}
@@ -67,6 +72,7 @@ function App() {
 							element={<CoursesCategory />}
 						/>
 						<Route path='coupons/*' element={<Coupons />} />
+						<Route path='edit/:id/*' element={<EditCourse />} />
 					</Route>
 					<Route
 						path='manage-profile/*'
