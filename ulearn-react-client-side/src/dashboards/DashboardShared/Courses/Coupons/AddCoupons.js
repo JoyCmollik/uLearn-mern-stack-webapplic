@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, DatePicker, Input, PageHeader, Upload } from 'antd';
-import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
+import { Button, DatePicker, Input, PageHeader } from 'antd';
 import addCategory from '../../../../images/add_category.svg';
 
 const AddCoupons = () => {
