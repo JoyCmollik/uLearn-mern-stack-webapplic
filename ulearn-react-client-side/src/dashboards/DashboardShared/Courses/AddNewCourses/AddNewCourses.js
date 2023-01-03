@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HiCog, HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { Steps, Tabs, Button, Checkbox, Form, Input } from 'antd';
+import { Steps, Tabs } from 'antd';
 import {
 	AddBasic,
 	AddRequirement,
