@@ -1,64 +1,88 @@
-const User = require('../models/User');
+const Review = require('../models/Review');
+const Course = require('../models/Course');
+
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
-const {
-	createTokenUser,
-	attachCookiesToResponse,
-	checkPermissions,
-} = require('../utils');
+const { checkPermissions } = require('../utils');
+const { findOne } = require('../models/Review');
 
-const getAllUser = async (req, res) => {
-	console.log(req.user);
-	const users = await User.find({ role: 'user' }).select('-password');
-	res.status(StatusCodes.OK).json({ users });
-};
-const getSingleUser = async (req, res) => {
-	const user = await User.findOne({ _id: req.params.id }).select('-password');
-	if (!User) {
-		throw new CustomError.NotFoundError(
-			`No user with id : ${req.params.id}`
+const createReview = async (req, res) => {
+	const { course: courseId } = req.body;
+	const isValidCourse = await Course.findOne({ _id: courseId });
+	if (!isValidCourse) {
+		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
+	}
+	const alreadySubmitted = await Review.findOne({
+		course: courseId,
+		user: req.user.userId,
+	});
+	if (alreadySubmitted) {
+		throw new CustomError.BadRequestError(
+			'Already Submitted Review for this course'
 		);
 	}
-	checkPermissions(req.user, user._id);
-	res.status(StatusCodes.OK).json({ user });
+	req.body.user = req.user.userId;
+	const review = await Review.create(req.body);
+	res.status(StatusCodes.CREATED).send({ review });
 };
-const showCurrentUser = async (req, res) => {
-	res.status(StatusCodes.OK).json({ user: req.user });
+const getAllReview = async (req, res) => {
+	const reviews = await Review.find({})
+		.populate({
+			path: 'course',
+			select: 'name company price',
+		})
+		.populate({
+			path: 'user',
+			select: 'name',
+		});
+	res.status(StatusCodes.OK).send({ reviews, count: reviews.length });
 };
-//update user with user.save()
-const UpdateUser = async (req, res) => {
-	const { email, name } = req.body;
-	if (!email || !name) {
-		throw new CustomError.BadRequestError('Please provide all values');
-	}
-	const user = await User.findOne({ _id: req.user.userId });
-	user.email = email;
-	user.name = name;
 
-	await user.save();
-	const tokenUser = createTokenUser(user);
-	attachCookiesToResponse({ res, user: tokenUser });
-	res.status(StatusCodes.OK).json({ user: tokenUser });
+const getSingleReview = async (req, res) => {
+	const { id: reviewId } = req.params;
+	const review = await Review.findOne({ _id: reviewId });
+	if (!review) {
+		throw new CustomError.NotFoundError(`No course with id: ${reviewId}`);
+	}
+	res.status(StatusCodes.OK).send({ review });
 };
-const UpdateUserPassword = async (req, res) => {
-	const { oldPassword, newPassword } = req.body;
-	if (!oldPassword || !newPassword) {
-		throw new CustomError.BadRequestError('Please provide both values');
+const updateReview = async (req, res) => {
+	const { id: reviewId } = req.params;
+	const { rating, title, comment } = req.body;
+
+	const review = await Review.findOne({ _id: reviewId });
+	if (!review) {
+		throw new CustomError.NotFoundError(`No course with id: ${reviewId}`);
 	}
-	const user = await User.findOne({ _id: req.user.userId });
-	const isPasswordCorrect = await user.comparePassword(oldPassword);
-	if (!isPasswordCorrect) {
-		throw new CustomError.UnauthenticatedError('Invalid Credentials');
+	checkPermissions(req.user, review.user);
+	review.rating = rating;
+	review.title = title;
+	review.comment = comment;
+	await review.save();
+	res.status(StatusCodes.OK).send({ review });
+};
+const deleteReview = async (req, res) => {
+	const { id: reviewId } = req.params;
+	const review = await Review.findOne({ _id: reviewId });
+	if (!review) {
+		throw new CustomError.NotFoundError(`No course with id: ${reviewId}`);
 	}
-	user.password = newPassword;
-	await user.save();
-	res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
+	checkPermissions(req.user, review.user);
+	await review.remove();
+	res.status(StatusCodes.OK).send({ msg: 'Success! review removed' });
+};
+
+const getSingleCourseReviews = async (req, res) => {
+	const { id: courseId } = req.params;
+	const reviews = await Review.find({ course: courseId });
+	res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 
 module.exports = {
-	getAllUser,
-	getSingleUser,
-	showCurrentUser,
-	UpdateUser,
-	UpdateUserPassword,
+	createReview,
+	getAllReview,
+	getSingleReview,
+	updateReview,
+	deleteReview,
+	getSingleCourseReviews,
 };

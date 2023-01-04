@@ -1,10 +1,36 @@
 const express = require('express');
+
 const router = express.Router();
+const {
+	authenticateUser,
+	authorizePermission,
+} = require('../middleware/authentication');
+const {
+	createSection,
+	getAllCourseSection,
+	getSingleSection,
+	updateSection,
+	deleteSection,
+} = require('../controllers/sectionController');
 
-const { register, login, logout } = require('../controllers/authController');
+router
+	.route('/')
+	.post(
+		[authenticateUser, authorizePermission('admin', 'instructior')],
+		createSection
+	)
+	.get(getAllCourseSection);
 
-router.post('/register', register);
-router.post('/login', login);
-router.get('/logout', logout);
+router
+	.route('/:id')
+	.get(getSingleSection)
+	.patch(
+		[authenticateUser, authorizePermission('admin', 'instructor')],
+		updateSection
+	)
+	.delete(
+		[authenticateUser, authorizePermission('admin', 'instructor')],
+		deleteSection
+	);
 
 module.exports = router;
