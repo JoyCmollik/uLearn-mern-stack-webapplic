@@ -1,64 +1,100 @@
-const User = require('../models/User');
+const Course = require('../models/Course');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
-const {
-	createTokenUser,
-	attachCookiesToResponse,
-	checkPermissions,
-} = require('../utils');
+const path = require('path');
 
-const getAllUser = async (req, res) => {
-	console.log(req.user);
-	const users = await User.find({ role: 'user' }).select('-password');
-	res.status(StatusCodes.OK).json({ users });
+const createCourse = async (req, res) => {
+	req.body.user = req.user.userId;
+
+	const course = await Course.create(req.body);
+	res.status(StatusCodes.CREATED).json({ course });
 };
-const getSingleUser = async (req, res) => {
-	const user = await User.findOne({ _id: req.params.id }).select('-password');
-	if (!User) {
-		throw new CustomError.NotFoundError(
-			`No user with id : ${req.params.id}`
+
+const getAllCourses = async (req, res) => {
+	const courses = await Course.find({});
+
+	res.status(StatusCodes.OK).json({ courses, count: courses.length });
+};
+
+const getSingleCourse = async (req, res) => {
+	const { id: courseId } = req.params;
+
+	const course = await Course.findOne({ _id: courseId }).populate(
+		'reviews'
+	);
+
+	if (!course) {
+		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
+	}
+	res.status(StatusCodes.OK).json({ course });
+};
+
+const updateCourse = async (req, res) => {
+	const { id: courseId } = req.params;
+
+	const course = await Course.findOneAndUpdate(
+		{ _id: courseId },
+		req.body,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+
+	if (!course) {
+		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
+	}
+
+	res.status(StatusCodes.OK).json({ course });
+};
+
+const deleteCourse = async (req, res) => {
+	const { id: courseId } = req.params;
+
+	const course = await Course.findOne({ _id: courseId });
+
+	if (!course) {
+		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
+	}
+
+	await course.remove();
+	res.status(StatusCodes.OK).json({ msg: 'Successfully removed an item.' });
+};
+
+const uploadImage = async (req, res) => {
+	if (!req.files) {
+		throw new CustomError.BadRequestError('No file was received');
+	}
+
+	const courseImage = req.files.image;
+
+	if (!courseImage.mimetype.startsWith('image')) {
+		throw new CustomError.BadRequestError('No file was received');
+	}
+
+	const maxSize = 1024 * 1024;
+
+	if (courseImage.size > maxSize) {
+		throw new CustomError.BadRequestError(
+			'Please upload image smaller than 1MB or less. '
 		);
 	}
-	checkPermissions(req.user, user._id);
-	res.status(StatusCodes.OK).json({ user });
-};
-const showCurrentUser = async (req, res) => {
-	res.status(StatusCodes.OK).json({ user: req.user });
-};
-//update user with user.save()
-const UpdateUser = async (req, res) => {
-	const { email, name } = req.body;
-	if (!email || !name) {
-		throw new CustomError.BadRequestError('Please provide all values');
-	}
-	const user = await User.findOne({ _id: req.user.userId });
-	user.email = email;
-	user.name = name;
 
-	await user.save();
-	const tokenUser = createTokenUser(user);
-	attachCookiesToResponse({ res, user: tokenUser });
-	res.status(StatusCodes.OK).json({ user: tokenUser });
-};
-const UpdateUserPassword = async (req, res) => {
-	const { oldPassword, newPassword } = req.body;
-	if (!oldPassword || !newPassword) {
-		throw new CustomError.BadRequestError('Please provide both values');
-	}
-	const user = await User.findOne({ _id: req.user.userId });
-	const isPasswordCorrect = await user.comparePassword(oldPassword);
-	if (!isPasswordCorrect) {
-		throw new CustomError.UnauthenticatedError('Invalid Credentials');
-	}
-	user.password = newPassword;
-	await user.save();
-	res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
+	const imagePath = path.join(
+		__dirname,
+		'../public/uploads/' + `${courseImage.name}`
+	);
+
+	await courseImage.mv(imagePath);
+
+	res.status(StatusCodes.OK).json({ image: `/uploads/${courseImage.name}` });
 };
 
 module.exports = {
-	getAllUser,
-	getSingleUser,
-	showCurrentUser,
-	UpdateUser,
-	UpdateUserPassword,
+	createCourse,
+	getAllCourses,
+	getSingleCourse,
+	updateCourse,
+	deleteCourse,
+	uploadImage,
 };
