@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Alert, Button, Input, Modal } from 'antd';
+import { Alert, Input, Modal } from 'antd';
 import { HiPlus } from 'react-icons/hi2';
-import { MdDashboard, MdDelete, MdEdit } from 'react-icons/md';
-import { BsArrowsMove } from 'react-icons/bs';
-import { Reorder, useDragControls, motion } from 'framer-motion';
+import { MdEdit } from 'react-icons/md';
+import { Reorder, motion } from 'framer-motion';
 import Lesson from './Lesson';
 
 const initialSectionList = [
@@ -38,7 +37,7 @@ const initialSectionList = [
 const AddCurriculumComponent = ({ handleActiveTab }) => {
 	const [sectionList, setSectionList] = useState([...initialSectionList]);
 	const [currSection, setCurrSection] = useState(sectionList[0]);
-	const [currLessons, setCurrLessons] = useState(sectionList[0].lessons);
+	const [lessonList, setLessonList] = useState([...sectionList[0].lessons]);
 	const [sectionModalOpen, setSectionModalOpen] = useState(false);
 	const [lessonModalOpen, setLessonModalOpen] = useState(false);
 	const [lessonTitle, setLessonTitle] = useState('');
@@ -47,7 +46,7 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 	// functionality - will show the current section
 	const handleCurrSection = (section) => {
 		setCurrSection(() => section);
-		setCurrLessons(() => section.lessons);
+		setLessonList(() => section.lessons);
 	};
 
 	// functionality - will add an empty section to the list
@@ -84,7 +83,7 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 						{ _id: section.lessons.length + 1, title },
 					];
 					setCurrSection(() => newSection);
-					setCurrLessons(() => newSection.lessons);
+					setLessonList(() => newSection.lessons);
 					return newSection;
 				}
 				return section;
@@ -131,28 +130,42 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 					</Modal>
 				</div>
 				{/*****--------------Section list---------------*****/}
-				<div className='space-y-0.5'>
-					{sectionList.map((sectionItem) => (
-						<>
-							{/*****--------------Section Item---------------*****/}
-							<article
-								key={sectionItem.section}
-								onClick={() => handleCurrSection(sectionItem)}
-								className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
-									currSection.section === sectionItem.section
-										? 'border-l-primary'
-										: 'border-l-transparent'
-								}`}
+				<div>
+					<Reorder.Group
+						axis='y'
+						values={sectionList}
+						onReorder={setSectionList}
+						className='space-y-0.5'
+					>
+						{sectionList.map((sectionItem) => (
+							<Reorder.Item
+								key={sectionItem._id}
+								value={sectionItem}
 							>
-								<h5 className='text-lg font-light m-0'>
-									Section {sectionItem.section}
-								</h5>
-								<p className='m-0 text-xs font-light text-font2'>
-									Lessons: {sectionItem?.lessons?.length || 0}
-								</p>
-							</article>
-						</>
-					))}
+								{/*****--------------Section Item---------------*****/}
+								<article
+									key={sectionItem.section}
+									onClick={() =>
+										handleCurrSection(sectionItem)
+									}
+									className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
+										currSection.section ===
+										sectionItem.section
+											? 'border-l-primary'
+											: 'border-l-transparent'
+									}`}
+								>
+									<h5 className='text-lg font-light m-0'>
+										Section {sectionItem.section}
+									</h5>
+									<p className='m-0 text-xs font-light text-font2'>
+										Lessons:{' '}
+										{sectionItem?.lessons?.length || 0}
+									</p>
+								</article>
+							</Reorder.Item>
+						))}
+					</Reorder.Group>
 				</div>
 			</div>
 			{/*****--------------Lesson container---------------*****/}
@@ -203,18 +216,16 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 							showIcon
 						/>
 					) : (
-						<div>
-							<Reorder.Group
-								axis='y'
-								values={currSection.lessons}
-								onReorder={setCurrLessons}
-								className='space-y-2'
-							>
-								{currLessons.map((lesson, index) => (
-									<Lesson key={index} lesson={lesson} />
-								))}
-							</Reorder.Group>
-						</div>
+						<Reorder.Group
+							axis='y'
+							values={lessonList}
+							onReorder={setLessonList}
+							className='space-y-2'
+						>
+							{lessonList.map((lesson) => (
+								<Lesson key={lesson._id} lesson={lesson} />
+							))}
+						</Reorder.Group>
 					)}
 				</div>
 			</div>

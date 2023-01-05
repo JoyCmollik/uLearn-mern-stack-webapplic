@@ -9,11 +9,12 @@ const Lesson = ({lesson}) => {
 
   return (
 		<Reorder.Item
+            key={lesson._id}
 			value={lesson}
 			dragListener={false}
 			dragControls={controls}
 		>
-			<article className='p-4 drop-shadow-lg rounded-lg border'>
+			<article key={lesson._id} className='p-4 drop-shadow-lg rounded-lg border'>
 				{/*****--------------lesson settings---------------*****/}
 				<div className='flex justify-between items-center'>
 					{/*****--------------lesson settings - title desc---------------*****/}
