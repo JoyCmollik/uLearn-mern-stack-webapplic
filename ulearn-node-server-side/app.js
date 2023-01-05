@@ -23,7 +23,9 @@ const userRouter = require('./routes/userRoutes');
 const lessonRouter = require('./routes/lessonRoutes');
 const sectionRouter = require('./routes/sectionRoutes');
 const courseRouter = require('./routes/courseRoutes');
-
+// this is a list of routers
+// testing
+// another 
 // middleware
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
