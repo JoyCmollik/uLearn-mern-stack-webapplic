@@ -34,6 +34,7 @@ const CourseSchema = new mongoose.Schema({
 	reviews: {
 		type: [mongoose.Schema.ObjectId],
 		ref: 'Review',
+		default: []
 	},
 	averageRating: {
 		type: Number,
@@ -72,6 +73,7 @@ const CourseSchema = new mongoose.Schema({
 	sections: {
 		type: [mongoose.Schema.ObjectId],
 		ref: 'Section',
+		default: []
 	},
 });
 
