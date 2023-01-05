@@ -17,11 +17,6 @@ const userRoles = [
 		img: role_creator,
 		role: 'content-creator',
 	},
-	{
-		title: 'Client',
-		img: role_client,
-		role: 'client',
-	},
 ];
 
 const Register = () => {
@@ -33,17 +28,38 @@ const Register = () => {
 	const handleUserRole = (role) => {
 		setUserRole((prevRole) => role);
 	};
+	const [person, setPerson] = useState({
+		email: '',
+		firstName: '',
+		lastName: '',
+		password: '',
+	});
 
-	useEffect(() => {
-		client
-			.post('/auth/login', {
-				email: 'instructor@gmail.com',
-				password: '123456',
-			})
-			.then((response) => {
-				console.log(response);
+	const handleChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		setPerson({ ...person, [name]: value });
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const { email, firstName, lastName, password } = person;
+
+		if (email && firstName && lastName && password && userRole) {
+			const data = {
+				name: `${firstName} ${lastName}`,
+				email,
+				password,
+				role: userRole === 'learner' ? 'user' : 'instructor',
+			};
+
+			client.post('/auth/register', data).then((response) => {
+				if (response.data) {
+					console.log(response.data);
+				}
 			});
-	}, []);
+			setPerson({ email: '', firstName: '', lastName: '', password: '' });
+		}
+	};
 
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
@@ -82,8 +98,11 @@ const Register = () => {
 							</Link>
 						</p>
 					</div>
-					{/* forms */}
-					<form className='grid grid-cols-12 gap-8'>
+					{/*-----------------------------forms------------------------------------ */}
+					<form
+						className='grid grid-cols-12 gap-8'
+						onSubmit={handleSubmit}
+					>
 						{/* form input */}
 						<div className='col-span-12 form-control w-full'>
 							<label className='label font-medium'>Email</label>
@@ -92,6 +111,8 @@ const Register = () => {
 								placeholder='Type your email'
 								name='email'
 								className='input input-bordered w-full'
+								value={person.email}
+								onChange={handleChange}
 							/>
 						</div>
 						{/* form input */}
@@ -102,8 +123,10 @@ const Register = () => {
 							<input
 								type='text'
 								placeholder='First Name'
-								name='first_name'
+								name='firstName'
 								className='input input-bordered w-full'
+								value={person.firstName}
+								onChange={handleChange}
 							/>
 						</div>
 						{/* form input */}
@@ -114,8 +137,10 @@ const Register = () => {
 							<input
 								type='text'
 								placeholder='Last Name'
-								name='last_name'
+								name='lastName'
 								className='input input-bordered w-full'
+								value={person.lastName}
+								onChange={handleChange}
 							/>
 						</div>
 						{/* form input */}
@@ -128,6 +153,8 @@ const Register = () => {
 								placeholder='********'
 								name='password'
 								className='input input-bordered w-full'
+								value={person.password}
+								onChange={handleChange}
 							/>
 						</div>
 						{/* roles */}
