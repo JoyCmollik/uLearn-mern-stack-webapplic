@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
-	authorizePermissions,
+	authorizePermission,
 	authenticateUser,
 } = require('../middleware/authentication');
 
@@ -19,17 +19,17 @@ const { getSingleCourseReviews } = require('../controllers/reviewController');
 router
 	.route('/')
 	.get(getAllCourses)
-	.post(authenticateUser, authorizePermissions('admin', 'instructor'), createCourse);
+	.post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
 
 router
 	.route('/uploadImage')
-	.post(authenticateUser, authorizePermissions('admin', 'instructor'), uploadImage);
+	.post(authenticateUser, authorizePermission('admin', 'instructor'), uploadImage);
 
 router
 	.route('/:id')
 	.get(getSingleCourse)
-	.patch(authenticateUser, authorizePermissions('admin'), updateCourse)
-	.delete(authenticateUser, authorizePermissions('admin'), deleteCourse);
+	.patch(authenticateUser, authorizePermission('admin'), updateCourse)
+	.delete(authenticateUser, authorizePermission('admin'), deleteCourse);
 
 router.route('/:id/reviews').get(getSingleCourseReviews);
 

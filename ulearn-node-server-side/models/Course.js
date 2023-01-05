@@ -20,12 +20,11 @@ const CourseSchema = new mongoose.Schema({
 		maxlength: 100,
 	},
 	instructor: {
-		type: mongoose.Types.ObjectId(),
-		ref: User,
-		required: true,
+		type: mongoose.Schema.ObjectId,
+		ref: 'User',
 	},
 	enrolledStudents: {
-		type: [mongoose.Types.ObjectId],
+		type: [mongoose.Schema.ObjectId],
 		ref: 'User',
 	},
 	courseOutcomes: {
@@ -33,14 +32,14 @@ const CourseSchema = new mongoose.Schema({
 		required: [true, 'please provide course outcomes'],
 	},
 	reviews: {
-		type: [mongoose.Types.ObjectId],
+		type: [mongoose.Schema.ObjectId],
 		ref: 'Review',
 	},
 	averageRating: {
 		type: Number,
-		default: 0, 
+		default: 0,
 		min: 0,
-		max: 5
+		max: 5,
 	},
 	numberOfReviews: {
 		type: {
@@ -68,12 +67,12 @@ const CourseSchema = new mongoose.Schema({
 	},
 	requirements: {
 		type: [String],
-		required: [true, 'please provide course requirements']
+		required: [true, 'please provide course requirements'],
 	},
 	sections: {
-		type: [mongoose.Types.ObjectId],
-		ref: 'Section'
-	}
+		type: [mongoose.Schema.ObjectId],
+		ref: 'Section',
+	},
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

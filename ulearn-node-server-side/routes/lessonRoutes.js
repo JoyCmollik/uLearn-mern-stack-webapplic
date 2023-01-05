@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
-	authorizePermissions,
+	authorizePermission,
 	authenticateUser,
 } = require('../middleware/authentication');
 
@@ -18,14 +18,14 @@ router
 	.get(getAllLessons)
 	.post(
 		authenticateUser,
-		authorizePermissions('admin', 'instructor'),
+		authorizePermission('admin', 'instructor'),
 		createLesson
 	);
 
 router
 	.route('/:id')
 	.get(getSingleLesson)
-	.patch(authenticateUser, authorizePermissions('admin', 'instructor'), updateLesson)
-	.delete(authenticateUser, authorizePermissions('admin', 'instructor'), deleteLesson);
+	.patch(authenticateUser, authorizePermission('admin', 'instructor'), updateLesson)
+	.delete(authenticateUser, authorizePermission('admin', 'instructor'), deleteLesson);
 
 module.exports = router;
