@@ -24,31 +24,32 @@ const initialSteps = [
 		title: 'Requirements',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'list out pre-requisites for the course',
 	},
 	{
 		title: 'Outcomes',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'what things are going to be achieved upon completion?',
 	},
 	{
 		title: 'Pricing',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description:
+			'putting a good price increases chances of better performance',
 	},
 	{
 		title: 'Media',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'some effective pictures that explain your course',
 	},
 	{
 		title: 'Seo',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'make a list of strong keywords',
 	},
 	{
 		title: 'Finish',
@@ -108,7 +109,7 @@ const AddNewCourses = () => {
 									// icon={icon}
 									description={
 										Number(tabActiveKey) === _idx + 1 ? (
-											<p className='text-sm text-font2 mt-2'>
+											<p className='text-sm text-font2 mt-2 capitalize'>
 												{description}
 											</p>
 										) : null
@@ -119,35 +120,29 @@ const AddNewCourses = () => {
 					</Steps>
 				</div>
 				<div className=' col-span-9 '>
-						<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
-							<Tabs.TabPane tab='Basic' key='1'>
-								<AddBasic handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Requirements' key='2'>
-								<AddRequirement
-									handleActiveTab={handleActiveTab}
-								/>
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Outcomes' key='3'>
-								<AddOutcomes
-									handleActiveTab={handleActiveTab}
-								/>
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Pricing' key='4'>
-								<AddPricing handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Media' key='5'>
-								<AddMedia handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Seo' key='6'>
-								<AddSeo handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane tab='Finish' key='7'>
-								<AddFinishing
-									handleActiveTab={handleActiveTab}
-								/>
-							</Tabs.TabPane>
-						</Tabs>
+					<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
+						<Tabs.TabPane tab='Basic' key='1'>
+							<AddBasic handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Requirements' key='2'>
+							<AddRequirement handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Outcomes' key='3'>
+							<AddOutcomes handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Pricing' key='4'>
+							<AddPricing handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Media' key='5'>
+							<AddMedia handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Seo' key='6'>
+							<AddSeo handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+						<Tabs.TabPane tab='Finish' key='7'>
+							<AddFinishing handleActiveTab={handleActiveTab} />
+						</Tabs.TabPane>
+					</Tabs>
 				</div>
 			</div>
 		</div>

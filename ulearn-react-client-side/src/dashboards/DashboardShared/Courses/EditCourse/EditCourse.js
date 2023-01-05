@@ -3,7 +3,6 @@ import {
 	HiAcademicCap,
 	HiCheck,
 	HiCog,
-	HiOutlineDocumentDuplicate,
     HiOutlineInformationCircle,
 } from 'react-icons/hi2';
 import { Steps, Tabs } from 'antd';
