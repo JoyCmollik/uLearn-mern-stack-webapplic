@@ -20,10 +20,14 @@ const connectDB = require('./db/connect');
 //  routers
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
-//const productRouter = require('./routes/productRoutes');
-//const reviewRouter = require('./routes/reviewRoutes');
-//const orderRouter = require('./routes/orderRoutes');
+const lessonRouter = require('./routes/lessonRoutes');
+const sectionRouter = require('./routes/sectionRoutes');
+const courseRouter = require('./routes/courseRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
+// this is a list of routers
+// testing
+// another
 // middleware
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
@@ -58,9 +62,10 @@ app.get('/api/v1', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
-//app.use('/api/v1/products', productRouter);
-//app.use('/api/v1/reviews', reviewRouter);
-//app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/lessons', lessonRouter);
+app.use('/api/v1/sections', sectionRouter);
+app.use('/api/v1/courses', courseRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

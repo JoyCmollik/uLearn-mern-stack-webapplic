@@ -1,10 +1,36 @@
 const express = require('express');
 const router = express.Router();
+const {
+	authorizePermission,
+	authenticateUser,
+} = require('../middleware/authentication');
 
-const { register, login, logout } = require('../controllers/authController');
+const {
+	createCourse,
+	getAllCourses,
+	getSingleCourse,
+	updateCourse,
+	deleteCourse,
+	uploadImage,
+} = require('../controllers/courseController');
 
-router.post('/register', register);
-router.post('/login', login);
-router.get('/logout', logout);
+const { getSingleCourseReviews } = require('../controllers/reviewController');
+
+router
+	.route('/')
+	.get(getAllCourses)
+	.post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
+
+router
+	.route('/uploadImage')
+	.post(authenticateUser, authorizePermission('admin', 'instructor'), uploadImage);
+
+router
+	.route('/:id')
+	.get(getSingleCourse)
+	.patch(authenticateUser, authorizePermission('admin'), updateCourse)
+	.delete(authenticateUser, authorizePermission('admin'), deleteCourse);
+
+router.route('/:id/reviews').get(getSingleCourseReviews);
 
 module.exports = router;
