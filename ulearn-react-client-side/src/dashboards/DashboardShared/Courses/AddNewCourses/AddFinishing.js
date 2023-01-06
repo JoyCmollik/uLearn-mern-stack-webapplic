@@ -1,8 +1,8 @@
-import { Button, Result } from 'antd';
+import { Button, Result, Spin } from 'antd';
 import React from 'react'
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 
-const AddFinishing = () => {
+const AddFinishing = ({isUploading}) => {
   return (
 		<div className=''>
 			<Result
@@ -14,7 +14,12 @@ const AddFinishing = () => {
 				}
 				title='Great, we have done all the operations!'
 				extra={
-					<button type="submit">Submit</button>
+					<button
+						className='block w-full px-4 py-2 border rounded-lg bg-primary text-white font-bold'
+						type='submit'
+					>
+						{isUploading ? <Spin size='small' /> : 'Submit'}
+					</button>
 				}
 			/>
 		</div>

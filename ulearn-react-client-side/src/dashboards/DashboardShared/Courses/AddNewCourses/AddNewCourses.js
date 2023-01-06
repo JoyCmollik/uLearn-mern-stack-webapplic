@@ -11,6 +11,9 @@ import {
 	AddFinishing,
 } from './';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const { Step } = Steps;
 
@@ -67,17 +70,40 @@ const AddNewCourses = () => {
 	const [outcome, setOutcome] = useState([]);
 	const [courseThumb, setCourseThumb] = useState([]);
 	const [tags, setTags] = useState(['course', 'add more']);
+	const [editorContent, setEditorContent] = useState();
+	const [isUploading, setIsUploading] = useState(false);
 
-	const { control, handleSubmit } = useForm({});
+	// third party library states
+	const { control, handleSubmit, reset } = useForm({});
+	const navigate = useNavigate();
+
+	// functions
 	const onSubmit = (data) => {
-		data.requirements = requirement;
+		setIsUploading(true);
+		data.courseRequirements = requirement;
 		data.courseOutcomes = outcome;
-		data.courseThumb= courseThumb;
-		data.tags = tags;
+		data.courseThumb = courseThumb;
+		data.seoTags = tags;
+		data.courseDesc = editorContent;
 
 		console.log(data);
-
-			};
+		// POST - request to save course
+		axios
+			.post('/courses', data)
+			.then((response) => {
+				console.log(response.data);
+				reset();
+				message.success('Your course has been uploaded successfully');
+				navigate('/admin/dashboard/manage-courses');
+			})
+			.catch((error) => {
+				console.log(error);
+				message.error(error?.response?.data?.msg || error.response.message || error.message);
+			})
+			.finally(() => {
+				setIsUploading(false);
+			})
+	};
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (receivedKey) => {
@@ -139,11 +165,17 @@ const AddNewCourses = () => {
 					onSubmit={handleSubmit(onSubmit)}
 					className=' col-span-9 '
 				>
-					<Tabs className='h-full' onChange={handleSteps} activeKey={tabActiveKey}>
+					<Tabs
+						className='h-full'
+						onChange={handleSteps}
+						activeKey={tabActiveKey}
+					>
 						<Tabs.TabPane tab='Basic' key='1'>
 							<AddBasic
 								handleActiveTab={handleActiveTab}
 								control={control}
+								editorContent={editorContent}
+								setEditorContent={setEditorContent}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Requirements' key='2'>
@@ -183,7 +215,7 @@ const AddNewCourses = () => {
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Finish' key='7'>
-							<AddFinishing handleActiveTab={handleActiveTab} />
+							<AddFinishing handleActiveTab={handleActiveTab} isUploading={isUploading} setIsUploading={setIsUploading} />
 						</Tabs.TabPane>
 					</Tabs>
 				</form>

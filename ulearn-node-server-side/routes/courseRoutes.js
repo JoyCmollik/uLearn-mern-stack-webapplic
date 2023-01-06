@@ -19,7 +19,8 @@ const { getSingleCourseReviews } = require('../controllers/reviewController');
 router
 	.route('/')
 	.get(getAllCourses)
-	.post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
+	// .post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
+	.post(createCourse);
 
 router
 	.route('/uploadImage')
