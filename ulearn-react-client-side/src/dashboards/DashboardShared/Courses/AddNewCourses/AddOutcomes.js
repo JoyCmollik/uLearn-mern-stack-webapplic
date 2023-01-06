@@ -5,7 +5,6 @@ import { HiMinus, HiPlus } from 'react-icons/hi';
 
 // local component
 const OutcomeInput = ({ handleOutcomeInputs, id, handleOutcomeValues }) => {
-	console.log(id, 'from component');
 	return (
 		<div className='col-span-12 flex flex-col'>
 			<div className='flex justify-between items-center space-x-4'>

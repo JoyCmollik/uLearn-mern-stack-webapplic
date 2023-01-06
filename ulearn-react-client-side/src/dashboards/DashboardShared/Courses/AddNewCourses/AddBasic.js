@@ -4,9 +4,8 @@ import { Button, Checkbox, Form, Input, Select } from 'antd';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
 import { Controller } from 'react-hook-form';
 
-const AddBasic = ({ handleActiveTab, control }) => {
+const AddBasic = ({ handleActiveTab, control, editorContent, setEditorContent }) => {
 	const editor = useRef('');
-	const [editorContent, setEditorContent] = useState();
 
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>

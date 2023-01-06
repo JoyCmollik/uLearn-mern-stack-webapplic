@@ -51,7 +51,6 @@ const AddSeo = ({ handleActiveTab, control, tags, setTags }) => {
 		setInputValue('');
 	};
 
-	console.log(tags);
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
 			{/* input item */}
