@@ -77,8 +77,7 @@ const AddNewCourses = () => {
 
 		console.log(data);
 
-		
-	};
+			};
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (receivedKey) => {
