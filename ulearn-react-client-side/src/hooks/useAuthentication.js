@@ -4,6 +4,7 @@ import useAxios from './useAxios';
 
 const useAuthentication = () => {
 	const [user, setUser] = useState({});
+	const [message, setMessage] = useState(false);
 
 	const [isAdmin, setIsAdmin] = useState(false);
 	const { client } = useAxios();
@@ -13,8 +14,9 @@ const useAuthentication = () => {
 		axios
 			.post('/auth/register', data)
 			.then((response) => {
-				setUser(response.data.user);
-				console.log(response.data.user);
+				/* 	setUser(response.data.user); */
+				setMessage(response.data.msg);
+				console.log(response.data.msg);
 				/* navigate('/'); */
 			})
 			.catch((err) => {
@@ -93,7 +95,7 @@ const useAuthentication = () => {
 		user,
 		handleRegister,
 		handleLogin,
-
+		message,
 		handleLogout,
 	};
 };

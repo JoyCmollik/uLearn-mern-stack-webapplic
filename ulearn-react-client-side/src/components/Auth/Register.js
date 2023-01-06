@@ -20,7 +20,8 @@ const userRoles = [
 
 const Register = () => {
 	const navigate = useNavigate();
-	const { handleRegister, user } = useAuthentication();
+	const { handleRegister, user, message } = useAuthentication();
+	console.log(message);
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
 
@@ -77,7 +78,8 @@ const Register = () => {
 				<img className='w-[70%] mx-auto' src={authImg} alt='login' />
 			</div>
 			{/*----------------------------------------right side of the page---------------------------------------------- */}
-			{!user ? (
+
+			{!message ? (
 				<div className='col-span-7 p-10 flex justify-center items-center'>
 					<div className='w-7/12 space-y-8'>
 						{/* title */}
