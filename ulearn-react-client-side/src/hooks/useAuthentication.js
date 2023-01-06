@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useAxios from './useAxios';
 
 const useAuthentication = () => {
-	const [user, setUser] = useState({});
+	const [user, setUser] = useState(false);
 	const [message, setMessage] = useState(false);
 
 	const [isAdmin, setIsAdmin] = useState(false);
@@ -79,16 +79,18 @@ const useAuthentication = () => {
 	};
 
 	useEffect(() => {
-		axios
-			.get('users/showMe')
-			.then((res) => {
-				setUser(res.data.user);
-				console.log(res.data.user, 'success');
-			})
-			.catch((err) => {
-				console.log(err, 'fail');
-				setUser(null);
-			});
+		if (!user) {
+			axios
+				.get('/users/showMe')
+				.then((res) => {
+					setUser(res.data.user);
+					console.log(res.data.user, 'success');
+				})
+				.catch((err) => {
+					console.log(err, 'fail');
+					setUser(null);
+				});
+		}
 	}, []);
 
 	return {
