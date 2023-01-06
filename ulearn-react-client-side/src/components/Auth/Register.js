@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import authImg from '../../images/auth_vector.svg';
 import role_learner from '../../images/role_leaner.svg';
 import role_creator from '../../images/role_creator.svg';
-import role_client from '../../images/role_client.svg';
-import useAxios from '../../hooks/useAxios';
+import useAuthentication from '../../hooks/useAuthentication';
 
 const userRoles = [
 	{
@@ -20,9 +19,10 @@ const userRoles = [
 ];
 
 const Register = () => {
+	const navigate = useNavigate();
+	const { handleRegister } = useAuthentication();
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
-	const { client } = useAxios();
 
 	// local functionalities
 	const handleUserRole = (role) => {
@@ -52,11 +52,7 @@ const Register = () => {
 				role: userRole === 'learner' ? 'user' : 'instructor',
 			};
 
-			client.post('/auth/register', data).then((response) => {
-				if (response.data) {
-					console.log(response.data);
-				}
-			});
+			handleRegister(data, navigate);
 			setPerson({ email: '', firstName: '', lastName: '', password: '' });
 		}
 	};

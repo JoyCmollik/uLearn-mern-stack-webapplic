@@ -20,6 +20,7 @@ import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategor
 import CourseContent from './pages/CourseContent/CourseContent';
 import CourseContentDetail from './components/CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
 import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
@@ -54,6 +55,10 @@ function App() {
 				/>
 				{/*****--------------Authentication Routes---------------*****/}
 				<Route path='auth/*' element={<Auth />} />
+				<Route
+					path='auth/reset-password'
+					element={<ForgotPassword />}
+				/>
 				{/*****--------------Admin Dashboard Index Routes---------------*****/}
 				<Route
 					path='admin/dashboard/*'

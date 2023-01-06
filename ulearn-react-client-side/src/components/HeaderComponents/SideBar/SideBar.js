@@ -1,12 +1,14 @@
-import { Avatar, Button, Drawer, Space } from 'antd';
+import { Avatar, Button, Drawer, Dropdown, Menu, Space } from 'antd';
 import React from 'react';
 import DropDownButton from '../DropDownButton/DropDownButton';
 import SearchField from '../SearchField/SearchField';
 import logo from '../../../images/ULearn_Logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdNotificationsNone } from 'react-icons/md';
 import { FiShoppingBag } from 'react-icons/fi';
-
+import useAuthentication from '../../../hooks/useAuthentication';
+import { LoginOutlined, DashboardTwoTone } from '@ant-design/icons';
+import { CgProfile } from 'react-icons/cg';
 const navigation = [
 	{ id: 1, to: '/forum', name: 'Forum' },
 	{ id: 2, to: '/blog', name: 'Blog' },
@@ -14,6 +16,59 @@ const navigation = [
 ];
 
 const SideBar = ({ placement, onClose, open }) => {
+	const { user, handleLogout } = useAuthentication();
+	const navigate = useNavigate();
+	const menu = (
+		<Menu
+			items={[
+				{
+					key: '1',
+					label: (
+						<Link
+							to='admin/dashboard/'
+							className='text-lg font-medium'
+						>
+							Dashboard
+						</Link>
+					),
+					icon: (
+						<DashboardTwoTone
+							style={{ fontSize: '24px', color: '#08c' }}
+						/>
+					),
+				},
+				{
+					key: '2',
+					label: (
+						<Link to='/' className='text-lg font-medium'>
+							My Profile
+						</Link>
+					),
+					icon: (
+						<CgProfile
+							style={{ fontSize: '24px', color: '#08c' }}
+						/>
+					),
+				},
+				{
+					key: '3',
+					label: (
+						<div
+							className='text-lg font-medium'
+							onClick={() => handleLogout(navigate)}
+						>
+							Logout
+						</div>
+					),
+					icon: (
+						<LoginOutlined
+							style={{ fontSize: '24px', color: '#08c' }}
+						/>
+					),
+				},
+			]}
+		/>
+	);
 	return (
 		<>
 			<Drawer
@@ -77,22 +132,41 @@ const SideBar = ({ placement, onClose, open }) => {
 
 					{/*-------------------avatar------------------------------*/}
 
-					<Avatar
-						src='https://joeschmoe.io/api/v1/random'
-						style={{ border: '1px solid black' }}
-					/>
-					{/*--------------------signin btn---------------------------*/}
-
-					<Button
-						style={{
-							background: '#F79903',
-							color: 'white',
-							borderRadius: '5px',
-							border: '1px solid #F789903',
-						}}
-					>
-						Sign In
-					</Button>
+					<div className=''>
+						{user ? (
+							<Dropdown overlay={menu} className='ml-3'>
+								<a
+									href='/xyz'
+									onClick={(e) => e.preventDefault()}
+									className='flex space-x-2 items-center'
+								>
+									<Avatar
+										style={{
+											background: 'purple',
+										}}
+									>
+										{user?.name?.slice(0, 1)}
+									</Avatar>
+									<Space className='text-lg'>
+										{user?.name}
+									</Space>
+								</a>
+							</Dropdown>
+						) : (
+							<div>
+								{/*-------------------login/---------------------*/}
+								<Link to='auth/login' className='text-base'>
+									Login
+								</Link>
+								<Link
+									to='auth/register/learner'
+									className='text-base ml-3'
+								>
+									Register
+								</Link>
+							</div>
+						)}
+					</div>
 				</article>
 			</Drawer>
 		</>

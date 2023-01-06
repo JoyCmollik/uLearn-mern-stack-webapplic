@@ -5,6 +5,7 @@ const { attachCookiesToResponse, createTokenUser } = require('../utils/');
 
 const register = async (req, res) => {
 	let { email, name, password, role } = req.body;
+
 	const emailAlreadyExists = await User.findOne({ email });
 	if (emailAlreadyExists) {
 		throw new CustomError.BadRequestError('Email Already Exists');
@@ -14,8 +15,10 @@ const register = async (req, res) => {
 	const isFirstAccount = (await User.countDocuments({})) === 0; //0 means no user
 	role = isFirstAccount ? 'admin' : role;
 
-	if(role !== 'user' || role !== 'instructor') {
-		throw new CustomError.UnauthorizedError('You are unauthorized to perform this task!');
+	if (role != 'user' && role != 'instructor') {
+		throw new CustomError.UnauthorizedError(
+			'You are unauthorized to perform this task!'
+		);
 	}
 
 	const user = await User.create({ name, email, password, role });
