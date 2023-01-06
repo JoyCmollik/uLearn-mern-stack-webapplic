@@ -24,6 +24,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 import ContentCreatorDashboardComponent from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardComponent/ContentCreatorDashboardComponent';
 import ContentCreatorDashboardHome from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardHome/ContentCreatorDashboardHome';
 import ContentCreatorCourses from './dashboards/ContentCreatorDashbaord/ContentCreatorCourses/ContentCreatorCourses';
+import Verify from './components/Auth/Verify';
 
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
@@ -62,6 +63,7 @@ function App() {
 					path='auth/reset-password'
 					element={<ForgotPassword />}
 				/>
+				<Route path='/user/verify-email' element={<Verify />} />
 				{/*****--------------Admin Dashboard Index Routes---------------*****/}
 				<Route
 					path='admin/dashboard/*'
