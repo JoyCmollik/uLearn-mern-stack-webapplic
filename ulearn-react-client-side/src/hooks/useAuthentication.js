@@ -15,7 +15,7 @@ const useAuthentication = () => {
 			.then((response) => {
 				setUser(response.data.user);
 				console.log(response.data.user);
-				navigate('/');
+				/* navigate('/'); */
 			})
 			.catch((err) => {
 				console.log(err);

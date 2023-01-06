@@ -20,7 +20,7 @@ const userRoles = [
 
 const Register = () => {
 	const navigate = useNavigate();
-	const { handleRegister } = useAuthentication();
+	const { handleRegister, user } = useAuthentication();
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
 
@@ -59,7 +59,7 @@ const Register = () => {
 
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
-			{/* left side of the page */}
+			{/*---------------------------------------left side of the page---------------------------------------------- */}
 			<div className='col-span-5 bg-primary p-10 flex flex-col justify-between'>
 				<div className='space-y-[48px]'>
 					{/* logo */}
@@ -76,131 +76,143 @@ const Register = () => {
 				</div>
 				<img className='w-[70%] mx-auto' src={authImg} alt='login' />
 			</div>
-			{/* right side of the page */}
-			<div className='col-span-7 p-10 flex justify-center items-center'>
-				<div className='w-7/12 space-y-8'>
-					{/* title */}
-					<div className='space-y-2'>
-						<h4 className='text-2xl font-medium'>
-							Create an Account
-						</h4>
-						<p className='text-gray-500'>
-							Already have an account?{' '}
-							<Link
-								to='/auth/login'
-								className='text-primary underline'
-							>
-								Sign In
-							</Link>
-						</p>
-					</div>
-					{/*-----------------------------forms------------------------------------ */}
-					<form
-						className='grid grid-cols-12 gap-8'
-						onSubmit={handleSubmit}
-					>
-						{/* form input */}
-						<div className='col-span-12 form-control w-full'>
-							<label className='label font-medium'>Email</label>
-							<input
-								type='email'
-								placeholder='Type your email'
-								name='email'
-								className='input input-bordered w-full'
-								value={person.email}
-								onChange={handleChange}
-							/>
-						</div>
-						{/* form input */}
-						<div className='col-span-6 form-control w-full'>
-							<label className='label font-medium'>
-								First Name
-							</label>
-							<input
-								type='text'
-								placeholder='First Name'
-								name='firstName'
-								className='input input-bordered w-full'
-								value={person.firstName}
-								onChange={handleChange}
-							/>
-						</div>
-						{/* form input */}
-						<div className='col-span-6 form-control w-full'>
-							<label className='label font-medium'>
-								Last Name
-							</label>
-							<input
-								type='text'
-								placeholder='Last Name'
-								name='lastName'
-								className='input input-bordered w-full'
-								value={person.lastName}
-								onChange={handleChange}
-							/>
-						</div>
-						{/* form input */}
-						<div className='col-span-12 form-control w-full'>
-							<label className='label font-medium'>
-								Password
-							</label>
-							<input
-								type='password'
-								placeholder='********'
-								name='password'
-								className='input input-bordered w-full'
-								value={person.password}
-								onChange={handleChange}
-							/>
-						</div>
-						{/* roles */}
-						<div className='col-span-12 grid grid-cols-3 gap-4'>
-							{userRoles.map(({ title, role, img }, roleIdx) => (
-								<div
-									key={roleIdx}
-									className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
-										userRole === role &&
-										'bg-light text-white drop-shadow-md border-primary'
-									}`}
-									onClick={() => handleUserRole(role)}
+			{/*----------------------------------------right side of the page---------------------------------------------- */}
+			{!user ? (
+				<div className='col-span-7 p-10 flex justify-center items-center'>
+					<div className='w-7/12 space-y-8'>
+						{/* title */}
+						<div className='space-y-2'>
+							<h4 className='text-2xl font-medium'>
+								Create an Account
+							</h4>
+							<p className='text-gray-500'>
+								Already have an account?{' '}
+								<Link
+									to='/auth/login'
+									className='text-primary underline'
 								>
-									<img
-										className='object-cover w-14 mx-auto'
-										src={img}
-										alt='role learner'
-									/>
-									<h5 className='text-lg font-light'>
-										{title}
-									</h5>
-								</div>
-							))}
+									Sign In
+								</Link>
+							</p>
 						</div>
-						{/* agreement */}
-						<div className='col-span-12'>
-							<div className='form-control'>
-								<label className='label cursor-pointer space-x-2'>
-									<input
-										type='checkbox'
-										className='checkbox checkbox-sm indeterminate:bg-primar'
-									/>
-									<span className='label-text'>
-										By clicking Create account, I agree that
-										I have read and accepted the Terms of
-										Use and Privacy Policy.
-									</span>
-								</label>
-							</div>
-						</div>
-						{/* submit button */}
-						<button
-							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
-							type='submit'
+						{/*-----------------------------forms------------------------------------ */}
+						<form
+							className='grid grid-cols-12 gap-8'
+							onSubmit={handleSubmit}
 						>
-							Sign Up
-						</button>
-					</form>
+							{/* form input */}
+							<div className='col-span-12 form-control w-full'>
+								<label className='label font-medium'>
+									Email
+								</label>
+								<input
+									type='email'
+									placeholder='Type your email'
+									name='email'
+									className='input input-bordered w-full'
+									value={person.email}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* form input */}
+							<div className='col-span-6 form-control w-full'>
+								<label className='label font-medium'>
+									First Name
+								</label>
+								<input
+									type='text'
+									placeholder='First Name'
+									name='firstName'
+									className='input input-bordered w-full'
+									value={person.firstName}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* form input */}
+							<div className='col-span-6 form-control w-full'>
+								<label className='label font-medium'>
+									Last Name
+								</label>
+								<input
+									type='text'
+									placeholder='Last Name'
+									name='lastName'
+									className='input input-bordered w-full'
+									value={person.lastName}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* form input */}
+							<div className='col-span-12 form-control w-full'>
+								<label className='label font-medium'>
+									Password
+								</label>
+								<input
+									type='password'
+									placeholder='********'
+									name='password'
+									className='input input-bordered w-full'
+									value={person.password}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* roles */}
+							<div className='col-span-12 grid grid-cols-3 gap-4'>
+								{userRoles.map(
+									({ title, role, img }, roleIdx) => (
+										<div
+											key={roleIdx}
+											className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
+												userRole === role &&
+												'bg-light text-white drop-shadow-md border-primary'
+											}`}
+											onClick={() => handleUserRole(role)}
+										>
+											<img
+												className='object-cover w-14 mx-auto'
+												src={img}
+												alt='role learner'
+											/>
+											<h5 className='text-lg font-light'>
+												{title}
+											</h5>
+										</div>
+									)
+								)}
+							</div>
+							{/* agreement */}
+							<div className='col-span-12'>
+								<div className='form-control'>
+									<label className='label cursor-pointer space-x-2'>
+										<input
+											type='checkbox'
+											className='checkbox checkbox-sm indeterminate:bg-primar'
+										/>
+										<span className='label-text'>
+											By clicking Create account, I agree
+											that I have read and accepted the
+											Terms of Use and Privacy Policy.
+										</span>
+									</label>
+								</div>
+							</div>
+							{/* submit button */}
+							<button
+								className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
+								type='submit'
+							>
+								Sign Up
+							</button>
+						</form>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className='col-span-7 p-10 flex justify-center items-center'>
+					<p className='text-lg text-green-800 bg-emerald-200 px-4 py-3 rounded'>
+						Success !please check your email to verify Account
+					</p>
+				</div>
+			)}
 		</div>
 	);
 };
