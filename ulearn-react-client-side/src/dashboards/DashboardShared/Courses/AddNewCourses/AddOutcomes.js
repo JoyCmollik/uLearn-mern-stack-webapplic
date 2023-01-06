@@ -4,14 +4,22 @@ import { Button, Input } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
 
 // local component
-const OutcomeInput = ({ handleOutcomeInputs, id }) => {
+const OutcomeInput = ({ handleOutcomeInputs, id, handleOutcomeValues }) => {
 	console.log(id, 'from component');
 	return (
 		<div className='col-span-12 flex flex-col'>
 			<div className='flex justify-between items-center space-x-4'>
-				<Input size='large' />
+				<Input
+					onBlur={(e) => {
+						e.preventDefault();
+						handleOutcomeValues(e);
+					}}
+					size='large'
+				/>
 				<button
-					onClick={() => handleOutcomeInputs('remove', id)}
+					onClick={(e) => {
+						handleOutcomeInputs(e, 'remove', id);
+					}}
 					className='p-2 bg-red-500 h-[40px] w-[40px] rounded-lg text-white flex justify-center items-center'
 				>
 					<HiMinus size={20} />
@@ -21,12 +29,12 @@ const OutcomeInput = ({ handleOutcomeInputs, id }) => {
 	);
 };
 
-const AddOutcomes = ({ handleActiveTab }) => {
-	const [requirement, setRequirement] = useState([]);
+const AddOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 	const [outcomeList, setOutcomeList] = useState([]);
 
 	// functionality: will add more input
-	const handleOutcomeInputs = (action, id = null) => {
+	const handleOutcomeInputs = (e, action, id = null) => {
+		e.preventDefault();
 		if (action === 'add') {
 			setOutcomeList((prevList) => {
 				const id = uuid();
@@ -38,15 +46,29 @@ const AddOutcomes = ({ handleActiveTab }) => {
 			});
 		}
 	};
+
+	// functionality: will update list of requirements
+	const handleOutcomeValues = (e) => {
+		e.preventDefault();
+		setOutcome([...outcome, e.target.value]);
+	};
+
+	console.log(outcome);
+
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
 			{/* input item */}
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Outcomes</label>
 				<div className='flex justify-between items-center space-x-4'>
-					<Input size='large' />
+					<Input
+						onBlur={(e) => handleOutcomeValues(e)}
+						size='large'
+					/>
 					<button
-						onClick={() => handleOutcomeInputs('add')}
+						onClick={(e) => {
+							handleOutcomeInputs(e, 'add');
+						}}
 						className='p-2 bg-green-500 h-[40px] w-[40px] rounded-lg text-white flex justify-center items-center'
 					>
 						<HiPlus size={20} />
@@ -59,6 +81,7 @@ const AddOutcomes = ({ handleActiveTab }) => {
 						key={id}
 						id={id}
 						handleOutcomeInputs={handleOutcomeInputs}
+						handleOutcomeValues={handleOutcomeValues}
 					/>
 				))}
 

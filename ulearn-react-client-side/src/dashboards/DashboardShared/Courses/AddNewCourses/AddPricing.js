@@ -1,20 +1,33 @@
-import { Button, Checkbox, InputNumber } from 'antd';
 import React from 'react';
+import { Button, Checkbox, InputNumber } from 'antd';
+import { Controller } from 'react-hook-form';
 
-const AddPricing = ({ handleActiveTab }) => {
+const AddPricing = ({ handleActiveTab, control }) => {
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
 			{/* input item */}
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Course Price</label>
-				<InputNumber
-					style={{ width: '400px !important' }}
-					size='large'
-					name='title'
+				<Controller
+					name='coursePrice'
+					control={control}
+					render={({ field }) => (
+						<InputNumber
+							{...field}
+							style={{ width: '400px !important' }}
+							size='large'
+						/>
+					)}
 				/>
 			</div>{' '}
 			<div className='col-span-12 space-y-2 flex flex-col'>
-				<Checkbox>Check if this is a free course.</Checkbox>
+				<Controller
+					name='isFree'
+					control={control}
+					render={({ field }) => (
+						<Checkbox {...field}>Check if this is a free course.</Checkbox>
+					)}
+				/>
 			</div>
 			<Button
 				onClick={() => handleActiveTab('5')}

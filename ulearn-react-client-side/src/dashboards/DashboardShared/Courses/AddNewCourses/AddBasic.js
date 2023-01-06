@@ -1,9 +1,10 @@
-import { Button, Checkbox, Form, Input, Select } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
 import { useRef, useState } from 'react';
+import TextArea from 'antd/lib/input/TextArea';
+import { Button, Checkbox, Form, Input, Select } from 'antd';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
+import { Controller } from 'react-hook-form';
 
-const AddBasic = ({ handleActiveTab }) => {
+const AddBasic = ({ handleActiveTab, control }) => {
 	const editor = useRef('');
 	const [editorContent, setEditorContent] = useState();
 
@@ -12,18 +13,24 @@ const AddBasic = ({ handleActiveTab }) => {
 			{/* input item */}
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Course Title</label>
-				<Input size='large' name='title' />
+				<Controller
+					name='courseTitle'
+					control={control}
+					render={({ field }) => <Input {...field} size='large' />}
+				/>
 			</div>
 			<div className='col-span-12 space-y-2'>
 				<label className='text-font2 uppercase'>
 					Short Description
 				</label>
-				<TextArea rows={2} />
+				<Controller
+					name='courseShortDesc'
+					control={control}
+					render={({ field }) => <TextArea rows={2} {...field} />}
+				/>
 			</div>
 			<div className='col-span-12 space-y-2'>
-				<label className='text-font2 uppercase'>
-					Description
-				</label>
+				<label className='text-font2 uppercase'>Description</label>
 				<DashTextEditor
 					editor={editor}
 					editorContent={editorContent}
@@ -32,21 +39,75 @@ const AddBasic = ({ handleActiveTab }) => {
 			</div>
 			<div className='col-span-4 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Category</label>
-				<Select size='large'>
-					<Select.Option value='demo'>Demo</Select.Option>
-				</Select>
+				<Controller
+					name='category'
+					control={control}
+					render={({ field }) => (
+						<Select
+							placeholder='select a category'
+							{...field}
+							size='large'
+						>
+							<Select.Option value='Computer Science & Engineering'>
+								Computer Science & Engineering
+							</Select.Option>
+							<Select.Option value='Economics'>
+								Economics
+							</Select.Option>
+							<Select.Option value='Business Studies'>
+								Business Studies
+							</Select.Option>
+							<Select.Option value='Sociology'>
+								Sociology
+							</Select.Option>
+						</Select>
+					)}
+				/>
 			</div>
 			<div className='col-span-4 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Level</label>
-				<Select size='large'>
-					<Select.Option value='demo'>Demo</Select.Option>
-				</Select>
+				<Controller
+					name='level'
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							placeholder={'select level'}
+							size='large'
+						>
+							<Select.Option value='Beginner'>
+								Beginner
+							</Select.Option>
+							<Select.Option value='Intermediate'>
+								Intermediate
+							</Select.Option>
+							<Select.Option value='Advanced'>
+								Advanced
+							</Select.Option>
+						</Select>
+					)}
+				/>
 			</div>
 			<div className='col-span-4 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Language</label>
-				<Select size='large'>
-					<Select.Option value='demo'>Demo</Select.Option>
-				</Select>
+				<Controller
+					name='language'
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							placeholder={'select language'}
+							size='large'
+						>
+							<Select.Option value='Bengali'>
+								Bengali
+							</Select.Option>
+							<Select.Option value='English'>
+								English
+							</Select.Option>
+						</Select>
+					)}
+				/>
 			</div>
 			<Button
 				onClick={() => handleActiveTab('2')}

@@ -10,6 +10,7 @@ import {
 	AddSeo,
 	AddFinishing,
 } from './';
+import { useForm } from 'react-hook-form';
 
 const { Step } = Steps;
 
@@ -18,51 +19,65 @@ const initialSteps = [
 		title: 'Basic',
 		currStatus: 'process',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'Add some basic information',
 	},
 	{
 		title: 'Requirements',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'list out pre-requisites for the course',
+		description: 'List out pre-requisites for the course',
 	},
 	{
 		title: 'Outcomes',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'what things are going to be achieved upon completion?',
+		description: 'What things are going to be achieved upon completion?',
 	},
 	{
 		title: 'Pricing',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
 		description:
-			'putting a good price increases chances of better performance',
+			'Putting a good price increases chances of better performance',
 	},
 	{
 		title: 'Media',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'some effective pictures that explain your course',
+		description: 'Some effective pictures that explain your course',
 	},
 	{
 		title: 'Seo',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'make a list of strong keywords',
+		description: 'Make a list of strong keywords',
 	},
 	{
 		title: 'Finish',
 		currStatus: 'wait',
 		icon: <HiOutlineDocumentDuplicate />,
-		description: 'add some basic information',
+		description: 'One step to complete!',
 	},
 ];
 
 const AddNewCourses = () => {
-	const [courseData, setCourseData] = useState({});
 	const [steps, setSteps] = useState([...initialSteps]);
 	const [tabActiveKey, setTabActiveKey] = useState('1');
+	const [requirement, setRequirement] = useState([]);
+	const [outcome, setOutcome] = useState([]);
+	const [courseThumb, setCourseThumb] = useState([]);
+	const [tags, setTags] = useState(['course', 'add more']);
+
+	const { control, handleSubmit } = useForm({});
+	const onSubmit = (data) => {
+		data.requirements = requirement;
+		data.courseOutcomes = outcome;
+		data.courseThumb= courseThumb;
+		data.tags = tags;
+
+		console.log(data);
+
+			};
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (receivedKey) => {
@@ -104,12 +119,13 @@ const AddNewCourses = () => {
 								_idx
 							) => (
 								<Step
+									key={_idx}
 									title={title}
 									status={currStatus}
 									// icon={icon}
 									description={
 										Number(tabActiveKey) === _idx + 1 ? (
-											<p className='text-sm text-font2 mt-2 capitalize'>
+											<p className='text-sm text-font2 mt-2'>
 												{description}
 											</p>
 										) : null
@@ -119,31 +135,58 @@ const AddNewCourses = () => {
 						)}
 					</Steps>
 				</div>
-				<div className=' col-span-9 '>
-					<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className=' col-span-9 '
+				>
+					<Tabs className='h-full' onChange={handleSteps} activeKey={tabActiveKey}>
 						<Tabs.TabPane tab='Basic' key='1'>
-							<AddBasic handleActiveTab={handleActiveTab} />
+							<AddBasic
+								handleActiveTab={handleActiveTab}
+								control={control}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Requirements' key='2'>
-							<AddRequirement handleActiveTab={handleActiveTab} />
+							<AddRequirement
+								handleActiveTab={handleActiveTab}
+								requirement={requirement}
+								setRequirement={setRequirement}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Outcomes' key='3'>
-							<AddOutcomes handleActiveTab={handleActiveTab} />
+							<AddOutcomes
+								handleActiveTab={handleActiveTab}
+								outcome={outcome}
+								setOutcome={setOutcome}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Pricing' key='4'>
-							<AddPricing handleActiveTab={handleActiveTab} />
+							<AddPricing
+								handleActiveTab={handleActiveTab}
+								control={control}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Media' key='5'>
-							<AddMedia handleActiveTab={handleActiveTab} />
+							<AddMedia
+								handleActiveTab={handleActiveTab}
+								control={control}
+								courseThumb={courseThumb}
+								setCourseThumb={setCourseThumb}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Seo' key='6'>
-							<AddSeo handleActiveTab={handleActiveTab} />
+							<AddSeo
+								handleActiveTab={handleActiveTab}
+								control={control}
+								tags={tags}
+								setTags={setTags}
+							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Finish' key='7'>
 							<AddFinishing handleActiveTab={handleActiveTab} />
 						</Tabs.TabPane>
 					</Tabs>
-				</div>
+				</form>
 			</div>
 		</div>
 	);

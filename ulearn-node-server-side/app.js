@@ -14,6 +14,13 @@ const xss = require('xss-clean');
 const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+	cloud_name: process.env.CLOUD_NAME,
+	api_key: process.env.CLOUD_API_KEY,
+	api_secret: process.env.CLOUD_API_SECRET,
+});
+
 // database
 const connectDB = require('./db/connect');
 
@@ -24,6 +31,7 @@ const lessonRouter = require('./routes/lessonRoutes');
 const sectionRouter = require('./routes/sectionRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const uploadRouter = require('./routes/uploadRoutes');
 
 // this is a list of routers
 // testing
@@ -46,6 +54,7 @@ app.use(mongoSanitize());
 
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use(express.static('./public'));
@@ -66,6 +75,7 @@ app.use('/api/v1/lessons', lessonRouter);
 app.use('/api/v1/sections', sectionRouter);
 app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/images', uploadRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
