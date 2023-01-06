@@ -14,9 +14,7 @@ const AddFinishing = () => {
 				}
 				title='Great, we have done all the operations!'
 				extra={
-					<Button type='primary' size='large'>
-						Submit
-					</Button>
+					<button type="submit">Submit</button>
 				}
 			/>
 		</div>

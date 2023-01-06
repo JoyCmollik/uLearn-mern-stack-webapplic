@@ -2,23 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Input, Tag, Tooltip } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { HiOutlinePlus } from 'react-icons/hi';
+import { Controller } from 'react-hook-form';
 
-const AddSeo = ({ handleActiveTab }) => {
-	const [tags, setTags] = useState(['course', 'add more']);
+const AddSeo = ({ handleActiveTab, control, tags, setTags }) => {
 	const [inputVisible, setInputVisible] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [editInputIndex, setEditInputIndex] = useState(-1);
 	const [editInputValue, setEditInputValue] = useState('');
 	const inputRef = useRef(null);
 	const editInputRef = useRef(null);
+
 	useEffect(() => {
 		if (inputVisible) {
 			inputRef.current?.focus();
 		}
 	}, [inputVisible]);
+
 	useEffect(() => {
 		editInputRef.current?.focus();
 	}, [inputValue]);
+
 	const handleClose = (removedTag) => {
 		const newTags = tags.filter((tag) => tag !== removedTag);
 		console.log(newTags);
@@ -47,6 +50,8 @@ const AddSeo = ({ handleActiveTab }) => {
 		setEditInputIndex(-1);
 		setInputValue('');
 	};
+
+	console.log(tags);
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
 			{/* input item */}
@@ -120,7 +125,11 @@ const AddSeo = ({ handleActiveTab }) => {
 			</div>
 			<div className='col-span-12 space-y-2'>
 				<label className='text-font2 uppercase'>Meta Description</label>
-				<TextArea rows={2} />
+				<Controller
+					name='courseMetaDesc'
+					control={control}
+					render={({ field }) => <TextArea rows={2} {...field} />}
+				/>
 			</div>
 			<Button
 				onClick={() => handleActiveTab('7')}
