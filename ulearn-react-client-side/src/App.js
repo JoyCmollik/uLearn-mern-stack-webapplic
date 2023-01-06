@@ -95,9 +95,9 @@ function App() {
 					<Route index element={<ContentCreatorDashboardHome />} />
 					<Route
 						path='manage-courses/*'
-						element={<ContentCreatorCourses />}
+						element={<CoursesComponent />}
 					>
-						<Route index element={<ManageCourses />} />
+						<Route index element={<ContentCreatorCourses />} />
 						<Route path='add' element={<AddNewCourse />} />
 						<Route path='edit/:id/*' element={<EditCourse />} />
 					</Route>
