@@ -21,6 +21,9 @@ import CourseContent from './pages/CourseContent/CourseContent';
 import CourseContentDetail from './components/CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
 import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
 import ForgotPassword from './components/Auth/ForgotPassword';
+import ContentCreatorDashboardComponent from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardComponent/ContentCreatorDashboardComponent';
+import ContentCreatorDashboardHome from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardHome/ContentCreatorDashboardHome';
+import ContentCreatorCourses from './dashboards/ContentCreatorDashbaord/ContentCreatorCourses/ContentCreatorCourses';
 
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
@@ -77,6 +80,25 @@ function App() {
 							element={<CoursesCategory />}
 						/>
 						<Route path='coupons/*' element={<Coupons />} />
+						<Route path='edit/:id/*' element={<EditCourse />} />
+					</Route>
+					<Route
+						path='manage-profile/*'
+						element={<ManageProfile />}
+					/>
+				</Route>
+				{/*****--------------Instructor Dashboard Index Routes---------------*****/}
+				<Route
+					path='content-creator/dashboard/*'
+					element={<ContentCreatorDashboardComponent />}
+				>
+					<Route index element={<ContentCreatorDashboardHome />} />
+					<Route
+						path='manage-courses/*'
+						element={<ContentCreatorCourses />}
+					>
+						<Route index element={<ManageCourses />} />
+						<Route path='add' element={<AddNewCourse />} />
 						<Route path='edit/:id/*' element={<EditCourse />} />
 					</Route>
 					<Route
