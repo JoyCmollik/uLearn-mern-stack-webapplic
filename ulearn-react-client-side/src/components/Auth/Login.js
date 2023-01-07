@@ -101,7 +101,7 @@ const Login = () => {
 
 						<Link
 							className='col-span-12 text-primary underline font-medium'
-							to='/auth/reset-password'
+							to='/auth/forgot-password'
 						>
 							Forgot Password?
 						</Link>
