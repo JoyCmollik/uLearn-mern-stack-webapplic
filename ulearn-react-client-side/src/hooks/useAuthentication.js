@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import useAxios from './useAxios';
 
 const useAuthentication = () => {
 	const [user, setUser] = useState(false);
 	const [message, setMessage] = useState(false);
-
+	const [forgotPasswordMsg, setforgotPasswordMsg] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const { client } = useAxios();
+
 	const handleRegister = async (data, navigate) => {
 		console.log(data);
 
@@ -59,10 +61,10 @@ const useAuthentication = () => {
 
 	const handleLogout = (navigate) => {
 		axios
-			.get('auth/logout')
+			.delete('auth/logout')
 			.then((response) => {
 				setUser(() => null);
-				console.log(response.data);
+				console.log(response.msg);
 				navigate('/');
 			})
 			.catch((err) => {
@@ -93,12 +95,41 @@ const useAuthentication = () => {
 		}
 	}, []);
 
+	const handleForgotPassword = (data, navigate) => {
+		console.log(data);
+		axios
+			.post('/auth/forgot-password', data)
+			.then((response) => {
+				setforgotPasswordMsg(response.data.msg);
+				console.log(response.data.msg);
+				/* navigate('/'); */
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+	const handleResetPassword = (data, navigate) => {
+		axios
+			.post('/auth/reset-password', data)
+			.then((response) => {
+				setforgotPasswordMsg(response.data.msg);
+				console.log(response.data.msg);
+				navigate('/auth/login');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return {
 		user,
 		handleRegister,
 		handleLogin,
 		message,
 		handleLogout,
+		handleForgotPassword,
+		handleResetPassword,
+		forgotPasswordMsg,
 	};
 };
 

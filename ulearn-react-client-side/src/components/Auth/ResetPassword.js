@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAuthentication from '../../hooks/useAuthentication';
-import useAxios from '../../hooks/useAxios';
+
 import authImg from '../../images/auth_vector.svg';
 
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
 const ForgotPassword = () => {
-	const { handleForgotPassword, forgotPasswordMsg } = useAuthentication();
-	const [email, setEmail] = useState('');
+	const { handleResetPassword, forgotPasswordMsg } = useAuthentication();
+	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
+	const query = useQuery();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (email) {
+		if (password) {
 			const data = {
-				email,
+				password,
+				token: query.get('token'),
+				email: query.get('email'),
 			};
 
-			handleForgotPassword(data, navigate);
-			setEmail('');
+			handleResetPassword(data, navigate);
+			setPassword('');
 		}
 	};
 	return (
@@ -47,15 +54,8 @@ const ForgotPassword = () => {
 						{/* title */}
 						<div className='space-y-2'>
 							<h4 className='text-2xl font-medium'>
-								Forgot Password ?
+								Reset Password
 							</h4>
-							<p>
-								Enter the email address you used when you joined
-								and we’ll send you instructions to reset your
-								password. For security reasons, we do NOT store
-								your password. So rest assured that we will
-								never send your password via email.
-							</p>
 						</div>
 						{/* forms */}
 						<form
@@ -72,8 +72,10 @@ const ForgotPassword = () => {
 									placeholder='Type your email'
 									name='email'
 									className='input input-bordered w-full'
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
+									value={password}
+									onChange={(e) =>
+										setPassword(e.target.value)
+									}
 								/>
 							</div>
 
