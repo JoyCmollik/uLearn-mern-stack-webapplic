@@ -65,12 +65,12 @@ const ForgotPassword = () => {
 							{/* form input */}
 							<div className='col-span-12 form-control w-full'>
 								<label className='label font-medium'>
-									Email
+									Password
 								</label>
 								<input
-									type='email'
-									placeholder='Type your email'
-									name='email'
+									type='password'
+									placeholder='Type your password'
+									name='password'
 									className='input input-bordered w-full'
 									value={password}
 									onChange={(e) =>
@@ -84,7 +84,7 @@ const ForgotPassword = () => {
 								className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
 								type='submit'
 							>
-								Get Reset Password Link
+								New Password
 							</button>
 						</form>
 						<p className='text-gray-500'>

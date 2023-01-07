@@ -4,7 +4,8 @@ import authImg from '../../images/auth_vector.svg';
 import role_learner from '../../images/role_leaner.svg';
 import role_creator from '../../images/role_creator.svg';
 import useAuthentication from '../../hooks/useAuthentication';
-
+import { Button, Result, Space, Spin } from 'antd';
+import { Alert } from 'antd';
 const userRoles = [
 	{
 		title: 'Learner',
@@ -17,11 +18,13 @@ const userRoles = [
 		role: 'content-creator',
 	},
 ];
-
+const onClose = (e) => {
+	console.log(e, 'I was closed.');
+};
 const Register = () => {
 	const navigate = useNavigate();
-	const { handleRegister, user, message } = useAuthentication();
-	console.log(message);
+	const { handleRegister, user, registerMsg, loading } = useAuthentication();
+	console.log(registerMsg);
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
 
@@ -57,7 +60,30 @@ const Register = () => {
 			setPerson({ email: '', firstName: '', lastName: '', password: '' });
 		}
 	};
-
+	if (loading) {
+		return (
+			<div className='flex mx-auto items-center justify-center container'>
+				<Space size='middle'>
+					<Spin size='large' />
+				</Space>
+			</div>
+		);
+	}
+	if (registerMsg) {
+		setTimeout(() => {
+			navigate('/');
+		}, 3000);
+		return (
+			<Result
+				title={registerMsg}
+				extra={
+					<Link to='/' className='text-primary text-base'>
+						Home Page
+					</Link>
+				}
+			/>
+		);
+	}
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
 			{/*---------------------------------------left side of the page---------------------------------------------- */}
@@ -79,142 +105,130 @@ const Register = () => {
 			</div>
 			{/*----------------------------------------right side of the page---------------------------------------------- */}
 
-			{!message ? (
-				<div className='col-span-7 p-10 flex justify-center items-center'>
-					<div className='w-7/12 space-y-8'>
-						{/* title */}
-						<div className='space-y-2'>
-							<h4 className='text-2xl font-medium'>
-								Create an Account
-							</h4>
-							<p className='text-gray-500'>
-								Already have an account?{' '}
-								<Link
-									to='/auth/login'
-									className='text-primary underline'
-								>
-									Sign In
-								</Link>
-							</p>
-						</div>
-						{/*-----------------------------forms------------------------------------ */}
-						<form
-							className='grid grid-cols-12 gap-8'
-							onSubmit={handleSubmit}
-						>
-							{/* form input */}
-							<div className='col-span-12 form-control w-full'>
-								<label className='label font-medium'>
-									Email
-								</label>
-								<input
-									type='email'
-									placeholder='Type your email'
-									name='email'
-									className='input input-bordered w-full'
-									value={person.email}
-									onChange={handleChange}
-								/>
-							</div>
-							{/* form input */}
-							<div className='col-span-6 form-control w-full'>
-								<label className='label font-medium'>
-									First Name
-								</label>
-								<input
-									type='text'
-									placeholder='First Name'
-									name='firstName'
-									className='input input-bordered w-full'
-									value={person.firstName}
-									onChange={handleChange}
-								/>
-							</div>
-							{/* form input */}
-							<div className='col-span-6 form-control w-full'>
-								<label className='label font-medium'>
-									Last Name
-								</label>
-								<input
-									type='text'
-									placeholder='Last Name'
-									name='lastName'
-									className='input input-bordered w-full'
-									value={person.lastName}
-									onChange={handleChange}
-								/>
-							</div>
-							{/* form input */}
-							<div className='col-span-12 form-control w-full'>
-								<label className='label font-medium'>
-									Password
-								</label>
-								<input
-									type='password'
-									placeholder='********'
-									name='password'
-									className='input input-bordered w-full'
-									value={person.password}
-									onChange={handleChange}
-								/>
-							</div>
-							{/* roles */}
-							<div className='col-span-12 grid grid-cols-3 gap-4'>
-								{userRoles.map(
-									({ title, role, img }, roleIdx) => (
-										<div
-											key={roleIdx}
-											className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
-												userRole === role &&
-												'bg-light text-white drop-shadow-md border-primary'
-											}`}
-											onClick={() => handleUserRole(role)}
-										>
-											<img
-												className='object-cover w-14 mx-auto'
-												src={img}
-												alt='role learner'
-											/>
-											<h5 className='text-lg font-light'>
-												{title}
-											</h5>
-										</div>
-									)
-								)}
-							</div>
-							{/* agreement */}
-							<div className='col-span-12'>
-								<div className='form-control'>
-									<label className='label cursor-pointer space-x-2'>
-										<input
-											type='checkbox'
-											className='checkbox checkbox-sm indeterminate:bg-primar'
-										/>
-										<span className='label-text'>
-											By clicking Create account, I agree
-											that I have read and accepted the
-											Terms of Use and Privacy Policy.
-										</span>
-									</label>
-								</div>
-							</div>
-							{/* submit button */}
-							<button
-								className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
-								type='submit'
+			<div className='col-span-7 p-10 flex justify-center items-center'>
+				<div className='w-7/12 space-y-8'>
+					{/* title */}
+					<div className='space-y-2'>
+						<h4 className='text-2xl font-medium'>
+							Create an Account
+						</h4>
+						<p className='text-gray-500'>
+							Already have an account?{' '}
+							<Link
+								to='/auth/login'
+								className='text-primary underline'
 							>
-								Sign Up
-							</button>
-						</form>
+								Sign In
+							</Link>
+						</p>
 					</div>
+					{/*-----------------------------forms------------------------------------ */}
+					<form
+						className='grid grid-cols-12 gap-8'
+						onSubmit={handleSubmit}
+					>
+						{/* form input */}
+						<div className='col-span-12 form-control w-full'>
+							<label className='label font-medium'>Email</label>
+							<input
+								type='email'
+								placeholder='Type your email'
+								name='email'
+								className='input input-bordered w-full'
+								value={person.email}
+								onChange={handleChange}
+							/>
+						</div>
+						{/* form input */}
+						<div className='col-span-6 form-control w-full'>
+							<label className='label font-medium'>
+								First Name
+							</label>
+							<input
+								type='text'
+								placeholder='First Name'
+								name='firstName'
+								className='input input-bordered w-full'
+								value={person.firstName}
+								onChange={handleChange}
+							/>
+						</div>
+						{/* form input */}
+						<div className='col-span-6 form-control w-full'>
+							<label className='label font-medium'>
+								Last Name
+							</label>
+							<input
+								type='text'
+								placeholder='Last Name'
+								name='lastName'
+								className='input input-bordered w-full'
+								value={person.lastName}
+								onChange={handleChange}
+							/>
+						</div>
+						{/* form input */}
+						<div className='col-span-12 form-control w-full'>
+							<label className='label font-medium'>
+								Password
+							</label>
+							<input
+								type='password'
+								placeholder='********'
+								name='password'
+								className='input input-bordered w-full'
+								value={person.password}
+								onChange={handleChange}
+							/>
+						</div>
+						{/* roles */}
+						<div className='col-span-12 grid grid-cols-3 gap-4'>
+							{userRoles.map(({ title, role, img }, roleIdx) => (
+								<div
+									key={roleIdx}
+									className={`py-4 border rounded-lg flex flex-col justify-center items-center space-y-2 transition duration-200 ease-in-out cursor-pointer ${
+										userRole === role &&
+										'bg-light text-white drop-shadow-md border-primary'
+									}`}
+									onClick={() => handleUserRole(role)}
+								>
+									<img
+										className='object-cover w-14 mx-auto'
+										src={img}
+										alt='role learner'
+									/>
+									<h5 className='text-lg font-light'>
+										{title}
+									</h5>
+								</div>
+							))}
+						</div>
+						{/* agreement */}
+						<div className='col-span-12'>
+							<div className='form-control'>
+								<label className='label cursor-pointer space-x-2'>
+									<input
+										type='checkbox'
+										className='checkbox checkbox-sm indeterminate:bg-primar'
+									/>
+									<span className='label-text'>
+										By clicking Create account, I agree that
+										I have read and accepted the Terms of
+										Use and Privacy Policy.
+									</span>
+								</label>
+							</div>
+						</div>
+						{/* submit button */}
+						<button
+							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
+							type='submit'
+						>
+							Sign Up
+						</button>
+					</form>
 				</div>
-			) : (
-				<div className='col-span-7 p-10 flex justify-center items-center'>
-					<p className='text-lg text-green-800 bg-emerald-200 px-4 py-3 rounded'>
-						Success !please check your email to verify Account
-					</p>
-				</div>
-			)}
+			</div>
 		</div>
 	);
 };
