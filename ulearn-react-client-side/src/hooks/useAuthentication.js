@@ -5,26 +5,27 @@ import useAxios from './useAxios';
 
 const useAuthentication = () => {
 	const [user, setUser] = useState(false);
-	const [message, setMessage] = useState(false);
+	const [registerMsg, setRegisterMsg] = useState(false);
 	const [forgotPasswordMsg, setforgotPasswordMsg] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const { client } = useAxios();
 
 	const handleRegister = async (data, navigate) => {
 		console.log(data);
-
+		setLoading(true);
 		axios
 			.post('/auth/register', data)
 			.then((response) => {
 				/* 	setUser(response.data.user); */
-				setMessage(response.data.msg);
+				setRegisterMsg(response.data.msg);
 				console.log(response.data.msg);
-				/* navigate('/'); */
+				/* 	navigate('/'); */
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-
+		setLoading(false);
 		/* try {
 			const response = await client.post('/auth/register', data);
 			setUser(response.data.user);
@@ -38,6 +39,7 @@ const useAuthentication = () => {
 
 	const handleLogin = (data, navigate) => {
 		console.log(data);
+		setLoading(true);
 		axios
 			.post('/auth/login', data)
 			.then((response) => {
@@ -48,7 +50,7 @@ const useAuthentication = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-
+		setLoading(false);
 		/* try {
 			const response = await client.post('/auth/login', data);
 			setUser(response.data.user);
@@ -60,6 +62,7 @@ const useAuthentication = () => {
 	};
 
 	const handleLogout = (navigate) => {
+		setLoading(true);
 		axios
 			.delete('auth/logout')
 			.then((response) => {
@@ -70,6 +73,7 @@ const useAuthentication = () => {
 			.catch((err) => {
 				console.log(err);
 			});
+		setLoading(false);
 		/* 	try {
 			const response = await client.get('auth/logout');
 			setUser(() => null);
@@ -81,6 +85,7 @@ const useAuthentication = () => {
 	};
 
 	useEffect(() => {
+		setLoading(true);
 		if (!user) {
 			axios
 				.get('/users/showMe')
@@ -93,10 +98,12 @@ const useAuthentication = () => {
 					setUser(null);
 				});
 		}
+		setLoading(false);
 	}, []);
 
 	const handleForgotPassword = (data, navigate) => {
 		console.log(data);
+		setLoading(true);
 		axios
 			.post('/auth/forgot-password', data)
 			.then((response) => {
@@ -107,8 +114,10 @@ const useAuthentication = () => {
 			.catch((err) => {
 				console.log(err);
 			});
+		setLoading(false);
 	};
 	const handleResetPassword = (data, navigate) => {
+		setLoading(true);
 		axios
 			.post('/auth/reset-password', data)
 			.then((response) => {
@@ -119,15 +128,17 @@ const useAuthentication = () => {
 			.catch((err) => {
 				console.log(err);
 			});
+		setLoading(false);
 	};
 
 	return {
 		user,
 		handleRegister,
 		handleLogin,
-		message,
+		registerMsg,
 		handleLogout,
 		handleForgotPassword,
+		loading,
 		handleResetPassword,
 		forgotPasswordMsg,
 	};

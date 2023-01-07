@@ -1,3 +1,4 @@
+import { Result, Space, Spin } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
@@ -9,7 +10,6 @@ function useQuery() {
 const Verify = () => {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
 	const query = useQuery();
 
 	const verifyToken = async () => {
@@ -20,7 +20,7 @@ const Verify = () => {
 				email: query.get('email'),
 			});
 		} catch (error) {
-			// console.log(error.response);
+			console.log(error.response);
 			setError(true);
 		}
 		setLoading(false);
@@ -28,25 +28,47 @@ const Verify = () => {
 	useEffect(() => {
 		verifyToken();
 	}, []);
+
 	if (loading) {
-		return <h2>Loading...</h2>;
+		return (
+			<Space size='middle'>
+				<Spin size='large' />
+			</Space>
+		);
 	}
 
 	if (error) {
 		return (
-			<h4>
-				There was an error, please double check your verification link{' '}
-			</h4>
+			<Result
+				status='error'
+				title="There was an error, please double check your verification link{' '}"
+				subTitle=''
+				extra={
+					<Link
+						to='/auth/login'
+						className='text-primary underline text-base'
+					>
+						Please Login
+					</Link>
+				}
+			/>
 		);
 	}
 	return (
 		<div className=' mx-auto '>
-			<h2 className='flex items-center justify-center text-2xl font-bold text-dark '>
-				Account Confirmed
-			</h2>
-			<Link to='/auth/login' className='btn'>
-				Please login
-			</Link>
+			<Result
+				status='success'
+				title='Account Confirmed!'
+				subTitle=''
+				extra={[
+					<Link
+						to='/auth/login'
+						className='text-primary underline text-base'
+					>
+						Please Login
+					</Link>,
+				]}
+			/>
 		</div>
 	);
 };
