@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+// library imports
 import {
 	HiAcademicCap,
 	HiCheck,
@@ -6,21 +8,21 @@ import {
     HiOutlineInformationCircle,
 } from 'react-icons/hi2';
 import { Steps, Tabs } from 'antd';
-import {
-	AddBasic,
-	AddRequirement,
-	AddOutcomes,
-	AddPricing,
-	AddMedia,
-	AddSeo,
-	AddFinishing,
-} from '../AddNewCourses';
-import AddCurriculumComponent from './AddCurriculumComponent';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { IoPricetagsOutline } from 'react-icons/io5';
 import { MdOutlinePermMedia } from 'react-icons/md';
 import { RiAdvertisementLine } from 'react-icons/ri';
-import { SiUploaded } from 'react-icons/si';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+// components
+import AddCurriculumComponent from './AddCurriculumComponent';
+import EditBasic from './EditBasic';
+import EditRequirement from './EditRequirement';
+import EditOutcomes from './EditOutcomes';
+import EditPricing from './EditPricing';
+import EditMedia from './EditMedia';
+import EditSeo from './EditSeo';
 
 const { Step } = Steps;
 
@@ -41,9 +43,18 @@ const StepHeader = ({ title, step, currKey, icon, activeKey }) => {
 };
 
 const EditCourse = () => {
-	const [courseData, setCourseData] = useState({});
 	const [steps, setSteps] = useState();
 	const [tabActiveKey, setTabActiveKey] = useState('start');
+	const [requirement, setRequirement] = useState([]);
+	const [outcome, setOutcome] = useState([]);
+	const [courseThumb, setCourseThumb] = useState([]);
+	const [tags, setTags] = useState(['course', 'add more']);
+	const [editorContent, setEditorContent] = useState();
+	const [isUploading, setIsUploading] = useState(false);
+
+	// third party library states
+	const { control, handleSubmit, reset } = useForm({});
+	const navigate = useNavigate();
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (receivedKey) => {
@@ -66,149 +77,151 @@ const EditCourse = () => {
 	};
 
 	return (
-			<div className='space-y-8'>
-				{/*****--------------Courses Header---------------*****/}
-				<div className='flex justify-between items-center'>
-					{/* header */}
-					<h4 className='text-xl font-medium'>Edit Course</h4>
-					{/* add new course */}
-					<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
-						<HiCog size={20} /> <span>My Courses</span>
-					</button>
-				</div>
-				<div className='grid grid-cols-12 gap-8 min-h-[71vh]'>
-					<div className='col-span-12 '>
-						<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='curriculum'
-										icon={<HiAcademicCap size={19} />}
-										step='1'
-										currKey='start'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='start'
-							>
-								<AddCurriculumComponent
-									handleActiveTab={handleActiveTab}
+		<div className='space-y-8'>
+			{/*****--------------Courses Header---------------*****/}
+			<div className='flex justify-between items-center'>
+				{/* header */}
+				<h4 className='text-xl font-medium'>Edit Course</h4>
+				{/* add new course */}
+				<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
+					<HiCog size={20} /> <span>My Courses</span>
+				</button>
+			</div>
+			<div className='grid grid-cols-12 gap-8 min-h-[71vh]'>
+				<div className='col-span-12 '>
+					<Tabs onChange={handleSteps} activeKey={tabActiveKey}>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='curriculum'
+									icon={<HiAcademicCap size={19} />}
+									step='1'
+									currKey='start'
+									activeKey={tabActiveKey}
 								/>
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Basic'
-										icon={
-											<HiOutlineInformationCircle
-												size={19}
-											/>
-										}
-										step='2'
-										currKey='1'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='1'
-							>
-								<AddBasic handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Requirements'
-										icon={
-											<HiOutlineClipboardList size={19} />
-										}
-										step='3'
-										currKey='2'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='2'
-							>
-								<AddRequirement
-									handleActiveTab={handleActiveTab}
+							}
+							key='start'
+						>
+							<AddCurriculumComponent
+								handleActiveTab={handleActiveTab}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Basic'
+									icon={
+										<HiOutlineInformationCircle size={19} />
+									}
+									step='2'
+									currKey='1'
+									activeKey={tabActiveKey}
 								/>
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Outcomes'
-										icon={<HiCheck size={19} />}
-										step='4'
-										currKey='3'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='3'
-							>
-								<AddOutcomes
-									handleActiveTab={handleActiveTab}
+							}
+							key='1'
+						>
+							<EditBasic
+								handleActiveTab={handleActiveTab}
+								control={control}
+								editorContent={editorContent}
+								setEditorContent={setEditorContent}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Requirements'
+									icon={<HiOutlineClipboardList size={19} />}
+									step='3'
+									currKey='2'
+									activeKey={tabActiveKey}
 								/>
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Pricing'
-										icon={<IoPricetagsOutline size={19} />}
-										step='5'
-										currKey='4'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='4'
-							>
-								<AddPricing handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Media'
-										icon={<MdOutlinePermMedia size={19} />}
-										step='6'
-										currKey='5'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='5'
-							>
-								<AddMedia handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Seo'
-										icon={<RiAdvertisementLine size={19} />}
-										step='7'
-										currKey='6'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='6'
-							>
-								<AddSeo handleActiveTab={handleActiveTab} />
-							</Tabs.TabPane>
-							<Tabs.TabPane
-								tab={
-									<StepHeader
-										title='Finish'
-										icon={<SiUploaded size={19} />}
-										step='8'
-										currKey='7'
-										activeKey={tabActiveKey}
-									/>
-								}
-								key='7'
-							>
-								<AddFinishing
-									handleActiveTab={handleActiveTab}
+							}
+							key='2'
+						>
+							<EditRequirement
+								handleActiveTab={handleActiveTab}
+								requirement={requirement}
+								setRequirement={setRequirement}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Outcomes'
+									icon={<HiCheck size={19} />}
+									step='4'
+									currKey='3'
+									activeKey={tabActiveKey}
 								/>
-							</Tabs.TabPane>
-						</Tabs>
-					</div>
+							}
+							key='3'
+						>
+							<EditOutcomes
+								handleActiveTab={handleActiveTab}
+								outcome={outcome}
+								setOutcome={setOutcome}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Pricing'
+									icon={<IoPricetagsOutline size={19} />}
+									step='5'
+									currKey='4'
+									activeKey={tabActiveKey}
+								/>
+							}
+							key='4'
+						>
+							<EditPricing
+								handleActiveTab={handleActiveTab}
+								control={control}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Media'
+									icon={<MdOutlinePermMedia size={19} />}
+									step='6'
+									currKey='5'
+									activeKey={tabActiveKey}
+								/>
+							}
+							key='5'
+						>
+							<EditMedia
+								handleActiveTab={handleActiveTab}
+								control={control}
+								courseThumb={courseThumb}
+								setCourseThumb={setCourseThumb}
+							/>
+						</Tabs.TabPane>
+						<Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Seo'
+									icon={<RiAdvertisementLine size={19} />}
+									step='7'
+									currKey='6'
+									activeKey={tabActiveKey}
+								/>
+							}
+							key='6'
+						>
+							<EditSeo
+								handleActiveTab={handleActiveTab}
+								control={control}
+								tags={tags}
+								setTags={setTags}
+							/>
+						</Tabs.TabPane>
+					</Tabs>
 				</div>
 			</div>
+		</div>
 	);
 };
 

@@ -68,7 +68,7 @@ const ContentCreatorSidebar = () => {
 						style={{ padding: '0 !important' }}
 					>
 						<SideBarLink to='/content-creator/dashboard/manage-courses' end>
-							<FaUsersCog size={20} /> <span>Manage Courses</span>
+							<FaUsersCog size={20} /> <span>My Courses</span>
 						</SideBarLink>
 						<SideBarLink to='/content-creator/dashboard/manage-courses/add'>
 							<MdPersonAddAlt size={20} />{' '}

@@ -24,4 +24,3 @@ const DashTextEditor = ({ editorContent, setEditorContent, editor, placeholder }
 
 export default DashTextEditor;
 
-
