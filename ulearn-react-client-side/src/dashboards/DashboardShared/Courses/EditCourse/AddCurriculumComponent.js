@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { Alert, Input, Modal } from 'antd';
+import { Alert, Input, message, Modal } from 'antd';
 import { HiPlus } from 'react-icons/hi2';
 import { MdEdit } from 'react-icons/md';
 import { Reorder, motion } from 'framer-motion';
+import axios from 'axios';
+
+// component imports
 import Lesson from './Lesson';
+import Section from './Section';
+import { useForm } from 'react-hook-form';
 
 const initialSectionList = [
 	{
@@ -13,11 +18,11 @@ const initialSectionList = [
 		lessons: [
 			{
 				_id: 0,
-				title: 'Introduction',
+				lessonTitle: 'Introduction',
 			},
 			{
 				_id: 1,
-				title: 'Description',
+				lessonTitle: 'Description',
 			},
 		],
 	},
@@ -28,13 +33,13 @@ const initialSectionList = [
 		lessons: [
 			{
 				_id: 1,
-				title: 'Projects',
+				lessonTitle: 'Projects',
 			},
 		],
 	},
 ];
 
-const AddCurriculumComponent = ({ handleActiveTab }) => {
+const AddCurriculumComponent = () => {
 	const [sectionList, setSectionList] = useState([...initialSectionList]);
 	const [currSection, setCurrSection] = useState(sectionList[0]);
 	const [lessonList, setLessonList] = useState([...sectionList[0].lessons]);
@@ -42,25 +47,23 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 	const [lessonModalOpen, setLessonModalOpen] = useState(false);
 	const [lessonTitle, setLessonTitle] = useState('');
 	const [tempSectionTitle, setTempSectionTitle] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+
+	// library constats
+	const { control, handleSubmit } = useForm({});
+
+	// -------------- COMPONENT FEATURES - FUNCTIONS --------------
 
 	// functionality - will show the current section
 	const handleCurrSection = (section) => {
-		setCurrSection(() => section);
-		setLessonList(() => section.lessons);
+		setCurrSection(section);
+		setLessonList([...section.lessons])
 	};
 
-	// functionality - will add an empty section to the list
-	const handleAddSection = (title) => {
-		console.log(title);
+	// functionality - will add newly created section to the list
+	const handleAddSection = async (newSection) => {
 		setSectionList(() => {
-			const newList = [
-				...sectionList,
-				{
-					section: sectionList.length + 1,
-					lessons: [],
-					sectionTitle: title,
-				},
-			];
+			const newList = [...sectionList, newSection];
 			return newList;
 		});
 		setTempSectionTitle('');
@@ -71,7 +74,7 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 	// - map sectionList, find the desired section, mutate it's lessons, return mutated section
 	// ! before returning update current section
 	// # finally close the modal and empty title string
-	const handleAddLesson = (sectionId, title) => {
+	const handleAddLesson = (sectionId, newLesson) => {
 		let newSectionList = [];
 
 		setSectionList((prevSectionList) => {
@@ -80,7 +83,7 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 					const newSection = { ...section };
 					newSection.lessons = [
 						...section.lessons,
-						{ _id: section.lessons.length + 1, title },
+						newLesson
 					];
 					setCurrSection(() => newSection);
 					setLessonList(() => newSection.lessons);
@@ -91,11 +94,47 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 			return [...newSectionList];
 		});
 
+		console.log(currSection, 'currSection');
+
 		setLessonTitle('');
 		setLessonModalOpen(false);
 	};
 
-	console.log(sectionList, lessonTitle);
+	// -------------- API REQUESTS - FUNCTIONS --------------
+
+	// POST - create section | add section to section list | update course
+	const handleCreateSection = (sectionTitle) => {
+		setIsLoading(true)
+		axios
+			.post('/sections', { sectionTitle })
+			.then((response) => {
+				message.success('Created a new section!');
+				handleAddSection(response.data.section);
+			})
+			.catch((error) => {
+				message.error(error.response.data.msg);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			})
+	};
+
+	// POST - create lesson | add lesson to current section | update current section
+	const handleCreateLesson = (sectionId, lessonTitle) => {
+		setIsLoading(true);
+		axios
+			.post('/lessons', { lessonTitle })
+			.then((response) => {
+				message.success('Created a new lesson!');
+				handleAddLesson(sectionId, response.data.lesson);
+			})
+			.catch((error) => {
+				message.error(error.response.data.msg);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	};
 
 	return (
 		<div className='border-[0.5px] rounded-lg min-h-[70vh] grid grid-cols-12 gap-2 p-2'>
@@ -120,8 +159,9 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 						title='New Section'
 						centered
 						open={sectionModalOpen}
-						onOk={() => handleAddSection(tempSectionTitle)}
+						onOk={() => handleCreateSection(tempSectionTitle)}
 						onCancel={() => setSectionModalOpen(false)}
+						confirmLoading={isLoading}
 					>
 						<Input
 							onBlur={(e) => setTempSectionTitle(e.target.value)}
@@ -142,27 +182,14 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 								key={sectionItem._id}
 								value={sectionItem}
 							>
-								{/*****--------------Section Item---------------*****/}
-								<article
-									key={sectionItem.section}
-									onClick={() =>
-										handleCurrSection(sectionItem)
-									}
-									className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
-										currSection.section ===
-										sectionItem.section
-											? 'border-l-primary'
-											: 'border-l-transparent'
-									}`}
-								>
-									<h5 className='text-lg font-light m-0'>
-										Section {sectionItem.section}
-									</h5>
-									<p className='m-0 text-xs font-light text-font2'>
-										Lessons:{' '}
-										{sectionItem?.lessons?.length || 0}
-									</p>
-								</article>
+								<Section
+									key={sectionItem._id}
+									data={{
+										sectionItem,
+										currSection,
+										handleCurrSection,
+									}}
+								/>
 							</Reorder.Item>
 						))}
 					</Reorder.Group>
@@ -196,9 +223,10 @@ const AddCurriculumComponent = ({ handleActiveTab }) => {
 						centered
 						open={lessonModalOpen}
 						onOk={() =>
-							handleAddLesson(currSection._id, lessonTitle)
+							handleCreateLesson(currSection._id, lessonTitle)
 						}
 						onCancel={() => setLessonModalOpen(false)}
+						confirmLoading={isLoading}
 					>
 						<Input
 							onChange={(e) => setLessonTitle(e.target.value)}
