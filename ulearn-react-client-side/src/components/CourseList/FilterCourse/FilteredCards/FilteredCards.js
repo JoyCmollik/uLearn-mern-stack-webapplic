@@ -1,10 +1,13 @@
 import { Avatar, Pagination, Rate } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiTimeFive } from 'react-icons/bi';
 import { BsFillPlayCircleFill } from 'react-icons/bs';
 import { RiClosedCaptioningFill } from 'react-icons/ri';
 import { TbExternalLink } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useCourseList from '../../../../hooks/useCourseList';
+
 const filterCategories = [
 	{
 		id: 73,
@@ -70,41 +73,42 @@ const filterCategories = [
 
 const FilteredCards = () => {
 	//rating
-
-	const [value, setValue] = useState(5);
+	const { courseList } = useCourseList();
 	//pagination
 	const [current, setCurrent] = useState(1);
+	const [value, setValue] = useState(5);
 	const navigate = useNavigate();
 	const onChange = (page) => {
 		console.log(page);
 		setCurrent(page);
 	};
+
 	return (
 		<section className='p-4 '>
 			<div className=''>
-				{filterCategories.map((category) => {
+				{courseList.map((category) => {
 					const {
-						img,
-						title,
-						subtitle,
-						price,
+						courseThumb,
+						courseTitle,
+						courseShortDesc,
+						coursePrice,
 						avatar,
 						lecture,
 						time,
-						status,
-						rating,
+						level,
+						averageRating,
 						language,
-						id,
+						_id,
 					} = category;
 					return (
 						<div
-							key={id}
+							key={_id}
 							className='  rounded-lg grid grid-cols-9  '
 						>
 							{/* ----------------------card image--------------------------- */}
 							<div className=' col-span-2 py-[10px] pl-[10px]'>
 								<img
-									src={img}
+									src={courseThumb}
 									alt='course'
 									className='rounded-xl '
 								/>
@@ -113,10 +117,10 @@ const FilteredCards = () => {
 							<article className='py-[10px] px-[20px] col-span-4 '>
 								{/* ----------------------card title--------------------------- */}
 								<h2 className='card-title text-base font-semibold text-dark whitespace-nowrap'>
-									{title}
+									{courseTitle}
 								</h2>
 								<h3 className='text-[13px]  capitalize text-font2 whitespace-nowrap'>
-									{subtitle}
+									{courseShortDesc}
 								</h3>
 								{/* ----------------------icons--------------------------- */}
 								<div className='flex space-x-4 items-center'>
@@ -130,7 +134,7 @@ const FilteredCards = () => {
 									<p className='flex items-center'>
 										<BiTimeFive className='inline-block text-base mr-2 text-font2' />
 										<span className='text-sm'>
-											{time} Hours
+											{time ? time : '01:10:09'} Hours
 										</span>
 									</p>
 									<p className='flex items-center'>
@@ -143,12 +147,12 @@ const FilteredCards = () => {
 								{/*------------------------- status and view-------------------- */}
 								<div className='flex items-center space-x-6'>
 									<p className='text-[13px]  capitalize bg-primary text-white py-1  px-4 rounded-md'>
-										{status}
+										{level}
 									</p>
 									<div className='mb-3'>
 										<button
 											onClick={() =>
-												navigate(`/course-list/${id}`)
+												navigate(`/course-list/${_id}`)
 											}
 											className='text-[13px] capitalize  bg-blue-100 hover:bg-primary text-primary hover:text-white py-1 px-4  rounded-md  font-medium '
 										>
@@ -160,10 +164,20 @@ const FilteredCards = () => {
 								{/*------------------------- avatar-------------------- */}
 								<div className=''>
 									<Avatar.Group>
-										<Avatar src={avatar} />
+										<Avatar
+											src={
+												avatar
+													? avatar
+													: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg'
+											}
+										/>
 										<Avatar
 											style={{ background: 'white' }}
-											src='https://joeschmoe.io/api/v1/random'
+											src={
+												avatar
+													? avatar
+													: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg'
+											}
 										/>
 									</Avatar.Group>
 								</div>
@@ -172,7 +186,7 @@ const FilteredCards = () => {
 							<article className='col-span-3 pt-[10px] pb-[15px] px-[25px] flex flex-col justify-end items-end'>
 								{/* -------------------------$course price---------------------------- */}
 								<p className='font-semibold  text-lg text-black'>
-									{price}
+									{coursePrice}
 								</p>
 								{/* ------------------------rating-------------------- */}
 								<div>
@@ -190,7 +204,9 @@ const FilteredCards = () => {
 										)}
 									</span>
 								</div>
-								<p className='text-[13px]'>{rating} Ratings</p>
+								<p className='text-[13px]'>
+									{averageRating} Ratings
+								</p>
 							</article>
 						</div>
 					);

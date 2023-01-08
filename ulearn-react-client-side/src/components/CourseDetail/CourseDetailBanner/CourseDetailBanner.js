@@ -1,32 +1,24 @@
 import { Rate } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const CourseDetailBanner = () => {
+const CourseDetailBanner = ({ singleCourse }) => {
+	const { _id, courseTitle, courseDesc, courseMetaDesc } = singleCourse;
+	console.log(singleCourse);
 	//rating
-
 	const [value, setValue] = useState(5);
 	return (
 		<section className='bg-gradient-to-r from-[#020024] to-[#090979] min-h-screen'>
 			<div className=' grid grid-cols-2 container mx-auto  pt-56'>
 				<div className='text-light     '>
 					{/*-------------------title-------------------------*/}
-					<h2 className='text-light text-[41px] font-medium tracking-wider'>
-						Javascript: <br /> Understanding The <br /> Weird Parts
+					<h2 className='text-light text-[41px] font-medium tracking-wider w-[400px]'>
+						{/* Javascript: <br /> Understanding The <br /> Weird Parts */}
+						{courseTitle || ''} :
+						<br />
+						{courseMetaDesc}
 					</h2>
 					<p className='text-base tracking-wide'>
-						In This Course You Will GAIn A Deep UnderstAndIng Of
-						<br />
-						JAvAscript, leArn How JAvAscript Works Under The Hood,
-						And <br />
-						How thAt Knowledge Helps You Avoid Common pitfAlls And
-						<br />
-						drAsticAlly Improve Your Ability To Debug Problems. You
-						Will <br />
-						FInd clArity In The pArts thAt oThers, Even Experienced
-						<br />
-						Coders, mAy FInd Weird, Odd, And At Times
-						Incomprehensible.
-						<br />
+						{courseDesc || ''}
 					</p>
 					<p>Johnny Depp | Level 1</p>
 					{/* ------------------------rating-------------------- */}

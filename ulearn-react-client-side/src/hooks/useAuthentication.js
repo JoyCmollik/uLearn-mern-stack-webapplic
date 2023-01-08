@@ -64,7 +64,7 @@ const useAuthentication = () => {
 	const handleLogout = (navigate) => {
 		setLoading(true);
 		axios
-			.delete('auth/logout')
+			.delete('/auth/logout')
 			.then((response) => {
 				setUser(() => null);
 				console.log(response.msg);

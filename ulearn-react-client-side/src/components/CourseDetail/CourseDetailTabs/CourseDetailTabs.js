@@ -184,7 +184,7 @@ const courseIncludes = [
 		courseinfo: 'Certification of Completion',
 	},
 ];
-const CourseDetailTabs = () => {
+const CourseDetailTabs = ({ singleCourse }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -197,6 +197,21 @@ const CourseDetailTabs = () => {
 	const handleCancel = () => {
 		setIsModalOpen(false);
 	};
+
+	const {
+		_id,
+		courseTitle,
+		courseDesc,
+		courseMetaDesc,
+		courseShortDesc,
+		courseOutcomes,
+		enrolledStudents,
+		coursePrice,
+		ourseRequirements,
+		level,
+		language,
+		courseOverviewVidUrl,
+	} = singleCourse;
 	return (
 		<section className='container mx-auto    '>
 			<div className='grid grid-cols-12  gap-12'>
@@ -217,44 +232,65 @@ const CourseDetailTabs = () => {
 										</h2>
 										<div className='grid grid-cols-2 gap-4'>
 											<ul className='flex flex-col space-y-4'>
-												{text1.map((text, index) => (
-													<li
-														key={index}
-														className='flex items-center space-x-3  whitespace-pre-line'
-													>
-														<span className='block bg-green-200 rounded-full p-1 '>
-															<BsCheck className='text-base text-green-500  ' />{' '}
-														</span>
-														<span className='block text-base'>
-															{text}
-														</span>
-													</li>
-												))}
+												{courseOutcomes
+													? courseOutcomes
+															?.slice(0, 4)
+															.map(
+																(
+																	text,
+																	index
+																) => (
+																	<li
+																		key={
+																			index
+																		}
+																		className='flex items-center space-x-3  whitespace-pre-line'
+																	>
+																		<span className='block bg-green-200 rounded-full p-1 '>
+																			<BsCheck className='text-base text-green-500  ' />{' '}
+																		</span>
+																		<span className='block text-base'>
+																			{
+																				text
+																			}
+																		</span>
+																	</li>
+																)
+															)
+													: ''}
 											</ul>
 
 											<ul className='flex flex-col space-y-4'>
-												{text2.map((text, index) => (
-													<li
-														key={index}
-														className='flex items-center space-x-3  whitespace-pre-line'
-													>
-														<span className='block bg-green-200 rounded-full p-1 '>
-															<BsCheck className='text-base text-green-500  ' />{' '}
-														</span>
-														<span className='block text-base'>
-															{text}
-														</span>
-													</li>
-												))}
+												{courseOutcomes.length > 4
+													? courseOutcomes
+															?.slice(4, 8)
+															.map(
+																(
+																	text,
+																	index
+																) => (
+																	<li
+																		key={
+																			index
+																		}
+																		className='flex items-center space-x-3  whitespace-pre-line'
+																	>
+																		<span className='block bg-green-200 rounded-full p-1 '>
+																			<BsCheck className='text-base text-green-500  ' />{' '}
+																		</span>
+																		<span className='block text-base'>
+																			{
+																				text
+																			}
+																		</span>
+																	</li>
+																)
+															)
+													: ''}
 											</ul>
 										</div>
 										<p className='text-base whitespace-nowrap'>
-											Javascript is the language that
-											modern developers need to know, and
-											know well. Truly knowing Javascript
-											will get <br /> you a job, and
-											enable you to build quality web and
-											server applications.
+											{courseShortDesc || ''}
 										</p>
 									</article>
 								),
@@ -336,7 +372,7 @@ const CourseDetailTabs = () => {
 						</div>
 						{/*-------------------------------cost------------------------------- */}
 						<h3 className='text-[33px]  text-[#040453] font-medium pt-4'>
-							$ 50.00
+							$ {coursePrice || ''}
 						</h3>
 						<div>
 							{enrollDetails.map((detail) => (
