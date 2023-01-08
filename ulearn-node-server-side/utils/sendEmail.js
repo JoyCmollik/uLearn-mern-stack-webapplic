@@ -5,9 +5,10 @@ const sendEmail = async ({ to, subject, html }) => {
 	let testAccount = await nodemailer.createTestAccount();
 
 	const transporter = nodemailer.createTransport(nodemailerConfig);
+	console.log(process.env.USER);
 
 	return transporter.sendMail({
-		from: '"marwa mahtab" <marwa.mahtab@gmail.com>', // sender address
+		from: `"uLearn" <${process.env.NODEMAILER_USER}>`, // sender address
 		to,
 		subject,
 		html,
