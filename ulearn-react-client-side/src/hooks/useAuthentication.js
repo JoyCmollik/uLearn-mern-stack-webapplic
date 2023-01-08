@@ -99,7 +99,7 @@ const useAuthentication = () => {
 				});
 		}
 		setLoading(false);
-	}, []);
+	}, [user]);
 
 	const handleForgotPassword = (data, navigate) => {
 		console.log(data);
