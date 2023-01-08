@@ -24,7 +24,7 @@ const Lesson = ({lesson}) => {
 						</div>
 						<div>
 							<h4 className='font-normal m-0 text-font1 text-lg '>
-								{lesson.title}
+								{lesson.lessonTitle}
 							</h4>
 							<p className='m-0 text-font2 text-xs'>
 								2 Topic | 0:00 Hr

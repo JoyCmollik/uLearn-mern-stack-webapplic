@@ -9,13 +9,11 @@ const LessonSchema = new mongoose.Schema({
 	},
 	lessonSubtitle: {
 		type: String,
-		required: [true, 'please provide lesson subtitle'],
 		minlength: 3,
 		maxlength: 250,
 	},
 	lessonContent: {
 		type: String,
-		required: [true, 'please provide lesson content'],
 	},
 	lessonReadDuration: {
 		type: Number,

@@ -14,6 +14,7 @@ import { MdOutlinePermMedia } from 'react-icons/md';
 import { RiAdvertisementLine } from 'react-icons/ri';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // components
 import AddCurriculumComponent from './AddCurriculumComponent';
@@ -55,6 +56,12 @@ const EditCourse = () => {
 	// third party library states
 	const { control, handleSubmit, reset } = useForm({});
 	const navigate = useNavigate();
+
+	// -------------- API REQUESTS - FUNCTIONS --------------
+
+	const handleUpdateCourse = () => {}
+
+	// -------------- COMPONENT FEATURES - FUNCTIONS --------------
 
 	// functionality -> will update steps while tabs are opened
 	const handleSteps = (receivedKey) => {
