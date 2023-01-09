@@ -261,7 +261,7 @@ const CourseDetailTabs = ({ singleCourse }) => {
 											</ul>
 
 											<ul className='flex flex-col space-y-4'>
-												{courseOutcomes.length > 4
+												{ courseOutcomes?.length > 4
 													? courseOutcomes
 															?.slice(4, 8)
 															.map(
