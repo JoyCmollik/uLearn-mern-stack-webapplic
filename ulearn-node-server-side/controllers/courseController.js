@@ -29,6 +29,17 @@ const getSingleCourse = async (req, res) => {
 	res.status(StatusCodes.OK).json({ course });
 };
 
+const getSingleCourseSections = async (req, res) => {
+	const { id: courseId } = req.params;
+
+	const course = await Course.findOne({ _id: courseId }).populate({ path: 'sections', populate: { path: 'lessons' } });
+
+	if (!course) {
+		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
+	}
+	res.status(StatusCodes.OK).json({ sections: course.sections });
+};
+
 const updateCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
@@ -94,6 +105,7 @@ module.exports = {
 	createCourse,
 	getAllCourses,
 	getSingleCourse,
+	getSingleCourseSections,
 	updateCourse,
 	deleteCourse,
 	uploadImage,

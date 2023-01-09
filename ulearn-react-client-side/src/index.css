@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Jost', sans-serif;
+	font-family: 'Jost', sans-serif;
 }
 
 body {
-   background-color: white;
-    color: #3A3A3A; 
+	background-color: white;
+	color: #3a3a3a;
 }

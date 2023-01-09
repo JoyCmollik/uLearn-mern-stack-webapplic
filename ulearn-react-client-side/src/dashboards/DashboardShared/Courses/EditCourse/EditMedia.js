@@ -12,7 +12,7 @@ const EditMedia = ({ handleActiveTab, control, setCourseThumb }) => {
 		listType: 'picture',
 		accept: '.png, .jpeg',
 		maxCount: 1,
-		action: 'https://api.imgbb.com/1/upload?expiration=600&key=e2401ff27943b11283409a478fccc412',
+		action: 'https://api.imgbb.com/1/upload?expiration=9999999&key=e2401ff27943b11283409a478fccc412',
 		// action: 'http://localhost:5001/api/v1/images/upload',
 		iconRender: () => {
 			return <Spin />;
@@ -41,16 +41,6 @@ const EditMedia = ({ handleActiveTab, control, setCourseThumb }) => {
 			console.log('Dropped files', e.dataTransfer.files);
 		},
 	};
-
-	// const handleBeforeUpload = (file) => {
-	// 	const reader = new FileReader();
-	// 	reader.readAsDataURL(file);
-	// 	reader.onloadend = () => {
-	// 		console.log(reader.result);
-	// 		setFile(() => reader.result);
-	// 	};
-	// 	return file;
-	// };
 
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4 h-full'>

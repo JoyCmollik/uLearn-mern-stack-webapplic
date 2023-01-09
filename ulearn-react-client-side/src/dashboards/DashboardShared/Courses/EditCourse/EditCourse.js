@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // library imports
 import {
@@ -7,13 +7,13 @@ import {
 	HiCog,
     HiOutlineInformationCircle,
 } from 'react-icons/hi2';
-import { Steps, Tabs } from 'antd';
+import { message, Steps, Tabs } from 'antd';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { IoPricetagsOutline } from 'react-icons/io5';
 import { MdOutlinePermMedia } from 'react-icons/md';
 import { RiAdvertisementLine } from 'react-icons/ri';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // components
@@ -44,6 +44,7 @@ const StepHeader = ({ title, step, currKey, icon, activeKey }) => {
 };
 
 const EditCourse = () => {
+	const [course, setCourse] = useState(null);
 	const [steps, setSteps] = useState();
 	const [tabActiveKey, setTabActiveKey] = useState('start');
 	const [requirement, setRequirement] = useState([]);
@@ -56,11 +57,36 @@ const EditCourse = () => {
 	// third party library states
 	const { control, handleSubmit, reset } = useForm({});
 	const navigate = useNavigate();
+	const { id: courseId } = useParams();
 
 	// -------------- API REQUESTS - FUNCTIONS --------------
 
-	const handleUpdateCourse = () => {}
+	const handleFetchSingleCourse = () => {
+		axios
+			.get(`/courses/${courseId}`)
+			.then((response) => {
+				setCourse(response.data.course);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
+	const handleUpdateCourse = (newCourseData) => {
+		axios.patch(`/courses/${courseId}`, newCourseData)
+			.then(response => {
+				setCourse(response.data.course);
+				message.success('Updated the course successfully!');
+			})
+			.catch(error => {
+				message.error(error.response.data.msg || error.message)
+			})
+	};
+
+	// -------------- ON COMPONENT MOUNT REQUESTS - FUNCTIONS --------------
+	useEffect(() => {
+		handleFetchSingleCourse();
+	}, [])
 	// -------------- COMPONENT FEATURES - FUNCTIONS --------------
 
 	// functionality -> will update steps while tabs are opened
@@ -110,7 +136,9 @@ const EditCourse = () => {
 							key='start'
 						>
 							<AddCurriculumComponent
+								course={course}
 								handleActiveTab={handleActiveTab}
+								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -132,6 +160,7 @@ const EditCourse = () => {
 								control={control}
 								editorContent={editorContent}
 								setEditorContent={setEditorContent}
+								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -185,6 +214,7 @@ const EditCourse = () => {
 							<EditPricing
 								handleActiveTab={handleActiveTab}
 								control={control}
+								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -204,6 +234,7 @@ const EditCourse = () => {
 								control={control}
 								courseThumb={courseThumb}
 								setCourseThumb={setCourseThumb}
+								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -223,6 +254,7 @@ const EditCourse = () => {
 								control={control}
 								tags={tags}
 								setTags={setTags}
+								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
 					</Tabs>

@@ -9,6 +9,7 @@ const {
 	createCourse,
 	getAllCourses,
 	getSingleCourse,
+	getSingleCourseSections,
 	updateCourse,
 	deleteCourse,
 	uploadImage,
@@ -19,8 +20,7 @@ const { getSingleCourseReviews } = require('../controllers/reviewController');
 router
 	.route('/')
 	.get(getAllCourses)
-	// .post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
-	.post(createCourse);
+	.post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
 
 router
 	.route('/uploadImage')
@@ -32,6 +32,7 @@ router
 	.patch(authenticateUser, authorizePermission('admin'), updateCourse)
 	.delete(authenticateUser, authorizePermission('admin'), deleteCourse);
 
+router.route('/:id/sections').get(getSingleCourseSections);
 router.route('/:id/reviews').get(getSingleCourseReviews);
 
 module.exports = router;
