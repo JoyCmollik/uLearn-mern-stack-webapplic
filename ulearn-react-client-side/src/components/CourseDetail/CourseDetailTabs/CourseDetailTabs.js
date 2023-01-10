@@ -261,7 +261,7 @@ const CourseDetailTabs = ({ singleCourse }) => {
 											</ul>
 
 											<ul className='flex flex-col space-y-4'>
-												{ courseOutcomes?.length > 4
+												{courseOutcomes?.length > 4
 													? courseOutcomes
 															?.slice(4, 8)
 															.map(
@@ -306,21 +306,15 @@ const CourseDetailTabs = ({ singleCourse }) => {
 									</div>
 								),
 							},
-							{
-								label: `Discussion`,
-								key: '3',
-								children: (
-									<div>
-										<CourseDetailDiscussion />
-									</div>
-								),
-							},
+
 							{
 								label: `Review`,
 								key: '4',
 								children: (
 									<div>
-										<CourseDetailReview />
+										<CourseDetailReview
+											singleCourse={singleCourse}
+										/>
 									</div>
 								),
 							},
