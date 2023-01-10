@@ -4,7 +4,7 @@ const CustomError = require('../errors');
 const path = require('path');
 
 const createCourse = async (req, res) => {
-	// req.body.instructor = req.user.userId;
+	req.body.instructor = req.user.userId;
 
 	const course = await Course.create(req.body);
 	res.status(StatusCodes.CREATED).json({ course });
@@ -19,9 +19,7 @@ const getAllCourses = async (req, res) => {
 const getSingleCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOne({ _id: courseId }).populate(
-		'reviews'
-	);
+	const course = await Course.findOne({ _id: courseId }).populate('reviews');
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
@@ -32,7 +30,10 @@ const getSingleCourse = async (req, res) => {
 const getSingleCourseSections = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOne({ _id: courseId }).populate({ path: 'sections', populate: { path: 'lessons' } });
+	const course = await Course.findOne({ _id: courseId }).populate({
+		path: 'sections',
+		populate: { path: 'lessons' },
+	});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
@@ -43,14 +44,10 @@ const getSingleCourseSections = async (req, res) => {
 const updateCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOneAndUpdate(
-		{ _id: courseId },
-		req.body,
-		{
-			new: true,
-			runValidators: true,
-		}
-	);
+	const course = await Course.findOneAndUpdate({ _id: courseId }, req.body, {
+		new: true,
+		runValidators: true,
+	});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);

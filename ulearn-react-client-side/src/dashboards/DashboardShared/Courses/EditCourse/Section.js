@@ -6,7 +6,7 @@ const Section = ({data}) => {
 		<>
 			{/*****--------------Section Item---------------*****/}
 			<article
-				key={sectionItem._id}
+				key={sectionItem?._id}
 				onClick={() => handleCurrSection(sectionItem)}
 				className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
 					currSection._id === sectionItem._id
