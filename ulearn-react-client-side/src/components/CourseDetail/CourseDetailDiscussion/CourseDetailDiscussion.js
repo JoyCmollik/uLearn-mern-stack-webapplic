@@ -72,15 +72,15 @@ const CourseDetailDiscussion = () => {
 		setValue(e.target.value);
 	};
 	return (
-		<div className='p-10 text-base'>
+		<div className='text-base'>
 			{comments.length > 0 && <CommentList comments={comments} />}
 			<Comment
-				avatar={
+				/* 	avatar={
 					<Avatar
 						src='https://joeschmoe.io/api/v1/random'
 						alt='Han Solo'
 					/>
-				}
+				} */
 				content={
 					<Editor
 						onChange={handleChange}
