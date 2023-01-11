@@ -18,12 +18,9 @@ const CourseDetailBanner = ({ singleCourse }) => {
 						<br />
 						{courseMetaDesc}
 					</h2>
-					<p
-						className='text-base tracking-wide text-white'
-						style={{ color: 'white' }}
-					>
-						{courseDesc ? parse(courseDesc) : ''}
-					</p>
+
+					{courseDesc ? parse(courseDesc) : ''}
+
 					<p>Johnny Depp | Level 1</p>
 					{/* ------------------------rating-------------------- */}
 
