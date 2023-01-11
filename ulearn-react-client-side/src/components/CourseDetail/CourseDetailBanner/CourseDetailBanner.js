@@ -1,9 +1,10 @@
 import { Rate } from 'antd';
 import { useState } from 'react';
 
+const parse = require('html-react-parser');
 const CourseDetailBanner = ({ singleCourse }) => {
-	const { _id, courseTitle, courseDesc, courseMetaDesc } = singleCourse;
-	console.log(singleCourse);
+	const { courseTitle, courseDesc, courseMetaDesc } = singleCourse;
+	//console.log(singleCourse);
 	//rating
 	const [value, setValue] = useState(5);
 	return (
@@ -17,8 +18,11 @@ const CourseDetailBanner = ({ singleCourse }) => {
 						<br />
 						{courseMetaDesc}
 					</h2>
-					<p className='text-base tracking-wide'>
-						{courseDesc || ''}
+					<p
+						className='text-base tracking-wide text-white'
+						style={{ color: 'white' }}
+					>
+						{courseDesc ? parse(courseDesc) : ''}
 					</p>
 					<p>Johnny Depp | Level 1</p>
 					{/* ------------------------rating-------------------- */}

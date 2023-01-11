@@ -23,7 +23,7 @@ import {
 import { IoCopy } from 'react-icons/io5';
 import './CourseDetailTabs.css';
 import CourseDetailCollapse from '../CourseDetailCollapse/CourseDetailCollapse';
-import CourseDetailDiscussion from '../CourseDetailDiscussion/CourseDetailDiscussion';
+
 import CourseDetailReview from '../CourseDetailReview/CourseDetailReview';
 import CourseDetailInstructor from '../CourseDetailInstructor/CourseDetailInstructor';
 import { TbCertificate2 } from 'react-icons/tb';

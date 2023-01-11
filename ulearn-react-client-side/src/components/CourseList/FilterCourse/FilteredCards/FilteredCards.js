@@ -108,7 +108,7 @@ const FilteredCards = () => {
 							{/* ----------------------card image--------------------------- */}
 							<div className=' col-span-2 py-[10px] pl-[10px]'>
 								<img
-									src={courseThumb}
+									src={courseThumb || 'missing'}
 									alt='course'
 									className='rounded-xl '
 								/>
@@ -165,14 +165,6 @@ const FilteredCards = () => {
 								<div className=''>
 									<Avatar.Group>
 										<Avatar
-											src={
-												avatar
-													? avatar
-													: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg'
-											}
-										/>
-										<Avatar
-											style={{ background: 'white' }}
 											src={
 												avatar
 													? avatar

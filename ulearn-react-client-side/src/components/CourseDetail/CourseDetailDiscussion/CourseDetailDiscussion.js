@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CourseDetailDiscussion.css';
 import { Avatar, Button, Comment, Form, Input, List } from 'antd';
+
 import moment from 'moment';
 
 const { TextArea } = Input;

@@ -91,10 +91,10 @@ const useAuthentication = () => {
 				.get('/users/showMe')
 				.then((res) => {
 					setUser(res.data.user);
-					console.log(res.data.user, 'success');
+					//console.log(res.data.user, 'success');
 				})
 				.catch((err) => {
-					console.log(err, 'fail');
+					//console.log(err, 'fail');
 					setUser(null);
 				});
 		}
