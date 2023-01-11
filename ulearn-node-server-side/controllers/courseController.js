@@ -19,7 +19,9 @@ const getAllCourses = async (req, res) => {
 const getSingleCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOne({ _id: courseId }).populate('reviews');
+	const course = await Course.findOne({ _id: courseId }).populate({
+		path: 'reviews', populate: { path: 'user', select: ['name', 'avatarURL'] }
+	});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);

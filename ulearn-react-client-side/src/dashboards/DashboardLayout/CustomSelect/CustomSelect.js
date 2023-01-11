@@ -19,8 +19,8 @@ const tempData = [
 	},
 	{
 		value: '25',
-		label: '25'
-	}
+		label: '25',
+	},
 ];
 
 const onChange = (value) => {
@@ -31,7 +31,6 @@ const onSearch = (value) => {
 };
 
 const CustomSelect = ({ placeholder, ...rest }) => {
-	console.log(rest);
 	return (
 		<Select
 			{...rest}

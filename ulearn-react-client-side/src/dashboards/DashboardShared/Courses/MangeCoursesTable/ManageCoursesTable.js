@@ -3,354 +3,107 @@ import React from 'react';
 // library components
 import { Table, Tag } from 'antd';
 import { TfiMore } from 'react-icons/tfi';
+import { Link } from 'react-router-dom';
 
 const columns = [
 	{
-		title: '#',
-		dataIndex: '_id',
-		key: '_id',
-		render: (text) => <a>{text}</a>,
-	},
-	{
 		title: 'Title',
-		dataIndex: 'title',
-		key: 'title',
+		dataIndex: 'courseTitle',
+		key: 'courseTitle',
 	},
 	{
 		title: 'Category',
-		key: 'categories',
-		dataIndex: 'categories',
-		render: (_, { categories }) => (
+		key: 'category',
+		dataIndex: 'category',
+		render: (category) => (
 			<div className='flex flex-wrap space-x-1'>
-				{categories.map((tag) => (
-					<Tag className='capitalize' color='gray' key={tag}>
-						{tag}
-					</Tag>
-				))}
+				{/* {categories.map((tag) => ( */}
+				<Tag className='capitalize' color='gray' key={category}>
+					{category}
+				</Tag>
+				{/* ))} */}
 			</div>
 		),
 	},
 	{
 		title: 'Lesson and section',
-		dataIndex: 'course_stat',
-		key: 'course_stat',
-		render: ({ sections, lessons }) => (
+		dataIndex: 'sections',
+		key: 'sections',
+		render: (sections) => (
 			<div className='flex flex-col space-y-1'>
 				<small className='font-medium text-font2'>
-					Total section: <span className='font-bold'>{sections}</span>
+					Total section:{' '}
+					<span className='font-bold'>{sections?.length || 0}</span>
 				</small>
 				<small className='font-medium text-font2'>
-					Total lesson: <span className='font-bold'>{lessons}</span>
+					Total lesson:{' '}
+					<span className='font-bold'>
+						{sections.reduce(
+							(prev, curr) => prev + curr?.lessons?.length,
+							0
+						) || 0}
+					</span>
 				</small>
 			</div>
 		),
 	},
 	{
 		title: 'Enrolled students',
-		dataIndex: 'total_enrollment',
-		key: 'total_enrollment',
+		dataIndex: 'enrolledStudents',
+		key: 'enrolledStudents',
 		render: (enrollment) => (
 			<small className='font-medium text-font2'>
 				Total Enrollment:{' '}
-				<span className='font-bold'>{enrollment}</span>
+				<span className='font-bold'>{enrollment.length}</span>
 			</small>
 		),
 	},
-	{
-		title: 'Status',
-		key: 'status',
-		dataIndex: 'status',
-		render: (status) => {
-			let color = status === 'active' ? 'green' : 'red';
-			return (
-				<Tag size='small' color={color} key={status}>
-					{status.toUpperCase()}
-				</Tag>
-			);
-		},
-	},
+	// {
+	// 	title: 'Status',
+	// 	key: 'status',
+	// 	dataIndex: 'status',
+	// 	render: (status) => {
+	// 		let color = status === 'active' ? 'green' : 'red';
+	// 		return (
+	// 			<Tag size='small' color={color} key={status}>
+	// 				{status.toUpperCase()}
+	// 			</Tag>
+	// 		);
+	// 	},
+	// },
 	{
 		title: 'Price',
-		dataIndex: 'price',
-		key: 'price',
-		render: (price) => (
+		dataIndex: 'coursePrice',
+		key: 'coursePrice',
+		render: (coursePrice) => (
 			<p className='text-font2 m-0'>
 				<span className='font-medium text-font1'>
-					{price ? '$' : null}
+					{coursePrice ? '$' : null}
 				</span>
-				{price || price !== 0 ? price : <Tag color='purple'>free</Tag>}
+				{coursePrice || coursePrice !== 0 ? (
+					coursePrice
+				) : (
+					<Tag color='purple'>free</Tag>
+				)}
 			</p>
 		),
 	},
 	{
 		title: 'Action',
 		key: 'action',
-		render: () => (
-			<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
-				<TfiMore size={18} />
-			</button>
+		dataIndex: '_id',
+		render: (_id) => (
+			<Link to={`edit/${_id}`} >
+				<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
+					<TfiMore size={18} />
+				</button>
+			</Link>
 		),
 	},
 ];
 
-const data = [
-	{
-		_id: '1',
-		title: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-		categories: ['computer science', 'graphics'],
-		course_stat: { sections: 14, lessons: 20 },
-		total_enrollment: 100,
-		status: 'active',
-		price: 0,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-	{
-		_id: '2',
-		title: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		categories: ['loser'],
-		course_stat: { sections: 25, lessons: 100 },
-		total_enrollment: 100,
-		status: 'inactive',
-		price: 250,
-	},
-];
-
-const ManageCoursesTable = () => {
-	return <Table columns={columns} dataSource={data} />;
+const ManageCoursesTable = ({ courses }) => {
+	return <Table columns={columns} dataSource={courses} />;
 };
 
 export default ManageCoursesTable;

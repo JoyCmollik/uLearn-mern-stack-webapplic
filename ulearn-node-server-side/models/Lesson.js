@@ -19,6 +19,9 @@ const LessonSchema = new mongoose.Schema({
 		type: Number,
 		default: 0,
 	},
+	language: {
+		type: String,
+	}
 });
 
 module.exports = mongoose.model('Lesson', LessonSchema);

@@ -5,7 +5,7 @@ import { HiPlus } from 'react-icons/hi2';
 import { BsArrowsMove, BsJournalMedical } from 'react-icons/bs';
 import { TbMinimize } from 'react-icons/tb';
 import { Controller, useForm } from 'react-hook-form';
-import { InputNumber, message, Select, Spin } from 'antd';
+import { InputNumber, message, Select, Spin, Tag } from 'antd';
 import axios from 'axios';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
 
@@ -66,7 +66,15 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							{lesson.lessonTitle}
 						</h4>
 						<p className='m-0 text-font2 text-xs'>
-							2 Topic | 0:00 Hr
+							{lesson.lessonReadDuration} Min Read |{' '}
+							{lesson.language &&
+								`in 
+							${lesson.language}`}
+							{!lesson.lessonContent && (
+								<Tag size='small' color='error'>
+									no content
+								</Tag>
+							)}
 						</p>
 					</div>
 				</div>

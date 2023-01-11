@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // components import
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 import CustomSelect from '../../../DashboardLayout/CustomSelect/CustomSelect';
 // icon imports
 import { HiPlus } from 'react-icons/hi2';
-import { Input, Space } from 'antd';
+import { Input, message, Space, Spin } from 'antd';
 import ManageCoursesTable from '../MangeCoursesTable/ManageCoursesTable';
+import axios from 'axios';
 const { Search } = Input;
 
 const courseStatList = [
@@ -41,6 +42,24 @@ const courseStatList = [
 ];
 
 const ManageCourses = () => {
+	const [courses, setCourses] = useState(null);
+	const [isFetching, setIsFetching] = useState(false);
+
+	// library constants
+
+
+	// functions - on component mount
+	useEffect(() => {
+		setIsFetching(true);
+		axios.get('/courses').then(response => {
+			setCourses(response.data.courses)
+		}).catch(error => {
+			message.error(error.message);
+		}).finally(() => {
+			setIsFetching(false);
+		})
+	}, [])
+
 	return (
 		<div className='space-y-8'>
 			{/*****--------------Courses Header---------------*****/}
@@ -91,7 +110,10 @@ const ManageCourses = () => {
 						<h5 className='text-font2 font-medium'>Price</h5>
 						<CustomSelect placeholder='select price' />
 					</div>
-					<button className='px-4 h-[40px] rounded-lg bg-secondary text-white self-end'>
+					<button
+						disabled={Boolean(!courses)}
+						className='px-4 h-[40px] rounded-lg bg-secondary text-white self-end disabled:bg-opacity-25'
+					>
 						Filter
 					</button>
 				</div>
@@ -118,10 +140,22 @@ const ManageCourses = () => {
 					/>
 				</div>
 
-			    {/*****--------------Courses Table---------------*****/}
-                <div className="">
-                    <ManageCoursesTable />
-                </div>
+				{/*****--------------Courses Table---------------*****/}
+				<div className=''>
+					{isFetching ? (
+						<div className='flex h-100 justify-center items-center'>
+							<Spin />
+						</div>
+					) : (
+						<>
+							{!courses ? (
+								'no data'
+							) : (
+								<ManageCoursesTable courses={courses} />
+							)}
+						</>
+					)}
+				</div>
 			</div>
 		</div>
 	);
