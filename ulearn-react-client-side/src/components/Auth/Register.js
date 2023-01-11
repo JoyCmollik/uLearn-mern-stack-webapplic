@@ -6,6 +6,7 @@ import role_creator from '../../images/role_creator.svg';
 import useAuthentication from '../../hooks/useAuthentication';
 import { Button, Result, Space, Spin } from 'antd';
 import { Alert } from 'antd';
+import { Select } from 'antd';
 const userRoles = [
 	{
 		title: 'Learner',
@@ -27,16 +28,33 @@ const Register = () => {
 	console.log(registerMsg);
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);
-
+	/* const handleGenderChange = (value) => {
+	console.log(`selected ${value}`);
+}; */
 	// local functionalities
 	const handleUserRole = (role) => {
 		setUserRole((prevRole) => role);
 	};
+	const options = [
+		{
+			label: 'Male',
+			value: 'male',
+		},
+		{
+			label: 'Female',
+			value: 'female',
+		},
+		{
+			label: 'Others',
+			value: 'others',
+		},
+	];
 	const [person, setPerson] = useState({
 		email: '',
 		firstName: '',
 		lastName: '',
 		password: '',
+		gender: options.value,
 	});
 
 	const handleChange = (e) => {
@@ -46,14 +64,15 @@ const Register = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const { email, firstName, lastName, password } = person;
+		const { email, firstName, lastName, password, gender } = person;
 
-		if (email && firstName && lastName && password && userRole) {
+		if (email && firstName && lastName && password && userRole && gender) {
 			const data = {
 				name: `${firstName} ${lastName}`,
 				email,
 				password,
 				role: userRole === 'learner' ? 'user' : 'instructor',
+				gender,
 			};
 
 			handleRegister(data, navigate);
@@ -84,6 +103,7 @@ const Register = () => {
 			/>
 		);
 	}
+
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
 			{/*---------------------------------------left side of the page---------------------------------------------- */}
@@ -166,6 +186,24 @@ const Register = () => {
 								value={person.lastName}
 								onChange={handleChange}
 							/>
+						</div>
+						{/*-------------gender------------------------*/}
+						<div className='col-span-12 form-control w-full'>
+							<select
+								className='input input-bordered w-full p-3'
+								name='gender'
+								value={person.gender}
+								onChange={handleChange}
+							>
+								{options.map((option) => (
+									<option
+										key={option.value}
+										value={option.value}
+									>
+										{option.label}
+									</option>
+								))}
+							</select>
 						</div>
 						{/* form input */}
 						<div className='col-span-12 form-control w-full'>

@@ -17,10 +17,8 @@ const useAuthentication = () => {
 		axios
 			.post('/auth/register', data)
 			.then((response) => {
-				/* 	setUser(response.data.user); */
 				setRegisterMsg(response.data.msg);
 				console.log(response.data.msg);
-				/* 	navigate('/'); */
 			})
 			.catch((err) => {
 				console.log(err);

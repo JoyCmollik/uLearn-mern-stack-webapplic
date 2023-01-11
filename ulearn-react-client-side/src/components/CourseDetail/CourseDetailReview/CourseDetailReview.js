@@ -47,6 +47,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 	const [value, setValue] = useState(3);
 	const [updateValue, setUpdateValue] = useState(value);
 	const [loading, setLoading] = useState(false);
+	const [isDelete, setIsDelete] = useState(false);
 	const [triggerFetch, setTriggerFetch] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
 	//creating reviews
@@ -79,8 +80,8 @@ const CourseDetailReview = ({ singleCourse }) => {
 	};
 	//get single course
 	useEffect(() => {
-		setLoading(true);
 		if (triggerFetch) {
+			setLoading(true);
 			axios
 				.get(`/courses/${singleCourse._id}`)
 				.then((response) => {
@@ -127,7 +128,6 @@ const CourseDetailReview = ({ singleCourse }) => {
 						setIsEdit(false);
 						setLoading(false);
 					});
-				setLoading(false);
 			}
 		}
 	};
@@ -136,7 +136,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 		if (userId !== user?.userId) {
 			return;
 		} else {
-			setLoading(true);
+			setIsDelete(true);
 			axios
 				.delete(`/reviews/${reviewId}`)
 				.then((response) => {
@@ -148,7 +148,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 					console.log(err);
 				})
 				.finally(() => {
-					setLoading(false);
+					setIsDelete(false);
 				});
 		}
 	};
@@ -272,7 +272,8 @@ const CourseDetailReview = ({ singleCourse }) => {
 								</div>
 							</div>
 							<div className='ml-12 mt-4'>
-								{isEdit ? (
+								{isEdit &&
+								user?.userId === review?.user?._id ? (
 									<textarea
 										type=''
 										cols={100}
@@ -302,7 +303,16 @@ const CourseDetailReview = ({ singleCourse }) => {
 													)
 												}
 											>
-												Delete
+												{isDelete ? (
+													<>
+														<Spin size='small' />{' '}
+														<span className='ml-2'>
+															Delete
+														</span>
+													</>
+												) : (
+													'Delete'
+												)}
 											</button>
 											<button
 												className='ml-2 border border-blue-300  text-blue-800  hover:text-white py-1 px-3 rounded hover:bg-blue-600'
@@ -322,7 +332,16 @@ const CourseDetailReview = ({ singleCourse }) => {
 												)
 											}
 										>
-											Update review
+											{loading ? (
+												<>
+													<Spin size='small' />{' '}
+													<span className='ml-2'>
+														Updating...
+													</span>
+												</>
+											) : (
+												'Update'
+											)}
 										</button>
 									)}
 								</div>

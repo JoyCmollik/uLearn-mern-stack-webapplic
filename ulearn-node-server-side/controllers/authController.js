@@ -23,12 +23,16 @@ const register = async (req, res) => {
 	const isFirstAccount = (await User.countDocuments({})) === 0; //0 means no user
 	role = isFirstAccount ? 'admin' : role;
 
-	if (!isFirstAccount && role.toString() !== 'user' && role.toString() !== 'instructor') {
+	if (
+		!isFirstAccount &&
+		role.toString() !== 'user' &&
+		role.toString() !== 'instructor'
+	) {
 		throw new CustomError.UnauthorizedError(
 			'You are unauthorized to perform this task!'
 		);
 	}
-	
+
 	const verificationToken = crypto.randomBytes(40).toString('hex');
 	const user = await User.create({
 		name,
