@@ -29,8 +29,8 @@ router
 router
 	.route('/:id')
 	.get(getSingleCourse)
-	.patch(authenticateUser, authorizePermission('admin'), updateCourse)
-	.delete(authenticateUser, authorizePermission('admin'), deleteCourse);
+	.patch(authenticateUser, authorizePermission('admin','instructor'), updateCourse)
+	.delete(authenticateUser, authorizePermission('admin', 'instructor'), deleteCourse);
 
 router.route('/:id/sections').get(getSingleCourseSections);
 router.route('/:id/reviews').get(getSingleCourseReviews);

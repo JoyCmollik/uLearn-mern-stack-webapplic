@@ -16,7 +16,7 @@ const {
 router
 	.route('/')
 	.post(
-		[authenticateUser, authorizePermission('admin', 'instructior')],
+		[authenticateUser, authorizePermission('admin', 'instructor')],
 		createSection
 	)
 	.get(getAllCourseSection);

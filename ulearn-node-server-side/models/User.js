@@ -28,6 +28,33 @@ const UserSchema = new mongoose.Schema({
 		enum: ['admin', 'instructor', 'user'],
 		default: 'user',
 	},
+	gender: {
+		type: String,
+		enum: ['female', 'male', 'others'],
+		default: 'others'
+	},
+	avatarURL: {
+		type: String,
+		default: function () {
+			const random = Math.floor(Math.random() * 3);
+			if (this.gender === 'female') {
+				const femaleAvatars = [
+					'https://i.ibb.co/LPbvPDW/3d-rendering-zoom-call-avatar.jpg',
+					'https://i.ibb.co/d09ZskT/cute-business-woman-idea-thinking-present-pink-background-3d-rendering.jpg',
+					'https://i.ibb.co/JrDPyTj/3d-rendering-zoom-call-avatar-2.jpg',
+				];
+				return femaleAvatars[random];
+			} else if(this.gender === 'male') {
+				const maleAvatars = [
+					'https://i.ibb.co/gyh97hR/3d-rendering-zoom-call-avatar-1.jpg',
+					'https://i.ibb.co/0nDYgtn/3d-rendering-zoom-call-avatar-4.jpg',
+					'https://i.ibb.co/M72P1xD/3d-rendering-zoom-call-avatar-3.jpg',
+				];
+				return maleAvatars[random];
+			}
+			return 'https://i.ibb.co/vkv7fZH/3d-astronaut-flat-circle-line-art-design-illustration.jpg';
+		},
+	},
 	verificationToken: String,
 	isVerified: {
 		type: Boolean,
