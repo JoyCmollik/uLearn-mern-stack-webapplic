@@ -20,6 +20,12 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 	const { control, handleSubmit, reset } = useForm({});
 
 	const handleLessonSubmit = (data) => {
+		console.log(data);
+		// setting default values
+		if(lesson.language && !data.language) data.language = lesson.language;
+		if(lesson.lessonReadDuration && !data.lessonReadDuration) data.lessonReadDuration = lesson.lessonReadDuration;
+
+		// making sure all data is available
 		if (data.language && data.lessonReadDuration && editorContent) {
 			setIsUpdating(true);
 			data.lessonContent = editorContent;
@@ -96,7 +102,7 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							onClick={handleLessonContentAdd}
 							className='p-2 border-[0.5px] bg-primary text-white flex items-center rounded-full'
 						>
-							<HiPlus size={20} />
+							<MdEdit size={20} />
 						</button>
 					)}
 					<button className='p-2 border-[0.5px] bg-transparent text-font2 flex items-center rounded-full'>
@@ -193,14 +199,17 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							disabled={isUpdating}
 						>
 							{isUpdating ? (
-								<Spin size='small' />
+								<>
+									<Spin size='small' />{' '}
+									<span className='ml-2'>Updating...</span>
+								</>
 							) : (
 								'Update Lesson'
 							)}
 						</button>
 						<button
 							onClick={() => setIsEditing(false)}
-							className='col-span-4 px-4 py-1 border border-error rounded-lg text-error disabled:border-red-200 disabled:text-red-200'
+							className='col-span-4 px-4 py-1 border border-error rounded-lg text-error disabled:border-red-200 disabled:text-red-200 disabled:cursor-not-allowed'
 							type='submit'
 							disabled={isUpdating}
 						>
