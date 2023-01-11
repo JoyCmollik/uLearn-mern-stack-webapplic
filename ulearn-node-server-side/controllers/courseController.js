@@ -21,7 +21,7 @@ const getSingleCourse = async (req, res) => {
 
 	const course = await Course.findOne({ _id: courseId }).populate({
 		path: 'reviews', populate: { path: 'user', select: ['name', 'avatarURL'] }
-	});
+	}).populate({path: 'sections', select: 'sectionTitle', populate: { path: 'lessons', select: 'lessonTitle' }});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
