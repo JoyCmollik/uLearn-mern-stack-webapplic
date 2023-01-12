@@ -17,7 +17,6 @@ const DashTextEditor = ({
 		enableDragAndDropFileToEditor: true,
 		minHeight: minHeight || 200,
 		extraButtons: ['uploadImage'],
-		autofocus: true,
 	};
 
 	const insertImage = (editor, url) => {
@@ -34,8 +33,8 @@ const DashTextEditor = ({
 			axios
 				.post('/images/upload', { file: newFile })
 				.then((response) => {
-					message.success('your image uploaded successfully')
-					if(response.data.image.src) {
+					message.success('your image uploaded successfully');
+					if (response.data.image.src) {
 						insertImage(editor, response.data.image.src);
 					}
 				})

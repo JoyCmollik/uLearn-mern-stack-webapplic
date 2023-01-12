@@ -52,7 +52,7 @@ const EditCourse = () => {
 	const [courseThumb, setCourseThumb] = useState([]);
 	const [tags, setTags] = useState(['course', 'add more']);
 	const [editorContent, setEditorContent] = useState();
-	const [isUploading, setIsUploading] = useState(false);
+	const [isUpdating, setIsUpdating] = useState(false);
 
 	// third party library states
 	const { control, handleSubmit, reset } = useForm({});
@@ -73,6 +73,7 @@ const EditCourse = () => {
 	};
 
 	const handleUpdateCourse = (newCourseData) => {
+		setIsUpdating(true);
 		axios.patch(`/courses/${courseId}`, newCourseData)
 			.then(response => {
 				setCourse(response.data.course);
@@ -80,6 +81,9 @@ const EditCourse = () => {
 			})
 			.catch(error => {
 				message.error(error.response.data.msg || error.message)
+			})
+			.finally(() => {
+				setIsUpdating(false);
 			})
 	};
 
@@ -137,7 +141,6 @@ const EditCourse = () => {
 						>
 							<AddCurriculumComponent
 								course={course}
-								handleActiveTab={handleActiveTab}
 								handleUpdateCourse={handleUpdateCourse}
 							/>
 						</Tabs.TabPane>
@@ -156,11 +159,9 @@ const EditCourse = () => {
 							key='1'
 						>
 							<EditBasic
-								handleActiveTab={handleActiveTab}
-								control={control}
-								editorContent={editorContent}
-								setEditorContent={setEditorContent}
+								course={course}
 								handleUpdateCourse={handleUpdateCourse}
+								isUpdating={isUpdating}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -176,9 +177,9 @@ const EditCourse = () => {
 							key='2'
 						>
 							<EditRequirement
-								handleActiveTab={handleActiveTab}
-								requirement={requirement}
-								setRequirement={setRequirement}
+								course={course}
+								handleUpdateCourse={handleUpdateCourse}
+								isUpdating={isUpdating}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -194,9 +195,9 @@ const EditCourse = () => {
 							key='3'
 						>
 							<EditOutcomes
-								handleActiveTab={handleActiveTab}
-								outcome={outcome}
-								setOutcome={setOutcome}
+								course={course}
+								handleUpdateCourse={handleUpdateCourse}
+								isUpdating={isUpdating}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane
@@ -212,9 +213,9 @@ const EditCourse = () => {
 							key='4'
 						>
 							<EditPricing
-								handleActiveTab={handleActiveTab}
-								control={control}
+								course={course}
 								handleUpdateCourse={handleUpdateCourse}
+								isUpdating={isUpdating}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane

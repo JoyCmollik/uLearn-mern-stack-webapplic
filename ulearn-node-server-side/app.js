@@ -32,6 +32,7 @@ const sectionRouter = require('./routes/sectionRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const uploadRouter = require('./routes/uploadRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
 
 // this is a list of routers
 // testing
@@ -76,6 +77,7 @@ app.use('/api/v1/sections', sectionRouter);
 app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/images', uploadRouter);
+app.use('/api/v1/categories', categoryRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

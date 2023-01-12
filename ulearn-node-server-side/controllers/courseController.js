@@ -2,6 +2,7 @@ const Course = require('../models/Course');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
+const { populate } = require('../models/Course');
 
 const createCourse = async (req, res) => {
 	req.body.instructor = req.user.userId;
@@ -32,15 +33,17 @@ const getSingleCourse = async (req, res) => {
 const getSingleCourseSections = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOne({ _id: courseId }).populate({
-		path: 'sections',
-		populate: { path: 'lessons' },
-	});
+	const course = await Course.findOne({ _id: courseId })
+		.select('courseTitle courseShortDesc level language')
+		.populate({
+			path: 'sections',
+			populate: { path: 'lessons' },
+		}).populate({ path: 'instructor' , select: 'name avatarURL'});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
 	}
-	res.status(StatusCodes.OK).json({ sections: course.sections });
+	res.status(StatusCodes.OK).json({ course });
 };
 
 const updateCourse = async (req, res) => {

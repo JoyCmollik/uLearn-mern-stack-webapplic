@@ -18,7 +18,7 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [lessonModalOpen, setLessonModalOpen] = useState(false);
 	const [lessonTitle, setLessonTitle] = useState('');
 	const [tempSectionTitle, setTempSectionTitle] = useState('');
-	const [isFetching, setIsFetching] = useState(false);
+	const [isFetching, setIsFetching] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [triggerFetch, setTriggerFetch] = useState(false);
 
@@ -32,7 +32,7 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 			axios
 				.get(`/courses/${course._id}/sections`)
 				.then((response) => {
-					const sections = response.data.sections;
+					const sections = response.data.course.sections;
 					setSectionList(sections);
 					setCurrSection(sections[0]);
 				})
