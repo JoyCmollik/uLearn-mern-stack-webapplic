@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, InputNumber, message, Spin } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 
 const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
+	const [isFree, setIsFree] = useState(true);
+	const [coursePrice, setCoursePrice] = useState(course.coursePrice);
 	const { control, handleSubmit } = useForm({});
 
-	const handleUpdatePrice = (data) => {
-		if(course.coursePrice !== data.coursePrice && course.isFree !== data.isFree) {
-			console.log(data);
-			data.coursePrice = data.isFree ? 0 : data.coursePrice;
-			const newCourseData = {...course, ...data};
-			handleUpdateCourse(newCourseData);
-		} else {
-			message.warning('Please make some changes before updating!');
+	useEffect(() => {
+		if (course) {
+			setIsFree(course.isFree);
+			setCoursePrice(course.coursePrice);
 		}
-	}
+	}, [course]);
+
+	const handleUpdatePrice = (e) => {
+		e.preventDefault();
+
+		if (coursePrice == 0 && !isFree) {
+			message.warning('Please input a valid price or check it as free!');
+			return;
+		}
+		
+		let data = {};
+		data.coursePrice = isFree ? 0 : coursePrice;
+		data.isFree = isFree;
+
+		if (
+			course.coursePrice === coursePrice &&
+			course.isFree === isFree
+		) {
+			message.warning('Please make some changes before updating!');
+			return;
+		}
+		console.log(data, 'after');
+		const newCourseData = { ...course, ...data };
+		// handleUpdateCourse(newCourseData);
+	};
+
 	return (
 		<>
 			{!course ? (
@@ -23,7 +46,7 @@ const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 				</div>
 			) : (
 				<form
-					onSubmit={handleSubmit(handleUpdatePrice)}
+					onSubmit={handleUpdatePrice}
 					className=' border rounded-lg h-fit w-11/12'
 				>
 					<div className='p-4 grid grid-cols-12 gap-4'>
@@ -32,35 +55,38 @@ const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 							<label className='text-font2 uppercase'>
 								Course Price
 							</label>
-							<Controller
-								name='coursePrice'
-								control={control}
-								render={({ field }) => (
-									<InputNumber
-										{...field}
-										addonBefore='$'
-										addonAfter='USD'
-										defaultValue={course.coursePrice}
-										style={{
-											borderRadius: '8px',
-											overflow: 'hidden',
-											border: '1px solid #d9d9d9',
-										}}
-									/>
-								)}
-							/>
+							{!isFree && (
+								<InputNumber
+									addonBefore='$'
+									addonAfter='USD'
+									defaultValue={coursePrice}
+									onChange={(value) => {
+										setCoursePrice(value);
+									}}
+									style={{
+										borderRadius: '8px',
+										overflow: 'hidden',
+										border: '1px solid #d9d9d9',
+									}}
+								/>
+							)}
 						</div>{' '}
 						<div className='col-span-12 space-y-2 flex flex-col'>
-							<Controller
-								name='isFree'
-								control={control}
-								defaultValue='true'
-								render={({ field }) => (
-									<Checkbox {...field}>
-										Check if this is a free course.
-									</Checkbox>
-								)}
-							/>
+							<Checkbox
+								onChange={(e) => {
+									e.preventDefault();
+									setIsFree(e.target.checked);
+								}}
+								defaultChecked={course.isFree}
+								checked={isFree}
+							>
+								<p className='m-0'>
+									Check if this is a free course.{' '}
+								</p>
+								<small className='font-light'>
+									(clicking this will remove the pricing)
+								</small>
+							</Checkbox>
 						</div>
 					</div>
 					<div className='p-4 bg-light'>

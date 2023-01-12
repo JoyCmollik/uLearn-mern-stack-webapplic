@@ -4,11 +4,17 @@ import { Button, Input } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
 
 // local component
-const OutcomeInput = ({ handleOutcomeInputs, id, handleOutcomeValues }) => {
+const OutcomeInput = ({
+	outcome,
+	handleOutcomeInputs,
+	id,
+	handleOutcomeValues,
+}) => {
 	return (
 		<div className='col-span-12 flex flex-col'>
 			<div className='flex justify-between items-center space-x-4'>
 				<Input
+					defaultValue={outcome[id]}
 					onBlur={(e) => {
 						e.preventDefault();
 						handleOutcomeValues(e);
@@ -28,19 +34,37 @@ const OutcomeInput = ({ handleOutcomeInputs, id, handleOutcomeValues }) => {
 	);
 };
 
-const EditOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
-	const [outcomeList, setOutcomeList] = useState([]);
-
+const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
+	const [outcome, setOutcome] = useState([...course.courseOutcomes]);
+	const [outcomeIdList, setOutcomeIdList] = useState([
+		...Array(course.courseOutcomes.length).keys(),
+	]);
+	const [data, setData] = useState([
+		{
+			id: 1,
+			value: [],
+		},
+		{
+			id: 1,
+			value: [],
+		},
+	]);
+	const onchangeInput = (val, index) => {
+		let temp = data;
+		temp[index] = val.target.value;
+		setData(temp);
+	};
+	console.log(data)
 	// functionality: will add more input
 	const handleOutcomeInputs = (e, action, id = null) => {
 		e.preventDefault();
 		if (action === 'add') {
-			setOutcomeList((prevList) => {
+			setOutcomeIdList((prevList) => {
 				const id = uuid();
 				return [...prevList, id];
 			});
 		} else {
-			setOutcomeList((prevList) => {
+			setOutcomeIdList((prevList) => {
 				return prevList.filter((currId) => id !== currId);
 			});
 		}
@@ -52,15 +76,16 @@ const EditOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 		setOutcome([...outcome, e.target.value]);
 	};
 
-	console.log(outcome);
+	console.log(outcome, outcomeIdList);
 
 	return (
 		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
-			{/* input item */}
+			{/* input item
 			<div className='col-span-12 space-y-2 flex flex-col'>
 				<label className='text-font2 uppercase'>Outcomes</label>
 				<div className='flex justify-between items-center space-x-4'>
 					<Input
+						defaultValue={outcome[0]}
 						onBlur={(e) => handleOutcomeValues(e)}
 						size='large'
 					/>
@@ -74,23 +99,33 @@ const EditOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 					</button>
 				</div>
 			</div>
-			{outcomeList.length > 0 &&
-				outcomeList.map((id) => (
+			{outcomeIdList.length > 1 &&
+				outcomeIdList.map((id) => (
 					<OutcomeInput
 						key={id}
 						id={id}
 						handleOutcomeInputs={handleOutcomeInputs}
 						handleOutcomeValues={handleOutcomeValues}
+						outcome={outcome}
 					/>
 				))}
 
 			<Button
-				onClick={() => handleActiveTab('4')}
 				className='col-span-2 mt-4'
 				type='primary'
 			>
 				Next
-			</Button>
+			</Button> */}
+			{data.map((value, index) => {
+				return (
+					<input
+						key={index}
+						onChange={(val) => {
+							onchangeInput(val, index);
+						}}
+					/>
+				);
+			})}
 		</div>
 	);
 };

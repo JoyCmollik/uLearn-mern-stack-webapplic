@@ -167,6 +167,9 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 			});
 	};
 
+	console.log(sectionList, 'sectionList' );
+	console.log(currSection, 'currSection' );
+
 	return (
 		<div className='border-[0.5px] rounded-lg min-h-[70vh] grid grid-cols-12 gap-2 p-2'>
 			{isFetching ? (
