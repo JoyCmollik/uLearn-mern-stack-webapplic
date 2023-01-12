@@ -47,10 +47,7 @@ function App() {
 					path='course-content/:contentId/*'
 					element={<CourseContent />}
 				/>
-				<Route
-					path='course-content-detail/:contentDetailId'
-					element={<CourseContentDetail />}
-				/>
+
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
 				<Route

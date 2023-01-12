@@ -1,13 +1,28 @@
+import { PageHeader } from 'antd';
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import CourseContentDetailBanner from '../CourseContentDetailBanner/CourseContentDetailBanner';
-import CourseContentDetailTutorial from '../CourseContentDetailTutorial/CourseContentDetailTutorial';
-const CourseContentDetail = () => {
-	const { contentDetailId } = useParams();
+
+const CourseContentDetail = ({ singleContent }) => {
+	console.log(singleContent);
+
 	return (
 		<section className='container mx-auto pt-10'>
-			<CourseContentDetailBanner />
-			<CourseContentDetailTutorial />
+			<div className='pt-6'>
+				{/*----------------------title and image-------------------------------*/}
+				<div className='grid grid-cols-2'>
+					<article className=' flex items-center space-x-3'>
+						<div>
+							<PageHeader
+								className='site-page-header'
+								onBack={() => window.history.back()}
+								title={singleContent.courseTitle}
+								subTitle=''
+							/>
+						</div>
+					</article>
+				</div>
+				{/*-----------------------course description--------------------------*/}
+				<div></div>
+			</div>
 		</section>
 	);
 };
