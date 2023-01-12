@@ -12,7 +12,7 @@ const AddMedia = ({ handleActiveTab, control, setCourseThumb }) => {
 		listType: 'picture',
 		accept: '.png, .jpeg',
 		maxCount: 1,
-		action: 'https://api.imgbb.com/1/upload?expiration=600&key=e2401ff27943b11283409a478fccc412',
+		action: 'https://api.imgbb.com/1/upload?expiration=9999999999&key=e2401ff27943b11283409a478fccc412',
 		// action: 'http://localhost:5001/api/v1/images/upload',
 		iconRender: () => {
 			return <Spin />;

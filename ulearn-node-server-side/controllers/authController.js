@@ -12,7 +12,7 @@ const {
 const crypto = require('crypto');
 
 const register = async (req, res) => {
-	let { email, name, password, role } = req.body;
+	let { email, name, password, role, gender } = req.body;
 
 	const emailAlreadyExists = await User.findOne({ email });
 	if (emailAlreadyExists) {
@@ -35,6 +35,7 @@ const register = async (req, res) => {
 		email,
 		password,
 		role,
+		gender,
 		verificationToken,
 	});
 	const origin = 'http://localhost:3000';

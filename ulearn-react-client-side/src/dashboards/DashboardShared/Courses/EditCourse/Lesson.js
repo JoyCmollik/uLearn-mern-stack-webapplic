@@ -22,8 +22,9 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 	const handleLessonSubmit = (data) => {
 		console.log(data);
 		// setting default values
-		if(lesson.language && !data.language) data.language = lesson.language;
-		if(lesson.lessonReadDuration && !data.lessonReadDuration) data.lessonReadDuration = lesson.lessonReadDuration;
+		if (lesson.language && !data.language) data.language = lesson.language;
+		if (lesson.lessonReadDuration && !data.lessonReadDuration)
+			data.lessonReadDuration = lesson.lessonReadDuration;
 
 		// making sure all data is available
 		if (data.language && data.lessonReadDuration && editorContent) {
@@ -208,7 +209,10 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							)}
 						</button>
 						<button
-							onClick={() => setIsEditing(false)}
+							onClick={(e) => {
+								e.preventDefault();
+								setIsEditing(false);
+							}}
 							className='col-span-4 px-4 py-1 border border-error rounded-lg text-error disabled:border-red-200 disabled:text-red-200 disabled:cursor-not-allowed'
 							type='submit'
 							disabled={isUpdating}
