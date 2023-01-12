@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Tabs } from 'antd';
-import {
-	AiFillPlayCircle,
-	AiOutlineClockCircle,
-	AiOutlineLock,
-	AiOutlineReconciliation,
-	AiOutlineVideoCamera,
-} from 'react-icons/ai';
+import { AiOutlineClockCircle, AiOutlineReconciliation } from 'react-icons/ai';
 import {
 	BsCheck,
 	BsFillBarChartLineFill,
@@ -20,7 +14,7 @@ import {
 	MdOutlineAssignmentReturned,
 	MdOutlineQuiz,
 } from 'react-icons/md';
-import { IoCopy } from 'react-icons/io5';
+
 import './CourseDetailTabs.css';
 import CourseDetailCollapse from '../CourseDetailCollapse/CourseDetailCollapse';
 
@@ -33,130 +27,11 @@ const onChange = (key) => {
 	console.log(key);
 };
 
-const text1 = [
-	`Grasp how Javascript works and it's fundamental concepts`,
-
-	`Understand advanced concepts such as closures, 
-	prototypal inheritance, IIFEs, and much more.`,
-
-	`Avoid common pitfalls and mistakes other Javascript
-	coders make`,
-	`Build your own Javascript framework or library`,
-];
-const text2 = [
-	`	Write solid, good Javascript code`,
-	`Drastically improve your ability to
-	debug problems in Javascript.`,
-
-	`Understand the source code of 
-	popular Javascript frameworks`,
-
-	`Build your own Javascript framework
-	or library`,
-];
-const curriculum = [
-	{
-		id: 1,
-		header: 'New Home',
-		playIcon: <AiFillPlayCircle />,
-		copyIcon: <IoCopy />,
-		desc1: 'introduction',
-		desc2: 'Section Intro',
-		desc3: 'slide Document',
-		introPreview: 'preview',
-		introTime: '00.18',
-		lockIcon: <AiOutlineLock />,
-	},
-	{
-		id: 2,
-		header: 'Javascript Fundamentals',
-		playIcon: <AiFillPlayCircle />,
-		copyIcon: <IoCopy />,
-		desc1: 'Values and Variables',
-		desc2: 'Block Label Variable',
-		desc3: 'This is Pdf Documetn',
-		lockIcon: <AiOutlineLock />,
-		videoTime1: '00.18',
-	},
-	{
-		id: 3,
-		header: 'Developers Skills',
-		playIcon: <AiFillPlayCircle />,
-		copyIcon: <IoCopy />,
-		desc1: 'Data Types',
-		videoTime1: '00.25',
-		videoTime2: '00.25',
-		desc2: 'Let Const & Var',
-		desc3: 'JavaScript Scope',
-		lockIcon: <AiOutlineLock />,
-	},
-	{
-		id: 4,
-		header: 'Editor Setups',
-		playIcon: <AiFillPlayCircle />,
-		copyIcon: <IoCopy />,
-		desc1: 'Basic Operator',
-		videoTime1: '00.25',
-		videoTime2: '00.25',
-		videoTime3: '02.01',
-		desc2: 'Operator Precedence',
-		desc3: 'This is Audio Tutorial',
-		lockIcon: <AiOutlineLock />,
-	},
-	{
-		id: 5,
-		header: 'HTML & CSS Crash Course',
-		playIcon: <AiFillPlayCircle />,
-		desc1: 'Truthy And Falsy Values',
-		videoTime1: '00.25',
-		videoTime2: '00.25',
-		desc2: 'Boolean Logic',
-		lockIcon: <AiOutlineLock />,
-	},
-	{
-		id: 6,
-		header: 'Youtube Video',
-		playIcon: <AiFillPlayCircle />,
-		introPreview: 'preview',
-		introPreview2: 'preview',
-		desc1: 'Javascript Introduction',
-		videoTime1: '00.25',
-		videoTime2: '00.25',
-		desc2: 'Test video',
-	},
-];
-
-const enrollDetails = [
-	{
-		id: 45,
-		icon: <AiOutlineClockCircle />,
-		title1: 'Course Duration',
-		title2: '21 min 42 sec',
-	},
-	{
-		id: 46,
-		icon: <BsFillBarChartLineFill />,
-		title1: 'Course level',
-		title2: 'Higher',
-	},
-	{
-		id: 47,
-		icon: <BsPeople />,
-		title1: 'Student Enrolled',
-		title2: '2',
-	},
-	{
-		id: 48,
-		icon: <AiOutlineReconciliation />,
-		title1: 'Language',
-		title2: 'English',
-	},
-];
 const courseIncludes = [
 	{
 		id: 61,
-		icon: <AiOutlineVideoCamera />,
-		courseinfo: '21 min 42 sec Video Lectures',
+		icon: <MdOutlineAssignment />,
+		courseinfo: '21 min 42 sec Read',
 	},
 	{
 		id: 62,
@@ -199,7 +74,6 @@ const CourseDetailTabs = ({ singleCourse }) => {
 	};
 
 	const {
-		_id,
 		courseTitle,
 		courseDesc,
 		courseMetaDesc,
@@ -207,11 +81,41 @@ const CourseDetailTabs = ({ singleCourse }) => {
 		courseOutcomes,
 		enrolledStudents,
 		coursePrice,
-		ourseRequirements,
+		courseRequirements,
 		level,
 		language,
+		sections,
 		courseOverviewVidUrl,
+		courseThumb,
 	} = singleCourse;
+
+	const enrollDetails = [
+		{
+			id: 45,
+			icon: <AiOutlineClockCircle />,
+			title1: 'Course Duration',
+			title2: '21 min 42 sec',
+		},
+		{
+			id: 46,
+			icon: <BsFillBarChartLineFill />,
+			title1: 'Course level',
+			title2: level ? level : '',
+		},
+		{
+			id: 47,
+			icon: <BsPeople />,
+			title1: 'Student Enrolled',
+			title2: enrolledStudents ? enrolledStudents?.length : 0,
+		},
+		{
+			id: 48,
+			icon: <AiOutlineReconciliation />,
+			title1: 'Language',
+			title2: language ? language : '',
+		},
+	];
+
 	return (
 		<section className='container mx-auto    '>
 			<div className='grid grid-cols-12  gap-12'>
@@ -301,7 +205,7 @@ const CourseDetailTabs = ({ singleCourse }) => {
 								children: (
 									<div>
 										<CourseDetailCollapse
-											curriculum={curriculum}
+											sections={sections}
 										/>
 									</div>
 								),
@@ -334,9 +238,9 @@ const CourseDetailTabs = ({ singleCourse }) => {
 				<div className='col-span-4 border  rounded p-4 bg-white -mt-96 '>
 					<div className='relative'>
 						<img
-							src='https://lmszai.zainikthemes.com/uploads/course/1655545018-UOg3MEPfM6.jpg'
+							src={courseThumb}
 							alt=''
-							className=''
+							className='object-cover w-full'
 						/>
 						<div className='absolute top-32 left-48'>
 							<BsPlayCircleFill
@@ -353,15 +257,14 @@ const CourseDetailTabs = ({ singleCourse }) => {
 								open={isModalOpen}
 								onOk={handleOk}
 								onCancel={handleCancel}
-								width={800}
 								className='course-detail-modal-footer course-detail-modal-header course-detail-modal-close course-detail-modal-content course-detail-modal-body'
 							>
-								<video controls>
-									<source
-										src='https://lmszai.zainikthemes.com/uploads/video/1657086898-cloud-syncs-dashboard.mp4'
-										type='video/mp4'
-									/>
-								</video>
+								<iframe
+									width='560px'
+									height='315px'
+									src={courseOverviewVidUrl}
+									title={courseTitle}
+								></iframe>
 							</Modal>
 						</div>
 						{/*-------------------------------cost------------------------------- */}

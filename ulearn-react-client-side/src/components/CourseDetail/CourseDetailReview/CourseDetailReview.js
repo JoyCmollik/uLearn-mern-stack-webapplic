@@ -65,7 +65,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 			axios
 				.post('/reviews', data)
 				.then((response) => {
-					console.log(response.data.review);
+					//	console.log(response.data.review);
 					message.success('review added successfully');
 					setTriggerFetch(true);
 				})
@@ -85,7 +85,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 			axios
 				.get(`/courses/${singleCourse._id}`)
 				.then((response) => {
-					console.log(response.data.course.reviews);
+					//	console.log(response.data.course.reviews);
 					setReviews(response.data.course.reviews);
 					setTriggerFetch(false);
 				})

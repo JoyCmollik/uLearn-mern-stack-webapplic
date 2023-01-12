@@ -6,7 +6,6 @@ import { RiClosedCaptioningFill } from 'react-icons/ri';
 import { TbExternalLink } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import useCourseList from '../../../../hooks/useCourseList';
 
 const filterCategories = [
 	{
@@ -73,7 +72,19 @@ const filterCategories = [
 
 const FilteredCards = () => {
 	//rating
-	const { courseList } = useCourseList();
+
+	const [courseList, setCourseList] = useState([]);
+	useEffect(() => {
+		axios
+			.get('/courses')
+			.then((response) => {
+				//console.log(response.data.courses);
+				setCourseList(response.data.courses);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 	//pagination
 	const [current, setCurrent] = useState(1);
 	const [value, setValue] = useState(5);
