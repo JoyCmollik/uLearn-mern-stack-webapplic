@@ -1,132 +1,125 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { Button, Input } from 'antd';
+import { Button, Input, message, Spin } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
-
-// local component
-const OutcomeInput = ({
-	outcome,
-	handleOutcomeInputs,
-	id,
-	handleOutcomeValues,
-}) => {
-	return (
-		<div className='col-span-12 flex flex-col'>
-			<div className='flex justify-between items-center space-x-4'>
-				<Input
-					defaultValue={outcome[id]}
-					onBlur={(e) => {
-						e.preventDefault();
-						handleOutcomeValues(e);
-					}}
-					size='large'
-				/>
-				<button
-					onClick={(e) => {
-						handleOutcomeInputs(e, 'remove', id);
-					}}
-					className='p-2 bg-red-500 h-[40px] w-[40px] rounded-lg text-white flex justify-center items-center'
-				>
-					<HiMinus size={20} />
-				</button>
-			</div>
-		</div>
-	);
-};
+import { MdDelete } from 'react-icons/md';
 
 const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 	const [outcome, setOutcome] = useState([...course.courseOutcomes]);
-	const [outcomeIdList, setOutcomeIdList] = useState([
-		...Array(course.courseOutcomes.length).keys(),
-	]);
-	const [data, setData] = useState([
-		{
-			id: 1,
-			value: [],
-		},
-		{
-			id: 1,
-			value: [],
-		},
-	]);
-	const onchangeInput = (val, index) => {
-		let temp = data;
-		temp[index] = val.target.value;
-		setData(temp);
-	};
-	console.log(data)
-	// functionality: will add more input
-	const handleOutcomeInputs = (e, action, id = null) => {
-		e.preventDefault();
-		if (action === 'add') {
-			setOutcomeIdList((prevList) => {
-				const id = uuid();
-				return [...prevList, id];
-			});
-		} else {
-			setOutcomeIdList((prevList) => {
-				return prevList.filter((currId) => id !== currId);
-			});
+	const outcomeRef = useRef(null);
+
+	useEffect(() => {
+		if(course) {
+			setOutcome([...course.courseOutcomes]);
 		}
-	};
+	}, [course]);
 
-	// functionality: will update list of requirements
-	const handleOutcomeValues = (e) => {
+	const handleOutcomeList = (e) => {
 		e.preventDefault();
-		setOutcome([...outcome, e.target.value]);
+		const currOutcome = outcomeRef.current.value;
+		if (currOutcome === null || currOutcome.trim() === '') {
+			message.warning('Outcome input is empty!');
+			return;
+		}
+
+		setOutcome((prevList) => [...prevList, currOutcome]);
+		outcomeRef.current.value = '';
 	};
 
-	console.log(outcome, outcomeIdList);
+	const handleDeleteItem = (e, item) => {
+		e.preventDefault();
+		setOutcome((prevList) =>
+			prevList.filter((prevItem) => prevItem !== item)
+		);
+	};
+
+	const handleUpdateRequirements = () => {
+		handleUpdateCourse({...course, courseOutcomes: [...outcome]})
+	}
 
 	return (
-		<div className='grid grid-cols-12 gap-4 w-11/12 p-4'>
-			{/* input item
-			<div className='col-span-12 space-y-2 flex flex-col'>
-				<label className='text-font2 uppercase'>Outcomes</label>
-				<div className='flex justify-between items-center space-x-4'>
-					<Input
-						defaultValue={outcome[0]}
-						onBlur={(e) => handleOutcomeValues(e)}
-						size='large'
-					/>
-					<button
-						onClick={(e) => {
-							handleOutcomeInputs(e, 'add');
-						}}
-						className='p-2 bg-green-500 h-[40px] w-[40px] rounded-lg text-white flex justify-center items-center'
-					>
-						<HiPlus size={20} />
-					</button>
+		<>
+			{!course ? (
+				<div className='flex justify-center items-center h-[40vh]'>
+					<Spin />
 				</div>
-			</div>
-			{outcomeIdList.length > 1 &&
-				outcomeIdList.map((id) => (
-					<OutcomeInput
-						key={id}
-						id={id}
-						handleOutcomeInputs={handleOutcomeInputs}
-						handleOutcomeValues={handleOutcomeValues}
-						outcome={outcome}
-					/>
-				))}
+			) : (
+				<div className='border rounded-lg h-fit w-11/12'>
+					<div className='grid grid-cols-12 gap-4 p-4'>
+						<label className='col-span-12 text-font2 uppercase'>
+							Outcomes
+						</label>
+						<div className='col-span-12 grid grid-cols-12 border rounded-lg p-1'>
+							<input
+								autoFocus={true}
+								ref={outcomeRef}
+								className='col-span-8 outline-none bg-transparent border-none px-2'
+								size='large'
+							/>
+							<button
+								onClick={handleOutcomeList}
+								className='col-span-4 px-4 py-1 border border-primary rounded-lg text-primary disabled:border-blue-200 flex justify-center items-center space-x-2'
+								disabled={isUpdating}
+							>
+								{isUpdating ? (
+									<>
+										<Spin size='small' />{' '}
+										<span className='ml-2'>Adding...</span>
+									</>
+								) : (
+									<>
+										<HiPlus size={18} />{' '}
+										<span>Add Outcome</span>
+									</>
+								)}
+							</button>
+						</div>
+						{outcome.length > 0 && (
+							<div className='col-span-12 border rounded-lg p-2 space-y-2'>
+								{outcome.map((outcome, OutcIdx) => (
+									<div
+										className='flex justify-between items-center p-2 border rounded-lg'
+										key={OutcIdx}
+									>
+										<p className='m-0'> {outcome} </p>
+										<div className='flex items-start space-x-2'>
+											{/* <button className='p-1 border border-primary rounded-lg text-xs text-primary'>
+								<MdEdit size={16} />
+							</button> */}
 
-			<Button
-				className='col-span-2 mt-4'
-				type='primary'
-			>
-				Next
-			</Button> */}
-			{data.map((value, index) => {
-				return (
-					<input
-						key={index}
-						onChange={(val) => {
-							onchangeInput(val, index);
-						}}
-					/>
-				);
-			})}
-		</div>
+											<button
+												onClick={(e) =>
+													handleDeleteItem(e, outcome)
+												}
+												className='p-1 border border-error bg-error rounded-lg text-xs text-white'
+											>
+												<MdDelete size={16} />
+											</button>
+										</div>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+					<div className='p-4 bg-light'>
+						<button
+							onClick={handleUpdateRequirements}
+							className='px-4 py-1 border border-primary rounded-lg text-primary disabled:border-blue-200'
+							disabled={isUpdating}
+						>
+							{isUpdating ? (
+								<>
+									<Spin size='small' />{' '}
+									<span className='ml-2'>Updating...</span>
+								</>
+							) : (
+								'Update Course Price'
+							)}
+						</button>
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 
