@@ -109,22 +109,6 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	};
 	// updated currSection lessons with newLesson | updated lessonList
 	const handleUpdateLesson = (updatedLesson) => {
-		// setCurrSection((prevSectionData) => {
-		// 	const newCurrSectionLessons = prevSectionData.lessons.map(
-		// 		(lesson) => {
-		// 			if (lesson._id === updatedLesson._id) {
-		// 				return updatedLesson;
-		// 			}
-		// 			return lesson;
-		// 		}
-		// 	);
-		// 	const newSectionData = {
-		// 		...prevSectionData,
-		// 		lessons: [...newCurrSectionLessons],
-		// 	};
-
-		// 	return newSectionData;
-		// });
 		setTriggerFetch(true);
 	};
 

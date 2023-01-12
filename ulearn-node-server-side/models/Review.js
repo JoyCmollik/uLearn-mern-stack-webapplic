@@ -25,7 +25,9 @@ const ReviewSchema = mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
 ReviewSchema.index({ course: 1, user: 1 }, { unique: true });
+
 ReviewSchema.statics.calculateAverageRating = async function (courseId) {
 	const result = await this.aggregate([
 		{
