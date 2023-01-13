@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 	const [isFree, setIsFree] = useState(true);
 	const [coursePrice, setCoursePrice] = useState(course.coursePrice);
-	const { control, handleSubmit } = useForm({});
+	// changes made to this file
 
 	useEffect(() => {
 		if (course) {
@@ -21,15 +21,12 @@ const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 			message.warning('Please input a valid price or check it as free!');
 			return;
 		}
-		
+
 		let data = {};
 		data.coursePrice = isFree ? 0 : coursePrice;
 		data.isFree = isFree;
 
-		if (
-			course.coursePrice === coursePrice &&
-			course.isFree === isFree
-		) {
+		if (course.coursePrice === coursePrice && course.isFree === isFree) {
 			message.warning('Please make some changes before updating!');
 			return;
 		}
