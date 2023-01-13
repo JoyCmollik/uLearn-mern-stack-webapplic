@@ -12,6 +12,7 @@ import {
 	MdOutlineAdminPanelSettings,
 	MdOutlineManageAccounts,
 	MdPersonAddAlt,
+	MdDocumentScanner,
 } from 'react-icons/md';
 import { BsWindowDock } from 'react-icons/bs';
 import { TbCertificate } from 'react-icons/tb';
@@ -37,8 +38,8 @@ const DashboardSidebar = () => {
 
 	useEffect(() => {
 		setPathName(window.location.pathname);
-	}, [location])
-	
+	}, [location]);
+
 	console.log(pathname);
 
 	return (
@@ -68,7 +69,7 @@ const DashboardSidebar = () => {
 						key='1'
 						style={{ padding: '0 !important' }}
 					>
-						<SideBarLink to='/admin/dashboard/manage-courses' end >
+						<SideBarLink to='/admin/dashboard/manage-courses' end>
 							<FaUsersCog size={20} /> <span>Manage Courses</span>
 						</SideBarLink>
 						<SideBarLink to='/admin/dashboard/manage-courses/add'>
@@ -148,83 +149,25 @@ const DashboardSidebar = () => {
 					>
 						<CollapsedSideLinksContainer>
 							{/*****--------------Admin links---------------*****/}
-							<Panel
-								header={
-									<PanelHeader
-										icon={
-											<MdOutlineAdminPanelSettings
-												size={20}
-											/>
-										}
-										title='Admin'
-									/>
-								}
-								key='1'
-								style={{ padding: '0 !important' }}
-							>
-								<SideBarLink to='/admin/manage-admins'>
-									<FaUsersCog size={20} />{' '}
-									<span>Manage Admins </span>
-								</SideBarLink>
-								<SideBarLink to='/admin/add-admin'>
-									<MdPersonAddAlt size={20} />{' '}
-									<span>Add New Admin</span>
-								</SideBarLink>
-							</Panel>
+
+							<SideBarLink to='/admin/dashboard/manage-users/admin'>
+								<MdOutlineAdminPanelSettings size={20} />{' '}
+								<span>Manage Admins </span>
+							</SideBarLink>
 
 							{/*****--------------Content Writer Nav Links---------------*****/}
-							<Panel
-								header={
-									<PanelHeader
-										icon={
-											<MdOutlineAdminPanelSettings
-												size={20}
-											/>
-										}
-										title='Content Writers'
-									/>
-								}
-								key='2'
-								style={{ padding: '0 !important' }}
-							>
-								<SideBarLink to='/admin/manage-content-writer'>
-									<FaUsersCog size={20} />{' '}
-									<span>Manage Content Writers </span>
-								</SideBarLink>
-								<SideBarLink to='/admin/add-content-writer'>
-									<MdPersonAddAlt size={20} />{' '}
-									<span>Add New Content Writer</span>
-								</SideBarLink>
-								<SideBarLink to='/admin/applications-content-writer'>
-									<MdPersonAddAlt size={20} />{' '}
-									<span>Applications</span>
-								</SideBarLink>
-							</Panel>
+
+							<SideBarLink to='/admin/dashboard/manage-users/content-writer'>
+								<MdDocumentScanner size={20} />{' '}
+								<span>Manage Content Writers </span>
+							</SideBarLink>
 
 							{/*****--------------Learner Links---------------*****/}
-							<Panel
-								header={
-									<PanelHeader
-										icon={
-											<MdOutlineAdminPanelSettings
-												size={20}
-											/>
-										}
-										title='Learner'
-									/>
-								}
-								key='3'
-								style={{ padding: '0 !important' }}
-							>
-								<SideBarLink to='/admin/manage-admins'>
-									<FaUsersCog size={20} />{' '}
-									<span>Manage Admins </span>
-								</SideBarLink>
-								<SideBarLink to='/admin/add-admin'>
-									<MdPersonAddAlt size={20} />{' '}
-									<span>Add New Admin</span>
-								</SideBarLink>
-							</Panel>
+
+							<SideBarLink to='/admin/dashboard/manage-users/learner'>
+								<FaUsersCog size={20} />{' '}
+								<span>Manage Learner </span>
+							</SideBarLink>
 						</CollapsedSideLinksContainer>
 					</Panel>
 				</CollapsedSideLinksContainer>
