@@ -21,7 +21,7 @@ const CourseContentDetail = ({ singleContent }) => {
 					</article>
 				</div>
 				{/*-----------------------course description--------------------------*/}
-				<div>our course description</div>
+				<div></div>
 			</div>
 		</section>
 	);
