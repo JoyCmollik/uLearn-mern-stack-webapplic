@@ -8,7 +8,7 @@ const onChange = (key) => {
 	console.log(key);
 };
 
-const CourseContentTabs = () => {
+const CourseContentTabs = ({ singleContent }) => {
 	return (
 		<section className='pt-6'>
 			<Tabs
@@ -21,7 +21,9 @@ const CourseContentTabs = () => {
 						key: '1',
 						children: (
 							<div>
-								<CourseContentTabsCourse />
+								<CourseContentTabsCourse
+									singleContent={singleContent}
+								/>
 							</div>
 						),
 					},

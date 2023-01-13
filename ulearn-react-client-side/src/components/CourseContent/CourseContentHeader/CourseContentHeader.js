@@ -1,15 +1,18 @@
 import React from 'react';
 import './CourseContentHeader.css';
 import { Progress, Space } from 'antd';
-const CourseContentHeader = () => {
+const CourseContentHeader = ({ singleContent }) => {
+	const { courseTitle, courseShortDesc } = singleContent;
 	return (
 		<section>
 			{/*-----------------course title and info---------------------*/}
 			<div className='grid grid-cols-2 items-center justify-between '>
 				<article className=''>
-					<h2 className='text-dark text-3xl font-bold'>Python</h2>
+					<h2 className='text-dark text-3xl font-bold'>
+						{courseTitle ? courseTitle : ''}
+					</h2>
 					<p className='text-font2 text-base font-normal'>
-						Learn the most important Language for Data Science
+						{courseShortDesc ? courseShortDesc : ''}
 					</p>
 					{/*-----------------btn and progress bar---------------------*/}
 					<div className='grid grid-cols-5 gap-4 items-center  '>
