@@ -35,7 +35,7 @@ const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 		}
 		console.log(data, 'after');
 		const newCourseData = { ...course, ...data };
-		// handleUpdateCourse(newCourseData);
+		handleUpdateCourse(newCourseData);
 	};
 
 	return (

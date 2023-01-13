@@ -33,8 +33,8 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 		);
 	};
 
-	const handleUpdateRequirements = () => {
-		handleUpdateCourse({...course, courseOutcomes: [...outcome]})
+	const handleUpdateOutcomes = () => {
+		handleUpdateCourse({...course, courseOutcomes: [...outcome]});
 	}
 
 	return (
@@ -46,7 +46,7 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 			) : (
 				<div className='border rounded-lg h-fit w-11/12'>
 					<div className='grid grid-cols-12 gap-4 p-4'>
-						<label className='col-span-12 text-font2 uppercase'>
+						<label className='col-span-12 text-font2 capitalize'>
 							Outcomes
 						</label>
 						<div className='col-span-12 grid grid-cols-12 border rounded-lg p-1'>
@@ -103,7 +103,7 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 					</div>
 					<div className='p-4 bg-light'>
 						<button
-							onClick={handleUpdateRequirements}
+							onClick={handleUpdateOutcomes}
 							className='px-4 py-1 border border-primary rounded-lg text-primary disabled:border-blue-200'
 							disabled={isUpdating}
 						>
