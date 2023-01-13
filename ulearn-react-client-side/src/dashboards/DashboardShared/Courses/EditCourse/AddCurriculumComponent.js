@@ -22,9 +22,6 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [triggerFetch, setTriggerFetch] = useState(false);
 
-	// library constats
-	const { control, handleSubmit } = useForm({});
-
 	// -------------- COMPONENT ON MOUNT FETCH --------------
 	useEffect(() => {
 		if (course) {
