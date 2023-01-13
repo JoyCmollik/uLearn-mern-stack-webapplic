@@ -11,7 +11,7 @@ const useAuthentication = () => {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const { client } = useAxios();
 
-	const handleRegister = async (data, navigate) => {
+	const handleRegister = async (data) => {
 		console.log(data);
 		setLoading(true);
 		axios
