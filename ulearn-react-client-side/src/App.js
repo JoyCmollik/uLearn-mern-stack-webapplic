@@ -26,6 +26,9 @@ import ContentCreatorDashboardHome from './dashboards/ContentCreatorDashbaord/Co
 import ContentCreatorCourses from './dashboards/ContentCreatorDashbaord/ContentCreatorCourses/ContentCreatorCourses';
 import Verify from './components/Auth/Verify';
 import ResetPassword from './components/Auth/ResetPassword';
+import UsersAdmin from './dashboards/AdminDashboard/Users/UsersAdmin/UsersAdmin';
+import UsersContentWriter from './dashboards/AdminDashboard/Users/UsersContentWriter/UsersContentWriter';
+import UsersLearner from './dashboards/AdminDashboard/Users/UsersLearner/UsersLearner';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -84,6 +87,15 @@ function App() {
 						/>
 						<Route path='coupons/*' element={<Coupons />} />
 						<Route path='edit/:id/*' element={<EditCourse />} />
+					</Route>
+					<Route
+						path='manage-users/*'
+						element={<CoursesComponent />}
+					>
+						<Route path='admin/*' element={<UsersAdmin />} />
+						<Route path='content-writer/*' element={<UsersContentWriter />} />
+						<Route path='learner/*' element={<UsersLearner />} />
+					
 					</Route>
 					<Route
 						path='manage-profile/*'

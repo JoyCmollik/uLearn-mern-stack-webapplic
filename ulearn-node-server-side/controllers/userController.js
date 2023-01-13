@@ -9,7 +9,14 @@ const {
 
 const getAllUser = async (req, res) => {
 	// const users = await User.find({ role: 'user' }).select('-password');
-	const users = await User.find({}).select('-password');
+	const { role } = req.query;
+
+	if(role) {
+		const users = await User.find({role}).select('-password');
+		res.status(StatusCodes.OK).json({ users });
+		return;
+	}
+	const users = await User.find({}).select('-password -verificationToken');
 	res.status(StatusCodes.OK).json({ users });
 };
 const getSingleUser = async (req, res) => {
@@ -40,6 +47,16 @@ const UpdateUser = async (req, res) => {
 	attachCookiesToResponse({ res, user: tokenUser });
 	res.status(StatusCodes.OK).json({ user: tokenUser });
 };
+
+const updateUserVerificationStatus = async (req, res) => {
+	const { userId } = req.params;
+	const user = await User.findOne({_id: userId});
+	user.isVerified = true;
+
+	await user.save();
+	res.status(StatusCodes.OK).json({msg : 'updated successfully'});
+}
+
 const UpdateUserPassword = async (req, res) => {
 	const { oldPassword, newPassword } = req.body;
 	if (!oldPassword || !newPassword) {
@@ -60,5 +77,6 @@ module.exports = {
 	getSingleUser,
 	showCurrentUser,
 	UpdateUser,
+	updateUserVerificationStatus,
 	UpdateUserPassword,
 };
