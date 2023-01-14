@@ -109,6 +109,18 @@ function App() {
 							element={<ManageProfile />}
 						/>
 					</Route>
+					<Route path='manage-users/*' element={<CoursesComponent />}>
+						<Route path='admin/*' element={<UsersAdmin />} />
+						<Route
+							path='content-writer/*'
+							element={<UsersContentWriter />}
+						/>
+						<Route path='learner/*' element={<UsersLearner />} />
+					</Route>
+					<Route
+						path='manage-profile/*'
+						element={<ManageProfile />}
+					/>
 				</Route>
 				{/*****--------------Instructor Dashboard Index Routes---------------*****/}
 				<Route

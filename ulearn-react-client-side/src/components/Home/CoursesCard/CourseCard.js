@@ -6,11 +6,11 @@ const CourseCard = (props) => {
 	console.log(props.course);
 
 	return (
-		<div className='card w-72 bg-white  shadow-xl mx-auto border border-black'>
+		<div className='mx-auto shadow-sm  border'>
 			<figure className='px-3 pt-3'>
 				<img src={img} alt='course' className='rounded-xl' />
 			</figure>
-			<div className='card-body'>
+			<div className=''>
 				<p className='text-xs text-left capitalize bg-primary text-white w-16 py-1 px-2 rounded-md'>
 					{status}
 				</p>
