@@ -33,6 +33,8 @@ const courseRouter = require('./routes/courseRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const uploadRouter = require('./routes/uploadRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+const topicRouter = require('./routes/topicRoutes');
+const commentRouter = require('./routes/commentRoutes');
 
 // this is a list of routers
 // testing
@@ -78,6 +80,8 @@ app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/images', uploadRouter);
 app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/topics', topicRouter);
+app.use('/api/v1/comments', commentRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
