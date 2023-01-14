@@ -3,10 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
 import Auth from './pages/Auth/Auth';
-import DevelopmentCourse from './components/Home/BoardSectionOfCourse/Courses/DevelopmentCourse/DevelopmentCourse';
-import BusinessCourse from './components/Home/BoardSectionOfCourse/Courses/BusinessCourse/BusinessCourse';
-import SoftwareCourse from './components/Home/BoardSectionOfCourse/Courses/SoftwareCourse/SoftwareCourse';
-import DesignCourse from './components/Home/BoardSectionOfCourse/Courses/DesignCourse/DesignCourse';
+
 import CourseDetail from './pages/CourseDetail/CourseDetail';
 import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardComponent/AdminDashboardComponent';
 import Report from './dashboards/AdminDashboard/Report/Report';
@@ -18,7 +15,7 @@ import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/Add
 import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 import CourseContent from './pages/CourseContent/CourseContent';
-import CourseContentDetail from './components/CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
+
 import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ContentCreatorDashboardComponent from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardComponent/ContentCreatorDashboardComponent';
@@ -39,13 +36,7 @@ function App() {
 		<>
 			<Routes>
 				{/*****--------------Home Routes---------------*****/}
-				<Route path='/*' element={<Home />}>
-					<Route index element={<DevelopmentCourse />} />
-					<Route path='development' element={<DevelopmentCourse />} />
-					<Route path='business' element={<BusinessCourse />} />
-					<Route path='software' element={<SoftwareCourse />} />
-					<Route path='design' element={<DesignCourse />} />
-				</Route>
+				<Route path='/*' element={<Home />}></Route>
 				{/*****--------------Course Content Show Routes---------------*****/}
 				<Route
 					path='course-content/:contentId/*'
