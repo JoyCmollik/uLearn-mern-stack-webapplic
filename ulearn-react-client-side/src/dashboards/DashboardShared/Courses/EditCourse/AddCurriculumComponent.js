@@ -8,7 +8,6 @@ import axios from 'axios';
 // component imports
 import Lesson from './Lesson';
 import Section from './Section';
-import { useForm } from 'react-hook-form';
 import nodataImg from '../../../../images/no_data.png';
 
 const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {

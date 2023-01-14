@@ -18,8 +18,8 @@
 	color: rgb(255, 192, 20);
 }
 .filterMenu-collapse-content .ant-collapse-content {
-	background: #efefef;
+	background: white;
 }
 .filterMenu-header-text .ant-collapse-header-text {
-	background-color: #efefef;
+	background-color: white;
 }

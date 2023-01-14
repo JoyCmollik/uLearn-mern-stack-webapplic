@@ -75,7 +75,7 @@ const FilterMenu = () => {
 			style={{
 				borderLeft: 0,
 				border: '1 px solid #e5e8ec',
-				background: '#EFEFEF',
+				background: 'white',
 			}}
 			defaultActiveKey={['1']}
 			onChange={onChange}
@@ -103,7 +103,7 @@ const FilterMenu = () => {
 				className='site-collapse-custom-panel  filterMenu-collapse-content filterMenu-header-text'
 			>
 				<Collapse
-					style={{ background: '#EFEFEF' }}
+					style={{ background: 'white' }}
 					accordion
 					bordered={false}
 					defaultActiveKey='1'

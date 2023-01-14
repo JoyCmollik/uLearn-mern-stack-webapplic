@@ -2,7 +2,7 @@ import { Avatar } from 'antd';
 import React from 'react';
 import { BsPin, BsThreeDots } from 'react-icons/bs';
 import { CaretUpOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const discussionList = [
 	{
@@ -44,14 +44,11 @@ const discussionList = [
 ];
 
 const CourseContentTabsDiscussionAll = () => {
-	const navigate = useNavigate();
-	const handleDiscussion = (id) => {
-		navigate(`discussionList/${id}`);
-	};
+
 	return (
 		<section className='px-5'>
 			{/* ---------------------pinned topics------------------------------*/}
-			<h2>Pinned topics</h2>
+			{/* <h2>Pinned topics</h2>
 			<article className='grid grid-cols-2 border-b border-gray-300 pb-4 '>
 				<div className='flex items-center space-x-3'>
 					<div className='relative'>
@@ -97,7 +94,7 @@ const CourseContentTabsDiscussionAll = () => {
 						</div>
 					</div>
 				</div>
-			</article>
+			</article> */}
 			{/*-------------------------all other topics----------------------------*/}
 			<div>
 				<h2>All other topics</h2>
@@ -111,62 +108,63 @@ const CourseContentTabsDiscussionAll = () => {
 						totalComment,
 					} = list;
 					return (
-						<article
-							onClick={() => handleDiscussion(id)}
-							key={id}
-							className='grid grid-cols-2 border-b border-gray-300 pb-4 mb-4'
-						>
-							<div className='flex items-center space-x-3'>
-								<Avatar
-									size='large'
-									src={userImage}
-									className=''
-								/>
+						<Link key={id} to={`discussionList/${id}`}>
+							<article
+								key={id}
+								className='grid grid-cols-2 border-b border-gray-300 pb-4 mb-4'
+							>
+								<div className='flex items-center space-x-3'>
+									<Avatar
+										size='large'
+										src={userImage}
+										className=''
+									/>
 
-								<div>
 									<div>
-										<span className='block text-base text-font1 font-normal'>
-											{topicTitle}
+										<div>
+											<span className='block text-base text-font1 font-normal'>
+												{topicTitle}
+											</span>
+											<span className='underline font-normal text-sm text-font2'>
+												{userName}
+											</span>
+											<span className='font-normal text-sm text-font2'>
+												{' '}
+												. Last Comment {lastComment} ago
+												by {userName}
+											</span>
+										</div>
+									</div>
+								</div>
+								<div className='flex flex-col justify-end '>
+									<div className='flex justify-end'>
+										<button className='flex items-center '>
+											<div className='border border-font2  rounded-full  '>
+												<span className='border border-zinc-800 rounded-y-full rounded-l-full bg-zinc-800 pl-3 pb-1'>
+													<CaretUpOutlined
+														className='bg-zinc-800 pb-1'
+														style={{
+															color: 'white',
+														}}
+													/>{' '}
+												</span>
+												<span className='px-3 font-bold '>
+													{totalComment}
+												</span>
+											</div>
+										</button>
+									</div>
+									<div className='flex justify-end'>
+										<span className='mr-3'>
+											{totalComment} comment{' '}
 										</span>
-										<span className='underline font-normal text-sm text-font2'>
-											{userName}
-										</span>
-										<span className='font-normal text-sm text-font2'>
-											{' '}
-											. Last Comment {lastComment} ago by{' '}
-											{userName}
+										<span>
+											<BsThreeDots className='text-lg ' />
 										</span>
 									</div>
 								</div>
-							</div>
-							<div className='flex flex-col justify-end '>
-								<div className='flex justify-end'>
-									<button className='flex items-center '>
-										<div className='border border-font2  rounded-full  '>
-											<span className='border border-zinc-800 rounded-y-full rounded-l-full bg-zinc-800 pl-3 pb-1'>
-												<CaretUpOutlined
-													className='bg-zinc-800 pb-1'
-													style={{
-														color: 'white',
-													}}
-												/>{' '}
-											</span>
-											<span className='px-3 font-bold '>
-												{totalComment}
-											</span>
-										</div>
-									</button>
-								</div>
-								<div className='flex justify-end'>
-									<span className='mr-3'>
-										{totalComment} comment{' '}
-									</span>
-									<span>
-										<BsThreeDots className='text-lg ' />
-									</span>
-								</div>
-							</div>
-						</article>
+							</article>
+						</Link>
 					);
 				})}
 			</div>

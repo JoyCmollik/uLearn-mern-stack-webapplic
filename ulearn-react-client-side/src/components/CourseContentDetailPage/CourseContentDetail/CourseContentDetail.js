@@ -1,8 +1,8 @@
 import { PageHeader } from 'antd';
 import React from 'react';
 
-const CourseContentDetail = ({ singleContent }) => {
-	console.log(singleContent);
+const CourseContentDetail = ({	courseContent }) => {
+	console.log(courseContent);
 
 	return (
 		<section className='container mx-auto pt-10'>
@@ -14,8 +14,7 @@ const CourseContentDetail = ({ singleContent }) => {
 							<PageHeader
 								className='site-page-header'
 								onBack={() => window.history.back()}
-								title={singleContent.courseTitle}
-								subTitle=''
+								title={courseContent.courseTitle}
 							/>
 						</div>
 					</article>

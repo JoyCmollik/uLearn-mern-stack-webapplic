@@ -21,6 +21,9 @@ import CourseDetailCollapse from '../CourseDetailCollapse/CourseDetailCollapse';
 import CourseDetailReview from '../CourseDetailReview/CourseDetailReview';
 import CourseDetailInstructor from '../CourseDetailInstructor/CourseDetailInstructor';
 import { TbCertificate2 } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
+
+const parse = require('html-react-parser');
 
 //tabs
 const onChange = (key) => {
@@ -193,8 +196,8 @@ const CourseDetailTabs = ({ singleCourse }) => {
 													: ''}
 											</ul>
 										</div>
-										<p className='text-base whitespace-nowrap'>
-											{courseShortDesc || ''}
+										<p className='text-base'>
+											{courseDesc ?  parse(courseDesc) : ''}
 										</p>
 									</article>
 								),
@@ -267,10 +270,10 @@ const CourseDetailTabs = ({ singleCourse }) => {
 								></iframe>
 							</Modal>
 						</div>
-						{/*-------------------------------cost------------------------------- */}
+						{/* -------------------------------cost-------------------------------
 						<h3 className='text-[33px]  text-[#040453] font-medium pt-4'>
 							$ {coursePrice || ''}
-						</h3>
+						</h3> */}
 						<div>
 							{enrollDetails.map((detail) => (
 								<div
@@ -292,10 +295,12 @@ const CourseDetailTabs = ({ singleCourse }) => {
 					</div>
 
 					<div className='pt-4'>
-						<button className='block py-3 rounded-lg bg-[#5E3FD7] text-white text-center w-full text-base'>
-							Enroll the Course
-						</button>
-						<div className='grid grid-cols-2 gap-4 pt-4 px-4'>
+						<Link to={`/course-content/${singleCourse._id}`}>
+							<button className='block py-3 rounded-lg bg-[#5E3FD7] text-white text-center w-full text-base'>
+								Go to course content
+							</button>
+						</Link>
+						{/* <div className='grid grid-cols-2 gap-4 pt-4 px-4'>
 							<button className='block py-2 rounded text-[15px] border-2 border-font2 font-medium'>
 								<BsHeart className='mr-3 inline' /> Add To
 								Wishlist
@@ -303,7 +308,7 @@ const CourseDetailTabs = ({ singleCourse }) => {
 							<button className='block py-2  rounded  text-[15px]  border-2 border-font2 font-medium'>
 								<BsShare className='mr-3 inline' /> Share Course
 							</button>
-						</div>
+						</div> */}
 					</div>
 					{/*--------------------------course includes----------------------------*/}
 					<div className='pt-10'>

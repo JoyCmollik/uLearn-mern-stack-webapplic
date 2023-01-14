@@ -32,7 +32,7 @@ const Hero = () => {
 		<div className=''>
 			<section
 				style={{ minHeight: 'calc(100vh-90px)' }}
-				className='rounded-lg mt-[90px]  container mx-auto p-5 bg-primary bg-opacity-20 pb-[140px]'
+				className='rounded-lg container mx-auto p-5 bg-light pb-[140px]'
 			>
 				{/*---------------------------banner-------------------------------*/}
 				<div className='flex flex-wrap flex-col md:flex-row justify-between  items-center  '>
