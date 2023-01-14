@@ -46,7 +46,7 @@ const CourseContentTabs = ({ courseContent }) => {
 						[
 							'px-4 py-2 flex items-center space-x-2 text-base hover:bg-light hover:text-font1',
 							isActive
-								? ' text-primary border-b-[2px] border-primary'
+								? ' text-primary border-b-[1px] border-primary'
 								: 'text-font1',
 						]
 							.filter(Boolean)
@@ -62,7 +62,7 @@ const CourseContentTabs = ({ courseContent }) => {
 						[
 							'px-4 py-2 flex items-center space-x-2 text-base hover:bg-light hover:text-font1',
 							isActive
-								? ' text-primary border-b-[2px] border-primary'
+								? ' text-primary border-b-[1px] border-primary'
 								: 'text-font1',
 						]
 							.filter(Boolean)

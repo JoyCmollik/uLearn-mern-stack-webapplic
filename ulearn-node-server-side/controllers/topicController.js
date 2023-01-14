@@ -1,29 +1,28 @@
-const Comment = require('../models/Comment');
+const Topic = require('../models/Topic');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
-const { populate } = require('../models/Comment');
 
 const createTopic = async (req, res) => {
 	req.body.instructor = req.user.userId;
 
-	const comment = await Comment.create(req.body);
-	res.status(StatusCodes.CREATED).json({ comment: comment });
+	const topic = await Topic.create(req.body);
+	res.status(StatusCodes.CREATED).json({ topic: topic });
 };
 
 const getAllTopics = async (req, res) => {
-	const comment = await Comment.find({});
+	const topic = await Topic.find({});
 
 	res.status(StatusCodes.OK).json({
-		comments: comment,
-		count: comment.length,
+		topics: topic,
+		count: topic.length,
 	});
 };
 
 const getSingleTopics = async (req, res) => {
-	const { id: commentId } = req.params;
+	const { id: topicId } = req.params;
 
-	const comment = await Comment.findOne({ _id: commentId })
+	const topic = await Topic.findOne({ _id: topicId })
 		.populate({
 			path: 'reviews',
 			populate: { path: 'user', select: ['name', 'avatarURL'] },
@@ -34,16 +33,16 @@ const getSingleTopics = async (req, res) => {
 			populate: { path: 'lessons', select: 'lessonTitle' },
 		});
 
-	if (!comment) {
-		throw new CustomError.NotFoundError(`No comment with id: ${commentId}`);
+	if (!topic) {
+		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
 	}
-	res.status(StatusCodes.OK).json({ comment: comment });
+	res.status(StatusCodes.OK).json({ topic: topic });
 };
 
 const getSingleCourseTopics = async (req, res) => {
-	const { id: commentId } = req.params;
+	const { id: topicId } = req.params;
 
-	const comment = await Comment.findOne({ _id: commentId })
+	const topic = await Topic.findOne({ _id: topicId })
 		.select('courseTitle courseShortDesc level language')
 		.populate({
 			path: 'sections',
@@ -51,17 +50,17 @@ const getSingleCourseTopics = async (req, res) => {
 		})
 		.populate({ path: 'instructor', select: 'name avatarURL' });
 
-	if (!comment) {
-		throw new CustomError.NotFoundError(`No comment with id: ${commentId}`);
+	if (!topic) {
+		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
 	}
-	res.status(StatusCodes.OK).json({ comment: comment });
+	res.status(StatusCodes.OK).json({ topic: topic });
 };
 
 const updateTopic = async (req, res) => {
-	const { id: commentId } = req.params;
+	const { id: topicId } = req.params;
 
-	const comment = await Comment.findOneAndUpdate(
-		{ _id: commentId },
+	const topic = await Topic.findOneAndUpdate(
+		{ _id: topicId },
 		req.body,
 		{
 			new: true,
@@ -69,23 +68,23 @@ const updateTopic = async (req, res) => {
 		}
 	);
 
-	if (!comment) {
-		throw new CustomError.NotFoundError(`No comment with id: ${commentId}`);
+	if (!topic) {
+		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
 	}
 
-	res.status(StatusCodes.OK).json({ comment: comment });
+	res.status(StatusCodes.OK).json({ topic: topic });
 };
 
 const deleteTopic = async (req, res) => {
-	const { id: commentId } = req.params;
+	const { id: topicId } = req.params;
 
-	const comment = await Comment.findOne({ _id: commentId });
+	const topic = await Topic.findOne({ _id: topicId });
 
-	if (!comment) {
-		throw new CustomError.NotFoundError(`No comment with id: ${commentId}`);
+	if (!topic) {
+		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
 	}
 
-	await comment.remove();
+	await topic.remove();
 	res.status(StatusCodes.OK).json({ msg: 'Successfully removed an item.' });
 };
 
