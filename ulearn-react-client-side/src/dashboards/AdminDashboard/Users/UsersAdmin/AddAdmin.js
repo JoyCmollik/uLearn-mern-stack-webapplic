@@ -4,21 +4,19 @@ import addCategory from '../../../../images/add_user.svg';
 import useAuthentication from '../../../../hooks/useAuthentication';
 import axios from 'axios';
 const AddAdmin = () => {
-	const { handleRegister, registerMsg, user } = useAuthentication();
-	const [userStatus, setUserStatus] = useState(false);
+	const { handleRegister, userId } = useAuthentication();
+
 	const [person, setPerson] = useState({
 		email: '',
 		name: '',
 		password: '',
 		gender: '',
-		role: '',
+		role: 'admin',
 	});
 	const handleGender = (value) => {
 		person.gender = value;
 	};
-	const handleRole = (value) => {
-		person.role = value;
-	};
+
 	const handleChange = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -37,7 +35,7 @@ const AddAdmin = () => {
 				gender,
 				role,
 			};
-			//console.log(data);
+			// console.log(data);
 			handleRegister(data);
 			setPerson({
 				email: '',
@@ -47,24 +45,20 @@ const AddAdmin = () => {
 		}
 	};
 	//to verify account
-	/* 	useEffect(() => {
-		if (registerMsg) {
-			axios
-				.get(`/users/updateUserStatus/${user.userId}`)
-				.then((response) => {
-					console
-						.log(response.data.msg)
-						.catch((err) => console.log(err));
-				});
+	useEffect(() => {
+		if (userId) {
+			axios.get(`/users/updateUserStatus/${userId}`).then((response) => {
+				console.log(response.data.msg).catch((err) => console.log(err));
+			});
 		}
-	}, []); */
+	}, []);
 
 	return (
 		<div className='border-[0.5px] rounded-lg overflow-hidden '>
 			<PageHeader
 				ghost={false}
 				onBack={() => window.history.back()}
-				title='Add a new user'
+				title='Add a new admin'
 				subTitle='if you go back, no changes are saved....'
 			>
 				<div className='grid grid-cols-12 min-h-[25vh] rounded-lg p-4'>
@@ -130,34 +124,6 @@ const AddAdmin = () => {
 							{/* input item */}
 							<div className='col-span-12 space-y-2 flex flex-col'>
 								<label className='text-font2 uppercase'>
-									Role
-								</label>
-								<Select
-									defaultValue='user'
-									style={{
-										width: '100%',
-									}}
-									size={'large'}
-									onChange={handleRole}
-									options={[
-										{
-											value: 'admin',
-											label: 'Admin',
-										},
-										{
-											value: 'user',
-											label: 'User',
-										},
-										{
-											value: 'instructor',
-											label: 'Instructor',
-										},
-									]}
-								/>
-							</div>
-							{/* input item */}
-							<div className='col-span-12 space-y-2 flex flex-col'>
-								<label className='text-font2 uppercase'>
 									password
 								</label>
 								<Input
@@ -174,7 +140,7 @@ const AddAdmin = () => {
 								type='primary'
 								htmlType='submit'
 							>
-								Add User
+								Add Admin
 							</Button>
 						</form>
 					</div>

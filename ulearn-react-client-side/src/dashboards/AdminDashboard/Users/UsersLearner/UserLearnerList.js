@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 // library components
 import { Table, Input, Spin } from 'antd';
 import { TfiMore } from 'react-icons/tfi';
@@ -39,16 +38,15 @@ const columns = [
 		),
 	},
 ];
-
-const UsersAdminList = () => {
+const UserLearnerList = () => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
 		setLoading(true);
 		axios
-			.get('/users?role=admin')
+			.get('/users?role=user')
 			.then((response) => {
-				//console.log(response.data.users);
+				//	console.log(response.data.users);
 				setData(response.data.users);
 			})
 			.catch((err) => {
@@ -87,4 +85,4 @@ const UsersAdminList = () => {
 	);
 };
 
-export default UsersAdminList;
+export default UserLearnerList;
