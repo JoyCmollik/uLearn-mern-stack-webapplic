@@ -9,8 +9,6 @@ const useAuthentication = () => {
 	const [userId, setUserId] = useState(false);
 	const [forgotPasswordMsg, setforgotPasswordMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [isAdmin, setIsAdmin] = useState(false);
-	const { client } = useAxios();
 
 	const handleRegister = async (data) => {
 		console.log(data);

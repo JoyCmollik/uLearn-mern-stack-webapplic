@@ -29,6 +29,7 @@ import ResetPassword from './components/Auth/ResetPassword';
 import UsersAdmin from './dashboards/AdminDashboard/Users/UsersAdmin/UsersAdmin';
 import UsersContentWriter from './dashboards/AdminDashboard/Users/UsersContentWriter/UsersContentWriter';
 import UsersLearner from './dashboards/AdminDashboard/Users/UsersLearner/UsersLearner';
+import AdminOutlet from './privateOutlets/AdminOutlet';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -69,38 +70,45 @@ function App() {
 					element={<ResetPassword />}
 				/>
 				{/*****--------------Admin Dashboard Index Routes---------------*****/}
-				<Route
-					path='admin/dashboard/*'
-					element={<AdminDashboardComponent />}
-				>
-					<Route index element={<AdminDashboardHome />} />
-					<Route path='report/revenue' element={<Report />} />
+				<Route path='admin/*' element={<AdminOutlet />}>
 					<Route
-						path='manage-courses/*'
-						element={<CoursesComponent />}
+						path='dashboard/*'
+						element={<AdminDashboardComponent />}
 					>
-						<Route index element={<ManageCourses />} />
-						<Route path='add' element={<AddNewCourse />} />
+						<Route index element={<AdminDashboardHome />} />
+						<Route path='report/revenue' element={<Report />} />
 						<Route
-							path='categories/*'
-							element={<CoursesCategory />}
+							path='manage-courses/*'
+							element={<CoursesComponent />}
+						>
+							<Route index element={<ManageCourses />} />
+							<Route path='add' element={<AddNewCourse />} />
+							<Route
+								path='categories/*'
+								element={<CoursesCategory />}
+							/>
+							<Route path='coupons/*' element={<Coupons />} />
+							<Route path='edit/:id/*' element={<EditCourse />} />
+						</Route>
+						<Route
+							path='manage-users/*'
+							element={<CoursesComponent />}
+						>
+							<Route path='admin/*' element={<UsersAdmin />} />
+							<Route
+								path='content-writer/*'
+								element={<UsersContentWriter />}
+							/>
+							<Route
+								path='learner/*'
+								element={<UsersLearner />}
+							/>
+						</Route>
+						<Route
+							path='manage-profile/*'
+							element={<ManageProfile />}
 						/>
-						<Route path='coupons/*' element={<Coupons />} />
-						<Route path='edit/:id/*' element={<EditCourse />} />
 					</Route>
-					<Route
-						path='manage-users/*'
-						element={<CoursesComponent />}
-					>
-						<Route path='admin/*' element={<UsersAdmin />} />
-						<Route path='content-writer/*' element={<UsersContentWriter />} />
-						<Route path='learner/*' element={<UsersLearner />} />
-					
-					</Route>
-					<Route
-						path='manage-profile/*'
-						element={<ManageProfile />}
-					/>
 				</Route>
 				{/*****--------------Instructor Dashboard Index Routes---------------*****/}
 				<Route
