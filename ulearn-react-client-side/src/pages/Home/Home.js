@@ -4,11 +4,11 @@ import { Layout } from 'antd';
 import Hero from '../../components/Home/Hero/Hero';
 
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
-import CoursesSelection from '../../components/Home/BoardSectionOfCourse/CoursesSelection/CoursesSelection';
 import CustomerReview from '../../components/Home/ReviewsSection/CustomerReviews/CustomerReview';
-import FrequentlyAskQuestions from '../../components/Home/FAQ/FrequentlyAskQuestions/FrequentlyAskQuestions';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import Features from '../../components/Home/Features/Features';
+import NewestCourses from '../../components/Home/AllCourses/NewestCourses';
+import BestReviewedCourses from '../../components/Home/AllCourses/BestReviewedCourses';
 
 const { Footer, Content } = Layout;
 const Home = () => {
@@ -18,9 +18,10 @@ const Home = () => {
 				<NavigationBar theme='light' />
 				<Content style={{ background: 'white' }}>
 					<Hero />
-					<CoursesSelection />
+					<NewestCourses />
+					<BestReviewedCourses />
 					<CustomerReview />
-					<FrequentlyAskQuestions />
+
 					<Features />
 				</Content>
 				<Footer style={{ background: '#040453' }}>

@@ -14,13 +14,13 @@ const CourseCard = (props) => {
 	const [value, setValue] = useState(3);
 
 	return (
-		<div className=' bg-white drop-shadow-md mx-auto border border-gray-200 rounded-lg'>
+		<div className='mx-auto shadow border  rounded-lg '>
 			<div className='px-4 pt-4 relative'>
 				{/* ----------------------card image--------------------------- */}
 				<img
 					src={img}
 					alt='course'
-					className='rounded-xl object-cover'
+					className='rounded-xl object-cover '
 				/>
 				{/* -------------------------$course price---------------------------- */}
 				<div className='absolute top-3 right-4'>

@@ -1,15 +1,13 @@
 import React from 'react';
-import CourseCarousel from '../../CourseCarousel/CourseCarousel';
-
+import CourseCard from './CourseCard';
 const courses = [
 	{
 		id: '31',
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
-
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -19,8 +17,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -30,8 +28,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -41,8 +39,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -52,8 +50,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -63,8 +61,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -74,8 +72,8 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
@@ -85,22 +83,28 @@ const courses = [
 		title: 'Wordpress for Beginners - Master Wordpress Quickly',
 		price: '80',
 		rating: '5',
-		avatar: 'https://i.ibb.co/FK6MgkL/0269091217f95c25ac4f77c1bd69879a.jpg',
-		img: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
+		avatar: 'https://placeimg.com/192/192/people',
+		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
 		time: '01:10:09',
 		lecture: '12',
 		status: 'beginner',
 	},
 ];
-
-const BusinessCourse = () => {
+const BestReviewedCourses = () => {
 	return (
-		<section className='mt-10'>
-			<div className=' '>
-				<CourseCarousel courses={courses} />
+		<section className=' container mx-auto min-h-screen mt-20'>
+			{/*--------------- title ----------------------- */}
+			<h2 className='text-2xl font-bold'>Best Reviewd Courses</h2>
+			<p className='text-gray-500 text-base font-normal'>
+				#Enjoy high quality and best reviewed content In Progress
+			</p>
+			<div className='grid grid-cols-4 gap-4 mx-auto'>
+				{courses?.slice(0, 4).map((course) => (
+					<CourseCard key={course.id} course={course} />
+				))}
 			</div>
 		</section>
 	);
 };
 
-export default BusinessCourse;
+export default BestReviewedCourses;

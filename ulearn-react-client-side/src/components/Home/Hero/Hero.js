@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { SiGooglescholar } from 'react-icons/si';
-import Categories from '../BoardSectionOfCourse/Categories/Categories';
+import Categories from '../Categories/Categories';
+
 
 const categories = [
 	{

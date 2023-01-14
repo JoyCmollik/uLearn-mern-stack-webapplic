@@ -88,14 +88,13 @@ function App() {
 						<Route path='coupons/*' element={<Coupons />} />
 						<Route path='edit/:id/*' element={<EditCourse />} />
 					</Route>
-					<Route
-						path='manage-users/*'
-						element={<CoursesComponent />}
-					>
+					<Route path='manage-users/*' element={<CoursesComponent />}>
 						<Route path='admin/*' element={<UsersAdmin />} />
-						<Route path='content-writer/*' element={<UsersContentWriter />} />
+						<Route
+							path='content-writer/*'
+							element={<UsersContentWriter />}
+						/>
 						<Route path='learner/*' element={<UsersLearner />} />
-					
 					</Route>
 					<Route
 						path='manage-profile/*'
