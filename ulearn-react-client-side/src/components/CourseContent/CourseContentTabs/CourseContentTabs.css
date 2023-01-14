@@ -8,17 +8,17 @@
 }
 
 .course-content-tabs-ink-bar .ant-tabs-ink-bar {
-	background: black;
+	background: #1F53F3;
 }
 
 .course-content-active-color
 	.ant-tabs-tab.ant-tabs-tab-active
 	.ant-tabs-tab-btn {
-	color: #222 !important;
+	color: #1F53F3 !important;
 	font-weight: 500;
 }
 .course-content-tabs-btn .ant-tabs-tab .ant-tabs-tab-btn:hover {
-	color: #363636;
+	color: #1F53F3;
 }
 .course-content-tabs-nav-wrap .ant-tabs-nav-wrap {
 	padding-top: 8px;

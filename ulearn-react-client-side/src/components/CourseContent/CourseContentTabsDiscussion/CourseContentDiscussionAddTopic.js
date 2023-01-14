@@ -1,20 +1,21 @@
 import { Avatar } from 'antd';
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { MdOutlineArrowBack } from 'react-icons/md';
+import { Link, useNavigate } from 'react-router-dom';
 import DashTextEditor from '../../../dashboards/DashboardShared/DashTextEditor/DashTextEditor';
 const CourseContentDiscussionAddTopic = () => {
 	const editor = useRef('');
 	const [editorContent, setEditorContent] = useState();
-	const navigate = useNavigate();
 	return (
 		<div className=''>
 			{/*--------------back---------------------*/}
 			<div className='flex justify-end pb-6'>
 				<button
-					onClick={() => navigate('/course-content/:course-content')}
-					className='text-sm font-bold border border-black px-6 py-2 rounded-full'
+					onClick={() => window.history.back()}
+					className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center capitalize'
 				>
-					Go back
+					<MdOutlineArrowBack size={20} />{' '}
+					<span>Go Back</span>
 				</button>
 			</div>
 			<div className='grid grid-cols-12 border border-gray-400'>
@@ -28,7 +29,7 @@ const CourseContentDiscussionAddTopic = () => {
 				</div>
 				<div className='col-span-10 p-5 flex flex-col space-y-5'>
 					<div>
-						<label class='block'>
+						<label className='block'>
 							<input
 								placeholder='Topic Title'
 								className='border border-gray-300 px-5 py-3 rounded-lg w-full text-base'

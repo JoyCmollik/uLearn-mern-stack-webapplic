@@ -5,7 +5,7 @@ import SideBar from '../../HeaderComponents/SideBar/SideBar';
 import logo from '../../../images/ULearn_Logo.png';
 import DropDownButton from '../../HeaderComponents/DropDownButton/DropDownButton';
 import SearchField from '../../HeaderComponents/SearchField/SearchField';
-import { MdNotificationsNone } from 'react-icons/md';
+import { MdEmail, MdNotificationsNone } from 'react-icons/md';
 import { FiShoppingBag } from 'react-icons/fi';
 import { Avatar, Button } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
@@ -13,11 +13,12 @@ import { LoginOutlined, DashboardTwoTone } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import { CgProfile } from 'react-icons/cg';
 import useAuthentication from '../../../hooks/useAuthentication';
+import { RiDashboardLine } from 'react-icons/ri';
 
 const navigation = [
-	{ id: 1, to: '/forum', name: 'Forum' },
-	{ id: 2, to: '/blog', name: 'Blog' },
-	{ id: 3, to: '/contact', name: 'Contact' },
+	{ id: 1, to: '/', name: 'Home' },
+	{ id: 2, to: '/course-list', name: 'Courses' },
+	{ id: 3, to: '/contact', name: 'Instructors' },
 ];
 
 const NavigationBar = () => {
@@ -88,105 +89,79 @@ const NavigationBar = () => {
 	);
 	return (
 		<>
-			<Header
-				style={{
-					background: 'white',
-					position: 'fixed',
-					zIndex: 2,
-					width: '100%',
-					height: '90px',
-					paddingTop: '6px',
-				}}
-			>
-				<section className='container mx-auto  box-border  bg-white shadow-sm pt-2'>
-					<div className='flex justify-between md:grid md:grid-cols-12 md:gap-4 items-center'>
+			<header className='sticky top-0 left-0 bg-white border-b z-50'>
+				{/* --------------------- container ------------------------*/}
+				<section className='container mx-auto py-5 space-y-1'>
+					<div className='flex justify-between items-center'>
 						{/* --------------------- logo and title ------------------------*/}
-						<article className='col-span-2 flex items-center '>
-							<div className=''>
-								<img src={logo} alt='' />
+						<div className='flex items-center space-x-5'>
+							<div className=' flex items-center space-x-1'>
+								<img
+									className='w-[40px] object-cover'
+									src={logo}
+									alt=''
+								/>
+								<h2 className='m-0 font-bold text-xl'>
+									ULearn
+								</h2>
 							</div>
-							<h2 className='font-bold text-2xl'>ULearn</h2>
-						</article>
-						<article className='col-span-4 hidden items-center space-x-6 md:flex'>
-							{/*--------------------Course Drop Down Button-------------------------*/}
-
-							<DropDownButton name={'course'} />
-
-							{/*--------------------Search Field-------------------------*/}
-							<SearchField />
-						</article>
-
-						<article className='col-span-6 items-center space-x-4 justify-end pr-2 hidden md:flex '>
-							<div>
-								{/* -------------- navigation links -------------------------------*/}
-
-								<ul className='items-center space-x-4 capitalize justify-end  -mb-2 md:flex '>
-									<li>
-										{/*--------------------Pages Drop Down Button-------------------------*/}
-										<DropDownButton name={'pages'} />
+							<div className='hidden items-center space-x-6 md:block'>
+								{/*--------------------Categories-------------------------*/}
+								<button className='flex items-center space-x-2 bg-light px-3 py-2 text-base rounded-lg font-medium'>
+									<RiDashboardLine size={20} /><span>Categories</span>
+								</button>
+							</div>
+							<ul className='p-0 m-0 hidden md:flex items-center space-x-1 capitalize'>
+								{navigation.map((nav) => (
+									<li key={nav.id}>
+										<Link
+											to={nav.to}
+											className='text-black text-base px-2 hover:text-primary'
+											aria-current='page'
+										>
+											{nav.name}
+										</Link>
 									</li>
-									{navigation.map((nav) => (
-										<li key={nav.id}>
-											<Link
-												to={nav.to}
-												className='text-black font-bold text-base'
-												aria-current='page'
-											>
-												{nav.name}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-							{/*-----------------notification icon--------------------- */}
+								))}
+							</ul>
+						</div>
 
-							<MdNotificationsNone className='text-3xl ' />
-
-							{/*------------------cart---------------------------------*/}
-
-							<FiShoppingBag className='text-2xl' />
+						<div className='items-center space-x-4 justify-end pr-2 hidden md:flex '>
 
 							{/*-------------------avatar------------------------------*/}
 
 							<div className=''>
 								{user ? (
 									<Dropdown overlay={menu} className='ml-3'>
-										<a
-											href='/xyz'
+										<button
 											onClick={(e) => e.preventDefault()}
 											className='flex space-x-2 items-center'
 										>
-											<Avatar
-												style={{
-													background: 'purple',
-												}}
-											>
-												{user?.name?.slice(0, 1)}
-											</Avatar>
+											<Avatar src={user.avatarURL} />
 											<Space className='text-lg'>
 												{user?.name}
 											</Space>
-										</a>
+										</button>
 									</Dropdown>
 								) : (
 									<div className='flex'>
 										{/*-------------------login/---------------------*/}
 										<Link
 											to='auth/login'
-											className='text-black font-bold text-base hover:text-blue-600'
+											className='text-black text-base hover:text-blue-600'
 										>
 											Login
 										</Link>
 										<Link
 											to='auth/register/learner'
-											className='text-black font-bold text-base ml-3 hover:text-blue-600'
+											className='text-black text-base ml-3 hover:text-blue-600'
 										>
 											Register
 										</Link>
 									</div>
 								)}
 							</div>
-						</article>
+						</div>
 
 						{/*----------- sidebar ---------------------*/}
 						<article className='md:hidden'>
@@ -204,7 +179,7 @@ const NavigationBar = () => {
 						</article>
 					</div>
 				</section>
-			</Header>
+			</header>
 		</>
 	);
 };

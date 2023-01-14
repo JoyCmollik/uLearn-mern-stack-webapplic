@@ -12,7 +12,7 @@ const CourseList = () => {
 		<>
 			<Layout>
 				<NavigationBar theme='light' />
-				<Content style={{ background: '#EFEFEF' }}>
+				<Content style={{ background: 'white' }}>
 					<Banner />
 					<SearchList />
 					<FilterCourse />
