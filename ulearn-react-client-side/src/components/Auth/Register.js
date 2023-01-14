@@ -7,6 +7,7 @@ import useAuthentication from '../../hooks/useAuthentication';
 import { Button, Result, Space, Spin } from 'antd';
 import { Alert } from 'antd';
 import { Select } from 'antd';
+import useAuth from '../../hooks/useAuth';
 const userRoles = [
 	{
 		title: 'Learner',
@@ -24,7 +25,7 @@ const onClose = (e) => {
 };
 const Register = () => {
 	const navigate = useNavigate();
-	const { handleRegister, user, registerMsg, loading } = useAuthentication();
+	const { handleRegister, user, registerMsg, loading } = useAuth();
 	console.log(registerMsg);
 	const { role } = useParams();
 	const [userRole, setUserRole] = useState(role);

@@ -10,16 +10,18 @@ const CourseDetail = () => {
 	const [singleCourse, setSingleCourse] = useState({});
 
 	useEffect(() => {
-		axios
-			.get(`/courses/${courseId}`)
-			.then((response) => {
-				//console.log(response.data.courses);
-				setSingleCourse(response.data.course);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, []);
+		if (courseId) {
+			axios
+				.get(`/courses/${courseId}`)
+				.then((response) => {
+					//console.log(response.data.courses);
+					setSingleCourse(response.data.course);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [courseId]);
 	return (
 		<div>
 			<NavigationBar />

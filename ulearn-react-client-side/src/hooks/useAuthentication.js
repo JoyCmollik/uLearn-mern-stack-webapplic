@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import useAxios from './useAxios';
 
 const useAuthentication = () => {
-	const [user, setUser] = useState(false);
+	const [user, setUser] = useState(null);
 	const [registerMsg, setRegisterMsg] = useState(false);
 	const [userId, setUserId] = useState(false);
 	const [forgotPasswordMsg, setforgotPasswordMsg] = useState(false);
@@ -84,23 +84,6 @@ const useAuthentication = () => {
 		} */
 	};
 
-	useEffect(() => {
-		setLoading(true);
-		if (!user) {
-			axios
-				.get('/users/showMe')
-				.then((res) => {
-					setUser(res.data.user);
-					//console.log(res.data.user, 'success');
-				})
-				.catch((err) => {
-					//console.log(err, 'fail');
-					setUser(null);
-				});
-		}
-		setLoading(false);
-	}, [user]);
-
 	const handleForgotPassword = (data, navigate) => {
 		console.log(data);
 		setLoading(true);
@@ -130,6 +113,27 @@ const useAuthentication = () => {
 			});
 		setLoading(false);
 	};
+
+	useEffect(() => {
+		setLoading(true);
+		if (!user) {
+			axios
+				.get('/users/showMe')
+				.then((res) => {
+					setUser(res.data.user);
+					console.log('retrieved user')
+				})
+				.catch((err) => {
+					setUser(null);
+					console.log('failed user');
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		}
+
+		return () => {};
+	}, [user]);
 
 	return {
 		user,

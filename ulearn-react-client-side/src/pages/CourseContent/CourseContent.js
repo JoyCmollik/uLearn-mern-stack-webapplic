@@ -13,7 +13,7 @@ const CourseContent = () => {
 	const [courseContent, setCourseContent] = useState({});
 
 	useEffect(() => {
-		if(contentId) {
+		if (contentId) {
 			axios
 				.get(`/courses/${contentId}/sections`)
 				.then((response) => {
@@ -30,8 +30,12 @@ const CourseContent = () => {
 		<div className='space-y-4'>
 			<NavigationBar />
 			<div className='container mx-auto min-h-screen pb-10'>
-				<CourseContentHeader courseContent={courseContent} />
-				<CourseContentTabs courseContent={courseContent} />
+				{courseContent && (
+					<>
+						<CourseContentHeader courseContent={courseContent} />
+						<CourseContentTabs courseContent={courseContent} />
+					</>
+				)}
 			</div>
 		</div>
 	);

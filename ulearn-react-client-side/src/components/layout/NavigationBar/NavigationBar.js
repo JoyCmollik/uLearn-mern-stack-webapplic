@@ -14,6 +14,7 @@ import { Dropdown, Menu, Space } from 'antd';
 import { CgProfile } from 'react-icons/cg';
 import useAuthentication from '../../../hooks/useAuthentication';
 import { RiDashboardLine } from 'react-icons/ri';
+import useAuth from '../../../hooks/useAuth';
 
 const navigation = [
 	{ id: 1, to: '/', name: 'Home' },
@@ -24,7 +25,7 @@ const navigation = [
 const NavigationBar = () => {
 	const [open, setOpen] = useState(false);
 	const [placement, setPlacement] = useState('left');
-	const { user, handleLogout } = useAuthentication();
+	const { user, handleLogout } = useAuth();
 	const navigate = useNavigate();
 
 	const showDrawer = () => {

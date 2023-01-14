@@ -38,7 +38,7 @@ const CourseContentLessons = ({ handleCurrLesson, currSection }) => {
 							<>
 								{' '}
 								<div className='space-y-2'>
-									{currSection.lessons.map((lesson) => (
+									{currSection.lessons.map((lesson, lessonIdx) => (
 										<article key={lesson._id}>
 											<Link
 												key={lesson._id}
@@ -56,7 +56,7 @@ const CourseContentLessons = ({ handleCurrLesson, currSection }) => {
 															</div>
 															<div>
 																<h4 className='font-normal m-0 text-font1 text-lg '>
-																	{
+																	Lesson {lessonIdx + 1}{' '}:{' '}{
 																		lesson.lessonTitle
 																	}
 																</h4>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import useAuthentication from '../../hooks/useAuthentication';
 import authImg from '../../images/auth_vector.svg';
 
 const Login = () => {
-	const { handleLogin } = useAuthentication();
+	const { handleLogin } = useAuth();
 	const navigate = useNavigate();
 	const [person, setPerson] = useState({
 		email: '',

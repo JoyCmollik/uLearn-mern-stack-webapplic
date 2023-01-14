@@ -3,11 +3,12 @@ import React from 'react';
 import { AiOutlineDesktop } from 'react-icons/ai';
 import { BsStar } from 'react-icons/bs';
 import { TbCertificate2, TbSchool } from 'react-icons/tb';
-const CourseDetailInstructor = () => {
+
+const CourseDetailInstructor = ({instructor}) => {
 	return (
 		<div className='p-10'>
 			<h4 className='text-[21px] text-[#040453] font-semibold capitalize'>
-				Meet Your Instructor
+				Meet The Content Creator
 			</h4>
 			<div className='grid grid-cols-2'>
 				{/*------------------about instructor--------------------*/}
@@ -19,19 +20,16 @@ const CourseDetailInstructor = () => {
 					></Avatar>
 					<p className='flex space-y-2 items-center flex-col'>
 						<span className='block text-[21px]  text-[#040453] font-semibold'>
-							Johnny Depp
-						</span>
-						<span className='block text-xs  text-font2 '>
-							PHP Developer
+							{instructor.name}
 						</span>
 
 						<span className='block text-sm  px-4 py-1 text-violet-800 bg-violet-200 rounded-lg'>
-							Instructor
+							content creator
 						</span>
 					</p>
 				</div>
 				{/*----------------course info--------------------*/}
-				<div className='flex space-x-5 pl-4 border items-center rounded-lg'>
+				{/* <div className='flex space-x-5 pl-4 border items-center rounded-lg'>
 					<div className='flex flex-col space-y-3'>
 						<span className='flex items-center  text-base text-[#040453] '>
 							<BsStar className='inline mr-3' />
@@ -52,13 +50,13 @@ const CourseDetailInstructor = () => {
 							Courses
 						</span>
 					</div>
-				</div>
+				</div> */}
 				{/*------------------------------------------*/}
-				<div className='flex flex-col pt-8 '>
+				<div className='col-span-2 flex flex-col pt-8'>
 					<h4 className='text-base  text-[#040453]  font-medium'>
 						About Instructor
 					</h4>
-					<p className='whitespace-nowrap text-base text-font2'>
+					<p className='text-base text-font2'>
 						About Instructor Freelancers and entrepreneurs
 						Freelancers and entrepreneurs use about.me to grow their
 						audience and get more <br /> clients. · Create a page to

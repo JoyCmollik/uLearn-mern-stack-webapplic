@@ -36,31 +36,6 @@ const courseIncludes = [
 		icon: <MdOutlineAssignment />,
 		courseinfo: '21 min 42 sec Read',
 	},
-	{
-		id: 62,
-		icon: <MdOutlineQuiz />,
-		courseinfo: '2 Quizzes',
-	},
-	{
-		id: 63,
-		icon: <MdOutlineAssignment />,
-		courseinfo: '1 assignment',
-	},
-	{
-		id: 64,
-		icon: <MdOutlineAssignmentReturned />,
-		courseinfo: '1 Downloadable Resources',
-	},
-	{
-		id: 65,
-		icon: <AiOutlineClockCircle />,
-		courseinfo: 'Full Lifetime Access',
-	},
-	{
-		id: 67,
-		icon: <TbCertificate2 />,
-		courseinfo: 'Certification of Completion',
-	},
 ];
 const CourseDetailTabs = ({ singleCourse }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,12 +58,12 @@ const CourseDetailTabs = ({ singleCourse }) => {
 		courseShortDesc,
 		courseOutcomes,
 		enrolledStudents,
-		coursePrice,
 		courseRequirements,
 		level,
 		language,
 		sections,
 		courseOverviewVidUrl,
+		instructor,
 		courseThumb,
 	} = singleCourse;
 
@@ -104,12 +79,6 @@ const CourseDetailTabs = ({ singleCourse }) => {
 			icon: <BsFillBarChartLineFill />,
 			title1: 'Course level',
 			title2: level ? level : '',
-		},
-		{
-			id: 47,
-			icon: <BsPeople />,
-			title1: 'Student Enrolled',
-			title2: enrolledStudents ? enrolledStudents?.length : 0,
 		},
 		{
 			id: 48,
@@ -197,7 +166,9 @@ const CourseDetailTabs = ({ singleCourse }) => {
 											</ul>
 										</div>
 										<p className='text-base'>
-											{courseDesc ?  parse(courseDesc) : ''}
+											{courseDesc
+												? parse(courseDesc)
+												: ''}
 										</p>
 									</article>
 								),
@@ -230,7 +201,9 @@ const CourseDetailTabs = ({ singleCourse }) => {
 								key: '5',
 								children: (
 									<div>
-										<CourseDetailInstructor />
+										<CourseDetailInstructor
+											instructor={instructor}
+										/>
 									</div>
 								),
 							},

@@ -7,6 +7,7 @@ import nodataImg from '../../../images/no_data.png';
 
 const parse = require('html-react-parser');
 
+
 const CourseContentLessonPage = ({ currSection }) => {
 	const [currLesson, setCurrLesson] = useState(null);
 	const { lessonId } = useParams();
@@ -18,8 +19,9 @@ const CourseContentLessonPage = ({ currSection }) => {
 			})
 		}
 	}, [lessonId, currSection]);
+
 	return (
-		<div>
+		<div className='relative'>
 			{!currLesson ? (
 				<div className='h-[40vh] flex justify-center items-center'>
 					<Spin />
@@ -33,6 +35,7 @@ const CourseContentLessonPage = ({ currSection }) => {
 							: `No Title`
 					}
 				>
+
 					<div>
 						{currLesson.lessonContent ? (
 							parse(currLesson.lessonContent)
