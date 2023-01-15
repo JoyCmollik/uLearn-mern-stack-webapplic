@@ -33,7 +33,7 @@ const categories = [
 ];
 const Categories = () => {
 	return (
-		<section className='container mx-auto min-h-fit'>
+		<section className='container mx-auto '>
 			{/*--------------- title ----------------------- */}
 			<h2 className='text-2xl font-bold'>Trending Categories</h2>
 			<p className='text-gray-500 text-base font-normal'>

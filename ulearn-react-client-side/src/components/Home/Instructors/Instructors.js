@@ -62,7 +62,7 @@ const Instructors = () => {
 	const [value, setValue] = useState(3);
 	SwiperCore.use([Autoplay]);
 	return (
-		<section className=' container mx-auto min-h-screen mt-20'>
+		<section className=' container mx-auto  '>
 			{/*--------------- title ----------------------- */}
 			<h2 className='text-2xl font-bold'>Instructors</h2>
 			<p className='text-gray-500 text-base font-normal'>
@@ -105,7 +105,7 @@ const Instructors = () => {
 									</h2>
 									<p className='text-base'>{position}</p>
 									<Rate onChange={setValue} value={rating} />
-									<button className='bg-primary text-white py-2 px-3 text-sm rounded-2xl '>
+									<button className='bg-primary text-white py-2 px-3 text-sm rounded-lg '>
 										Reserve a live meeting
 									</button>
 								</div>

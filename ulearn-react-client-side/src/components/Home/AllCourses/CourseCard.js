@@ -47,13 +47,8 @@ const CourseCard = (props) => {
 				</span>
 				{/*------------------------- avatar-------------------- */}
 				<div className='flex mt-3 justify-between'>
-					<Avatar.Group>
-						<Avatar src={avatar} />
-						<Avatar
-							style={{ background: 'white' }}
-							src='https://joeschmoe.io/api/v1/random'
-						/>
-					</Avatar.Group>
+					<Avatar src={avatar} />
+
 					<button
 						onClick={() => handleDetailPage(id)}
 						className='text-[13px]  capitalize  bg-blue-100 hover:bg-primary text-primary hover:text-white py-1 px-4 rounded-md flex items-center font-medium '

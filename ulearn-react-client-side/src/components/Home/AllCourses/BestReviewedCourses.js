@@ -92,7 +92,7 @@ const courses = [
 ];
 const BestReviewedCourses = () => {
 	return (
-		<section className=' container mx-auto min-h-screen '>
+		<section className=' container mx-auto  '>
 			{/*--------------- title ----------------------- */}
 			<h2 className='text-2xl font-bold'>Best Reviewd Courses</h2>
 			<p className='text-gray-500 text-base font-normal'>

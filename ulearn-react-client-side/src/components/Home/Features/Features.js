@@ -23,7 +23,7 @@ const features = [
 
 const Features = () => {
 	return (
-		<section className='min-h-fit mb-20 container mx-auto'>
+		<section className='container mx-auto'>
 			{/*---------------feature container--------------*/}
 			<div className='flex justify-center items-center space-x-5'>
 				{features.map((feature) => {

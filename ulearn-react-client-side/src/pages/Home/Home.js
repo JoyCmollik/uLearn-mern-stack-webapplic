@@ -17,21 +17,19 @@ const { Footer, Content } = Layout;
 const Home = () => {
 	return (
 		<>
-			<Layout>
-				<NavigationBar theme='light' />
-				<Content style={{ background: 'white' }}>
-					<Hero />
-					<NewestCourses />
-					<BestReviewedCourses />
-					<Categories />
-					<Instructors />
-					<Testimonials />
-					<Features />
-				</Content>
-				<Footer style={{ background: '#040453' }}>
+			<NavigationBar theme='light' />
+			<div className=' space-y-24'>
+				<Hero />
+				<NewestCourses />
+				<BestReviewedCourses />
+				<Categories />
+				<Instructors />
+				<Testimonials />
+				<Features />
+				<div style={{ background: '#040453' }}>
 					<FooterComponent />
-				</Footer>
-			</Layout>
+				</div>
+			</div>
 		</>
 	);
 };
