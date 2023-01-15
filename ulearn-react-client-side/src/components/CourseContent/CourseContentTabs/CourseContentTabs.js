@@ -12,33 +12,6 @@ const onChange = (key) => {
 const CourseContentTabs = ({ courseContent }) => {
 	return (
 		<section className='space-y-2'>
-			{/* <Tabs
-				className='course-content-Tab-style course-content-active-color course-content-tabs-ink-bar course-content-tabs-btn course-content-tabs-nav-wrap course-content-tabs-tab'
-				defaultActiveKey='1'
-				onChange={onChange}
-				items={[
-					{
-						label: <h4 className='text-base'>Course</h4>,
-						key: '1',
-						children: (
-							<div>
-								<CourseContentTabsCourse
-									courseContent={courseContent}
-								/>
-							</div>
-						),
-					},
-					{
-						label: <h4 className='text-base'>Discussion</h4>,
-						key: '2',
-						children: (
-							<div>
-								<CourseContentTabsDiscussion />
-							</div>
-						),
-					},
-				]}
-			/> */}
 			<nav className='flex justify-start items-center border-b'>
 				<NavLink
 					to={`/course-content/${courseContent._id}`}
@@ -83,7 +56,11 @@ const CourseContentTabs = ({ courseContent }) => {
 				/>
 				<Route
 					path='discussions/*'
-					element={<CourseContentTabsDiscussion />}
+					element={
+						<CourseContentTabsDiscussion
+							courseContent={courseContent}
+						/>
+					}
 				/>
 			</Routes>
 			<Outlet />

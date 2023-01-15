@@ -1,10 +1,11 @@
+const Course = require('../models/Course');
 const Topic = require('../models/Topic');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
 
 const createTopic = async (req, res) => {
-	req.body.instructor = req.user.userId;
+	req.body.user = req.user.userId;
 
 	const topic = await Topic.create(req.body);
 	res.status(StatusCodes.CREATED).json({ topic: topic });
@@ -23,15 +24,8 @@ const getSingleTopics = async (req, res) => {
 	const { id: topicId } = req.params;
 
 	const topic = await Topic.findOne({ _id: topicId })
-		.populate({
-			path: 'reviews',
-			populate: { path: 'user', select: ['name', 'avatarURL'] },
-		})
-		.populate({
-			path: 'sections',
-			select: 'sectionTitle',
-			populate: { path: 'lessons', select: 'lessonTitle' },
-		});
+		.populate('comments')
+		.populate('user', 'name avatarURL role createdAt');
 
 	if (!topic) {
 		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
@@ -40,20 +34,12 @@ const getSingleTopics = async (req, res) => {
 };
 
 const getSingleCourseTopics = async (req, res) => {
-	const { id: topicId } = req.params;
+	const { id: courseId } = req.params;
 
-	const topic = await Topic.findOne({ _id: topicId })
-		.select('courseTitle courseShortDesc level language')
-		.populate({
-			path: 'sections',
-			populate: { path: 'lessons' },
-		})
-		.populate({ path: 'instructor', select: 'name avatarURL' });
+	const topics = await Topic.find({ course: courseId }).populate('user', 'name avatarURL').sort('-_id');
 
-	if (!topic) {
-		throw new CustomError.NotFoundError(`No topic with id: ${topicId}`);
-	}
-	res.status(StatusCodes.OK).json({ topic: topic });
+
+	res.status(StatusCodes.OK).json({ topics: topics, count: topics.length });
 };
 
 const updateTopic = async (req, res) => {
