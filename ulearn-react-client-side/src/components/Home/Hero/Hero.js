@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { SiGooglescholar } from 'react-icons/si';
-import Categories from '../Categories/Categories';
-
 
 const categories = [
 	{
@@ -71,9 +69,26 @@ const Hero = () => {
 				{/*----------------------------categories------------------------------*/}
 			</section>
 			<div className=' grid grid-cols-1 md:grid-cols-3 gap-4 -mt-[50px]  container mx-auto px-4'>
-				{categories.map((category) => (
-					<Categories key={category.id} {...category} />
-				))}
+				{categories.map((category) => {
+					const { icon, title, desc, bgColor } = category;
+					return (
+						<div className='card w-96 bg-base-100  mx-auto'>
+							<div className='card-body'>
+								<div className='flex gap-2 items-center justify-center'>
+									<div
+										className={` p-4 rounded-full gap-4 ${bgColor}`}
+									>
+										{icon}
+									</div>
+									<div>
+										<h2 className='card-title'>{title}</h2>
+										<p className='text-base w-48'>{desc}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
