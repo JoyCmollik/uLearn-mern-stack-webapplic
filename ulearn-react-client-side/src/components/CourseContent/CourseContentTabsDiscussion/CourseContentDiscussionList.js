@@ -6,7 +6,7 @@ import { Tabs } from 'antd';
 import CourseContentTabsDiscussionAll from './CourseContentTabsDiscussionAll';
 import { MdOutlineControlPointDuplicate } from 'react-icons/md';
 
-const CourseContentDiscussionList = () => {
+const CourseContentDiscussionList = ({ isLoading, courseTopics }) => {
 	const onChange = (key) => {
 		console.log(key);
 	};
@@ -57,7 +57,10 @@ const CourseContentDiscussionList = () => {
 								key: '1',
 								children: (
 									<div>
-										<CourseContentTabsDiscussionAll />
+										<CourseContentTabsDiscussionAll
+											courseTopics={courseTopics}
+											isLoading={isLoading}
+										/>
 									</div>
 								),
 							},
@@ -66,11 +69,11 @@ const CourseContentDiscussionList = () => {
 								key: '2',
 								children: `Content of Tab Pane 2`,
 							},
-							{
-								label: `Bookmarks`,
-								key: '3',
-								children: `Content of Tab Pane 3`,
-							},
+							// {
+							// 	label: `Bookmarks`,
+							// 	key: '3',
+							// 	children: `Content of Tab Pane 3`,
+							// },
 						]}
 					/>
 				</div>

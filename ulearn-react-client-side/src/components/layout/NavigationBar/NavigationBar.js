@@ -44,7 +44,7 @@ const NavigationBar = () => {
 					key: '1',
 					label: (
 						<Link
-							to='admin/dashboard/'
+							to='/admin/dashboard/'
 							className='text-lg font-medium'
 						>
 							Dashboard
@@ -136,25 +136,25 @@ const NavigationBar = () => {
 									<Dropdown overlay={menu} className='ml-3'>
 										<button
 											onClick={(e) => e.preventDefault()}
-											className='flex space-x-2 items-center'
+											className='flex space-x-1 items-center'
 										>
-											<Avatar src={user.avatarURL} />
-											<Space className='text-lg'>
-												{user?.name}
-											</Space>
+											<Avatar size={40} src={user.avatarURL} />
+											<div className='text-base font-medium'>
+												<small>{user?.name}</small>
+											</div>
 										</button>
 									</Dropdown>
 								) : (
 									<div className='flex'>
 										{/*-------------------login/---------------------*/}
 										<Link
-											to='auth/login'
+											to='/auth/login'
 											className='text-black text-base hover:text-blue-600'
 										>
 											Login
 										</Link>
 										<Link
-											to='auth/register/learner'
+											to='/auth'
 											className='text-black text-base ml-3 hover:text-blue-600'
 										>
 											Register

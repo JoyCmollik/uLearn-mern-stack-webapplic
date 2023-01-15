@@ -14,29 +14,14 @@ const {
 	deleteTopic,
 } = require('../controllers/topicController');
 
-router
-	.route('/')
-	.get(getAllTopics)
-	.post(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		createTopic
-	);
+router.route('/').get(getAllTopics).post(authenticateUser, createTopic);
+router.route('/course/:id').get(getSingleCourseTopics);
 
 router
 	.route('/:id')
 	.get(getSingleTopics)
-	.patch(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		updateTopic
-	)
-	.delete(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		deleteTopic
-	);
+	.patch(authenticateUser, updateTopic)
+	.delete(authenticateUser, deleteTopic);
 
-router.route('/:id/sections').get(getSingleCourseTopics);
 
 module.exports = router;
