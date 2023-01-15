@@ -33,7 +33,7 @@ import AdminOutlet from './privateOutlets/AdminOutlet';
 
 function App() {
 	return (
-		<>
+		<div className='bg-white'>
 			<Routes>
 				{/*****--------------Home Routes---------------*****/}
 				<Route path='/*' element={<Home />}></Route>
@@ -133,7 +133,7 @@ function App() {
 					/>
 				</Route>
 			</Routes>
-		</>
+		</div>
 	);
 }
 

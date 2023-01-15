@@ -111,6 +111,7 @@ const CourseContentTabsDiscussionListDetail = () => {
 				<>
 					{topic && (
 						<div>
+							{/*-------------------------------- main topic -------------------------------*/}
 							<div className='grid grid-cols-12 border rounded-lg p-2'>
 								{/*---------------------topic author ----------------------------*/}
 								<article className='py-8 col-span-2 flex flex-col justify-start items-center space-y-2 bg-light rounded-lg'>
@@ -181,6 +182,7 @@ const CourseContentTabsDiscussionListDetail = () => {
 									</div> */}
 								</article>
 							</div>
+							{/*-------------------------------- topic comments -------------------------------*/}
 							<div className='flex justify-between items-center'>
 								{/*--------------------------------no of comments-------------------------------*/}
 								<h2 className='pt-4 text-base font-normal text-font1'>
