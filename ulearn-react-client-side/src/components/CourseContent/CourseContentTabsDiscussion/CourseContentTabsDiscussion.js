@@ -46,7 +46,6 @@ const CourseContentTabsDiscussion = ({ courseContent }) => {
 		axios
 			.post('/topics', { ...topic })
 			.then((response) => {
-				console.log(response.data.topic);
 				message.success('Topic is added successfully');
 				window.history.back();
 				setTriggerFetching(true);
@@ -64,17 +63,24 @@ const CourseContentTabsDiscussion = ({ courseContent }) => {
 	const handleVoteForTopic = (operation, topicId) => {
 		setCourseTopics((prevTopics) => {
 			// getting the desired topic
-			const targetTopic = prevTopics.find(
+			let targetTopic = prevTopics.find(
 				(topic) => topic._id === topicId
 			);
 			// if upvote: add userId to voteList, else remove it by filtering
 			if (operation === 'upvote') {
-				targetTopic.votes = [...targetTopic.votes, currUser?.userId];
+				if (targetTopic.votes.length === 0)
+					targetTopic.votes = [currUser?.userId];
+				else if(!targetTopic.votes.includes(currUser?.userId))
+					targetTopic.votes = [
+						...targetTopic.votes,
+						currUser?.userId,
+					];
 			} else {
-				targetTopic.votes = targetTopic.votes.filter(
-					(vote) => vote !== currUser?.userId
-				);
+				targetTopic.votes = [
+					...targetTopic.votes.filter((voteId) => voteId != currUser.userId),
+				];
 			}
+			console.log(targetTopic);
 			// now update the topics with new target topic keeping the order same
 			let newList = prevTopics.map((topic) => {
 				if (topic._id === topicId) return targetTopic;
@@ -143,7 +149,11 @@ const CourseContentTabsDiscussion = ({ courseContent }) => {
 				/>
 				<Route
 					path='topics/:topicId'
-					element={<CourseContentTabsDiscussionListDetail />}
+					element={
+						<CourseContentTabsDiscussionListDetail
+							vote={{ handleUpVote, handleDownVote }}
+						/>
+					}
 				/>
 			</Routes>
 			<Outlet />
