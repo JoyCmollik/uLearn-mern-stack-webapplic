@@ -1,8 +1,10 @@
+import { Footer } from 'antd/lib/layout/layout';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CourseDetailBanner from '../../components/CourseDetail/CourseDetailBanner/CourseDetailBanner';
 import CourseDetailTabs from '../../components/CourseDetail/CourseDetailTabs/CourseDetailTabs';
+import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 
 const CourseDetail = () => {
@@ -27,6 +29,9 @@ const CourseDetail = () => {
 			<NavigationBar />
 			<CourseDetailBanner singleCourse={singleCourse} />
 			<CourseDetailTabs singleCourse={singleCourse} />
+			<Footer style={{ background: '#040453' }}>
+				<FooterComponent />
+			</Footer>
 		</div>
 	);
 };

@@ -13,7 +13,7 @@ const crypto = require('crypto');
 
 const register = async (req, res) => {
 	let { email, name, password, role, gender } = req.body;
-
+	console.log(req.user);
 	const emailAlreadyExists = await User.findOne({ email });
 	if (emailAlreadyExists) {
 		throw new CustomError.BadRequestError('Email Already Exists');
@@ -23,15 +23,15 @@ const register = async (req, res) => {
 	const isFirstAccount = (await User.countDocuments({})) === 0; //0 means no user
 	role = isFirstAccount ? 'admin' : role;
 
-	if (
+	/* 	if (
 		!isFirstAccount &&
 		role.toString() !== 'user' &&
 		role.toString() !== 'instructor'
-	) {
-		throw new CustomError.UnauthorizedError(
-			'You are unauthorized to perform this task!'
-		);
-	}
+		) {
+			throw new CustomError.UnauthorizedError(
+				'You are unauthorized to perform this task!'
+				);
+			} */
 
 	const verificationToken = crypto.randomBytes(40).toString('hex');
 	const user = await User.create({
@@ -43,12 +43,18 @@ const register = async (req, res) => {
 		verificationToken,
 	});
 	const origin = 'http://localhost:3000';
-	await sendVerificationEmail({
-		name: user.name,
-		email: user.email,
-		verificationToken: user.verificationToken,
-		origin,
-	});
+	if (req.user.role === 'admin') {
+		user.isVerified = true;
+		await user.save();
+	} else {
+		await sendVerificationEmail({
+			name: user.name,
+			email: user.email,
+			verificationToken: user.verificationToken,
+			origin,
+		});
+	}
+
 	/* const tokenUser = createTokenUser(user);
 	attachCookiesToResponse({ res, user: tokenUser });
 	res.status(StatusCodes.CREATED).json({ user: tokenUser }); */

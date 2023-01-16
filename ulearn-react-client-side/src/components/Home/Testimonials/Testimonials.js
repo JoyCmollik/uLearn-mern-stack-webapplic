@@ -92,11 +92,8 @@ const Testimonials = () => {
 							instructor;
 
 						return (
-							<SwiperSlide>
-								<div
-									key={id}
-									className='mx-auto flex flex-col justify-center items-center my-10 relative  pb-10 pt-20 px-6'
-								>
+							<SwiperSlide key={id}>
+								<div className='mx-auto flex flex-col justify-center items-center my-10 relative  pb-10 pt-20 px-6'>
 									<div className='border rounded-lg'>
 										<h2 className='text-center text-lg font-bold pt-12 '>
 											{name}

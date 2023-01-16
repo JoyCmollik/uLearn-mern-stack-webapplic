@@ -4,7 +4,7 @@ import addCategory from '../../../../images/add_user.svg';
 import useAuthentication from '../../../../hooks/useAuthentication';
 import axios from 'axios';
 const AddContentWriter = () => {
-	const { handleRegister, userId } = useAuthentication();
+	const { handleRegister, userId, registerMsg } = useAuthentication();
 
 	const [person, setPerson] = useState({
 		email: '',

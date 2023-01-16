@@ -7,11 +7,19 @@ const CourseDetailBanner = ({ singleCourse }) => {
 	//rating
 	const [value, setValue] = useState(5);
 	return (
-		<section className='bg-gradient-to-r from-[#020024] to-[#090979] min-h-[55vh] border flex items-center'>
+		<section
+			style={{
+				backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/929/update_1.6_c.jpg')`,
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+			}}
+			className=' min-h-screen  border flex items-center  '
+		>
 			<div className=' grid grid-cols-2 container mx-auto h-full'>
-				<div className='text-light     '>
+				<div className='text-white     '>
 					{/*-------------------title-------------------------*/}
-					<h2 className='text-light text-5xl font-medium tracking-wider w-[400px]'>
+					<h2 className='text-white text-5xl font-medium tracking-wider w-[400px]'>
 						{courseTitle || ''}
 					</h2>
 
@@ -40,7 +48,7 @@ const CourseDetailBanner = ({ singleCourse }) => {
 						<li className='text-sm'> 2 students</li>
 					</ul>
 				</div>
-				<div className=' '></div>
+				<div className='2 '></div>
 			</div>
 		</section>
 	);

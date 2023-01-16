@@ -70,9 +70,12 @@ const Hero = () => {
 			</section>
 			<div className=' grid grid-cols-1 md:grid-cols-3 gap-4 -mt-[50px]  container mx-auto px-4'>
 				{categories.map((category) => {
-					const { icon, title, desc, bgColor } = category;
+					const { icon, title, desc, bgColor, id } = category;
 					return (
-						<div className='card w-96 bg-base-100  mx-auto'>
+						<div
+							className='card w-96 bg-base-100  mx-auto'
+							key={id}
+						>
 							<div className='card-body'>
 								<div className='flex gap-2 items-center justify-center'>
 									<div

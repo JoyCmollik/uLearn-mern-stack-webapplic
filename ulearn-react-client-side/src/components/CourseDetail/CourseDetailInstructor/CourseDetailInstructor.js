@@ -1,25 +1,38 @@
 import { Avatar } from 'antd';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineDesktop } from 'react-icons/ai';
 import { BsStar } from 'react-icons/bs';
 import { TbCertificate2, TbSchool } from 'react-icons/tb';
 
-const CourseDetailInstructor = ({instructor}) => {
+const CourseDetailInstructor = ({ instructor }) => {
+	const [user, setUser] = useState({});
+	useEffect(() => {
+		axios
+			.get(`/users/${instructor}`)
+			.then((response) => {
+				console.log(response.data.user);
+				setUser(response.data.user);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<div className='p-10'>
-			<h4 className='text-[21px] text-[#040453] font-semibold capitalize'>
+			<h4 className='text-[21px] text-primary font-semibold capitalize'>
 				Meet The Content Creator
 			</h4>
 			<div className='grid grid-cols-2'>
 				{/*------------------about instructor--------------------*/}
 				<div className='flex space-x-3 '>
 					<Avatar
-						src='https://lmszai.zainikthemes.com/uploads_demo/user/1.jpg'
+						src={user.avatarURL}
 						size={64}
 						className='rounded-full'
 					></Avatar>
 					<p className='flex space-y-2 items-center flex-col'>
-						<span className='block text-[21px]  text-[#040453] font-semibold'>
+						<span className='block text-[21px]  text-primary font-semibold'>
 							{instructor.name}
 						</span>
 
@@ -53,7 +66,7 @@ const CourseDetailInstructor = ({instructor}) => {
 				</div> */}
 				{/*------------------------------------------*/}
 				<div className='col-span-2 flex flex-col pt-8'>
-					<h4 className='text-base  text-[#040453]  font-medium'>
+					<h4 className='text-base  text-primary font-medium'>
 						About Instructor
 					</h4>
 					<p className='text-base text-font2'>

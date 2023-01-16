@@ -6,15 +6,14 @@
 /* to change the border bottom of tabs */
 .courseTabStyle .ant-tabs-nav .ant-tabs-nav-wrap {
 	border-bottom: 1px solid #dfdddc;
-
 	border-radius: 5px;
 	color: rgb(82, 82, 108);
-	font-size: 13px;
+	font-size: 18px;
 	font-weight: 500;
 }
 
 .course-detail-tabs-ink-bar .ant-tabs-ink-bar {
-	background: rgb(94, 63, 215);
+	background: #1f53f3;
 }
 
 .course-detail-active-color
@@ -32,4 +31,5 @@
 }
 .course-detail-tabs-tab .ant-tabs-tab {
 	padding-bottom: 20px;
+	font-size: 16px;
 }

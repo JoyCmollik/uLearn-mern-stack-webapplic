@@ -6,21 +6,19 @@ import Banner from '../../components/CourseList/Banner/Banner/Banner';
 import SearchList from '../../components/CourseList/Search&Sort/SearchList/SearchList';
 import FilterCourse from '../../components/CourseList/FilterCourse/FilterCourse/FilterCourse';
 
-const { Footer, Content } = Layout;
+const { Footer } = Layout;
 const CourseList = () => {
 	return (
 		<>
-			<Layout>
-				<NavigationBar theme='light' />
-				<Content style={{ background: 'white' }}>
-					<Banner />
-					<SearchList />
-					<FilterCourse />
-				</Content>
-				<Footer style={{ background: '#040453' }}>
-					<FooterComponent />
-				</Footer>
-			</Layout>
+			<NavigationBar theme='light' />
+			<div style={{ background: 'white' }}>
+				<Banner />
+				<SearchList />
+				<FilterCourse />
+			</div>
+			<Footer style={{ background: '#040453' }}>
+				<FooterComponent />
+			</Footer>
 		</>
 	);
 };

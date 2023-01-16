@@ -4,9 +4,6 @@
 .site-collapse-custom-collapse .site-collapse-custom-panel {
 	margin-bottom: 24px;
 	overflow: hidden;
-
-	border: 0px;
-	border-radius: 2px;
 }
 .ant-collapse-content-box {
 	color: #222;
@@ -17,6 +14,7 @@
 }
 .collapseHeader .ant-collapse-header-text {
 	background-color: white;
+	padding: 10px;
 }
 
 /*----------------------------modal---------------------------------------*/

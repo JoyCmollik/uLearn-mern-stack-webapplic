@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, PageHeader, Select } from 'antd';
+import { Button, Input, message, PageHeader, Select } from 'antd';
 import addCategory from '../../../../images/add_user.svg';
 import useAuthentication from '../../../../hooks/useAuthentication';
 import axios from 'axios';
 const AddAdmin = () => {
-	const { handleRegister, userId } = useAuthentication();
+	const { handleRegister, userId, registerMsg } = useAuthentication();
 
 	const [person, setPerson] = useState({
 		email: '',
@@ -37,21 +37,35 @@ const AddAdmin = () => {
 			};
 			// console.log(data);
 			handleRegister(data);
-			setPerson({
-				email: '',
-				name: ' ',
-				password: '',
-			});
+			if (userId && registerMsg) {
+				message.success('Successfully registered');
+				setPerson({
+					email: '',
+					name: ' ',
+					password: '',
+				});
+			}
 		}
 	};
 	//to verify account
-	useEffect(() => {
-		if (userId) {
-			axios.get(`/users/updateUserStatus/${userId}`).then((response) => {
-				console.log(response.data.msg).catch((err) => console.log(err));
-			});
+	/* 	useEffect(() => {
+		if (userId && registerMsg) {
+			message.success('user Successfully registered');
+			axios
+				.get(`/users/updateUserStatus/${userId}`)
+				.then((response) => {
+					console.log(response.data.msg);
+				})
+				.catch((err) => console.log(err))
+				.finally(() => {
+					setPerson({
+						email: '',
+						name: ' ',
+						password: '',
+					});
+				});
 		}
-	}, []);
+	}, []); */
 
 	return (
 		<div className='border-[0.5px] rounded-lg overflow-hidden '>

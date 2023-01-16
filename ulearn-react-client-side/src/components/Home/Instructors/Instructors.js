@@ -88,11 +88,8 @@ const Instructors = () => {
 						const { id, name, img, position, rating } = instructor;
 
 						return (
-							<SwiperSlide>
-								<div
-									key={id}
-									className='mx-auto flex flex-col space-y-3 justify-center items-center mb-20'
-								>
+							<SwiperSlide key={id}>
+								<div className='mx-auto flex flex-col space-y-3 justify-center items-center mb-20'>
 									<div className='mx-auto'>
 										<img
 											src={img}
