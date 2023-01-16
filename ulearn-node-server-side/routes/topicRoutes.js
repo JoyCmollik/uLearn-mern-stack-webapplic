@@ -11,10 +11,14 @@ const {
 	getSingleTopics,
 	getSingleCourseTopics,
 	updateTopic,
+	updateTopicUpvote,
+	updateTopicDownvote,
 	deleteTopic,
 } = require('../controllers/topicController');
 
 router.route('/').get(getAllTopics).post(authenticateUser, createTopic);
+router.route('/upvote').patch(authenticateUser, updateTopicUpvote);
+router.route('/downvote').patch(authenticateUser, updateTopicDownvote);
 router.route('/course/:id').get(getSingleCourseTopics);
 
 router
@@ -22,6 +26,5 @@ router
 	.get(getSingleTopics)
 	.patch(authenticateUser, updateTopic)
 	.delete(authenticateUser, deleteTopic);
-
 
 module.exports = router;

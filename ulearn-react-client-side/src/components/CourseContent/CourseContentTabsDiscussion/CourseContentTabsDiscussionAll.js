@@ -1,12 +1,20 @@
 import { Avatar, Spin } from 'antd';
 import React from 'react';
-import { BsPin, BsThreeDots } from 'react-icons/bs';
+import {
+	BsFillCaretDownFill,
+	BsFillCaretUpFill,
+	BsPin,
+	BsThreeDots,
+} from 'react-icons/bs';
 import { CaretUpOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
+import { BiDownArrow, BiUpArrow, BiUpArrowAlt } from 'react-icons/bi';
+import useAuth from '../../../hooks/useAuth';
 
-const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics }) => {
+const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
+	const { handleUpVote, handleDownVote } = vote;
+	const { user: currUser } = useAuth();
 	return (
 		<section className=''>
 			{/*-------------------------all other topics----------------------------*/}
@@ -24,62 +32,105 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics }) => {
 								_id,
 								topicTitle,
 								user,
-								voteCount,
-								commentCount,
+								votes,
+								comments,
 								createdAt,
 							} = topic;
 							return (
-								<Link key={_id} to={`topics/${_id}`}>
-									<article className='flex justify-between items-center border-b-2 p-4 hover:bg-light rounded-t-lg transition'>
+								<>
+									{/*------------------------- single topic ----------------------------*/}
+									<article
+										key={_id}
+										className='flex justify-between items-center border-b-2 p-4 hover:bg-light rounded-t-lg transition'
+									>
 										{/* ---------------- topic left---------------- */}
-										<div className='flex-grow flex items-center space-x-4'>
-											<div className='rounded-full outline outline-2 outline-primary border-4 border-white'>
-												<Avatar
-													size={49}
-													src={user?.avatarURL}
-													alt={user.name}
-												/>
-											</div>
-											<div className=''>
-												<h2 className='text-xl font-semibold m-0'>
-													{topicTitle}
-												</h2>
-												<div className='text-font2 flex space-x-1'>
-													<p className='m-0 p-0 underline font-light'>
-														{user.name}
-													</p>
-													<span>.</span>
-													<p className='m-0 p-0 font-light'>
-														Posted{' '}
-														{moment(
-															createdAt
-														).fromNow()}
-													</p>
+										<Link
+											className='flex-grow'
+											to={`topics/${_id}`}
+										>
+											<div className='flex items-center space-x-4'>
+												<div className='rounded-full outline outline-2 outline-primary border-4 border-white'>
+													<Avatar
+														size={49}
+														src={user?.avatarURL}
+														alt={user.name}
+													/>
+												</div>
+												<div className=''>
+													<h2 className='text-xl font-semibold m-0'>
+														{topicTitle}
+													</h2>
+													<div className='text-font2 flex space-x-1'>
+														<p className='m-0 p-0 underline font-light'>
+															{user.name}
+														</p>
+														<span>.</span>
+														<p className='m-0 p-0 font-light'>
+															Posted{' '}
+															{moment(
+																createdAt
+															).fromNow()}
+														</p>
+													</div>
 												</div>
 											</div>
-										</div>
+										</Link>
 										{/* ---------------- topic right ---------------- */}
 										<div className='flex flex-col space-y-2 justify-center items-end'>
 											{/* ---------------- vote buttons ---------------- */}
 											<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
-												<button className='block px-2 border-r border-font2'>
-													<BiUpArrow />
+												{/* ---------------- upvote ---------------- */}
+												<button
+													onClick={(e) =>
+														handleUpVote(_id)
+													}
+													className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+													disabled={
+														!currUser ||
+														votes.includes(
+															currUser?.userId
+														)
+													}
+												>
+													{votes.includes(
+														currUser.userId
+													) ? (
+														<BsFillCaretUpFill
+															size={17}
+														/>
+													) : (
+														<BiUpArrow />
+													)}
 												</button>
 												<div className='text-base font-medium px-2'>
-													1
+													{votes.length || 0}
 												</div>
-												<button className=' block px-2 border-l border-font2'>
+												{/* ---------------- downvote ---------------- */}
+												<button
+													onClick={(e) =>
+														handleDownVote(_id)
+													}
+													disabled={
+														!currUser ||
+														!votes.includes(
+															currUser?.userId
+														)
+													}
+													className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+												>
 													<BiDownArrow />
 												</button>
 											</div>
 											{/* ---------------- comment stats ---------------- */}
 											<div className='text-font2'>
-												<span className='mr-1'>4</span>
+												<span className='mr-1'>
+													{comments.length || 0}
+												</span>
 												comments
 											</div>
 										</div>
 									</article>
-								</Link>
+								</>
 							);
 						})}
 					</div>

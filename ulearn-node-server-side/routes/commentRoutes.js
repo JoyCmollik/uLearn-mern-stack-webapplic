@@ -14,14 +14,7 @@ const {
 	deleteComment,
 } = require('../controllers/commentController');
 
-router
-	.route('/')
-	.get(getAllComments)
-	.post(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		createComment
-	);
+router.route('/').get(getAllComments).post(authenticateUser, createComment);
 
 router
 	.route('/:id')
@@ -31,11 +24,7 @@ router
 		authorizePermission('admin', 'instructor'),
 		updateComment
 	)
-	.delete(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		deleteComment
-	);
+	.delete(authenticateUser, deleteComment);
 
 router.route('/:id/sections').get(getSingleTopicComments);
 

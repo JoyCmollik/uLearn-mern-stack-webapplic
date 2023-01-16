@@ -5,7 +5,7 @@ const path = require('path');
 const { populate } = require('../models/Comment');
 
 const createComment = async (req, res) => {
-	req.body.instructor = req.user.userId;
+	req.body.user = req.user.userId;
 
 	const comment = await Comment.create(req.body);
 	res.status(StatusCodes.CREATED).json({ comment: comment });

@@ -72,6 +72,7 @@ const CourseContentDiscussionAddTopic = ({ isLoading, handleCreateTopic }) => {
 						</div>
 					</div>
 					<div className='flex justify-end bg-light p-4 space-x-2'>
+						{/*--------------------- publish button ----------------------------*/}
 						<button
 							onClick={() =>
 								handleCreateTopic(

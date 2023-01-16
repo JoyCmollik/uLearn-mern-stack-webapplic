@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -20,10 +21,13 @@ const useAuthentication = () => {
 				setUserId(response.data.userId);
 				console.log(response.data.msg);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error);
+				message.error(error.response.data.msg || error.message);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
-		setLoading(false);
 		/* try {
 			const response = await client.post('/auth/register', data);
 			setUser(response.data.user);
@@ -119,7 +123,7 @@ const useAuthentication = () => {
 				.get('/users/showMe')
 				.then((res) => {
 					setUser(res.data.user);
-					console.log('retrieved user')
+					console.log('retrieved user');
 				})
 				.catch((err) => {
 					setUser(null);

@@ -3,8 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import authImg from '../../images/auth_vector.svg';
 import role_learner from '../../images/role_leaner.svg';
 import role_creator from '../../images/role_creator.svg';
-import useAuthentication from '../../hooks/useAuthentication';
-import { Button, Result, Space, Spin } from 'antd';
+import { Button, message, Result, Space, Spin } from 'antd';
 import { Alert } from 'antd';
 import { Select } from 'antd';
 import useAuth from '../../hooks/useAuth';
@@ -55,7 +54,7 @@ const Register = () => {
 		firstName: '',
 		lastName: '',
 		password: '',
-		gender: options.value,
+		gender: options[0].value,
 	});
 
 	const handleChange = (e) => {
@@ -64,6 +63,7 @@ const Register = () => {
 		setPerson({ ...person, [name]: value });
 	};
 	const handleSubmit = (e) => {
+		console.log(person);
 		e.preventDefault();
 		const { email, firstName, lastName, password, gender } = person;
 
@@ -77,18 +77,26 @@ const Register = () => {
 			};
 
 			handleRegister(data, navigate);
-			setPerson({ email: '', firstName: '', lastName: '', password: '' });
+			setPerson({
+				email: '',
+				firstName: '',
+				lastName: '',
+				password: '',
+				gender: options[0].value,
+			});
+		} else {
+			message.warning('Inputs should be filled!');
 		}
 	};
-	if (loading) {
-		return (
-			<div className='flex mx-auto items-center justify-center container'>
-				<Space size='middle'>
-					<Spin size='large' />
-				</Space>
-			</div>
-		);
-	}
+	// if (loading) {
+	// 	return (
+	// 		<div className='flex mx-auto items-center justify-center container'>
+	// 			<Space size='middle'>
+	// 				<Spin size='large' />
+	// 			</Space>
+	// 		</div>
+	// 	);
+	// }
 	if (registerMsg) {
 		setTimeout(() => {
 			navigate('/');
@@ -145,8 +153,8 @@ const Register = () => {
 					</div>
 					{/*-----------------------------forms------------------------------------ */}
 					<form
-						className='grid grid-cols-12 gap-8'
 						onSubmit={handleSubmit}
+						className='grid grid-cols-12 gap-8'
 					>
 						{/* form input */}
 						<div className='col-span-12 form-control w-full'>
@@ -260,10 +268,10 @@ const Register = () => {
 						</div>
 						{/* submit button */}
 						<button
-							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
 							type='submit'
+							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
 						>
-							Sign Up
+							{loading ? <Spin /> : 'Sign Up'}
 						</button>
 					</form>
 				</div>

@@ -6,7 +6,7 @@ import { Tabs } from 'antd';
 import CourseContentTabsDiscussionAll from './CourseContentTabsDiscussionAll';
 import { MdOutlineControlPointDuplicate } from 'react-icons/md';
 
-const CourseContentDiscussionList = ({ isLoading, courseTopics }) => {
+const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
 	const onChange = (key) => {
 		console.log(key);
 	};
@@ -60,6 +60,7 @@ const CourseContentDiscussionList = ({ isLoading, courseTopics }) => {
 										<CourseContentTabsDiscussionAll
 											courseTopics={courseTopics}
 											isLoading={isLoading}
+											vote={vote}
 										/>
 									</div>
 								),

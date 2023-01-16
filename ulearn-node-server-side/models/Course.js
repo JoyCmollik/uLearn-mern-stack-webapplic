@@ -34,10 +34,6 @@ const CourseSchema = new mongoose.Schema(
 			type: mongoose.Schema.ObjectId,
 			ref: 'User',
 		},
-		enrolledStudents: {
-			type: [mongoose.Schema.ObjectId],
-			ref: 'User',
-		},
 		courseOutcomes: {
 			type: [String],
 			required: [true, 'please provide course outcomes'],
@@ -101,6 +97,11 @@ const CourseSchema = new mongoose.Schema(
 			type: [mongoose.Schema.ObjectId],
 			ref: 'Section',
 			default: [],
+		},
+		savedLearners: {
+			type: [mongoose.Schema.ObjectId],
+			ref: 'User',
+			default: []
 		},
 	},
 	{
