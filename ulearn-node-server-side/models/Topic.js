@@ -11,6 +11,11 @@ const TopicSchema = mongoose.Schema(
 			ref: 'User',
 			required: true,
 		},
+		votes: {
+			type: [mongoose.Schema.ObjectId],
+			ref: 'User', 
+			default: []
+		},
 		course: {
 			type: mongoose.Schema.ObjectId,
 			ref: 'Course',
@@ -19,10 +24,6 @@ const TopicSchema = mongoose.Schema(
 		topicContent: {
 			type: String,
 			required: [true, 'Please provide topic content'],
-		},
-		voteCount: {
-			type: Number,
-			default: 0,
 		},
 	},
 	{

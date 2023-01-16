@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const CommentSchema = mongoose.Schema(
 	{
 		commentBody: {
-			type: Number,
+			type: String,
 			default: 0,
 		},
 		user: {

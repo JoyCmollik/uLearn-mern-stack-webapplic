@@ -20,13 +20,30 @@ const getAllCourses = async (req, res) => {
 const getSingleCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
-	const course = await Course.findOne({ _id: courseId }).populate({
-		path: 'reviews', populate: { path: 'user', select: ['name', 'avatarURL'] }
-	}).populate({path: 'sections', select: 'sectionTitle', populate: { path: 'lessons', select: 'lessonTitle' }});
+	const course = await Course.findOne({ _id: courseId })
+		.populate({
+			path: 'reviews',
+			populate: { path: 'user', select: ['name', 'avatarURL'] },
+		})
+		.populate({
+			path: 'sections',
+			select: 'sectionTitle',
+			populate: { path: 'lessons', select: 'lessonTitle' },
+		});
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
 	}
+	res.status(StatusCodes.OK).json({ course });
+};
+
+const getSingleUserCourses = async (req, res) => {
+	const { id: courseId } = req.params;
+
+	const course = await Course.find({ _id: courseId }).select(
+		'courseTitle courseShortDesc level language'
+	);
+
 	res.status(StatusCodes.OK).json({ course });
 };
 
@@ -38,7 +55,8 @@ const getSingleCourseSections = async (req, res) => {
 		.populate({
 			path: 'sections',
 			populate: { path: 'lessons' },
-		}).populate({ path: 'instructor' , select: 'name avatarURL'});
+		})
+		.populate({ path: 'instructor', select: 'name avatarURL' });
 
 	if (!course) {
 		throw new CustomError.NotFoundError(`No course with id: ${courseId}`);
