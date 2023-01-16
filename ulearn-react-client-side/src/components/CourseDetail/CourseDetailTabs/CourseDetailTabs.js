@@ -254,7 +254,7 @@ const CourseDetailTabs = ({ singleCourse }) => {
 								className='object-cover  w-[400px] h-[350px] rounded-t-xl '
 							/>
 						</div>
-						<div className='absolute top-32 left-44'>
+						<div className='absolute top-32 left-40'>
 							<BsPlayCircleFill
 								onClick={showModal}
 								className='text-primary text-6xl font-medium capitalize bg-white rounded-full '

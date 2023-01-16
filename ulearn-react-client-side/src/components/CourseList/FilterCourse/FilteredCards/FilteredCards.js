@@ -24,7 +24,7 @@ const FilteredCards = () => {
 			})
 			.finally(() => {
 				setIsFetching(false);
-			})
+			});
 	}, []);
 	//pagination
 	const [current, setCurrent] = useState(1);
@@ -48,7 +48,13 @@ const FilteredCards = () => {
 							status='500'
 							title='500'
 							subTitle='Sorry, something went wrong.'
-							extra={<Link to={'/'}><button className='bg-primary px-4 py-2 text-white rounded-lg'>Back home</button></Link>}
+							extra={
+								<Link to={'/'}>
+									<button className='bg-primary px-4 py-2 text-white rounded-lg'>
+										Back home
+									</button>
+								</Link>
+							}
 						/>
 					) : (
 						<>
@@ -79,7 +85,7 @@ const FilteredCards = () => {
 														courseThumb || 'missing'
 													}
 													alt='course'
-													className='rounded-xl '
+													className='rounded-xl object-cover w-full'
 												/>
 											</div>
 											{/* ----------------------card body--------------------------- */}
