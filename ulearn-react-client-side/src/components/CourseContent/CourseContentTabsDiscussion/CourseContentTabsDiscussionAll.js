@@ -53,7 +53,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 													<Avatar
 														size={49}
 														src={user?.avatarURL}
-														alt={user.name}
+														alt={user?.name}
 													/>
 												</div>
 												<div className=''>
@@ -62,7 +62,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 													</h2>
 													<div className='text-font2 flex space-x-1'>
 														<p className='m-0 p-0 underline font-light'>
-															{user.name}
+															{user?.name}
 														</p>
 														<span>.</span>
 														<p className='m-0 p-0 font-light'>
@@ -81,7 +81,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 											<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
 												{/* ---------------- upvote ---------------- */}
 												<button
-													onClick={(e) =>
+													onClick={() =>
 														handleUpVote(_id)
 													}
 													className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'

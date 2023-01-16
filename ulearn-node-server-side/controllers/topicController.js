@@ -3,6 +3,7 @@ const Topic = require('../models/Topic');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
+const { getSingleTopicComments } = require('./commentController');
 
 const createTopic = async (req, res) => {
 	req.body.user = req.user.userId;
@@ -65,31 +66,38 @@ const updateTopic = async (req, res) => {
 
 const updateTopicUpvote = async (req, res) => {
 	const { topicId } = req.body;
-	const topic = await Topic.findOne({_id: topicId});
-	if(topic.votes.includes(req.user.userId)) {
+	const topic = await Topic.findOne({ _id: topicId });
+	if (topic.votes.includes(req.user.userId)) {
 		throw new CustomError.BadRequestError(
 			`Already voted for ${topic.topicTitle}`
 		);
 	}
-	topic.votes = [ ...topic.votes, req.user.userId ];
+
+	if (topic.votes.length === 0) {
+		topic.votes = [req.user.userId];
+	} else {
+		topic.votes = [...topic.votes, req.user.userId];
+	}
 
 	await topic.save();
-	res.status(StatusCodes.OK).json({msg : 'voted successfully'});
-}
+	res.status(StatusCodes.OK).json({ msg: 'upvoted' });
+};
 
 const updateTopicDownvote = async (req, res) => {
 	const { topicId } = req.body;
-	const topic = await Topic.findOne({_id: topicId});
-	if (!topic.votes.includes(req.user.userId)) {
+	const { userId } = req.user;
+	const topic = await Topic.findOne({ _id: topicId });
+	if (!topic.votes.includes(userId)) {
 		throw new CustomError.BadRequestError(
 			`you didn't vote for ${topic.topicTitle}`
 		);
 	}
-	topic.votes = topic.votes.filter(voteId => voteId !== req.user.userId);
+
+	topic.votes = [...topic.votes.filter((voteId) => voteId != userId)];
 
 	await topic.save();
-	res.status(StatusCodes.OK).json({msg : 'voted successfully'});
-}
+	res.status(StatusCodes.OK).json({ msg : 'downvoted' });
+};
 
 const deleteTopic = async (req, res) => {
 	const { id: topicId } = req.params;

@@ -9,6 +9,8 @@ import { MdOutlineArrowBack } from 'react-icons/md';
 import moment from 'moment';
 import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
 import CourseDiscussionCommentsComponent from './CourseDiscussionComments/CourseDiscussionCommentsComponent';
+import useAuth from '../../../hooks/useAuth';
+import { BsFillCaretUpFill } from 'react-icons/bs';
 
 const parse = require('html-react-parser');
 
@@ -18,7 +20,7 @@ const initialStatus = {
 	updating: false,
 };
 
-const CourseContentTabsDiscussionListDetail = () => {
+const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 	const [topic, setTopic] = useState(null);
 	const [editorContent, setEditorContent] = useState();
 	const [isLoading, setIsLoading] = useState();
@@ -28,7 +30,8 @@ const CourseContentTabsDiscussionListDetail = () => {
 
 	// library constants
 	const { topicId } = useParams();
-	const navigate = useNavigate();
+	const { user: currUser } = useAuth();
+	const { handleUpVote, handleDownVote } = vote;
 
 	// function - on component load
 	useEffect(() => {
@@ -158,13 +161,44 @@ const CourseContentTabsDiscussionListDetail = () => {
 										</div>
 										{/*---------------------topic vote ----------------------------*/}
 										<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
-											<button className='block px-2 border-r border-font2'>
-												<BiUpArrow />
+											<button
+												onClick={() =>
+													handleUpVote(topic._id)
+												}
+												className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+												disabled={
+													!currUser ||
+													topic.votes.includes(
+														currUser?.userId
+													)
+												}
+											>
+												{topic.votes.includes(
+													currUser.userId
+												) ? (
+													<BsFillCaretUpFill
+														size={17}
+													/>
+												) : (
+													<BiUpArrow />
+												)}
 											</button>
 											<div className='text-base font-medium px-2'>
-												1
+												{topic.votes.length || 0}
 											</div>
-											<button className=' block px-2 border-l border-font2'>
+											{/* ---------------- downvote ---------------- */}
+											<button
+												onClick={(e) =>
+													handleDownVote(topic._id)
+												}
+												disabled={
+													!currUser ||
+													!topic.votes.includes(
+														currUser?.userId
+													)
+												}
+												className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+											>
 												<BiDownArrow />
 											</button>
 										</div>
