@@ -245,9 +245,9 @@ const CourseDetailTabs = ({ singleCourse }) => {
 					/>
 				</div>
 				{/*----------------------------enroll course detail--------------------------------*/}
-				<div className='col-span-4 rounded-t-xl showdow-lg space-y-4  w-[400px]  -mt-[350px]'>
+				<div className='col-span-4 rounded-t-xl shadow-xl space-y-4  w-[400px]  -mt-[350px] p-4 border  bg-white'>
 					<div className='relative '>
-						<div className=' '>
+						<div className=''>
 							<img
 								src={courseThumb}
 								alt=''
