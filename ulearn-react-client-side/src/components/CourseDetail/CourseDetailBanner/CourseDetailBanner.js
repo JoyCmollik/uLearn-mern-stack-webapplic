@@ -10,11 +10,8 @@ const CourseDetailBanner = ({ singleCourse }) => {
 		<section
 			style={{
 				backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/929/update_1.6_c.jpg')`,
-				backgroundRepeat: 'no-repeat',
-				backgroundSize: 'cover',
-				backgroundPosition: 'center',
 			}}
-			className=' min-h-screen  border flex items-center  '
+			className=' min-h-[55vh] border flex items-center  '
 		>
 			<div className=' grid grid-cols-2 container mx-auto h-full'>
 				<div className='text-white     '>
@@ -48,7 +45,7 @@ const CourseDetailBanner = ({ singleCourse }) => {
 						<li className='text-sm'> 2 students</li>
 					</ul>
 				</div>
-				<div className='2 '></div>
+				<div className=' '></div>
 			</div>
 		</section>
 	);
