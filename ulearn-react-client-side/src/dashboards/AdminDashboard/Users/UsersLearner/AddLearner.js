@@ -140,7 +140,7 @@ const AddLearner = () => {
 								type='primary'
 								htmlType='submit'
 							>
-								Add Admin
+								Add Learner
 							</Button>
 						</form>
 					</div>

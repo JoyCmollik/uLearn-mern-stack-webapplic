@@ -139,7 +139,7 @@ const AddContentWriter = () => {
 								type='primary'
 								htmlType='submit'
 							>
-								Add Admin
+								Add Content Writer
 							</Button>
 						</form>
 					</div>

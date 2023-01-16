@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import moment from 'moment';
 // library components
 import { Table, Input, Spin } from 'antd';
 import { TfiMore } from 'react-icons/tfi';
@@ -26,8 +26,9 @@ const columns = [
 	},
 	{
 		title: 'joining_time',
-		dataIndex: 'joining_time',
-		key: 'time',
+		dataIndex: 'createdAt',
+		key: 'createdAt',
+		render: (createdAt) => <p>{moment(createdAt).fromNow()} </p>,
 	},
 	{
 		title: 'Action',
