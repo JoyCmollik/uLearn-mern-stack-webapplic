@@ -36,7 +36,10 @@ const CourseDetail = () => {
 				console.log(response.data.currLearner);
 				message.success('Course is enrolled successfully');
 				setSingleCourse((course) => {
-					return {...course, currLearners: response.data.currLearners}
+					return {
+						...course,
+						currLearners: response.data.currLearners,
+					};
 				});
 			})
 			.catch((error) => {
@@ -46,7 +49,7 @@ const CourseDetail = () => {
 			.finally(() => {
 				setIsEnrolling(false);
 			});
-	}
+	};
 
 	return (
 		<div>

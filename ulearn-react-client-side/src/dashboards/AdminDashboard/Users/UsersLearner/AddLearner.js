@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, PageHeader, Select } from 'antd';
+import { Button, Input, message, PageHeader, Select } from 'antd';
 import addCategory from '../../../../images/add_user.svg';
-import useAuthentication from '../../../../hooks/useAuthentication';
 import axios from 'axios';
 const AddLearner = () => {
-	const { handleRegister, userId } = useAuthentication();
+	const [loading, setLoading] = useState(false);
 
 	const [person, setPerson] = useState({
 		email: '',
@@ -35,23 +34,29 @@ const AddLearner = () => {
 				gender,
 				role,
 			};
-			//console.log(data);
-			handleRegister(data);
-			setPerson({
-				email: '',
-				name: ' ',
-				password: '',
-			});
+			setLoading(true);
+			axios
+				.post('/auth/admin/register', data)
+				.then((response) => {
+					console.log(response.data.msg);
+					message.success('new user registered successfully');
+					setPerson({
+						email: '',
+						name: ' ',
+						password: '',
+					});
+				})
+				.catch((error) => {
+					console.log(error);
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		} else {
+			message.warning('Inputs should be filled!');
 		}
 	};
-	//to verify account
-	useEffect(() => {
-		if (userId) {
-			axios.get(`/users/updateUserStatus/${userId}`).then((response) => {
-				console.log(response.data.msg).catch((err) => console.log(err));
-			});
-		}
-	}, []);
 
 	return (
 		<div className='border-[0.5px] rounded-lg overflow-hidden '>
