@@ -45,6 +45,7 @@ function App() {
 
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
+				<Route path='my-courses' element={<CourseList />} />
 				<Route
 					path='course-list/:courseId'
 					element={<CourseDetail />}
