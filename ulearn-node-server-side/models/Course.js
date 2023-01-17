@@ -98,7 +98,7 @@ const CourseSchema = new mongoose.Schema(
 			ref: 'Section',
 			default: [],
 		},
-		savedLearners: {
+		currLearners: {
 			type: [mongoose.Schema.ObjectId],
 			ref: 'User',
 			default: []

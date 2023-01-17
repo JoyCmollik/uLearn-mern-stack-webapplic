@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { SiGooglescholar } from 'react-icons/si';
+import * as LottiePlayer from '@lottiefiles/lottie-player';
 
 const categories = [
 	{
@@ -28,71 +29,70 @@ const categories = [
 
 const Hero = () => {
 	return (
-		<div className=''>
-			<section
-				style={{ minHeight: 'calc(100vh-90px)' }}
-				className='rounded-lg container mx-auto p-5 bg-light pb-[140px]'
-			>
+		<div className='pt-10'>
+			<section className='container mx-auto bg-primary bg-opacity-5 rounded-lg h-[50vh]'>
 				{/*---------------------------banner-------------------------------*/}
-				<div className='flex flex-wrap flex-col md:flex-row justify-between  items-center  '>
-					<article className=''>
-						{/* --------------------title------------------------------ */}
-						<small className='text-xs font-semibold tracking-[.65em]'>
-							Come for Learn
-						</small>
-						<h1 className='text-6xl font-bold text mt-5'>
-							A Better <br />
-							Learning Era
-							<br />
-							Starts Here.
+				<div className='h-full p-[10vw] flex justify-between items-center font-lato'>
+					<div className='space-y-4'>
+						<h1 className='text-2xl xl:text-4xl font-bold text-font1'>
+							Explore a community built <br /> for academics, with
+							academics.
 						</h1>
-						<p className=' text-lg '>
-							While the lovely valley teems with vapour around
-							me,and
-							<br />
-							the meridian sun strikes the upper
-						</p>
-						<button className='btn bg-primary border border-primary'>
-							Browse Chrome
-						</button>
-					</article>
-
-					{/* ------------------------image-------------------------- */}
-					<article>
-						<img
-							src='https://lmszai.zainikthemes.com/uploads_demo/home/hero-img.png'
-							alt=''
-							className='max-w-2xl rounded-lg'
-						/>
-					</article>
-				</div>
-				{/*----------------------------categories------------------------------*/}
-			</section>
-			<div className=' grid grid-cols-1 md:grid-cols-3 gap-4 -mt-[50px]  container mx-auto px-4'>
-				{categories.map((category) => {
-					const { icon, title, desc, bgColor, id } = category;
-					return (
-						<div
-							className='card w-96 bg-base-100  mx-auto'
-							key={id}
-						>
-							<div className='card-body'>
-								<div className='flex gap-2 items-center justify-center'>
-									<div
-										className={` p-4 rounded-full gap-4 ${bgColor}`}
-									>
-										{icon}
-									</div>
-									<div>
-										<h2 className='card-title'>{title}</h2>
-										<p className='text-base w-48'>{desc}</p>
-									</div>
-								</div>
-							</div>
+						<h4 className='m-0 p-0 text-base w-8/12 text-font2'>
+							uLearn - a platform to let you organize your
+							resources and share with others whilst making you a
+							contributor to the society.
+						</h4>
+						<div className='flex space-x-4 items-center font-medium'>
+							<button className='px-4 py-2 border-2 border-primary bg-primary text-white rounded-lg'>
+								Sign Up
+							</button>
+							<button className='px-4 py-2 border-2 border-primary text-primary rounded-lg'>
+								What is uLearn?
+							</button>
 						</div>
-					);
-				})}
-			</div>
+					</div>
+
+					{/* <img
+						src='https://lottiefiles.com/62404-academic-hut-banner'
+						className='inline-block w-[350px] object-cover'
+						alt='hero-banner'
+					/> */}
+					{/* <iframe
+						className='inline-block w-[350px] object-cover'
+						title='hero'
+						src='https://embed.lottiefiles.com/animation/62404'
+					/> */}
+					<lottie-player
+						autoplay
+						loop
+						background='#F3F6FF'
+						src='https://assets2.lottiefiles.com/packages/lf20_xxyvtiab.json'
+						style={{ width: '350px', height: '350px' }}
+					/>
+				</div>
+				{/*----------------------------stats------------------------------*/}
+				<div className='transform -translate-y-2/4 mx-auto bg-white w-[35vw] border-b-4 border-primary rounded-lg grid grid-cols-3 shadow-md'>
+					<div className='flex flex-col justify-center items-center border-r p-4'>
+						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
+							40
+						</h4>
+						<p className='m-0 p-0 text-font2'>Courses</p>
+					</div>
+					<div className='flex flex-col justify-center items-center border-r p-4'>
+						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
+							55
+						</h4>
+						<p className='m-0 p-0 text-font2'>Content Creators</p>
+					</div>
+					<div className='flex flex-col justify-center items-center p-4'>
+						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
+							90
+						</h4>
+						<p className='m-0 p-0 text-font2'>Learners</p>
+					</div>
+				</div>
+			</section>
 		</div>
 	);
 };

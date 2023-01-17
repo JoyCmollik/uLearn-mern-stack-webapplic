@@ -27,6 +27,7 @@ import UsersAdmin from './dashboards/AdminDashboard/Users/UsersAdmin/UsersAdmin'
 import UsersContentWriter from './dashboards/AdminDashboard/Users/UsersContentWriter/UsersContentWriter';
 import UsersLearner from './dashboards/AdminDashboard/Users/UsersLearner/UsersLearner';
 import AdminOutlet from './privateOutlets/AdminOutlet';
+import MyCourses from './pages/MyCourses/MyCourses';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -45,7 +46,7 @@ function App() {
 
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
-				<Route path='my-courses' element={<CourseList />} />
+				<Route path='my-courses' element={<MyCourses />} />
 				<Route
 					path='course-list/:courseId'
 					element={<CourseDetail />}

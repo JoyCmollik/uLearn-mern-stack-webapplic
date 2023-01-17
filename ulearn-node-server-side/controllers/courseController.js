@@ -39,8 +39,9 @@ const getSingleCourse = async (req, res) => {
 
 const getSingleUserCourses = async (req, res) => {
 	const { id: courseId } = req.params;
+	const { userId } = req.user;
 
-	const course = await Course.find({ _id: courseId }).select(
+	const course = await Course.find({ _id: courseId, currLearners: { "$in" : [userId]}  }).select(
 		'courseTitle courseShortDesc level language'
 	);
 
@@ -77,6 +78,21 @@ const updateCourse = async (req, res) => {
 	}
 
 	res.status(StatusCodes.OK).json({ course });
+};
+
+const updateSingleUserCourses = async (req, res) => {
+	const { courseId, isAdd } = req.params;
+	const { userId } = req.user;
+
+	const course = await Course.findOne({ _id: courseId });
+	if(isAdd && !course.currLearners.include(userId)) {
+		course.currLearners = [ ...course.currLearners, userId ];
+	} else {
+		course.currLearners = course.currLearners.filter(currId => currId !== userId);
+	}
+
+	await course.save();
+	res.status(StatusCodes.OK).json({ msg: 'updated successfully' });
 };
 
 const deleteCourse = async (req, res) => {
@@ -126,7 +142,9 @@ module.exports = {
 	getAllCourses,
 	getSingleCourse,
 	getSingleCourseSections,
+	getSingleUserCourses,
 	updateCourse,
+	updateSingleUserCourses,
 	deleteCourse,
 	uploadImage,
 };

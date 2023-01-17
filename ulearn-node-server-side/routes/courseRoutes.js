@@ -10,7 +10,9 @@ const {
 	getAllCourses,
 	getSingleCourse,
 	getSingleCourseSections,
+	getSingleUserCourses,
 	updateCourse,
+	updateSingleUserCourses,
 	deleteCourse,
 	uploadImage,
 } = require('../controllers/courseController');
@@ -34,5 +36,6 @@ router
 
 router.route('/:id/sections').get(getSingleCourseSections);
 router.route('/:id/reviews').get(getSingleCourseReviews);
+router.route('/:id/users').get(getSingleUserCourses).patch(updateSingleUserCourses);
 
 module.exports = router;

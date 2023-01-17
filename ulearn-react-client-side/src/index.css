@@ -10,3 +10,7 @@ body {
 	background-color: white;
 	color: #3a3a3a;
 }
+
+.font-lato {
+	font-family: 'Lato', sans-serif !important;
+}
