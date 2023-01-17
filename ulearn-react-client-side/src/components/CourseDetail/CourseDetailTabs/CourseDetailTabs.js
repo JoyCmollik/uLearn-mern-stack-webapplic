@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Tabs } from 'antd';
+import { Modal, Spin, Tabs } from 'antd';
 import {
 	AiOutlineClockCircle,
 	AiOutlineReconciliation,
@@ -22,6 +22,7 @@ import CourseDetailInstructor from '../CourseDetailInstructor/CourseDetailInstru
 import { VscDiffAdded } from 'react-icons/vsc';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import useAuth from '../../../hooks/useAuth';
 
 const parse = require('html-react-parser');
 
@@ -30,8 +31,13 @@ const onChange = (key) => {
 	console.log(key);
 };
 
-const CourseDetailTabs = ({ singleCourse }) => {
+const CourseDetailTabs = ({
+	singleCourse,
+	handleEnrollCourse,
+	isEnrolling,
+}) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { user } = useAuth();
 	const showModal = () => {
 		setIsModalOpen(true);
 	};
@@ -47,7 +53,6 @@ const CourseDetailTabs = ({ singleCourse }) => {
 	const {
 		courseTitle,
 		courseDesc,
-
 		courseOutcomes,
 		enrolledStudents,
 		courseRequirements,
@@ -58,35 +63,31 @@ const CourseDetailTabs = ({ singleCourse }) => {
 		instructor,
 		createdAt,
 		courseThumb,
+		currLearners,
 	} = singleCourse;
 
 	const courseDetails = [
 		{
-			id: 45,
 			icon: <AiOutlineClockCircle className='text-font2 text-lg' />,
 			title1: 'Course Duration',
 			title2: '21 min 42 sec',
 		},
 		{
-			id: 47,
 			icon: <BsFillBarChartLineFill className='text-font2 text-lg' />,
 			title1: 'Course level',
 			title2: level ? level : '',
 		},
 		{
-			id: 46,
 			icon: <AiOutlineUsergroupAdd className='text-font2 text-lg' />,
 			title1: 'Students',
 			title2: enrolledStudents ? enrolledStudents?.length : '',
 		},
 		{
-			id: 48,
 			icon: <AiOutlineReconciliation className='text-font2 text-lg' />,
 			title1: 'Language',
 			title2: language ? language : '',
 		},
 		{
-			id: 48,
 			icon: <BsCalendarDate className='text-font2 text-lg' />,
 			title1: 'Created Date',
 			title2: createdAt ? moment(createdAt).fromNow() : '',
@@ -279,16 +280,42 @@ const CourseDetailTabs = ({ singleCourse }) => {
 
 					<div className='space-y-4'>
 						<div>
-							<Link to={`/course-content/${singleCourse._id}`}>
-								<button className='block py-3 rounded-lg bg-primary text-white text-center w-full text-base'>
-									Go to course content page
+							{/* ------------------ Enroll Button ------------------ */}
+
+							{user && currLearners && (
+								<button
+									onClick={() =>
+										handleEnrollCourse(singleCourse._id)
+									}
+									disabled={currLearners?.includes(
+										user?.userId
+									)}
+									className='block py-3 rounded-lg bg-primary text-white text-center w-full text-base disabled:bg-opacity-70'
+								>
+									{isEnrolling ? (
+										<>
+											<Spin
+												className='mr-2'
+												size='small'
+											/>
+											Enrolling on progress
+										</>
+									) : (
+										<>
+											{!currLearners?.includes(
+												user?.userId
+											)
+												? 'Enroll to this course.'
+												: 'Already enrolled to this course.'}
+										</>
+									)}
 								</button>
-							</Link>
+							)}
 						</div>
 						<div className='grid grid-cols-2  border border-gray-300  rounded text-base  pt-4'>
 							<button className='rounded  flex flex-col justify-center items-center border-r border-gray-300'>
 								<VscDiffAdded className='text-font2' />
-								<p className='text-font2'> Add To Mylist</p>
+								<p className='text-font2'> Add To Wishlist</p>
 							</button>
 							<button className='flex flex-col justify-center rounded items-center '>
 								<BsShare className='text-font2' />
@@ -302,9 +329,9 @@ const CourseDetailTabs = ({ singleCourse }) => {
 							Course Specifications
 						</h2>
 						<div>
-							{courseDetails.map((detail) => (
+							{courseDetails.map((detail, index) => (
 								<div
-									key={detail?.id}
+									key={index}
 									className='flex items-center justify-between space-y-3'
 								>
 									<div className='flex justify-between items-center text-base'>

@@ -28,6 +28,8 @@ import UsersContentWriter from './dashboards/AdminDashboard/Users/UsersContentWr
 import UsersLearner from './dashboards/AdminDashboard/Users/UsersLearner/UsersLearner';
 import AdminOutlet from './privateOutlets/AdminOutlet';
 import MyCourses from './pages/MyCourses/MyCourses';
+import Testimonial from './pages/Testimonial/Testimonial';
+import BecomeContentWriter from './pages/BecomeContentWriter/BecomeContentWriter';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -47,6 +49,11 @@ function App() {
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
 				<Route path='my-courses' element={<MyCourses />} />
+				<Route path='testimonial' element={<Testimonial />} />
+				<Route
+					path='become-content-creator'
+					element={<BecomeContentWriter />}
+				/>
 				<Route
 					path='course-list/:courseId'
 					element={<CourseDetail />}

@@ -38,14 +38,13 @@ const getSingleCourse = async (req, res) => {
 };
 
 const getSingleUserCourses = async (req, res) => {
-	const { id: courseId } = req.params;
 	const { userId } = req.user;
 
-	const course = await Course.find({ _id: courseId, currLearners: { "$in" : [userId]}  }).select(
-		'courseTitle courseShortDesc level language'
-	);
+	const courses = await Course.find({
+		currLearners: { $in: [userId] },
+	}).select('courseTitle courseShortDesc courseThumb level language');
 
-	res.status(StatusCodes.OK).json({ course });
+	res.status(StatusCodes.OK).json({ courses });
 };
 
 const getSingleCourseSections = async (req, res) => {
@@ -81,18 +80,22 @@ const updateCourse = async (req, res) => {
 };
 
 const updateSingleUserCourses = async (req, res) => {
-	const { courseId, isAdd } = req.params;
-	const { userId } = req.user;
+	const { courseId, isAdd } = req.body;
+	const userId = req.user.userId;
 
 	const course = await Course.findOne({ _id: courseId });
-	if(isAdd && !course.currLearners.include(userId)) {
-		course.currLearners = [ ...course.currLearners, userId ];
+	if (isAdd && !course.currLearners.includes(userId)) {
+		course.currLearners = [...course.currLearners, userId];
+	} else if (course.currLearners.includes(userId)) {
+		course.currLearners = course.currLearners.filter(
+			(currId) => currId + '' !== userId + ''
+		);
 	} else {
-		course.currLearners = course.currLearners.filter(currId => currId !== userId);
+		throw new CustomError.BadRequestError('Not possible to process.');
 	}
 
 	await course.save();
-	res.status(StatusCodes.OK).json({ msg: 'updated successfully' });
+	res.status(StatusCodes.OK).json({ currLearners: course.currLearners });
 };
 
 const deleteCourse = async (req, res) => {

@@ -19,10 +19,17 @@ const UserSchema = new mongoose.Schema(
 				message: 'please provide valid email',
 			},
 		},
+		instructor: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'Instructor',
+		},
 		password: {
 			type: String,
 			required: [true, 'please provide email'],
 			minlength: 6,
+		},
+		about: {
+			type: String
 		},
 		role: {
 			type: String,

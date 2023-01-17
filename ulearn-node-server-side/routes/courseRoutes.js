@@ -22,20 +22,39 @@ const { getSingleCourseReviews } = require('../controllers/reviewController');
 router
 	.route('/')
 	.get(getAllCourses)
-	.post(authenticateUser, authorizePermission('admin', 'instructor'), createCourse);
+	.post(
+		authenticateUser,
+		authorizePermission('admin', 'instructor'),
+		createCourse
+	);
 
 router
 	.route('/uploadImage')
-	.post(authenticateUser, authorizePermission('admin', 'instructor'), uploadImage);
+	.post(
+		authenticateUser,
+		authorizePermission('admin', 'instructor'),
+		uploadImage
+	);
+router
+	.route('/users')
+	.get(authenticateUser, getSingleUserCourses)
+	.patch(authenticateUser, updateSingleUserCourses);
 
 router
 	.route('/:id')
 	.get(getSingleCourse)
-	.patch(authenticateUser, authorizePermission('admin','instructor'), updateCourse)
-	.delete(authenticateUser, authorizePermission('admin', 'instructor'), deleteCourse);
+	.patch(
+		authenticateUser,
+		authorizePermission('admin', 'instructor'),
+		updateCourse
+	)
+	.delete(
+		authenticateUser,
+		authorizePermission('admin', 'instructor'),
+		deleteCourse
+	);
 
 router.route('/:id/sections').get(getSingleCourseSections);
 router.route('/:id/reviews').get(getSingleCourseReviews);
-router.route('/:id/users').get(getSingleUserCourses).patch(updateSingleUserCourses);
 
 module.exports = router;

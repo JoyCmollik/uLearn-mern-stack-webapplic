@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateUser } = require('../middleware/authentication');
+const { authenticateUser, authorizePermission } = require('../middleware/authentication');
 const {
 	register,
+	registerUserByAdmin,
 	login,
 	logout,
 	verifyEmail,
@@ -11,6 +12,12 @@ const {
 } = require('../controllers/authController');
 
 router.post('/register', register);
+router.post(
+	'/admin/register',
+	authenticateUser,
+	authorizePermission('admin'),
+	registerUserByAdmin
+);
 router.post('/login', login);
 router.delete('/logout', authenticateUser, logout);
 router.post('/verify-email', verifyEmail);

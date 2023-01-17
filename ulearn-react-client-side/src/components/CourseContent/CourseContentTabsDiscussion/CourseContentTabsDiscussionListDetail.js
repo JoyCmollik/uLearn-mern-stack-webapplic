@@ -1,9 +1,9 @@
-import { Avatar, message, Progress, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import './CourseContentTabDiscussionListDetail.css';
 import { Dropdown, Menu } from 'antd';
 import DashTextEditor from '../../../dashboards/DashboardShared/DashTextEditor/DashTextEditor';
+import { Avatar, message, Progress, Spin } from 'antd';
 import axios from 'axios';
 import { MdOutlineArrowBack } from 'react-icons/md';
 import moment from 'moment';
