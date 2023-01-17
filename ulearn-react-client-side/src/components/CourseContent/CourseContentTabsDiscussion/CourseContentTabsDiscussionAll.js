@@ -93,7 +93,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 													}
 												>
 													{votes.includes(
-														currUser.userId
+														currUser?.userId
 													) ? (
 														<BsFillCaretUpFill
 															size={17}
