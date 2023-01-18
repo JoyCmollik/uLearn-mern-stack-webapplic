@@ -82,13 +82,13 @@ const BecomeContentWriter = () => {
 				degreeTitle,
 				institutionName,
 				approxPassingYear,
-				tags,
+				skillSets: tags,
 			};
-			//console.log(data);
+			console.log(data);
 			axios
 				.post('/instructors', data)
 				.then((response) => {
-					console.log(response.data.instructors);
+					console.log(response.data.instructor);
 					message.success('instructor details successfully updated');
 				})
 				.catch((error) => {
