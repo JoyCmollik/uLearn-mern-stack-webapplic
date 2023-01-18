@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button, Input, message, Spin } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const AddOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 	const [isUpdating, setIsUpdating] = useState(false);
@@ -44,9 +45,10 @@ const AddOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 					disabled={isUpdating}
 				>
 					{isUpdating ? (
-						<>
-							<Loading /> <span className='ml-2'>Adding...</span>
-						</>
+						<span className='flex items-center'>
+							<Loading size='small' />{' '}
+							<span className='ml-2'>Adding...</span>
+						</span>
 					) : (
 						<>
 							<HiPlus size={18} /> <span>Add Outcome</span>

@@ -3,6 +3,7 @@ import { Button, Input, message, PageHeader, Spin, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 import addCategory from '../../../../images/add_category.svg';
 import { Controller, useForm } from 'react-hook-form';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const AddCategory = ({ isLoading, handleCreateCategory }) => {
 	const categoryThumbRef = useRef('');
@@ -117,12 +118,12 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 										value='Add Category'
 									/>
 								) : (
-									<>
-										<Loading />
+									<span className='flex items-center'>
+										<Loading size='small' />
 										<span className='ml-2'>
 											Adding Category...
 										</span>
-									</>
+									</span>
 								)}
 							</Button>
 						</form>

@@ -5,6 +5,7 @@ import { Table, Input, Spin } from 'antd';
 import { TfiMore } from 'react-icons/tfi';
 import CustomSelect from '../../../DashboardLayout/CustomSelect/CustomSelect';
 import axios from 'axios';
+import Loading from '../../../../components/layout/Loading/Loading';
 const { Search } = Input;
 
 const columns = [
