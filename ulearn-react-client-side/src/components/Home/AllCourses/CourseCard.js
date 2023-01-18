@@ -1,44 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiTimeFive, BiNotepad } from 'react-icons/bi';
 import { Avatar, Divider, Rate } from 'antd';
 import { TbExternalLink } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const CourseCard = (props) => {
+	const [user, setUser] = useState({});
 	const navigate = useNavigate();
 	const handleDetailPage = (id) => {
 		navigate(`/course-list/${id}`);
 	};
-	const { title, price, avatar, img, time, lecture, status, id } =
-		props.course;
+	const {
+		courseTitle,
+		instructor,
+		courseThumb,
+		lecture,
+		level,
+		averageRating,
+		sections,
+		_id,
+	} = props.course;
 	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
-	const [value, setValue] = useState(3);
+	const [value, setValue] = useState(averageRating);
 
+	useEffect(() => {
+		axios
+			.get(`/users/${instructor}`)
+			.then((response) => {
+				console.log(response.data.user);
+				setUser(response.data.user);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<div className='mx-auto shadow border  rounded-lg '>
-			<div className='px-4 pt-4 relative'>
+			<div className='px-4 pt-4 '>
 				{/* ----------------------card image--------------------------- */}
 				<img
-					src={img}
+					src={courseThumb && courseThumb}
 					alt='course'
-					className='rounded-xl object-cover '
+					className='rounded-xl object-cover w-[400px] h-[300px]'
 				/>
-				{/* -------------------------$course price---------------------------- */}
-				<div className='absolute top-3 right-4'>
-					<button className='btn-sm btn-active bg-green-600 text-white font-semibold rounded-lg'>
-						$ {price}
-					</button>
-				</div>
 			</div>
 			<div className='px-5 py-3'>
 				<p className='text-xs text-left capitalize bg-primary text-white w-16 py-1 px-2 rounded-md'>
-					{status}
+					{level}
 				</p>
 				<h2 className='card-title text-base font-semibold text-dark'>
-					{title}
+					{courseTitle ? courseTitle : ''}
 				</h2>
 				{/* ------------------------rating-------------------- */}
 				<span>
-					<Rate tooltips={desc} onChange={setValue} value={value} />
+					<Rate
+						tooltips={desc}
+						onChange={setValue}
+						value={value && value}
+					/>
 					{value ? (
 						<span className='ant-rate-text'>{desc[value - 1]}</span>
 					) : (
@@ -47,10 +66,10 @@ const CourseCard = (props) => {
 				</span>
 				{/*------------------------- avatar-------------------- */}
 				<div className='flex mt-3 justify-between'>
-					<Avatar src={avatar} />
+					<Avatar src={user?.avatarURL} />
 
 					<button
-						onClick={() => handleDetailPage(id)}
+						onClick={() => handleDetailPage(_id)}
 						className='text-[13px]  capitalize  bg-blue-100 hover:bg-primary text-primary hover:text-white py-1 px-4 rounded-md flex items-center font-medium '
 					>
 						<TbExternalLink className='text-base mr-2 ' /> view
@@ -61,11 +80,11 @@ const CourseCard = (props) => {
 				<div className='flex justify-between'>
 					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary'>
 						<BiTimeFive />
-						{time} Hours
+						01:10:09 Hours
 					</div>
-					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary'>
+					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary capitalize'>
 						<BiNotepad />
-						{lecture} Lecture
+						{sections && sections?.length} sections
 					</div>
 				</div>
 			</div>

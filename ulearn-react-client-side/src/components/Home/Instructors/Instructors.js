@@ -1,5 +1,5 @@
 import { Rate } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,8 +11,9 @@ import 'swiper/css/pagination';
 import './instructor.css';
 // import required modules
 import { Pagination, Zoom } from 'swiper';
+import axios from 'axios';
 
-const instructors = [
+/* const instructors = [
 	{
 		id: 1001,
 		name: 'Ricardo Dave',
@@ -57,9 +58,20 @@ const instructors = [
 		rating: 5,
 	},
 ];
-
+ */
 const Instructors = () => {
 	const [value, setValue] = useState(3);
+	const [instructors, setInstructors] = useState([]);
+	useEffect(() => {
+		axios
+			.get('/users?role=instructor')
+			.then((response) => {
+				setInstructors(response.data.users);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 	SwiperCore.use([Autoplay]);
 	return (
 		<section className=' container mx-auto  '>
@@ -84,26 +96,28 @@ const Instructors = () => {
 					className='mySwiper'
 					autoplay={{ delay: 2000 }}
 				>
-					{instructors.map((instructor) => {
-						const { id, name, img, position, rating } = instructor;
+					{instructors?.map((instructor) => {
+						const { _id, name, avatarURL } = instructor;
 
 						return (
-							<SwiperSlide key={id}>
+							<SwiperSlide key={_id}>
 								<div className='mx-auto flex flex-col space-y-3 justify-center items-center mb-20'>
-									<div className='mx-auto'>
+									<div className='mx-auto w-[250px] h-[250px]'>
 										<img
-											src={img}
+											src={avatarURL && avatarURL}
 											alt=''
-											className='rounded-full'
+											className=' object-cover   rounded-full'
 										/>
 									</div>
 									<h2 className='text-center text-lg font-bold'>
-										{name}
+										{name && name}
 									</h2>
-									<p className='text-base'>{position}</p>
-									<Rate onChange={setValue} value={rating} />
+									<p className='text-base'>
+										Data Analyst at Microsoft
+									</p>
+									<Rate onChange={setValue} value={value} />
 									<button className='bg-primary text-white py-2 px-3 text-sm rounded-lg '>
-										Reserve a live meeting
+										View Profile
 									</button>
 								</div>
 							</SwiperSlide>

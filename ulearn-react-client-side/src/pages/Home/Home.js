@@ -20,9 +20,9 @@ const Home = () => {
 			<NavigationBar theme='light' />
 			<div className=' space-y-24'>
 				<Hero />
+				<Categories />
 				<NewestCourses />
 				<BestReviewedCourses />
-				<Categories />
 				<Instructors />
 				<Testimonials />
 				<Features />

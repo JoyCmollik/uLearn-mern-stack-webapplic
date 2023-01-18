@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 const categories = [
 	{
 		id: '2001',
 		title: 'Management',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
+		link: 'https://www.flaticon.com/authors/dimitry-miroliubov',
 	},
 	{
 		id: '2002',
@@ -41,15 +42,17 @@ const Categories = () => {
 			</p>
 			<div className='grid grid-cols-6 mx-auto gap-4  w-85'>
 				{categories.map((category) => {
-					const { id, title, img } = category;
+					const { id, title } = category;
 					return (
 						<div key={id} className='mx-auto text-center'>
 							<div>
 								<img
-									src={img}
+									src='https://i.ibb.co/K2nXqZq/briefcase.png 	'
 									alt=''
 									className='bg-secondary rounded-3xl '
 								/>
+
+								<div></div>
 							</div>
 							<p className='-mt-3 border  rounded-2xl mx-auto text-center text-lg py-2 px-6 bg-white inline-block capitalize hover:bg-primary hover:text-white hover:border-primary'>
 								1 Course
