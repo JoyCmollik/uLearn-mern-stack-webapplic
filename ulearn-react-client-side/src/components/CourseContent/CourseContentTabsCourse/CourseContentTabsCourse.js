@@ -11,6 +11,7 @@ import nodataImg from '../../../images/no_data.png';
 import { MdDashboard } from 'react-icons/md';
 import CourseContentLessons from './CourseContentLessons';
 import CourseContentLessonPage from './CourseContentLessonPage';
+import Loading from '../../layout/Loading/Loading';
 
 const CourseContentTabsCourse = ({ courseContent }) => {
 	const [sectionList, setSectionList] = useState([]);
@@ -45,7 +46,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 		<div className='border-[0.5px] rounded-lg min-h-[70vh] grid grid-cols-12 gap-2 p-2'>
 			{isLoading ? (
 				<div className='col-span-12 flex justify-center items-center h-full'>
-					<Spin size='large' />
+					<Loading />
 				</div>
 			) : (
 				<>
@@ -85,14 +86,14 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 												>
 													<article
 														key={sectionItem?._id}
-														onClick={() =>
-															{
-																handleCurrSection(
-																	sectionItem
-																);
-																navigate(`/course-content/${courseContent._id}`)
-															}
-														}
+														onClick={() => {
+															handleCurrSection(
+																sectionItem
+															);
+															navigate(
+																`/course-content/${courseContent._id}`
+															);
+														}}
 														className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
 															currSection._id ===
 															sectionItem._id

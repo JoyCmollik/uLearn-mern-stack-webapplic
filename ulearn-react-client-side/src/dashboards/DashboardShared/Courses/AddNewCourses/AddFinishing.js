@@ -1,9 +1,10 @@
 import { Button, Result, Spin } from 'antd';
-import React from 'react'
+import React from 'react';
+import Loading from '../../../../components/layout/Loading/Loading';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 
-const AddFinishing = ({isUploading}) => {
-  return (
+const AddFinishing = ({ isUploading }) => {
+	return (
 		<div className=''>
 			<Result
 				icon={
@@ -18,12 +19,12 @@ const AddFinishing = ({isUploading}) => {
 						className='block w-full px-4 py-2 border rounded-lg bg-primary text-white font-bold'
 						type='submit'
 					>
-						{isUploading ? <Spin size='small' /> : 'Submit'}
+						{isUploading ? <Loading size='small' /> : 'Submit'}
 					</button>
 				}
 			/>
 		</div>
-  );
-}
+	);
+};
 
-export default AddFinishing
+export default AddFinishing;

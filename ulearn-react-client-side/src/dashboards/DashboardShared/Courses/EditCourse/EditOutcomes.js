@@ -3,13 +3,14 @@ import { v4 as uuid } from 'uuid';
 import { Button, Input, message, Spin } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
 import { MdDelete } from 'react-icons/md';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 	const [outcome, setOutcome] = useState([...course.courseOutcomes]);
 	const outcomeRef = useRef(null);
 
 	useEffect(() => {
-		if(course) {
+		if (course) {
 			setOutcome([...course.courseOutcomes]);
 		}
 	}, [course]);
@@ -34,8 +35,8 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 	};
 
 	const handleUpdateOutcomes = () => {
-		handleUpdateCourse({...course, courseOutcomes: [...outcome]});
-	}
+		handleUpdateCourse({ ...course, courseOutcomes: [...outcome] });
+	};
 
 	return (
 		<>
@@ -62,10 +63,10 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 								disabled={isUpdating}
 							>
 								{isUpdating ? (
-									<>
-										<Spin size='small' />{' '}
+									<span className='flex items-center'>
+										<Loading size='small' />{' '}
 										<span className='ml-2'>Adding...</span>
-									</>
+									</span>
 								) : (
 									<>
 										<HiPlus size={18} />{' '}
@@ -109,7 +110,7 @@ const EditOutcomes = ({ course, handleUpdateCourse, isUpdating }) => {
 						>
 							{isUpdating ? (
 								<>
-									<Spin size='small' />{' '}
+									<Loading />{' '}
 									<span className='ml-2'>Updating...</span>
 								</>
 							) : (

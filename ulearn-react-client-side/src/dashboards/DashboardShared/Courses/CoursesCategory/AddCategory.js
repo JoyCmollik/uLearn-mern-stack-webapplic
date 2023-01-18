@@ -30,8 +30,7 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 					`${info.file.name} file uploaded successfully.`
 				);
 				console.log(info.file.response);
-				categoryThumbRef.current =
-					info.file.response.data.display_url;
+				categoryThumbRef.current = info.file.response.data.display_url;
 			} else if (status === 'error') {
 				message.error(`${info.file.name} file upload failed.`);
 			}
@@ -50,7 +49,7 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 		if (data.category && categoryThumbRef) {
 			data.categoryURL = categoryThumbRef.current;
 			const isCreated = await handleCreateCategory(data);
-			if(isCreated) {
+			if (isCreated) {
 				reset();
 				categoryThumbRef.current = '';
 			}
@@ -106,7 +105,11 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 									</p>
 								</Upload.Dragger>
 							</div>
-							<Button className='col-span-12 mt-4 disabled:bg-opacity-25' type='primary' disabled={isLoading}>
+							<Button
+								className='col-span-12 mt-4 disabled:bg-opacity-25'
+								type='primary'
+								disabled={isLoading}
+							>
 								{!isLoading ? (
 									<input
 										className='cursor-pointer'
@@ -115,8 +118,10 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 									/>
 								) : (
 									<>
-										<Spin size='small' />
-										<span className='ml-2'>Adding Category...</span>
+										<Loading />
+										<span className='ml-2'>
+											Adding Category...
+										</span>
 									</>
 								)}
 							</Button>

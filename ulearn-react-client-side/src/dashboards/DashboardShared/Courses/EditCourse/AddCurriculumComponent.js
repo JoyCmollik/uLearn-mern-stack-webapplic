@@ -9,6 +9,7 @@ import axios from 'axios';
 import Lesson from './Lesson';
 import Section from './Section';
 import nodataImg from '../../../../images/no_data.png';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [sectionList, setSectionList] = useState(null);
@@ -163,14 +164,14 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 			});
 	};
 
-	console.log(sectionList, 'sectionList' );
-	console.log(currSection, 'currSection' );
+	console.log(sectionList, 'sectionList');
+	console.log(currSection, 'currSection');
 
 	return (
 		<div className='border-[0.5px] rounded-lg min-h-[70vh] grid grid-cols-12 gap-2 p-2'>
 			{isFetching ? (
 				<div className='col-span-12 flex justify-center items-center h-full'>
-					<Spin size='large' />
+					<Loading />
 				</div>
 			) : (
 				<>
@@ -248,7 +249,11 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 					<div className='col-span-10 bg-white rounded-lg p-2'>
 						{!currSection ? (
 							<div className='flex justify-center items-center h-full'>
-								<img className='w-[500px]' src={nodataImg} alt='no-data' />
+								<img
+									className='w-[500px]'
+									src={nodataImg}
+									alt='no-data'
+								/>
 							</div>
 						) : (
 							<>

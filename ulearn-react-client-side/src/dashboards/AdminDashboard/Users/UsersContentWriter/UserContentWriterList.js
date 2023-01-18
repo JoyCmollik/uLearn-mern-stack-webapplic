@@ -81,7 +81,7 @@ const UserContentWriterList = () => {
 			{!loading ? (
 				<Table columns={columns} dataSource={data} />
 			) : (
-				<Spin size='small' />
+				<Loading />
 			)}
 		</div>
 	);

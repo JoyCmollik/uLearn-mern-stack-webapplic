@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, InputNumber, message, Spin } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 	const [isFree, setIsFree] = useState(true);
@@ -93,10 +94,10 @@ const EditPricing = ({ course, handleUpdateCourse, isUpdating }) => {
 							disabled={isUpdating}
 						>
 							{isUpdating ? (
-								<>
-									<Spin size='small' />{' '}
+								<span className='flex items-center'>
+									<Loading size='small' />{' '}
 									<span className='ml-2'>Updating...</span>
-								</>
+								</span>
 							) : (
 								'Update Course Price'
 							)}

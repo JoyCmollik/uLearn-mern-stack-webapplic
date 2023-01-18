@@ -2,22 +2,23 @@ import { Input, Select, Spin } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Loading from '../../../../components/layout/Loading/Loading';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
 
 const EditBasic = ({ course, handleUpdateCourse, isUpdating }) => {
 	const [editorContent, setEditorContent] = useState('');
 	const { control, handleSubmit } = useForm({});
-	
+
 	useEffect(() => {
-		if(course) {
+		if (course) {
 			setEditorContent(course.courseDesc);
 		}
 	}, [course]);
-	
+
 	const handleUpdateBasic = (data) => {
 		data.courseDesc = editorContent;
 
-		const newCourseData = {...course, ...data};
+		const newCourseData = { ...course, ...data };
 		handleUpdateCourse(newCourseData);
 	};
 
@@ -25,7 +26,7 @@ const EditBasic = ({ course, handleUpdateCourse, isUpdating }) => {
 		<>
 			{!course ? (
 				<div className='flex justify-center items-center h-[40vh]'>
-					<Spin />
+					<Loading />
 				</div>
 			) : (
 				<form
@@ -158,10 +159,10 @@ const EditBasic = ({ course, handleUpdateCourse, isUpdating }) => {
 							disabled={isUpdating}
 						>
 							{isUpdating ? (
-								<>
-									<Spin size='small' />{' '}
+								<span className='flex items-center'>
+									<Loading size='small' />{' '}
 									<span className='ml-2'>Updating...</span>
-								</>
+								</span>
 							) : (
 								'Update Basic Information'
 							)}

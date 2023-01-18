@@ -13,7 +13,7 @@ const AddOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 		if (currOutcome === null || currOutcome.trim() === '') {
 			message.warning('Outcome input is empty!');
 			return;
-		};
+		}
 
 		setOutcome((prevList) => [...prevList, currOutcome]);
 		outcomeRef.current.value = '';
@@ -45,8 +45,7 @@ const AddOutcomes = ({ handleActiveTab, outcome, setOutcome }) => {
 				>
 					{isUpdating ? (
 						<>
-							<Spin size='small' />{' '}
-							<span className='ml-2'>Adding...</span>
+							<Loading /> <span className='ml-2'>Adding...</span>
 						</>
 					) : (
 						<>

@@ -4,6 +4,7 @@ import { UpOutlined, SmileOutlined } from '@ant-design/icons';
 import DashTextEditor from '../../../../dashboards/DashboardShared/DashTextEditor/DashTextEditor';
 import useAuth from '../../../../hooks/useAuth';
 import CourseDiscussionComment from './CourseDiscussionComment';
+import Loading from '../../../layout/Loading/Loading';
 
 const menu = (
 	<Menu
@@ -117,10 +118,9 @@ const CourseDiscussionCommentsComponent = ({
 								disabled={status.creating}
 							>
 								{status.creating ? (
-									<span>
-										{' '}
-										<Spin size='small' />{' '}
-										<span className='ml-1'>Posting</span>{' '}
+									<span className='flex items-center'>
+										<Loading size='small' />
+										<span className='ml-1'>Posting</span>
 									</span>
 								) : (
 									'Post Comment'

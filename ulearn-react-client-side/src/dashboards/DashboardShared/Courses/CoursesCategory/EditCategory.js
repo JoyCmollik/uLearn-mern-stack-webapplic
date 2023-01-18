@@ -5,6 +5,7 @@ import addCategory from '../../../../images/add_category.svg';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const EditCategory = ({ isLoading, handleUpdateCategory }) => {
 	const [isFetching, setIsFetching] = useState(true);
@@ -70,9 +71,11 @@ const EditCategory = ({ isLoading, handleUpdateCategory }) => {
 
 	const onSubmit = async (data) => {
 		if (data.category) {
-			data.categoryURL = categoryThumbRef.current ? categoryThumbRef.current : category.categoryURL;
-            const newCategoryData = {...category, ...data};
-            console.log(newCategoryData);
+			data.categoryURL = categoryThumbRef.current
+				? categoryThumbRef.current
+				: category.categoryURL;
+			const newCategoryData = { ...category, ...data };
+			console.log(newCategoryData);
 			const isCreated = await handleUpdateCategory(newCategoryData);
 			if (isCreated) {
 				reset();
@@ -168,12 +171,12 @@ const EditCategory = ({ isLoading, handleUpdateCategory }) => {
 													value='Update Category'
 												/>
 											) : (
-												<>
-													<Spin size='small' />
+												<span className='flex items-center'>
+													<Loading size='small' />
 													<span className='ml-2'>
 														Updating Category...
 													</span>
-												</>
+												</span>
 											)}
 										</Button>
 									</form>
