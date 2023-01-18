@@ -11,6 +11,7 @@ import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
 import CourseDiscussionCommentsComponent from './CourseDiscussionComments/CourseDiscussionCommentsComponent';
 import useAuth from '../../../hooks/useAuth';
 import { BsFillCaretUpFill } from 'react-icons/bs';
+import Loading from '../../layout/Loading/Loading';
 
 const parse = require('html-react-parser');
 
@@ -115,7 +116,7 @@ const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 			{isLoading ? (
 				<div className='h-[40vh] flex justify-center items-center'>
 					{' '}
-					<Spin size='large' />{' '}
+					<Loading />{' '}
 				</div>
 			) : (
 				<>

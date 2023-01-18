@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { InputNumber, message, Select, Spin, Tag } from 'antd';
 import axios from 'axios';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const Lesson = ({ lesson, handleUpdateLesson }) => {
 	const editor = useRef('');
@@ -200,10 +201,10 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							disabled={isUpdating}
 						>
 							{isUpdating ? (
-								<>
-									<Spin size='small' />{' '}
+								<span className='flex items-center'>
+									<Loading size='small' />{' '}
 									<span className='ml-2'>Updating...</span>
-								</>
+								</span>
 							) : (
 								'Update Lesson'
 							)}

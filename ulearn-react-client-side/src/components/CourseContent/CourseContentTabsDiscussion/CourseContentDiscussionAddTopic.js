@@ -6,6 +6,7 @@ import DashTextEditor from '../../../dashboards/DashboardShared/DashTextEditor/D
 
 import useAuth from '../../../hooks/useAuth';
 import { BsCheckLg } from 'react-icons/bs';
+import Loading from '../../layout/Loading/Loading';
 
 const CourseContentDiscussionAddTopic = ({ isLoading, handleCreateTopic }) => {
 	const [editorContent, setEditorContent] = useState();
@@ -84,10 +85,12 @@ const CourseContentDiscussionAddTopic = ({ isLoading, handleCreateTopic }) => {
 							disabled={isLoading}
 						>
 							{isLoading ? (
-								<span>
+								<span className='flex items-center'>
 									{' '}
-									<Spin size='small' />{' '}
-									<span className='ml-1'>Publishing...</span>{' '}
+									<Loading size='small' />{' '}
+									<span className='ml-1'>
+										Publishing...
+									</span>{' '}
 								</span>
 							) : (
 								'Publish Topic'

@@ -92,7 +92,7 @@ const Register = () => {
 	// 	return (
 	// 		<div className='flex mx-auto items-center justify-center container'>
 	// 			<Space size='middle'>
-	// 				<Spin size='large' />
+	// 				<Loading />
 	// 			</Space>
 	// 		</div>
 	// 	);

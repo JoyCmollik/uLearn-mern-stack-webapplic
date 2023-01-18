@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
-
-import loading from '../../images/loading.json';
 import { MdDeleteOutline } from 'react-icons/md';
 import { message, Popconfirm } from 'antd';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from '../../components/layout/Loading/Loading';
 
 const MyCourses = () => {
 	const [myCourseList, setMyCourseList] = useState([]);
@@ -90,16 +89,7 @@ const MyCourses = () => {
 							<div className='grid grid-cols-3 gap-4 justify-between'>
 								{!myCourseList.length ? (
 									<div className='col-span-3 flex justify-center items-center'>
-										<lottie-player
-											autoplay
-											loop
-											background='#FFFFFF'
-											src='https://lottie.host/bc036bb5-0c9f-49f6-8d58-4bba13fafc54/p3jSw9gfoE.json'
-											style={{
-												width: '250px',
-												height: '250px',
-											}}
-										/>
+										<Loading />
 									</div>
 								) : (
 									myCourseList.map((course) => {
@@ -119,10 +109,10 @@ const MyCourses = () => {
 														</h5>
 													</div>
 													{/* button */}
-													<Link to={`/course-content/${course._id}`}>
-														<button
-															className='inline-block w-full py-2 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'
-														>
+													<Link
+														to={`/course-content/${course._id}`}
+													>
+														<button className='inline-block w-full py-2 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'>
 															Go To Content Page
 														</button>
 													</Link>

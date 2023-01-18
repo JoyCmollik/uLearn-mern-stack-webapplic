@@ -6,6 +6,7 @@ import { RiClosedCaptioningFill } from 'react-icons/ri';
 import { TbExternalLink } from 'react-icons/tb';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../../../layout/Loading/Loading';
 
 const FilteredCards = () => {
 	const [courseList, setCourseList] = useState([]);
@@ -39,7 +40,7 @@ const FilteredCards = () => {
 		<section className='p-4 '>
 			{isFetching ? (
 				<div className='flex justify-center items-center w-full min-h-[40vh]'>
-					<Spin size='large' />
+					<Loading />
 				</div>
 			) : (
 				<>

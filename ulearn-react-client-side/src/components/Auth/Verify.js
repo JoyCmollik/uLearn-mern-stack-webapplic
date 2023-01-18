@@ -2,6 +2,7 @@ import { Result, Space, Spin } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import Loading from '../layout/Loading/Loading';
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
@@ -32,7 +33,7 @@ const Verify = () => {
 	if (loading) {
 		return (
 			<Space size='middle'>
-				<Spin size='large' />
+				<Loading />
 			</Space>
 		);
 	}

@@ -12,7 +12,28 @@ const createCourse = async (req, res) => {
 };
 
 const getAllCourses = async (req, res) => {
-	const courses = await Course.find({});
+	const filters = { ...req.query };
+
+	// sort, page. limit -> exclude
+	const excludeFields = ['sort', 'page', 'limit'];
+	excludeFields.forEach((field) => delete filters[field]); // to delete desired fields
+
+	const queries = {};
+
+	if (req.query.sort) {
+		// price, quantity -> 'price quantity'
+		const sortBy = req.query.sort.split(',').join(' ');
+		queries.sortBy = sortBy;
+	}
+
+	if (req.query.fields) {
+		const fields = req.query.fields.split(',').join(' ');
+		queries.fields = fields;
+	}
+
+	const courses = await Course.find(filters)
+		.select(queries.fields)
+		   .sort(queries.sortBy);
 
 	res.status(StatusCodes.OK).json({ courses, count: courses.length });
 };

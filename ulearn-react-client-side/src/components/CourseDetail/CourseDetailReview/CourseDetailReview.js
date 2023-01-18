@@ -6,6 +6,7 @@ import { Dropdown, Space } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import useAuthentication from '../../../hooks/useAuthentication';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
+import Loading from '../../layout/Loading/Loading';
 const progressBarReviews = [
 	{
 		id: 23,
@@ -304,12 +305,12 @@ const CourseDetailReview = ({ singleCourse }) => {
 												}
 											>
 												{isDelete ? (
-													<>
-														<Spin size='small' />{' '}
+													<span className='flex items-center'>
+														<Loading size='small' />{' '}
 														<span className='ml-2'>
 															Delete
 														</span>
-													</>
+													</span>
 												) : (
 													'Delete'
 												)}
@@ -334,7 +335,7 @@ const CourseDetailReview = ({ singleCourse }) => {
 										>
 											{loading ? (
 												<>
-													<Spin size='small' />{' '}
+													<Loading />{' '}
 													<span className='ml-2'>
 														Updating...
 													</span>

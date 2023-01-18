@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Button, Input, message, Spin } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi';
 import { MdDelete } from 'react-icons/md';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const AddRequirement = ({ handleActiveTab, requirement, setRequirement }) => {
 	const [isUpdating, setIsUpdating] = useState(false);
@@ -31,7 +32,9 @@ const AddRequirement = ({ handleActiveTab, requirement, setRequirement }) => {
 
 	return (
 		<div className='grid grid-cols-12 w-11/12 gap-4 p-4'>
-			<label className='col-span-12 text-font2 uppercase'>Requirements</label>
+			<label className='col-span-12 text-font2 uppercase'>
+				Requirements
+			</label>
 			<div className='col-span-12 grid grid-cols-12 border rounded-lg p-1'>
 				<input
 					autoFocus={true}
@@ -45,10 +48,9 @@ const AddRequirement = ({ handleActiveTab, requirement, setRequirement }) => {
 					disabled={isUpdating}
 				>
 					{isUpdating ? (
-						<>
-							<Spin size='small' />{' '}
-							<span className='ml-2'>Adding...</span>
-						</>
+						<span className='flex items-center'>
+							<Loading size='small' /> <span className='ml-2'>Adding...</span>
+						</span>
 					) : (
 						<>
 							<HiPlus size={18} /> <span>Add Requirement</span>

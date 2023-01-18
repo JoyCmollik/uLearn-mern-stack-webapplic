@@ -5,9 +5,12 @@ import { Input, message, Spin } from 'antd';
 import { HiMinus, HiPlus } from 'react-icons/hi2';
 import { v4 as uuid } from 'uuid';
 import { MdDelete } from 'react-icons/md';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 const EditRequirement = ({ course, handleUpdateCourse, isUpdating }) => {
-	const [requirement, setRequirement] = useState([...course.courseRequirements]);
+	const [requirement, setRequirement] = useState([
+		...course.courseRequirements,
+	]);
 	const requirementRef = useRef(null);
 
 	useEffect(() => {
@@ -65,7 +68,7 @@ const EditRequirement = ({ course, handleUpdateCourse, isUpdating }) => {
 							>
 								{isUpdating ? (
 									<>
-										<Spin size='small' />{' '}
+										<Loading />{' '}
 										<span className='ml-2'>Adding...</span>
 									</>
 								) : (
@@ -91,7 +94,10 @@ const EditRequirement = ({ course, handleUpdateCourse, isUpdating }) => {
 
 											<button
 												onClick={(e) =>
-													handleDeleteItem(e, requirement)
+													handleDeleteItem(
+														e,
+														requirement
+													)
 												}
 												className='p-1 border border-error bg-error rounded-lg text-xs text-white'
 											>
@@ -110,10 +116,10 @@ const EditRequirement = ({ course, handleUpdateCourse, isUpdating }) => {
 							disabled={isUpdating}
 						>
 							{isUpdating ? (
-								<>
-									<Spin size='small' />{' '}
+								<span className='flex items-center'>
+									<Loading size='small' />{' '}
 									<span className='ml-2'>Updating...</span>
-								</>
+								</span>
 							) : (
 								'Update Requirements'
 							)}
@@ -125,4 +131,4 @@ const EditRequirement = ({ course, handleUpdateCourse, isUpdating }) => {
 	);
 };
 
-export default EditRequirement
+export default EditRequirement;
