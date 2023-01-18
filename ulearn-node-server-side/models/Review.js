@@ -49,10 +49,11 @@ ReviewSchema.statics.calculateAverageRating = async function (courseId) {
 	]);
 	console.log(result);
 	try {
+		const averageRating = Math.ceil(result[0]?.averageRating || '0');
 		await this.model('Course').findOneAndUpdate(
 			{ _id: courseId },
 			{
-				averageRating: Math.ceil(result[0]?.averageRating || 0),
+				averageRating: String(averageRating),
 				numOfReviews: result[0]?.numOfReviews || 0,
 			}
 		);

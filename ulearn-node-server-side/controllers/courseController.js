@@ -2,7 +2,7 @@ const Course = require('../models/Course');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
-const { populate } = require('../models/Course');
+const { populate, find } = require('../models/Course');
 
 const createCourse = async (req, res) => {
 	req.body.instructor = req.user.userId;
@@ -12,30 +12,64 @@ const createCourse = async (req, res) => {
 };
 
 const getAllCourses = async (req, res) => {
-	const filters = { ...req.query };
+	let filters = { ...req.query };
+	const queries = {};
 
 	// sort, page. limit -> exclude
 	const excludeFields = ['sort', 'page', 'limit'];
 	excludeFields.forEach((field) => delete filters[field]); // to delete desired fields
 
-	const queries = {};
-
+	// sorting queries
 	if (req.query.sort) {
 		// price, quantity -> 'price quantity'
 		const sortBy = req.query.sort.split(',').join(' ');
 		queries.sortBy = sortBy;
 	}
 
+	// selecting queries
 	if (req.query.fields) {
 		const fields = req.query.fields.split(',').join(' ');
 		queries.fields = fields;
 	}
 
-	const courses = await Course.find(filters)
-		.select(queries.fields)
-		   .sort(queries.sortBy);
+	// if only limit is given but no page
+	if (req.query.limit && !req.query.page) {
+		queries.limit = Number(req.query.limit);
+	}
 
-	res.status(StatusCodes.OK).json({ courses, count: courses.length });
+	// pagination
+	if (req.query.page) {
+		const { page = 1, limit = 1 } = req.query;
+		const skip = (Number(page) - 1) * Number(limit); // page 5 --> 5 - 1 * 10 = skip first 4 page data
+		queries.skip = skip;
+		queries.limit = Number(limit);
+	}
+
+	// advanced filters - url is price[gt]=50
+	let filtersString = JSON.stringify(filters);
+	filtersString = filtersString.replace(
+		/\b(gt|gte|lt|lte|toInt)\b/g,
+		(match) => `$${match}`
+	);
+	filters = JSON.parse(filtersString);
+
+	console.log(filters);
+
+	// final procedure
+	const courses = await Course.find(filters)
+		.skip(queries.skip)
+		.limit(queries.limit)
+		.select(queries.fields)
+		.sort(queries.sortBy);
+	const totalCourses = await Course.countDocuments(filters);
+
+	const pageCount = Math.ceil(totalCourses / queries.limit);
+	res.status(StatusCodes.OK).json({
+		courses,
+		count: courses.length,
+		total: totalCourses,
+		pageCount,
+	});
 };
 
 const getSingleCourse = async (req, res) => {

@@ -4,7 +4,10 @@ const CategorySchema = new mongoose.Schema(
 	{
 		category: {
 			type: String,
+			trim: true,
 			required: [true, 'Please provide the category'],
+			unique: true,
+			lowercase: true
 		},
 		categoryURL: {
 			type: String,

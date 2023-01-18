@@ -53,8 +53,8 @@ const CourseSchema = new mongoose.Schema(
 			type: String,
 		},
 		averageRating: {
-			type: Number,
-			default: 0,
+			type: String,
+			default: '0',
 			min: 0,
 			max: 5,
 		},

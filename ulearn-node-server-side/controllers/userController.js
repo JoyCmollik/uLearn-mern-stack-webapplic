@@ -8,15 +8,10 @@ const {
 } = require('../utils');
 
 const getAllUser = async (req, res) => {
-	// const users = await User.find({ role: 'user' }).select('-password');
-	const { role } = req.query;
-
-	if(role) {
-		const users = await User.find({role}).select('-password');
-		res.status(StatusCodes.OK).json({ users });
-		return;
-	}
-	const users = await User.find({}).select('-password -verificationToken');
+	const users = await User.find(req.query).select(
+		'-password -verificationToken'
+	);
+	
 	res.status(StatusCodes.OK).json({ users });
 };
 const getSingleUser = async (req, res) => {
