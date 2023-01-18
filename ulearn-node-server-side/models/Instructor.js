@@ -1,20 +1,39 @@
 const mongoose = require('mongoose');
 
-const InstructorSchema = new mongoose.Schema({
-	sectionTitle: {
-		type: String,
-		required: [true, 'please provide section title'],
-		minlength: 10,
-		maxlength: 50,
+const InstructorSchema = new mongoose.Schema(
+	{
+		degreeTitle: {
+			type: String,
+			required: [true, 'please provide degree title'],
+			minlength: 10,
+			maxlength: 50,
+		},
+		institutionName: {
+			type: String,
+			required: [true, 'please provide institution name'],
+			minlength: 10,
+			maxlength: 50,
+		},
+		approxPassingYear: {
+			type: Number,
+			required: [true, 'please provide approximate passing year'],
+		},
+		user: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User',
+			required: true,
+		},
+		skillSets: {
+			type: [String],
+			required: [true, 'please provide skill sets'],
+		},
+		status: {
+			type: String,
+			enum: ['pending', 'approved'],
+			default: 'pending',
+		},
 	},
-	numOfLessons: {
-		type: Number,
-		default: 0,
-	},
-	lessons: {
-		type: [mongoose.Schema.ObjectId],
-		ref: 'Lesson',
-	},
-});
+	{ timestamps: true }
+);
 
 module.exports = mongoose.model('Instructor', InstructorSchema);

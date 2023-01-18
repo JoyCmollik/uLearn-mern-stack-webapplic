@@ -5,6 +5,7 @@ import { Input, message, Rate, Tag, theme, Tooltip } from 'antd';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import { HiOutlinePlus } from 'react-icons/hi2';
+import axios from 'axios';
 const BecomeContentWriter = () => {
 	// for tags
 	//const { token } = theme.useToken();
@@ -83,13 +84,25 @@ const BecomeContentWriter = () => {
 				approxPassingYear,
 				tags,
 			};
-			console.log(data);
-			setPerson({
-				degreeTitle: '',
-				institutionName: '',
-				approxPassingYear: '',
-			});
-			setTags([]);
+			//console.log(data);
+			axios
+				.post('/instructors', data)
+				.then((response) => {
+					console.log(response.data.instructors);
+					message.success('instructor details successfully updated');
+				})
+				.catch((error) => {
+					console.log(error);
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setPerson({
+						degreeTitle: '',
+						institutionName: '',
+						approxPassingYear: '',
+					});
+					setTags([]);
+				});
 		} else {
 			message.warning('Inputs should be filled!');
 		}
@@ -272,7 +285,7 @@ const BecomeContentWriter = () => {
 													ref={inputRef}
 													type='text'
 													size='large'
-													className='tag-input '
+													className='tag-input text-lg'
 													value={inputValue}
 													onChange={handleInputChange}
 													onBlur={handleInputConfirm}
