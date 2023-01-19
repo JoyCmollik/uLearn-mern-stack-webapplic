@@ -6,6 +6,7 @@ import { message, Rate } from 'antd';
 
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
+import axios from 'axios';
 
 const Testimonial = () => {
 	const [value, setValue] = useState(3);
@@ -24,10 +25,8 @@ const Testimonial = () => {
 	};
 
 	const handleSubmit = (e) => {
-		console.log(person);
-
 		e.preventDefault();
-		const { name: userName, occupation, rate, comment } = person;
+		const { userName, occupation, rate, comment } = person;
 
 		if (userName && occupation && rate && comment) {
 			const data = {
@@ -36,13 +35,25 @@ const Testimonial = () => {
 				rate,
 				comment,
 			};
-			console.log(data);
-			setPerson({
-				userName: '',
-				occupation: '',
-				rate: value,
-				comment: '',
-			});
+			//		console.log(data);
+			axios
+				.post('/testimonials', data)
+				.then((response) => {
+					console.log(response.data.testimonial);
+					message.success('testimonial created successfully');
+				})
+				.catch((error) => {
+					console.log(error);
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setPerson({
+						userName: '',
+						occupation: '',
+						rate: value,
+						comment: '',
+					});
+				});
 		} else {
 			message.warning('Inputs should be filled!');
 		}
@@ -102,10 +113,10 @@ const Testimonial = () => {
 										</label>
 										<input
 											type='text'
-											placeholder='Name'
+											placeholder='User Name'
 											name='userName'
 											className='input input-bordered w-full'
-											value={person.name}
+											value={person.userName}
 											onChange={handleChange}
 										/>
 									</div>
@@ -120,7 +131,7 @@ const Testimonial = () => {
 											placeholder='occupation'
 											name='occupation'
 											className='input input-bordered w-full'
-											value={person.password}
+											value={person.occupation}
 											onChange={handleChange}
 										/>
 									</div>

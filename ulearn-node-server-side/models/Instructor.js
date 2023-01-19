@@ -27,6 +27,12 @@ const InstructorSchema = new mongoose.Schema(
 			type: [String],
 			required: [true, 'please provide skill sets'],
 		},
+		rating: {
+			type: Number,
+			min: 1,
+			max: 5,
+			required: [true, 'Please provide rating'],
+		},
 		status: {
 			type: String,
 			enum: ['pending', 'approved'],

@@ -36,6 +36,7 @@ const categoryRouter = require('./routes/categoryRoutes');
 const topicRouter = require('./routes/topicRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const instructorRouter = require('./routes/instructorRoutes');
+const testimonialRouter = require('./routes/testimonialRoutes');
 
 // this is a list of routers
 // testing
@@ -84,6 +85,7 @@ app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/topics', topicRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/instructors', instructorRouter);
+app.use('/api/v1/testimonials', testimonialRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
