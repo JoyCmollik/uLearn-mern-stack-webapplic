@@ -18,8 +18,8 @@ const columns = [
 		render: (category) => (
 			<div className='flex flex-wrap space-x-1'>
 				{/* {categories.map((tag) => ( */}
-				<Tag className='capitalize' color='gray' key={category}>
-					{category}
+				<Tag className='capitalize' color='gray' key={category?._id}>
+					{category?.name}
 				</Tag>
 				{/* ))} */}
 			</div>
@@ -49,12 +49,12 @@ const columns = [
 	},
 	{
 		title: 'Enrolled students',
-		dataIndex: 'enrolledStudents',
+		dataIndex: 'currLearners',
 		key: 'enrolledStudents',
-		render: (enrollment) => (
+		render: (currLearners) => (
 			<small className='font-medium text-font2'>
-				Total Enrollment:{' '}
-				<span className='font-bold'>{enrollment.length}</span>
+				Total Learners:{' '}
+				<span className='font-bold'>{currLearners.length}</span>
 			</small>
 		),
 	},
@@ -71,29 +71,29 @@ const columns = [
 	// 		);
 	// 	},
 	// },
-	{
-		title: 'Price',
-		dataIndex: 'coursePrice',
-		key: 'coursePrice',
-		render: (coursePrice) => (
-			<p className='text-font2 m-0'>
-				<span className='font-medium text-font1'>
-					{coursePrice ? '$' : null}
-				</span>
-				{coursePrice || coursePrice !== 0 ? (
-					coursePrice
-				) : (
-					<Tag color='purple'>free</Tag>
-				)}
-			</p>
-		),
-	},
+	// {
+	// 	title: 'Price',
+	// 	dataIndex: 'coursePrice',
+	// 	key: 'coursePrice',
+	// 	render: (coursePrice) => (
+	// 		<p className='text-font2 m-0'>
+	// 			<span className='font-medium text-font1'>
+	// 				{coursePrice ? '$' : null}
+	// 			</span>
+	// 			{coursePrice || coursePrice !== 0 ? (
+	// 				coursePrice
+	// 			) : (
+	// 				<Tag color='purple'>free</Tag>
+	// 			)}
+	// 		</p>
+	// 	),
+	// },
 	{
 		title: 'Action',
 		key: 'action',
 		dataIndex: '_id',
 		render: (_id) => (
-			<Link to={`edit/${_id}`} >
+			<Link to={`edit/${_id}`}>
 				<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
 					<TfiMore size={18} />
 				</button>

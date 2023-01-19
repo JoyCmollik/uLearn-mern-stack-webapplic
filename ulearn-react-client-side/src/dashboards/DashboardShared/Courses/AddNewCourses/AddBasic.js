@@ -4,7 +4,13 @@ import { Button, Checkbox, Form, Input, Select } from 'antd';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
 import { Controller } from 'react-hook-form';
 
-const AddBasic = ({ handleActiveTab, control, editorContent, setEditorContent }) => {
+const AddBasic = ({
+	handleActiveTab,
+	control,
+	editorContent,
+	setEditorContent,
+	categories,
+}) => {
 	const editor = useRef('');
 
 	return (
@@ -47,18 +53,11 @@ const AddBasic = ({ handleActiveTab, control, editorContent, setEditorContent })
 							{...field}
 							size='large'
 						>
-							<Select.Option value='Computer Science & Engineering'>
-								Computer Science & Engineering
-							</Select.Option>
-							<Select.Option value='Economics'>
-								Economics
-							</Select.Option>
-							<Select.Option value='Business Studies'>
-								Business Studies
-							</Select.Option>
-							<Select.Option value='Sociology'>
-								Sociology
-							</Select.Option>
+							{categories.map((categoryItem) => (
+								<Select.Option value={categoryItem.category}>
+									{categoryItem.category}
+								</Select.Option>
+							))}
 						</Select>
 					)}
 				/>
@@ -81,7 +80,7 @@ const AddBasic = ({ handleActiveTab, control, editorContent, setEditorContent })
 								Intermediate
 							</Select.Option>
 							<Select.Option value='Advanced'>
-								Advanced
+								Advancedq
 							</Select.Option>
 						</Select>
 					)}

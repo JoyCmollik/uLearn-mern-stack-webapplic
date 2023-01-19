@@ -19,7 +19,13 @@ const CourseSchema = new mongoose.Schema(
 			required: [true, 'please provide course description'],
 		},
 		category: {
-			type: String,
+			type: {
+				name: String,
+				categoryId: {
+					type: mongoose.Schema.ObjectId,
+					ref: 'Category',
+				},
+			},
 			required: [true, 'please provide course category'],
 		},
 		level: {
@@ -84,10 +90,6 @@ const CourseSchema = new mongoose.Schema(
 			type: [String],
 			required: [true, 'please provide course requirements'],
 		},
-		coursePrice: {
-			type: Number,
-			required: [true, 'please provide course price'],
-		},
 		isFree: {
 			type: Boolean,
 			required: [true, 'please provide course price'],
@@ -101,7 +103,7 @@ const CourseSchema = new mongoose.Schema(
 		currLearners: {
 			type: [mongoose.Schema.ObjectId],
 			ref: 'User',
-			default: []
+			default: [],
 		},
 	},
 	{

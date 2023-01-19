@@ -84,7 +84,7 @@ const AddMedia = ({ handleActiveTab, control, setCourseThumb }) => {
 				</Upload.Dragger>
 			</div>
 			<Button
-				onClick={() => handleActiveTab('6')}
+				onClick={() => handleActiveTab('5')}
 				className='col-span-2 mt-4'
 				type='primary'
 			>

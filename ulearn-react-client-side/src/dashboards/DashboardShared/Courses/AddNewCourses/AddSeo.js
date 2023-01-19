@@ -131,7 +131,7 @@ const AddSeo = ({ handleActiveTab, control, tags, setTags }) => {
 				/>
 			</div>
 			<Button
-				onClick={() => handleActiveTab('7')}
+				onClick={() => handleActiveTab('6')}
 				className='col-span-2 mt-4'
 				type='primary'
 			>
@@ -141,4 +141,4 @@ const AddSeo = ({ handleActiveTab, control, tags, setTags }) => {
 	);
 };
 
-export default AddSeo
+export default AddSeo;
