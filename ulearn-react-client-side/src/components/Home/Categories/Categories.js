@@ -1,38 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-const categories = [
-	{
-		id: '2001',
-		title: 'Management',
-		link: 'https://www.flaticon.com/authors/dimitry-miroliubov',
-	},
-	{
-		id: '2002',
-		title: 'Business Strategy',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
-	},
-	{
-		id: '2003',
-		title: 'LifeStyle',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
-	},
-	{
-		id: '2004',
-		title: 'Health & Fitness',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
-	},
-	{
-		id: '2005',
-		title: 'Science',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
-	},
-	{
-		id: '2006',
-		title: 'Design',
-		img: 'https://i.ibb.co/Q697ph9/course-thumbnail.jpg',
-	},
-];
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 const Categories = () => {
+	const [categories, setCategoires] = useState([]);
+	useEffect(() => {
+		axios
+			.get('/categories')
+			.then((response) => {
+				//console.log(response.data.categories);
+				setCategoires(response.data.categories);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 	return (
 		<section className='container mx-auto '>
 			{/*--------------- title ----------------------- */}
@@ -41,13 +22,13 @@ const Categories = () => {
 				#Browse trending & popular learning topics
 			</p>
 			<div className='grid grid-cols-6 mx-auto gap-4  w-85'>
-				{categories.map((category) => {
-					const { id, title } = category;
+				{categories?.map((item) => {
+					const { _id, category, categoryURL } = item;
 					return (
-						<div key={id} className='mx-auto text-center'>
+						<div key={_id} className='mx-auto text-center'>
 							<div>
 								<img
-									src='https://i.ibb.co/K2nXqZq/briefcase.png 	'
+									src={categoryURL}
 									alt=''
 									className='bg-secondary rounded-3xl '
 								/>
@@ -59,7 +40,7 @@ const Categories = () => {
 							</p>
 							<h2 className='text-xl text-center tracking-wider'>
 								{' '}
-								{title}
+								{category}
 							</h2>
 						</div>
 					);
