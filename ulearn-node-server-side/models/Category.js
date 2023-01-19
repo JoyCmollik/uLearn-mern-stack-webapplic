@@ -4,10 +4,8 @@ const CategorySchema = new mongoose.Schema(
 	{
 		category: {
 			type: String,
-			trim: true,
 			required: [true, 'Please provide the category'],
-			unique: true,
-			lowercase: true
+			lowercase: true,
 		},
 		categoryURL: {
 			type: String,
@@ -16,6 +14,7 @@ const CategorySchema = new mongoose.Schema(
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
+			required: true,
 		},
 	},
 	{ timestamps: true }
