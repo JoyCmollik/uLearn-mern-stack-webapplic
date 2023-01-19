@@ -10,8 +10,18 @@ const createCategory = async (req, res) => {
 };
 
 const getAllCategories = async (req, res) => {
-	const categories = await Category.find({}).populate('user', 'name avatarURL').sort('-_id');
-	
+	const queries = {};
+
+	// selecting queries
+	if (req.query.fields) {
+		const fields = req.query.fields.split(',').join(' ');
+		queries.fields = fields;
+	}
+	const categories = await Category.find({})
+		.select(queries.fields)
+		.populate('user', 'name avatarURL')
+		.sort('-_id');
+
 	res.status(StatusCodes.OK).send({ categories, count: categories.length });
 };
 
@@ -19,7 +29,9 @@ const getSingleCategory = async (req, res) => {
 	const { id: categoryId } = req.params;
 	const category = await Category.findOne({ _id: categoryId });
 	if (!category) {
-		throw new CustomError.NotFoundError(`No category with Id: ${categoryId}`);
+		throw new CustomError.NotFoundError(
+			`No category with Id: ${categoryId}`
+		);
 	}
 	res.status(StatusCodes.OK).send({ category });
 };
@@ -32,7 +44,9 @@ const updateCategory = async (req, res) => {
 		{ new: true, runValidators: true }
 	);
 	if (!category) {
-		throw new CustomError.NotFoundError(`No category with Id: ${categoryId}`);
+		throw new CustomError.NotFoundError(
+			`No category with Id: ${categoryId}`
+		);
 	}
 	res.status(StatusCodes.OK).send({ category });
 };
@@ -41,7 +55,9 @@ const deleteCategory = async (req, res) => {
 	const { id: categoryId } = req.params;
 	const category = await Category.findOne({ _id: categoryId });
 	if (!category) {
-		throw new CustomError.NotFoundError(`No category with Id: ${categoryId}`);
+		throw new CustomError.NotFoundError(
+			`No category with Id: ${categoryId}`
+		);
 	}
 	await category.remove();
 	res.status(StatusCodes.OK).send({ msg: 'success! category removed.' });
@@ -49,7 +65,7 @@ const deleteCategory = async (req, res) => {
 
 module.exports = {
 	createCategory,
-    getAllCategories,
+	getAllCategories,
 	getSingleCategory,
 	updateCategory,
 	deleteCategory,

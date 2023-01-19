@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiCog, HiOutlineDocumentDuplicate } from 'react-icons/hi2';
 import { Steps, Tabs } from 'antd';
 import {
@@ -36,13 +36,13 @@ const initialSteps = [
 		icon: <HiOutlineDocumentDuplicate />,
 		description: 'What things are going to be achieved upon completion?',
 	},
-	{
-		title: 'Pricing',
-		currStatus: 'wait',
-		icon: <HiOutlineDocumentDuplicate />,
-		description:
-			'Putting a good price increases chances of better performance',
-	},
+	// {
+	// 	title: 'Pricing',
+	// 	currStatus: 'wait',
+	// 	icon: <HiOutlineDocumentDuplicate />,
+	// 	description:
+	// 		'Putting a good price increases chances of better performance',
+	// },
 	{
 		title: 'Media',
 		currStatus: 'wait',
@@ -68,6 +68,7 @@ const AddNewCourses = () => {
 	const [tabActiveKey, setTabActiveKey] = useState('1');
 	const [requirement, setRequirement] = useState([]);
 	const [outcome, setOutcome] = useState([]);
+	const [categories, setCategories] = useState([]);
 	const [courseThumb, setCourseThumb] = useState([]);
 	const [tags, setTags] = useState(['course', 'add more']);
 	const [editorContent, setEditorContent] = useState();
@@ -77,6 +78,20 @@ const AddNewCourses = () => {
 	const { control, handleSubmit, reset } = useForm({});
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		if (!categories.length) {
+			axios
+				.get('/categories?fields=category,-user')
+				.then((response) => {
+					console.log(response.data.categories);
+					setCategories(response.data.categories);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, []);
+
 	// functions
 	const onSubmit = (data) => {
 		setIsUploading(true);
@@ -85,8 +100,9 @@ const AddNewCourses = () => {
 		data.courseThumb = courseThumb;
 		data.seoTags = tags;
 		data.courseDesc = editorContent;
+		data.category = { name: data.category, categoryId: categories.find(item => item.category === data.category)._id }
 
-		console.log(data);
+		console.log(data.category);
 		// POST - request to save course
 		axios
 			.post('/courses', data)
@@ -176,6 +192,7 @@ const AddNewCourses = () => {
 								control={control}
 								editorContent={editorContent}
 								setEditorContent={setEditorContent}
+								categories={categories}
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Requirements' key='2'>
@@ -192,13 +209,13 @@ const AddNewCourses = () => {
 								setOutcome={setOutcome}
 							/>
 						</Tabs.TabPane>
-						<Tabs.TabPane tab='Pricing' key='4'>
+						{/* <Tabs.TabPane tab='Pricing' key='4'>
 							<AddPricing
 								handleActiveTab={handleActiveTab}
 								control={control}
 							/>
-						</Tabs.TabPane>
-						<Tabs.TabPane tab='Media' key='5'>
+						</Tabs.TabPane> */}
+						<Tabs.TabPane tab='Media' key='4'>
 							<AddMedia
 								handleActiveTab={handleActiveTab}
 								control={control}
@@ -206,7 +223,7 @@ const AddNewCourses = () => {
 								setCourseThumb={setCourseThumb}
 							/>
 						</Tabs.TabPane>
-						<Tabs.TabPane tab='Seo' key='6'>
+						<Tabs.TabPane tab='Seo' key='5'>
 							<AddSeo
 								handleActiveTab={handleActiveTab}
 								control={control}
@@ -214,7 +231,7 @@ const AddNewCourses = () => {
 								setTags={setTags}
 							/>
 						</Tabs.TabPane>
-						<Tabs.TabPane tab='Finish' key='7'>
+						<Tabs.TabPane tab='Finish' key='6'>
 							<AddFinishing handleActiveTab={handleActiveTab} isUploading={isUploading} setIsUploading={setIsUploading} />
 						</Tabs.TabPane>
 					</Tabs>

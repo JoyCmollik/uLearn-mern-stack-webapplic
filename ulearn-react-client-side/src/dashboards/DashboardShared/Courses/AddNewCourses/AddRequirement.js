@@ -85,7 +85,7 @@ const AddRequirement = ({ handleActiveTab, requirement, setRequirement }) => {
 				</div>
 			)}
 			<Button
-				onClick={() => handleActiveTab('4')}
+				onClick={() => handleActiveTab('3')}
 				className='col-span-2 mt-4'
 				type='primary'
 			>
