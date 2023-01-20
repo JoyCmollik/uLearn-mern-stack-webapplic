@@ -3,6 +3,9 @@ module.exports = {
 	content: ['./src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
+			backgroundImage: {
+				background: "url('/src/images/cool-background.png')",
+			},
 			colors: {
 				primary: '#1F53F3',
 				secondary: '#9937FC',

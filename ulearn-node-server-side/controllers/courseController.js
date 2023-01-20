@@ -8,6 +8,9 @@ const createCourse = async (req, res) => {
 	req.body.instructor = req.user.userId;
 
 	const course = await Course.create(req.body);
+	const { category } = req.body;
+
+	
 	res.status(StatusCodes.CREATED).json({ course });
 };
 
@@ -60,7 +63,8 @@ const getAllCourses = async (req, res) => {
 		.skip(queries.skip)
 		.limit(queries.limit)
 		.select(queries.fields)
-		.sort(queries.sortBy);
+		.sort(queries.sortBy)
+		.populate('instructor', 'name avatarURL');
 	const totalCourses = await Course.countDocuments(filters);
 
 	const pageCount = Math.ceil(totalCourses / queries.limit);

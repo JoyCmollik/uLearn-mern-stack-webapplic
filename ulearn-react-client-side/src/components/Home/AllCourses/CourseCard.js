@@ -5,7 +5,6 @@ import { TbExternalLink } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const CourseCard = (props) => {
-	const [user, setUser] = useState({});
 	const navigate = useNavigate();
 	const handleDetailPage = (id) => {
 		navigate(`/course-list/${id}`);
@@ -22,18 +21,6 @@ const CourseCard = (props) => {
 	} = props.course;
 	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 	const [value, setValue] = useState(averageRating);
-
-	useEffect(() => {
-		axios
-			.get(`/users/${instructor}`)
-			.then((response) => {
-				console.log(response.data.user);
-				setUser(response.data.user);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
 	return (
 		<div className='mx-auto shadow border  rounded-lg '>
 			<div className='px-4 pt-4 '>
@@ -66,7 +53,7 @@ const CourseCard = (props) => {
 				</span>
 				{/*------------------------- avatar-------------------- */}
 				<div className='flex mt-3 justify-between'>
-					<Avatar src={user?.avatarURL} />
+					<Avatar src={instructor?.avatarURL} />
 
 					<button
 						onClick={() => handleDetailPage(_id)}

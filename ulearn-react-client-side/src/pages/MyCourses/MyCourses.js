@@ -6,6 +6,7 @@ import { message, Popconfirm } from 'antd';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Loading from '../../components/layout/Loading/Loading';
+import BreadcrumbComponents from '../../components/CourseList/Banner/BreadcrumbComponent/BreadcrumbComponents';
 
 const MyCourses = () => {
 	const [myCourseList, setMyCourseList] = useState([]);
@@ -55,13 +56,18 @@ const MyCourses = () => {
 		<>
 			<NavigationBar theme='light' />
 			<section>
-				<div className='bg-light h-[25vh]'></div>
+				<div className='h-[25vh] bg-background bg-cover bg-center bg-no-repeat flex flex-col justify-start items-center pt-[2vh]'>
+					<h3 className='text-white text-2xl text-center'>
+						My Courses
+					</h3>
+					<BreadcrumbComponents />
+				</div>
 				<div
 					className='bg-white'
 					style={{ minHeight: 'calc(75vh - 81px)' }}
 				>
 					{/* container */}
-					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 h-full drop-shadow'>
+					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 h-full'>
 						{/* ---------- My Courses Nav ---------- */}
 						<div className='col-span-4 rounded-lg p-4 bg-light space-y-4'>
 							<div className='px-4 py-2 rounded-lg border bg-white'>
