@@ -30,6 +30,7 @@ import AdminOutlet from './privateOutlets/AdminOutlet';
 import MyCourses from './pages/MyCourses/MyCourses';
 import Testimonial from './pages/Testimonial/Testimonial';
 import BecomeContentWriter from './pages/BecomeContentWriter/BecomeContentWriter';
+import ContentWriterProfile from './pages/ContentWriterProfile/ContentWriterProfile';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -53,6 +54,10 @@ function App() {
 				<Route
 					path='become-content-creator'
 					element={<BecomeContentWriter />}
+				/>
+				<Route
+					path='content-creator-profile'
+					element={<ContentWriterProfile />}
 				/>
 				<Route
 					path='course-list/:courseId'
