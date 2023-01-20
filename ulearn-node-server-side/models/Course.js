@@ -18,6 +18,11 @@ const CourseSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'please provide course description'],
 		},
+		status: {
+			type: String,
+			enum: ['active', 'inactive', 'pending', 'rejected'],
+			default: 'pending'
+		},
 		category: {
 			type: {
 				name: String,
@@ -64,28 +69,7 @@ const CourseSchema = new mongoose.Schema(
 			min: 0,
 			max: 5,
 		},
-		numberOfReviews: {
-			numOf5: {
-				type: Number,
-				default: 0,
-			},
-			numOf4: {
-				type: Number,
-				default: 0,
-			},
-			numOf3: {
-				type: Number,
-				default: 0,
-			},
-			numOf2: {
-				type: Number,
-				default: 0,
-			},
-			numOf1: {
-				type: Number,
-				default: 0,
-			},
-		},
+		numberOfReviews: Number,
 		courseRequirements: {
 			type: [String],
 			required: [true, 'please provide course requirements'],

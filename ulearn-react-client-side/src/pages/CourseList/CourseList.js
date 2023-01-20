@@ -3,20 +3,20 @@ import { Avatar, Checkbox, Rate, Result, Select, Tag } from 'antd';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import BreadcrumbComponents from '../../components/CourseList/Banner/BreadcrumbComponent/BreadcrumbComponents';
-import bannerTemp from '../../images/cool-background.png';
 import axios from 'axios';
 import Loading from '../../components/layout/Loading/Loading';
 import { Link } from 'react-router-dom';
 import { BsFillPlayCircleFill, BsSearch } from 'react-icons/bs';
 import { BiTimeFive } from 'react-icons/bi';
-import { RiClosedCaptioningFill } from 'react-icons/ri';
-import { TbExternalLink } from 'react-icons/tb';
+import Lottie from '../../components/layout/Lottie/Lottie';
 import moment from 'moment';
+import { HiAcademicCap, HiDocumentPlus, HiOutlineClock } from 'react-icons/hi2';
 
 const CourseList = () => {
 	const [courseList, setCourseList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [isFetching, setIsFetching] = useState(true);
+	const [filters, setFilters] = useState({});
 
 	useEffect(() => {
 		if (!categories.length) {
@@ -46,19 +46,52 @@ const CourseList = () => {
 		}
 	}, []);
 
-	const onChange = (checkedValues) => {
-		console.log('checked = ', checkedValues);
+	const handleFilters = (field, value) => {
+		setFilters((prevFilters) => {
+			let newFilter = {};
+			newFilter = { ...prevFilters, [field]: value.join(',') };
+			console.log(newFilter);
+			return newFilter;
+		});
+	};
+
+	const handleFilterCourseFetch = () => {
+		// adding category
+		let query = filters?.category?.length
+			? `category=${filters.category}`
+			: '';
+		// if category is added, separator is added
+		if (query.length) query += '&';
+		// level parameters
+		query += filters?.level?.length ? `level=${filters.level}` : '';
+		setIsFetching(true);
+		axios
+			.get(`/courses?${query}`)
+			.then((response) => {
+				//console.log(response.data.courses);
+				setCourseList(response.data.courses);
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.finally(() => {
+				setIsFetching(false);
+			});
 	};
 
 	return (
 		<>
 			<NavigationBar theme='light' />
 			<section>
-				<div className='h-[25vh] flex flex-col justify-start items-center bg-background bg-cover bg-center bg-no-repeat pt-[2vh] relative'>
-					<h3 className='text-white text-2xl text-center'>
-						Courses
-					</h3>
-					<BreadcrumbComponents />
+				<div className='h-[34vh] bg-light relative'>
+					<div className='w-full h-full bg-background bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
+						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
+							<h3 className='text-2xl text-center text-white'>
+								Courses
+							</h3>
+							<BreadcrumbComponents />
+						</div>
+					</div>
 				</div>
 				<div
 					className='bg-white'
@@ -67,7 +100,7 @@ const CourseList = () => {
 					{/* container */}
 					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
 						{/* ---------- More Options ---------- */}
-						<div className='col-span-12 p-6 border rounded-lg flex bg-white justify-between items-center'>
+						<div className='col-span-12 p-4 border rounded-lg flex bg-white justify-between items-center'>
 							{/* search */}
 							<div className='flex items-center border border-primary rounded-lg overflow-hidden w-[350px]'>
 								<BsSearch
@@ -95,7 +128,7 @@ const CourseList = () => {
 									borderRadius: '8px',
 								}}
 								size='large'
-								// onChange={handleChange}
+								onChange={handleFilters}
 								options={[
 									{
 										value: '-_id',
@@ -108,6 +141,81 @@ const CourseList = () => {
 								]}
 							/>
 						</div>
+						{/* ---------- All Courses Filters, Queries ---------- */}
+						<div className='col-span-4 p-4 space-y-4 border rounded-lg h-fit'>
+							{/* filter - Categories */}
+							<div className='space-y-4'>
+								<div className='space-y-2'>
+									<h4 className='text-lg font-medium m-0 p-0'>
+										Categories
+									</h4>
+									<div className='w-[45px] h-[4px] bg-primary' />
+								</div>
+								{/* filter - options */}
+								<Checkbox.Group
+									name='category'
+									className='w-full space-y-2'
+									onChange={(value) =>
+										handleFilters('category', value)
+									}
+								>
+									{categories.length > 0 &&
+										categories.map((categoryItem) => (
+											<div
+												key={categoryItem._id}
+												className='flex justify-between items-center'
+											>
+												<p className='flex-grow m-0 capitalize p-0 text-font1 text-base'>
+													{categoryItem.category}
+												</p>
+												<Checkbox
+													value={categoryItem._id}
+												/>
+											</div>
+										))}
+								</Checkbox.Group>
+							</div>
+							<hr />
+							{/* filter - levels */}
+							<div className='space-y-4'>
+								<div className='space-y-2 '>
+									<h4 className='text-lg font-medium m-0 p-0'>
+										Levels
+									</h4>
+									<div className='w-[45px] h-[4px] bg-primary' />
+								</div>
+								{/* filter - options */}
+								<Checkbox.Group
+									name='level'
+									className='w-full space-y-2'
+									onChange={(value) =>
+										handleFilters('level', value)
+									}
+								>
+									{[
+										'Beginner',
+										'Intermediate',
+										'Advanced',
+									].map((levelItem) => (
+										<div
+											key={levelItem}
+											className='flex justify-between items-center'
+										>
+											<p className='flex-grow m-0 capitalize p-0 text-font1 text-base'>
+												{levelItem}
+											</p>
+											<Checkbox value={levelItem} />
+										</div>
+									))}
+								</Checkbox.Group>
+							</div>
+							<button
+								onClick={handleFilterCourseFetch}
+								className='p-2 border border-primary rounded-lg text-primary w-full'
+							>
+								Filter Courses
+							</button>
+						</div>
 						{/* ---------- Courses List ---------- */}
 						<div className='col-span-8 rounded-lg space-y-4'>
 							{isFetching ? (
@@ -117,18 +225,15 @@ const CourseList = () => {
 							) : (
 								<>
 									{!courseList.length ? (
-										<Result
-											status='500'
-											title='500'
-											subTitle='Sorry, something went wrong.'
-											extra={
-												<Link to={'/'}>
-													<button className='bg-primary px-4 py-2 text-white rounded-lg'>
-														Back home
-													</button>
-												</Link>
-											}
-										/>
+										<div className='flex justify-center items-center'>
+											<Lottie
+												src='https://assets3.lottiefiles.com/packages/lf20_rdjfuniz.json'
+												size={{
+													width: '450',
+													height: '450',
+												}}
+											/>
+										</div>
 									) : (
 										<>
 											<div className='container-wrapper space-y-4'>
@@ -139,6 +244,7 @@ const CourseList = () => {
 														instructor,
 														sections,
 														level,
+														currLearners,
 														averageRating,
 														category,
 														language,
@@ -148,18 +254,22 @@ const CourseList = () => {
 													return (
 														<article
 															key={_id}
-															className='flex justify-between border rounded-lg overflow-hidden'
+															className='flex justify-between bg-white drop-shadow rounded-lg overflow-hidden'
 														>
 															{/* course image */}
-															<img
-																src={
-																	courseThumb
-																}
-																alt='course-thumb'
-																className='w-[300px] h-[250px] object-cover'
-															/>
+															<Link
+																to={`/course-list/${_id}`}
+															>
+																<img
+																	src={
+																		courseThumb
+																	}
+																	alt='course-thumb'
+																	className='w-[300px] h-[250px] object-cover'
+																/>
+															</Link>
 															{/* course info */}
-															<div className='flex-grow p-4 flex flex-col justify-between space-y-2'>
+															<div className='flex-grow p-4 flex flex-col justify-between space-y-2 relative'>
 																<h4 className='text-lg font-medium'>
 																	{
 																		courseTitle
@@ -201,16 +311,16 @@ const CourseList = () => {
 																			}
 																		/>
 																		<div className='px-4 rounded-lg bg-light text-primary'>
-																			{
-																				averageRating
-																			}
-																			.00
+																			{averageRating ==
+																			'0'
+																				? 'Not reviewed yet'
+																				: `${averageRating}.00`}
 																		</div>
 																	</div>
 																	{/* stats */}
 																	<div className='flex items-center space-x-2'>
 																		<div className='flex items-center'>
-																			<BsFillPlayCircleFill className='inline-block text-base mr-2 text-font2' />
+																			<HiDocumentPlus className='inline-block text-base mr-2 text-font2' />
 																			<span className='text-base'>
 																				{
 																					sections.length
@@ -220,16 +330,39 @@ const CourseList = () => {
 																		</div>
 																		<span className='w-[0.25px] h-[16px] bg-font2' />
 																		<div className='flex items-center'>
-																			<BiTimeFive className='inline-block text-base mr-2 text-font2' />
+																			<HiOutlineClock className='inline-block text-base mr-2 text-font2' />
 																			<span className='text-base'>
 																				{moment(
 																					createdAt
 																				).format(
-																					'D-M-Y'
+																					'LL'
 																				)}
 																			</span>
 																		</div>
+																		<span className='w-[0.25px] h-[16px] bg-font2' />
+																		<div className='flex items-center'>
+																			<HiAcademicCap className='inline-block text-base mr-2 text-font2' />
+																			<span className='text-base'>
+																				{
+																					currLearners.length
+																				}{' '}
+																				Learners
+																			</span>
+																		</div>
 																	</div>
+																</div>
+																{/* level */}
+																<div className='absolute top-0 right-2 bg-blue-400 text-white px-4 py-1 rounded-lg'>
+																	{level}
+																</div>
+																{/* language */}
+																<div className='absolute bottom-2 right-2 bg-light px-4 py-2 rounded-lg'>
+																	Prepared in{' '}
+																	<span className='font-medium'>
+																		{
+																			language
+																		}
+																	</span>
 																</div>
 															</div>
 														</article>
@@ -242,39 +375,6 @@ const CourseList = () => {
 									)}
 								</>
 							)}
-						</div>
-						{/* ---------- All Courses Filters, Queries ---------- */}
-						<div className='col-span-4 p-4 space-y-4 border rounded-lg h-fit'>
-							{/* filter - title */}
-							<div className='space-y-2'>
-								<h4 className='text-lg font-medium m-0 p-0'>
-									Categories
-								</h4>
-								<div className='w-[45px] h-[4px] bg-primary' />
-							</div>
-							{/* filter - options */}
-							<Checkbox.Group
-								className='w-full space-y-2'
-								onChange={onChange}
-							>
-								{categories.length > 0 &&
-									categories.map((categoryItem) => (
-										<div
-											key={categoryItem._id}
-											className='flex justify-between items-center'
-										>
-											<p className='flex-grow m-0 capitalize p-0 text-font1'>
-												{categoryItem.category}
-											</p>
-											<Checkbox
-												value={categoryItem._id}
-											/>
-										</div>
-									))}
-							</Checkbox.Group>
-							<button className='p-2 border border-primary rounded-lg text-primary w-full'>
-								Filter Courses
-							</button>
 						</div>
 					</div>
 				</div>

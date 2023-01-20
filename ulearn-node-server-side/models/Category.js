@@ -16,6 +16,10 @@ const CategorySchema = new mongoose.Schema(
 			ref: 'User',
 			required: true,
 		},
+		courses: {
+			type: [mongoose.Schema.ObjectId],
+			ref: 'Course',
+		},
 	},
 	{ timestamps: true }
 );
