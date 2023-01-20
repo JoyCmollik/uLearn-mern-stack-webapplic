@@ -10,7 +10,6 @@ const createCourse = async (req, res) => {
 	const course = await Course.create(req.body);
 	const { category } = req.body;
 
-	
 	res.status(StatusCodes.CREATED).json({ course });
 };
 
@@ -19,7 +18,7 @@ const getAllCourses = async (req, res) => {
 	const queries = {};
 
 	// sort, page. limit -> exclude
-	const excludeFields = ['sort', 'page', 'limit'];
+	const excludeFields = ['sort', 'page', 'limit', 'category'];
 	excludeFields.forEach((field) => delete filters[field]); // to delete desired fields
 
 	// sorting queries
@@ -55,9 +54,12 @@ const getAllCourses = async (req, res) => {
 		(match) => `$${match}`
 	);
 	filters = JSON.parse(filtersString);
-
+	
+	// filters for category property
+	if (req.query.category) {
+		filters['category.categoryId'] = req.query.category.split(',');
+	}
 	console.log(filters);
-
 	// final procedure
 	const courses = await Course.find(filters)
 		.skip(queries.skip)

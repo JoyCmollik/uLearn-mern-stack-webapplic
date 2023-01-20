@@ -56,11 +56,15 @@ const MyCourses = () => {
 		<>
 			<NavigationBar theme='light' />
 			<section>
-				<div className='h-[25vh] bg-background bg-cover bg-center bg-no-repeat flex flex-col justify-start items-center pt-[2vh]'>
-					<h3 className='text-white text-2xl text-center'>
-						My Courses
-					</h3>
-					<BreadcrumbComponents />
+				<div className='h-[34vh] bg-light relative'>
+					<div className='w-full h-full bg-background1 bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
+						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
+							<h3 className='text-2xl text-center text-white'>
+								My Courses
+							</h3>
+							<BreadcrumbComponents />
+						</div>
+					</div>
 				</div>
 				<div
 					className='bg-white'

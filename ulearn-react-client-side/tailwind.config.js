@@ -4,7 +4,10 @@ module.exports = {
 	theme: {
 		extend: {
 			backgroundImage: {
-				background: "url('/src/images/cool-background.png')",
+				background:
+					"linear-gradient(to right, rgba(0, 0, 0, .25), rgba(0, 0, 0, .25)),url('/src/images/cool-background.png')",
+				background1:
+					"linear-gradient(to right, rgba(0, 0, 0, .25), rgba(0, 0, 0, .25)),url('/src/images/cool-background1.png')",
 			},
 			colors: {
 				primary: '#1F53F3',
