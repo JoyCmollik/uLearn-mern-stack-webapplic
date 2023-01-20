@@ -1,7 +1,11 @@
 import React from 'react';
 
 const ContentWriterProfile = () => {
-	return <div>profile content writer...</div>;
+	return (
+		<section>
+			<div>profile</div>
+		</section>
+	);
 };
 
 export default ContentWriterProfile;
