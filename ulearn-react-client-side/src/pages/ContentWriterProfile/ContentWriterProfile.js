@@ -1,5 +1,5 @@
 import { Divider, Rate } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookSquare, FaLinkedin, FaTwitterSquare } from 'react-icons/fa';
 import './ContentWriterProfile.css';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
@@ -7,6 +7,8 @@ import { Tabs } from 'antd';
 import CourseCard from '../../components/Home/AllCourses/CourseCard';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import { Footer } from 'antd/lib/layout/layout';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 const onChange = (key) => {
 	console.log(key);
 };
@@ -34,8 +36,17 @@ const backgroundImage = {
 	backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/1016/7.jpg')`,
 };
 const ContentWriterProfile = () => {
+	const { contentWriterId } = useParams();
+	const [user, setUser] = useState({});
 	const [value, setValue] = useState(4);
-
+	useEffect(() => {
+		axios
+			.get(`/users/${contentWriterId}`)
+			.then((response) => {
+				setUser(response.data.user);
+			})
+			.catch((err) => console.log(err));
+	}, []);
 	const details = [
 		{
 			id: 10,
@@ -78,7 +89,7 @@ const ContentWriterProfile = () => {
 					{/*------------------------------instructorImage--------------------------------------------*/}
 					<div>
 						<img
-							src='	https://lms.rocket-soft.org/store/1016/avatar/617a4f17c8e72.png'
+							src={user?.avatarURL}
 							alt='instructor-img'
 							className='rounded-full w-[300px] h-[300px] object-cover'
 						/>
@@ -87,8 +98,11 @@ const ContentWriterProfile = () => {
 					<div className='space-y-2 '>
 						{/*--------------name-------------*/}
 						<h2 className='text-3xl text-font1 font-bold tracking-wider capitalize'>
-							Ricardo dave
+							{user?.name}
 						</h2>
+						<p className='text-base text-font1  tracking-wider font-medium'>
+							{user?.email}
+						</p>
 						{/*--------------rating-------------*/}
 						<div>
 							<Rate
@@ -102,6 +116,7 @@ const ContentWriterProfile = () => {
 								4.58
 							</p>
 						</div>
+
 						{/* social medial link */}
 						<div className='flex text-3xl text-primary space-x-2'>
 							<FaFacebookSquare />
@@ -220,17 +235,17 @@ const ContentWriterProfile = () => {
 									{/* skillset */}
 									<div>
 										<h2 className='text-font1 text-xl font-semibold'>
-											About
+											Skill Sets
 										</h2>
 										<div className='flex space-x-3 '>
-											<p className='text-lg  bg-gray-300 rounded pt-2 px-3'>
+											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
 												Design Web
 											</p>
-											<p className='text-lg  bg-gray-300 rounded pt-2 px-3'>
+											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
 												{' '}
 												Development
 											</p>
-											<p className='text-lg  bg-gray-300 rounded pt-2 px-3'>
+											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
 												Mobile Development
 											</p>
 										</div>

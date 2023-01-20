@@ -12,6 +12,7 @@ import './instructor.css';
 // import required modules
 import { Pagination, Zoom } from 'swiper';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 /* const instructors = [
 	{
@@ -116,9 +117,11 @@ const Instructors = () => {
 										Data Analyst at Microsoft
 									</p>
 									<Rate onChange={setValue} value={value} />
-									<button className='bg-primary text-white py-2 px-3 text-sm rounded-lg '>
-										View Profile
-									</button>
+									<Link to={`/content-writer-profile/${_id}`}>
+										<button className='bg-primary text-white py-2 px-3 text-sm rounded-lg '>
+											View Profile
+										</button>
+									</Link>
 								</div>
 							</SwiperSlide>
 						);

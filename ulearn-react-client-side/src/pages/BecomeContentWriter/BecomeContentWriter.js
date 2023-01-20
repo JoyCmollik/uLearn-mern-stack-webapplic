@@ -58,6 +58,7 @@ const BecomeContentWriter = () => {
 		degreeTitle: '',
 		institutionName: '',
 		approxPassingYear: '',
+		aboutYou: ' ',
 	});
 
 	const handleChange = (e) => {
@@ -70,18 +71,21 @@ const BecomeContentWriter = () => {
 		/* console.log(person);
 		console.log(tags); */
 		e.preventDefault();
-		const { degreeTitle, institutionName, approxPassingYear } = person;
+		const { degreeTitle, institutionName, approxPassingYear, aboutYou } =
+			person;
 
 		if (
 			degreeTitle &&
 			institutionName &&
 			approxPassingYear &&
+			aboutYou &&
 			tags.length
 		) {
 			const data = {
 				degreeTitle,
 				institutionName,
 				approxPassingYear,
+				aboutYou,
 				skillSets: tags,
 			};
 			console.log(data);
@@ -100,6 +104,7 @@ const BecomeContentWriter = () => {
 						degreeTitle: '',
 						institutionName: '',
 						approxPassingYear: '',
+						aboutYou: '',
 					});
 					setTags([]);
 				});
@@ -307,6 +312,21 @@ const BecomeContentWriter = () => {
 										</div>
 									</div>
 									{/* end of tags */}
+									{/* form input */}
+									<div className='col-span-12 form-control w-full'>
+										<label className='label font-medium'>
+											Write about you
+										</label>
+										<textarea
+											cols={100}
+											rows={5}
+											placeholder='write about you....'
+											name='aboutYou'
+											className='input input-bordered w-full h-full'
+											value={person.aboutYou}
+											onChange={handleChange}
+										/>
+									</div>
 									{/* submit button */}
 									<button
 										type='submit'
