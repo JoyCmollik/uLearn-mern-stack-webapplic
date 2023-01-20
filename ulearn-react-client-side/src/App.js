@@ -56,7 +56,7 @@ function App() {
 					element={<BecomeContentWriter />}
 				/>
 				<Route
-					path='become-content-creator'
+					path='content-writer-profile'
 					element={<ContentWriterProfile />}
 				/>
 				<Route
