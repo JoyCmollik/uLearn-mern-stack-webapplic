@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
 import useAuth from '../../../hooks/useAuth';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import useFramerMotion from '../../../hooks/useFramerMotion';
 import Loading from '../../layout/Loading/Loading';
 
 const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 	const { handleUpVote, handleDownVote } = vote;
 	const { user: currUser } = useAuth();
-	const { voteAnimation, list, item } = useFramerMotion();
+	const { list, item } = useFramerMotion();
 	return (
 		<section className=''>
 			{/*-------------------------all other topics----------------------------*/}
