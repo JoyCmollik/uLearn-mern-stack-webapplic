@@ -44,26 +44,20 @@ const ContentWriterProfile = () => {
 	const { contentWriterId } = useParams();
 	const [user, setUser] = useState({});
 	const [value, setValue] = useState(4);
-
+	const [instructor, setInstructor] = useState([]);
 	useEffect(() => {
-		if (!user) {
+		if (contentWriterId) {
 			axios
 				.get(`/users/${contentWriterId}`)
 				.then((response) => {
 					setUser(response.data.user);
-				})
-				.catch((err) => console.log(err));
-		} else {
-			axios
-				.get(`/users/${contentWriterId}`)
-				.then((response) => {
-					setUser(response.data.user);
+					setInstructor(response.data.user.instructor);
+					console.log(response.data.user);
 				})
 				.catch((err) => console.log(err));
 		}
 	}, []);
-	const [instructor] = user?.instructor;
-	//console.log(instructor);
+	const [contentWriter] = instructor;
 	const details = [
 		{
 			id: 10,
@@ -107,20 +101,20 @@ const ContentWriterProfile = () => {
 			{/*----------------------background image----------------------------------------------*/}
 			<div style={backgroundImage} className='min-h-[55vh]'></div>
 			{/*----------------------Instructor Details----------------------------------------------*/}
-			<div className='container mx-auto border rounded-lg -mt-72 bg-white shadow-md'>
-				<div className='flex space-x-4 items-center p-4'>
+			<div className='container mx-auto border rounded-lg -mt-60 bg-white shadow-md p-8 space-y-4'>
+				<div className='flex space-x-8 items-center mx-auto  '>
 					{/*------------------------------instructorImage--------------------------------------------*/}
-					<div>
+					<div className=''>
 						<img
 							src={user?.avatarURL}
 							alt='instructor-img'
-							className='rounded-full w-[300px] h-[300px] object-cover'
+							className='rounded-full w-[200px] h-[200px] object-cover'
 						/>
 					</div>
 					{/*------------------------------instructorImage--------------------------------------------*/}
 					<div className='space-y-2 '>
 						{/*--------------name-------------*/}
-						<h2 className='text-3xl text-font1 font-bold tracking-wider capitalize'>
+						<h2 className='text-xl text-font1 font-bold tracking-wider capitalize'>
 							{user?.name}
 						</h2>
 						<p className='text-base text-font1  tracking-wider font-medium'>
@@ -148,26 +142,21 @@ const ContentWriterProfile = () => {
 						</div>
 					</div>
 				</div>
-				<div className='space-x-2 space-y-2'>
-					<Divider />
-					<div className='grid grid-cols-4 '>
-						{details.map((detail) => {
-							const {
-								icon,
-								id,
-								noOfCourse,
-								noOfReviews,
-								borderColor,
-								noOfStudents,
-								title,
-							} = detail;
-							return (
-								<div key={id} className='mx-auto '>
-									<div
-										className={`shadow-md border-[3px] rounded-md  mx-auto ${
-											borderColor ? borderColor : ''
-										} `}
-									>
+				<div className='grid grid-cols-4 gap-4 '>
+					{details.map((detail) => {
+						const {
+							icon,
+							id,
+							noOfCourse,
+							noOfReviews,
+
+							noOfStudents,
+							title,
+						} = detail;
+						return (
+							<div key={id}>
+								<div className='mx-auto border-[0.5px] rounded-lg shadow'>
+									<div>
 										<div className=' flex items-center justify-center'>
 											{icon}
 										</div>
@@ -183,9 +172,9 @@ const ContentWriterProfile = () => {
 										</p>
 									</div>
 								</div>
-							);
-						})}
-					</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			{/*--------------------------tabs-----------------------------*/}
@@ -206,15 +195,19 @@ const ContentWriterProfile = () => {
 										</h2>
 										<p className='text-lg text-font2'>
 											Degree Title:{' '}
-											{instructor?.degreeTitle}
+											{instructor?.length &&
+												contentWriter.degreeTitle}
 										</p>
 										<p className='text-lg text-font2'>
-											Institution Name :{' '}
-											{instructor?.institutionName}
+											Institution Name :
+											{instructor?.length &&
+												contentWriter.institutionName}
 										</p>
 										<p className='text-lg text-font2'>
+											{' '}
 											Passing Year :{' '}
-											{instructor?.approxPassingYear}
+											{instructor?.length &&
+												contentWriter.approxPassingYear}
 										</p>
 									</div>
 									{/* about */}
@@ -223,7 +216,8 @@ const ContentWriterProfile = () => {
 											About
 										</h2>
 										<p className='text-lg text-font2'>
-											{instructor?.aboutYou}
+											{instructor?.length &&
+												contentWriter.aboutYou}
 										</p>
 									</div>
 									{/* skillset */}
@@ -232,13 +226,17 @@ const ContentWriterProfile = () => {
 											Skill Sets
 										</h2>
 										<div className='flex space-x-3 '>
-											{instructor?.skillSets?.map(
-												(skill) => (
-													<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
-														{skill || ''}
-													</p>
-												)
-											)}
+											{instructor?.length &&
+												contentWriter?.skillSets.map(
+													(skill, index) => (
+														<p
+															key={index}
+															className='text-lg  bg-gray-200 rounded pt-2 px-3'
+														>
+															{skill}
+														</p>
+													)
+												)}
 										</div>
 									</div>
 								</section>
