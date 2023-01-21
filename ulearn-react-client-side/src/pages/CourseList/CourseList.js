@@ -1,24 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Checkbox, Rate, Result, Select, Tag } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+	Avatar,
+	Checkbox,
+	Dropdown,
+	message,
+	Pagination,
+	Rate,
+	Result,
+	Select,
+	Tag,
+} from 'antd';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import BreadcrumbComponents from '../../components/CourseList/Banner/BreadcrumbComponent/BreadcrumbComponents';
 import axios from 'axios';
 import Loading from '../../components/layout/Loading/Loading';
 import { Link } from 'react-router-dom';
-import { BsFillPlayCircleFill, BsSearch } from 'react-icons/bs';
-import { BiTimeFive } from 'react-icons/bi';
+import { BsSearch } from 'react-icons/bs';
 import Lottie from '../../components/layout/Lottie/Lottie';
 import moment from 'moment';
 import { HiAcademicCap, HiDocumentPlus, HiOutlineClock } from 'react-icons/hi2';
+import { motion } from 'framer-motion';
+import useFramerMotion from '../../hooks/useFramerMotion';
+import CourseSearchItem from './CourseSearchItem';
 
 const CourseList = () => {
 	const [courseList, setCourseList] = useState([]);
+	const [searchCourseList, setSearchCourseList] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [isFetching, setIsFetching] = useState(true);
+	const [isSearching, setIsSearching] = useState(false);
+	const [searchDropOpen, setSearchDropOpen] = useState(false);
 	const [filters, setFilters] = useState({});
+	const [query, setQuery] = useState('');
+	const [currentPage, setCurrentPage] = useState({ page: 1, limit: 2 });
+	const searchRef = useRef('');
 
+	// hook constants
+	const { list, item } = useFramerMotion();
+
+	// initial fetches
 	useEffect(() => {
+		setIsFetching(true);
 		if (!categories.length) {
 			axios
 				.get('/categories?fields=category,-user')
@@ -32,10 +55,10 @@ const CourseList = () => {
 		}
 		if (!courseList.length) {
 			axios
-				.get('/courses')
+				.get(`/courses?page=1&limit=2&sort=-_id`)
 				.then((response) => {
 					//console.log(response.data.courses);
-					setCourseList(response.data.courses);
+					setCourseList(response.data);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -46,30 +69,25 @@ const CourseList = () => {
 		}
 	}, []);
 
-	const handleFilters = (field, value) => {
-		setFilters((prevFilters) => {
-			let newFilter = {};
-			newFilter = { ...prevFilters, [field]: value.join(',') };
-			console.log(newFilter);
-			return newFilter;
-		});
-	};
+	const handleFetchFilterCourses = (
+		newPage = false,
+		newQuery = false,
+		sort = false
+	) => {
+		const page = newPage || currentPage.page;
+		const limit = currentPage.limit;
+		const currQuery = newQuery || query;
+		const sortBy = sort || filters.sort;
+		const fetchURL = `/courses?page=${page}&limit=${limit}&sort=${sortBy}${currQuery}`;
 
-	const handleFilterCourseFetch = () => {
-		// adding category
-		let query = filters?.category?.length
-			? `category=${filters.category}`
-			: '';
-		// if category is added, separator is added
-		if (query.length) query += '&';
-		// level parameters
-		query += filters?.level?.length ? `level=${filters.level}` : '';
+		console.log(fetchURL);
+
 		setIsFetching(true);
 		axios
-			.get(`/courses?${query}`)
+			.get(fetchURL)
 			.then((response) => {
 				//console.log(response.data.courses);
-				setCourseList(response.data.courses);
+				setCourseList(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -77,6 +95,75 @@ const CourseList = () => {
 			.finally(() => {
 				setIsFetching(false);
 			});
+	};
+
+	const handleSearchCourseList = () => {
+		if (searchRef.current.value) {
+			setIsSearching(true);
+			setSearchDropOpen(true);
+			console.log(searchRef.current);
+			const fetchURL = `/courses?search=${searchRef.current.value}`;
+			axios
+				.get(fetchURL)
+				.then((response) => {
+					//console.log(response.data.courses);
+					setSearchCourseList(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+				.finally(() => {
+					setIsSearching(false);
+				});
+		} else {
+			message.warning('Your search query is empty!');
+		}
+	};
+
+	const handlePageChange = (newPage) => {
+		setCurrentPage((prevPage) => {
+			return { ...prevPage, page: newPage };
+		});
+		handleFetchFilterCourses(newPage);
+	};
+
+	// category and level handler
+	const handleFilters = (field, value) => {
+		setFilters((prevFilters) => {
+			let newFilter = {};
+			if (field === 'sort') {
+				newFilter = { ...prevFilters, sort: value };
+				handleFetchFilterCourses(1, query, value);
+				return newFilter;
+			} else if (value.length) {
+				newFilter = { ...prevFilters, [field]: value.join(',') };
+			} else {
+				delete prevFilters[field];
+				newFilter = { ...prevFilters };
+			}
+			handleQueryBuilder(newFilter);
+			return newFilter;
+		});
+	};
+
+	const handleQueryBuilder = (newFilter) => {
+		// resetting pagination
+		setCurrentPage({ page: 1, limit: 2 });
+		// adding category
+		let newQuery = newFilter?.category
+			? `&category=${newFilter.category}`
+			: '';
+
+		// level parameters
+		newQuery += newFilter?.level ? `&level=${newFilter.level}` : '';
+
+		setQuery((prevQuery) => {
+			return newQuery;
+		});
+	};
+	// handle change for dropdown
+	const handleSearchDropDown = (flag) => {
+		setSearchDropOpen(flag);
 	};
 
 	return (
@@ -101,24 +188,6 @@ const CourseList = () => {
 					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
 						{/* ---------- More Options ---------- */}
 						<div className='col-span-12 p-4 border rounded-lg flex bg-white justify-between items-center'>
-							{/* search */}
-							<div className='flex items-center border border-primary rounded-lg overflow-hidden w-[350px]'>
-								<BsSearch
-									style={{
-										fontSize: '20px',
-										margin: '0 10px',
-									}}
-								/>
-								<input
-									className='outline-none p-2 w-full'
-									type='text'
-									// onChange={handleSearchValue}
-									placeholder='Search by keywords'
-								/>
-								<button className='block bg-primary text-white px-4 py-2'>
-									Search
-								</button>
-							</div>
 							{/* filter options - newest oldest */}
 							<Select
 								className='items-end place-self-end'
@@ -128,7 +197,9 @@ const CourseList = () => {
 									borderRadius: '8px',
 								}}
 								size='large'
-								onChange={handleFilters}
+								onChange={(value) =>
+									handleFilters('sort', value)
+								}
 								options={[
 									{
 										value: '-_id',
@@ -140,6 +211,73 @@ const CourseList = () => {
 									},
 								]}
 							/>
+							{/* ---------- Search Options ---------- */}
+							<Dropdown
+								overlay={
+									<div className='bg-white rounded-lg p-2 w-[440px] h-fit border overflow-y-auto'>
+										{isSearching ? (
+											<div className='w-full h-full flex justify-center items-center'>
+												<Loading />
+											</div>
+										) : (
+											<div className='grid grid-cols-12 gap-2 overflow-hidden'>
+												{!searchCourseList.length ? (
+													<div className='col-span-12 flex justify-center items-center'>
+														<Lottie
+															src='https://assets10.lottiefiles.com/packages/lf20_suc7tciv.json'
+															size={{
+																width: 120,
+																height: 120,
+															}}
+														/>
+													</div>
+												) : (
+													searchCourseList.map(
+														(course) => (
+															<CourseSearchItem
+																key={course._id}
+																course={course}
+																setSearchDropOpen={
+																	setSearchDropOpen
+																}
+															/>
+														)
+													)
+												)}
+											</div>
+										)}
+									</div>
+								}
+								open={searchDropOpen}
+								onOpenChange={handleSearchDropDown}
+								placement='bottomRight'
+							>
+								{/* ---------- Search Query ---------- */}
+								<div className='flex items-center border border-primary rounded-lg overflow-hidden w-[350px]'>
+									<BsSearch
+										style={{
+											fontSize: '20px',
+											margin: '0 10px',
+										}}
+									/>
+									<input
+										className='outline-none p-2 w-full'
+										ref={searchRef}
+										type='text'
+										// onChange={handleSearchValue}
+										placeholder='Search by keywords'
+									/>
+									<button
+										onClick={(e) => {
+											e.preventDefault();
+											handleSearchCourseList();
+										}}
+										className='block bg-primary text-white px-4 py-2'
+									>
+										Search
+									</button>
+								</div>
+							</Dropdown>
 						</div>
 						{/* ---------- All Courses Filters, Queries ---------- */}
 						<div className='col-span-4 p-4 space-y-4 border rounded-lg h-fit'>
@@ -159,20 +297,28 @@ const CourseList = () => {
 										handleFilters('category', value)
 									}
 								>
-									{categories.length > 0 &&
-										categories.map((categoryItem) => (
-											<div
-												key={categoryItem._id}
-												className='flex justify-between items-center'
-											>
-												<p className='flex-grow m-0 capitalize p-0 text-font1 text-base'>
-													{categoryItem.category}
-												</p>
-												<Checkbox
-													value={categoryItem._id}
-												/>
-											</div>
-										))}
+									<motion.div
+										className='space-y-2'
+										initial='hidden'
+										animate='visible'
+										variants={list}
+									>
+										{categories.length > 0 &&
+											categories.map((categoryItem) => (
+												<motion.div
+													key={categoryItem._id}
+													className='flex justify-between items-center'
+													variants={item}
+												>
+													<p className='flex-grow m-0 capitalize p-0 text-font1 text-base'>
+														{categoryItem.category}
+													</p>
+													<Checkbox
+														value={categoryItem._id}
+													/>
+												</motion.div>
+											))}
+									</motion.div>
 								</Checkbox.Group>
 							</div>
 							<hr />
@@ -210,7 +356,9 @@ const CourseList = () => {
 								</Checkbox.Group>
 							</div>
 							<button
-								onClick={handleFilterCourseFetch}
+								onClick={() =>
+									handleFetchFilterCourses(1, query)
+								}
 								className='p-2 border border-primary rounded-lg text-primary w-full'
 							>
 								Filter Courses
@@ -224,7 +372,7 @@ const CourseList = () => {
 								</div>
 							) : (
 								<>
-									{!courseList.length ? (
+									{!courseList?.courses?.length ? (
 										<div className='flex justify-center items-center'>
 											<Lottie
 												src='https://assets3.lottiefiles.com/packages/lf20_rdjfuniz.json'
@@ -236,139 +384,164 @@ const CourseList = () => {
 										</div>
 									) : (
 										<>
-											<div className='container-wrapper space-y-4'>
-												{courseList.map((course) => {
-													const {
-														courseThumb,
-														courseTitle,
-														instructor,
-														sections,
-														level,
-														currLearners,
-														averageRating,
-														category,
-														language,
-														createdAt,
-														_id,
-													} = course;
-													return (
-														<article
-															key={_id}
-															className='flex justify-between bg-white drop-shadow rounded-lg overflow-hidden'
-														>
-															{/* course image */}
-															<Link
-																to={`/course-list/${_id}`}
+											<motion.div
+												className='container-wrapper space-y-4'
+												initial='hidden'
+												animate='visible'
+												variants={list}
+											>
+												{courseList.courses.map(
+													(course) => {
+														const {
+															courseThumb,
+															courseTitle,
+															instructor,
+															sections,
+															level,
+															currLearners,
+															averageRating,
+															category,
+															language,
+															createdAt,
+															_id,
+														} = course;
+														return (
+															<motion.article
+																key={_id}
+																className='flex justify-between bg-white drop-shadow rounded-lg overflow-hidden'
+																variants={item}
 															>
-																<img
-																	src={
-																		courseThumb
-																	}
-																	alt='course-thumb'
-																	className='w-[300px] h-[250px] object-cover'
-																/>
-															</Link>
-															{/* course info */}
-															<div className='flex-grow p-4 flex flex-col justify-between space-y-2 relative'>
-																<h4 className='text-lg font-medium'>
-																	{
-																		courseTitle
-																	}
-																</h4>
-																<div className='space-y-2'>
-																	<p className='m-0 p-0'>
+																{/* course image */}
+																<Link
+																	to={`/course-list/${_id}`}
+																>
+																	<img
+																		src={
+																			courseThumb
+																		}
+																		alt='course-thumb'
+																		className='w-[300px] h-[250px] object-cover'
+																	/>
+																</Link>
+																{/* course info */}
+																<div className='flex-grow p-4 flex flex-col justify-between space-y-2 relative'>
+																	<h4 className='text-lg font-medium'>
+																		{
+																			courseTitle
+																		}
+																	</h4>
+																	<div className='space-y-2'>
+																		<p className='m-0 p-0'>
+																			in{' '}
+																			<span className='capitalize underline'>
+																				{' '}
+																				{
+																					category?.name
+																				}
+																			</span>
+																		</p>
+																		{/* creator */}
+																		<div className='flex items-center space-x-1'>
+																			<Avatar
+																				size={
+																					45
+																				}
+																				src={
+																					instructor.avatarURL
+																				}
+																				alt='avatar'
+																			/>
+																			<h5 className='text-base m-0 text-font2 capitalize'>
+																				{
+																					instructor.name
+																				}
+																			</h5>
+																		</div>
+																		{/* rating */}
+																		<div className='flex items-center space-x-2'>
+																			<Rate
+																				disabled
+																				defaultValue={
+																					averageRating
+																				}
+																			/>
+																			<div className='px-4 rounded-lg bg-light text-primary'>
+																				{averageRating ==
+																				'0'
+																					? 'Not reviewed yet'
+																					: `${averageRating}.00`}
+																			</div>
+																		</div>
+																		{/* stats */}
+																		<div className='flex items-center space-x-2'>
+																			<div className='flex items-center'>
+																				<HiDocumentPlus className='inline-block text-base mr-2 text-font2' />
+																				<span className='text-base'>
+																					{
+																						sections.length
+																					}{' '}
+																					Section
+																				</span>
+																			</div>
+																			<span className='w-[0.25px] h-[16px] bg-font2' />
+																			<div className='flex items-center'>
+																				<HiOutlineClock className='inline-block text-base mr-2 text-font2' />
+																				<span className='text-base'>
+																					{moment(
+																						createdAt
+																					).format(
+																						'LL'
+																					)}
+																				</span>
+																			</div>
+																			<span className='w-[0.25px] h-[16px] bg-font2' />
+																			<div className='flex items-center'>
+																				<HiAcademicCap className='inline-block text-base mr-2 text-font2' />
+																				<span className='text-base'>
+																					{
+																						currLearners.length
+																					}{' '}
+																					Learners
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																	{/* level */}
+																	<div className='absolute top-0 right-2 bg-blue-400 text-white px-4 py-1 rounded-lg'>
+																		{level}
+																	</div>
+																	{/* language */}
+																	<div className='absolute bottom-2 right-2 bg-light px-4 py-2 rounded-lg'>
+																		Prepared
 																		in{' '}
-																		<span className='capitalize underline'>
-																			{' '}
+																		<span className='font-medium'>
 																			{
-																				category?.name
+																				language
 																			}
 																		</span>
-																	</p>
-																	{/* creator */}
-																	<div className='flex items-center space-x-1'>
-																		<Avatar
-																			size={
-																				45
-																			}
-																			src={
-																				instructor.avatarURL
-																			}
-																			alt='avatar'
-																		/>
-																		<h5 className='text-base m-0 text-font2 capitalize'>
-																			{
-																				instructor.name
-																			}
-																		</h5>
-																	</div>
-																	{/* rating */}
-																	<div className='flex items-center space-x-2'>
-																		<Rate
-																			disabled
-																			defaultValue={
-																				averageRating
-																			}
-																		/>
-																		<div className='px-4 rounded-lg bg-light text-primary'>
-																			{averageRating ==
-																			'0'
-																				? 'Not reviewed yet'
-																				: `${averageRating}.00`}
-																		</div>
-																	</div>
-																	{/* stats */}
-																	<div className='flex items-center space-x-2'>
-																		<div className='flex items-center'>
-																			<HiDocumentPlus className='inline-block text-base mr-2 text-font2' />
-																			<span className='text-base'>
-																				{
-																					sections.length
-																				}{' '}
-																				Section
-																			</span>
-																		</div>
-																		<span className='w-[0.25px] h-[16px] bg-font2' />
-																		<div className='flex items-center'>
-																			<HiOutlineClock className='inline-block text-base mr-2 text-font2' />
-																			<span className='text-base'>
-																				{moment(
-																					createdAt
-																				).format(
-																					'LL'
-																				)}
-																			</span>
-																		</div>
-																		<span className='w-[0.25px] h-[16px] bg-font2' />
-																		<div className='flex items-center'>
-																			<HiAcademicCap className='inline-block text-base mr-2 text-font2' />
-																			<span className='text-base'>
-																				{
-																					currLearners.length
-																				}{' '}
-																				Learners
-																			</span>
-																		</div>
 																	</div>
 																</div>
-																{/* level */}
-																<div className='absolute top-0 right-2 bg-blue-400 text-white px-4 py-1 rounded-lg'>
-																	{level}
-																</div>
-																{/* language */}
-																<div className='absolute bottom-2 right-2 bg-light px-4 py-2 rounded-lg'>
-																	Prepared in{' '}
-																	<span className='font-medium'>
-																		{
-																			language
-																		}
-																	</span>
-																</div>
-															</div>
-														</article>
-													);
-												})}
-											</div>
+															</motion.article>
+														);
+													}
+												)}
+												<div className='flex justify-center items-center p-4'>
+													<Pagination
+														current={
+															currentPage?.page
+														}
+														onChange={
+															handlePageChange
+														}
+														pageSize={
+															currentPage?.limit
+														}
+														total={
+															courseList?.total
+														}
+													/>
+												</div>
+											</motion.div>
 											{/*-------------------------pagination-------------------------*/}
 											<div className='mt-16'></div>
 										</>

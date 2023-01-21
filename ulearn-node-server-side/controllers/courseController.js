@@ -18,7 +18,7 @@ const getAllCourses = async (req, res) => {
 	const queries = {};
 
 	// sort, page. limit -> exclude
-	const excludeFields = ['sort', 'page', 'limit', 'category'];
+	const excludeFields = ['sort', 'page', 'limit', 'category', 'level'];
 	excludeFields.forEach((field) => delete filters[field]); // to delete desired fields
 
 	// sorting queries
@@ -34,14 +34,9 @@ const getAllCourses = async (req, res) => {
 		queries.fields = fields;
 	}
 
-	// if only limit is given but no page
-	if (req.query.limit && !req.query.page) {
-		queries.limit = Number(req.query.limit);
-	}
-
 	// pagination
 	if (req.query.page) {
-		const { page = 1, limit = 1 } = req.query;
+		const { page = 1, limit = 2 } = req.query;
 		const skip = (Number(page) - 1) * Number(limit); // page 5 --> 5 - 1 * 10 = skip first 4 page data
 		queries.skip = skip;
 		queries.limit = Number(limit);
@@ -50,16 +45,26 @@ const getAllCourses = async (req, res) => {
 	// advanced filters - url is price[gt]=50
 	let filtersString = JSON.stringify(filters);
 	filtersString = filtersString.replace(
-		/\b(gt|gte|lt|lte|toInt)\b/g,
+		/\b(gt|gte|lt|lte|regex)\b/g,
 		(match) => `$${match}`
 	);
 	filters = JSON.parse(filtersString);
-	
+
 	// filters for category property
 	if (req.query.category) {
 		filters['category.categoryId'] = req.query.category.split(',');
 	}
-	console.log(filters);
+
+	// levels
+	if (req.query.level) {
+		filters.level = req.query.level.split(',');
+	}
+
+	// search
+	if (req.query.search) {
+		filters.courseTitle = new RegExp(req.query.search, 'i');
+	}
+ 
 	// final procedure
 	const courses = await Course.find(filters)
 		.skip(queries.skip)
