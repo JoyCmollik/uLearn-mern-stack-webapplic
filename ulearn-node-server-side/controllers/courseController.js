@@ -1,4 +1,6 @@
 const Course = require('../models/Course');
+const Lesson = require('../models/Lesson');
+const User = require('../models/User');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const path = require('path');
@@ -130,6 +132,24 @@ const getSingleCourseSections = async (req, res) => {
 	res.status(StatusCodes.OK).json({ course });
 };
 
+const getCourseStats = async ( req, res ) => {
+	const totalCourses = await Course.countDocuments({});
+	const totalLesson = await Lesson.countDocuments({});
+	const totalLearner = await Lesson.countDocuments({ role: 'user' });
+	const totalContentWriters = await Lesson.countDocuments({ role: 'instructor' });
+	const pendingCourses = await Course.countDocuments({ status: 'pending' });
+	const activeCourses = await Course.countDocuments({ status: 'active' });
+
+	res.status(StatusCodes.OK).json({
+		totalCourses,
+		totalLesson,
+		totalLearner,
+		totalContentWriters,
+		pendingCourses,
+		activeCourses,
+	});
+}
+
 const updateCourse = async (req, res) => {
 	const { id: courseId } = req.params;
 
@@ -212,6 +232,7 @@ module.exports = {
 	getSingleCourse,
 	getSingleCourseSections,
 	getSingleUserCourses,
+	getCourseStats,
 	updateCourse,
 	updateSingleUserCourses,
 	deleteCourse,

@@ -6,14 +6,13 @@ import {
 	Tooltip,
 	LabelList,
 } from 'recharts';
-
-const data = [
-	{ name: 'Active Courses', value: 100 },
-	{ name: 'Pending Courses', value: 90 },
-];
 const COLORS = ['#1CD767','#fed81d'];
 
-const CourseOverview = () => {
+const CourseOverview = ({courseStats}) => {	
+	const data = [
+		{ name: 'Active Courses', value: courseStats?.activeCourses },
+		{ name: 'Pending Courses', value: courseStats?.pendingCourses },
+	];
 	return (
 		<PieChart width={400} height={200}>
 			<Pie

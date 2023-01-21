@@ -11,6 +11,7 @@ const {
 	getSingleCourse,
 	getSingleCourseSections,
 	getSingleUserCourses,
+	getCourseStats,
 	updateCourse,
 	updateSingleUserCourses,
 	deleteCourse,
@@ -18,6 +19,7 @@ const {
 } = require('../controllers/courseController');
 
 const { getSingleCourseReviews } = require('../controllers/reviewController');
+const { route } = require('express/lib/router');
 
 router
 	.route('/')
@@ -27,6 +29,10 @@ router
 		authorizePermission('admin', 'instructor'),
 		createCourse
 	);
+
+router
+	.route('/stats')
+	.get(authenticateUser, authorizePermission('admin'), getCourseStats);
 
 router
 	.route('/uploadImage')

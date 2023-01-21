@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // library components
-import { Space, Table, Tag } from 'antd';
+import { Table } from 'antd';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -22,26 +22,27 @@ const columns = [
 		render: (instructor) => <div>{instructor?.name}</div>,
 	},
 	{
-		title: 'Rating',
-		dataIndex: 'averageRating',
-		key: 'averageRating',
+		title: 'Sections',
+		dataIndex: 'sections',
+		key: 'sections',
+		render: (sections) => <div>{sections?.length}</div>,
 	},
 	{
-		title: 'Learners',
-		dataIndex: 'currLearners',
+		title: 'Category',
+		dataIndex: 'category',
 		key: 'total',
-		render: (currLearners) => <div>{currLearners?.length}</div>,
+		render: (category) => <small>{category?.name}</small>,
 	},
 ];
 
-const TopCourses = () => {
-	const [topCourses, setTopCourses] = useState([]);
+const PendingCourses = () => {
+	const [pendingCourses, setPendingCourses] = useState([]);
 	useEffect(() => {
-		if (!topCourses.length) {
+		if (!pendingCourses.length) {
 			axios
-				.get('/courses?averageRating[gte]=4&limit=4')
+				.get('/courses?status=pending&limit=4')
 				.then((response) => {
-					setTopCourses(response.data.courses);
+					setPendingCourses(response.data.courses);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -49,8 +50,12 @@ const TopCourses = () => {
 		}
 	}, []);
 	return (
-		<Table columns={columns} dataSource={topCourses} pagination={false} />
+		<Table
+			columns={columns}
+			dataSource={pendingCourses}
+			pagination={false}
+		/>
 	);
 };
 
-export default TopCourses;
+export default PendingCourses;

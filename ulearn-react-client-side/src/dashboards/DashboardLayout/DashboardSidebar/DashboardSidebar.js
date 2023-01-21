@@ -21,6 +21,7 @@ import { FaUsersCog } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 // library components
 import { Collapse } from 'antd';
+import { HiOutlineDocumentAdd, HiOutlineHome, HiOutlinePaperClip } from 'react-icons/hi';
 const { Panel } = Collapse;
 
 // local component
@@ -58,35 +59,21 @@ const DashboardSidebar = () => {
 				</SideBarLink>
 
 				{/*****--------------Course Links---------------*****/}
-				<CollapsedSideLinksContainer>
-					<Panel
-						header={
-							<PanelHeader
-								icon={<BsWindowDock size={20} />}
-								title='Courses'
-							/>
-						}
-						key='1'
-						style={{ padding: '0 !important' }}
-					>
-						<SideBarLink to='/admin/dashboard/manage-courses' end>
-							<FaUsersCog size={20} /> <span>Manage Courses</span>
-						</SideBarLink>
-						<SideBarLink to='/admin/dashboard/manage-courses/add'>
-							<MdPersonAddAlt size={20} />{' '}
-							<span>Add New Courses</span>
-						</SideBarLink>
-						<SideBarLink to='/admin/dashboard/manage-courses/categories'>
-							<MdPersonAddAlt size={20} />{' '}
-							<span>Course Category</span>
-						</SideBarLink>
-						<SideBarLink to='/admin/dashboard/manage-courses/coupons'>
-							<MdPersonAddAlt size={20} /> <span>Coupons</span>
-						</SideBarLink>
-					</Panel>
-				</CollapsedSideLinksContainer>
 
-				{/*****--------------Enrollment Links---------------*****/}
+				<SideBarLink to='/admin/dashboard/manage-courses' end>
+					<FaUsersCog size={20} /> <span>Manage Courses</span>
+				</SideBarLink>
+				<SideBarLink to='/admin/dashboard/manage-courses/add'>
+					<HiOutlineDocumentAdd size={20} /> <span>Add New Courses</span>
+				</SideBarLink>
+				<SideBarLink to='/admin/dashboard/manage-courses/categories'>
+					<HiOutlinePaperClip size={20} /> <span>Course Category</span>
+				</SideBarLink>
+				{/* <SideBarLink to='/admin/dashboard/manage-courses/coupons'>
+					<MdPersonAddAlt size={20} /> <span>Coupons</span>
+				</SideBarLink> */}
+
+				{/* ****--------------Enrollment Links---------------****
 				<CollapsedSideLinksContainer>
 					<Panel
 						header={
@@ -107,10 +94,10 @@ const DashboardSidebar = () => {
 							<span>Enrollment History</span>
 						</SideBarLink>
 					</Panel>
-				</CollapsedSideLinksContainer>
+				</CollapsedSideLinksContainer> */}
 
 				{/*****--------------Report section nav links---------------*****/}
-				<CollapsedSideLinksContainer>
+				{/* <CollapsedSideLinksContainer>
 					<Panel
 						header={
 							<PanelHeader
@@ -133,44 +120,29 @@ const DashboardSidebar = () => {
 							<span>Purchase History</span>
 						</SideBarLink>
 					</Panel>
-				</CollapsedSideLinksContainer>
+				</CollapsedSideLinksContainer> */}
 
 				{/*****--------------User section nav links---------------*****/}
-				<CollapsedSideLinksContainer>
-					<Panel
-						header={
-							<PanelHeader
-								icon={<MdOutlinePeople size={20} />}
-								title='User'
-							/>
-						}
-						key='1'
-						style={{ padding: '0 !important' }}
-					>
-						<CollapsedSideLinksContainer>
-							{/*****--------------Admin links---------------*****/}
 
-							<SideBarLink to='/admin/dashboard/manage-users/admin'>
-								<MdOutlineAdminPanelSettings size={20} />{' '}
-								<span>Manage Admins </span>
-							</SideBarLink>
+				{/*****--------------Admin links---------------*****/}
 
-							{/*****--------------Content Writer Nav Links---------------*****/}
+				<SideBarLink to='/admin/dashboard/manage-users/admin'>
+					<MdOutlineAdminPanelSettings size={20} />{' '}
+					<span>Manage Admins </span>
+				</SideBarLink>
 
-							<SideBarLink to='/admin/dashboard/manage-users/content-writer'>
-								<MdDocumentScanner size={20} />{' '}
-								<span>Manage Content Writers </span>
-							</SideBarLink>
+				{/*****--------------Content Writer Nav Links---------------*****/}
 
-							{/*****--------------Learner Links---------------*****/}
+				<SideBarLink to='/admin/dashboard/manage-users/content-writer'>
+					<MdDocumentScanner size={20} />{' '}
+					<span>Manage Content Writers </span>
+				</SideBarLink>
 
-							<SideBarLink to='/admin/dashboard/manage-users/learner'>
-								<FaUsersCog size={20} />{' '}
-								<span>Manage Learner </span>
-							</SideBarLink>
-						</CollapsedSideLinksContainer>
-					</Panel>
-				</CollapsedSideLinksContainer>
+				{/*****--------------Learner Links---------------*****/}
+
+				<SideBarLink to='/admin/dashboard/manage-users/learner'>
+					<FaUsersCog size={20} /> <span>Manage Learner </span>
+				</SideBarLink>
 
 				<SideBarLink to='/admin/certificate'>
 					<TbCertificate size={20} /> <span>Certificate</span>
@@ -181,6 +153,10 @@ const DashboardSidebar = () => {
 				<SideBarLink to='/admin/dashboard/manage-profile'>
 					<MdOutlineManageAccounts size={20} />{' '}
 					<span>Manage Profile</span>
+				</SideBarLink>
+				<SideBarLink to='/'>
+					<HiOutlineHome size={20} />{' '}
+					<span>Go Back To Home</span>
 				</SideBarLink>
 			</div>
 		</div>

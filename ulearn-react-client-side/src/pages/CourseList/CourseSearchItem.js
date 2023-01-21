@@ -20,10 +20,13 @@ const CourseSearchItem = ({ course, setSearchDropOpen }) => {
 	} = course;
 	return (
 		<div key={_id} className='col-span-12'>
-			<Link onClick={() => setSearchDropOpen(false)} to={`/course-list/${_id}`}>
+			<Link
+				onClick={() => setSearchDropOpen(false)}
+				to={`/course-list/${_id}`}
+			>
 				<article
 					key={_id}
-					className='flex justify-between bg-white drop-shadow rounded-lg overflow-hidden h-[100px] text-font1'
+					className='flex justify-between bg-white shadow-lg border rounded-lg overflow-hidden h-[100px] text-font1'
 				>
 					{/* course image */}
 

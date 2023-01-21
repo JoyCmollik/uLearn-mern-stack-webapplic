@@ -18,6 +18,7 @@ const SideBarLink = React.forwardRef(
 						.filter(Boolean)
 						.join(' ')
 				}
+				end
 			/>
 		);
 	}
