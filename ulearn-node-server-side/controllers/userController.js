@@ -11,11 +11,15 @@ const getAllUser = async (req, res) => {
 	const users = await User.find(req.query).select(
 		'-password -verificationToken'
 	);
-	
+
 	res.status(StatusCodes.OK).json({ users });
 };
 const getSingleUser = async (req, res) => {
-	const user = await User.findOne({ _id: req.params.id }).select('-password');
+	const user = await User.findOne({ _id: req.params.id })
+		.select('-password')
+		.populate({
+			path: 'instructor',
+		});
 	if (!User) {
 		throw new CustomError.NotFoundError(
 			`No user with id : ${req.params.id}`

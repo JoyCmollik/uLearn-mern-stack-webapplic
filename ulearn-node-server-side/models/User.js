@@ -19,17 +19,14 @@ const UserSchema = new mongoose.Schema(
 				message: 'please provide valid email',
 			},
 		},
-		instructor: {
-			type: mongoose.Schema.ObjectId,
-			ref: 'Instructor',
-		},
+
 		password: {
 			type: String,
 			required: [true, 'please provide email'],
 			minlength: 6,
 		},
 		about: {
-			type: String
+			type: String,
 		},
 		role: {
 			type: String,
@@ -76,8 +73,17 @@ const UserSchema = new mongoose.Schema(
 			type: Date,
 		},
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+		toJSON: { virtuals: true },
+		toObject: { virtuals: true },
+	}
 );
+UserSchema.virtual('instructor', {
+	ref: 'Instructor',
+	localField: '_id',
+	foreignField: 'user',
+});
 
 UserSchema.pre('save', async function () {
 	//console.log(this.modifiedPaths());

@@ -8,6 +8,11 @@ import CourseCard from '../../components/Home/AllCourses/CourseCard';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
 import { Footer } from 'antd/lib/layout/layout';
 import { useParams } from 'react-router-dom';
+import { IoSchoolOutline } from 'react-icons/io5';
+import { GoBook } from 'react-icons/go';
+import { VscPreview } from 'react-icons/vsc';
+import { MdOutlineCategory } from 'react-icons/md';
+
 import axios from 'axios';
 const onChange = (key) => {
 	console.log(key);
@@ -39,42 +44,60 @@ const ContentWriterProfile = () => {
 	const { contentWriterId } = useParams();
 	const [user, setUser] = useState({});
 	const [value, setValue] = useState(4);
+
 	useEffect(() => {
-		axios
-			.get(`/users/${contentWriterId}`)
-			.then((response) => {
-				setUser(response.data.user);
-			})
-			.catch((err) => console.log(err));
+		if (!user) {
+			axios
+				.get(`/users/${contentWriterId}`)
+				.then((response) => {
+					setUser(response.data.user);
+				})
+				.catch((err) => console.log(err));
+		} else {
+			axios
+				.get(`/users/${contentWriterId}`)
+				.then((response) => {
+					setUser(response.data.user);
+				})
+				.catch((err) => console.log(err));
+		}
 	}, []);
+	const [instructor] = user?.instructor;
+	//console.log(instructor);
 	const details = [
 		{
 			id: 10,
-			img: 'https://lms.rocket-soft.org/assets/default/img/profile/students.svg',
+			icon: (
+				<IoSchoolOutline className='text-6xl text-[#ef9d69] p-1 mx-auto' />
+			),
 			noOfStudents: 5,
 			borderColor: 'border-[#ef9d69]',
 			title: 'students',
 		},
 		{
 			id: 11,
-			img: 'https://lms.rocket-soft.org/assets/default/img/profile/students.svg',
+			icon: <GoBook className='text-6xl text-[#00a1d9] p-1 mx-auto' />,
 			noOfCourse: 4,
 			borderColor: 'border-[#00a1d9]',
 			title: 'courses',
 		},
 		{
 			id: 12,
-			img: 'https://lms.rocket-soft.org/assets/default/img/profile/students.svg',
+			icon: (
+				<VscPreview className='text-6xl text-[#4fb949] p-1 mx-auto' />
+			),
 			noOfReviews: 3,
 			borderColor: 'border-[#4fb949]',
 			title: 'Reviews',
 		},
 		{
 			id: 13,
-			img: 'https://lms.rocket-soft.org/assets/default/img/profile/students.svg',
+			icon: (
+				<MdOutlineCategory className='text-6xl text-[#a855ff] p-1 mx-auto' />
+			),
 			noOfReviews: 3,
 			borderColor: 'border-[#a855ff]',
-			title: 'categories',
+			title: 'Category',
 		},
 	];
 	return (
@@ -130,7 +153,7 @@ const ContentWriterProfile = () => {
 					<div className='grid grid-cols-4 '>
 						{details.map((detail) => {
 							const {
-								img,
+								icon,
 								id,
 								noOfCourse,
 								noOfReviews,
@@ -141,15 +164,13 @@ const ContentWriterProfile = () => {
 							return (
 								<div key={id} className='mx-auto '>
 									<div
-										className={`shadow-md inline-block border-[3px] rounded-md ${
+										className={`shadow-md border-[3px] rounded-md  mx-auto ${
 											borderColor ? borderColor : ''
 										} `}
 									>
-										<img
-											src={img}
-											alt=''
-											className='rounded object-cover w-[80px] p-4'
-										/>
+										<div className=' flex items-center justify-center'>
+											{icon}
+										</div>
 									</div>
 									<div className='text-center'>
 										<h4 className='text-font1 text-xl font-bold '>
@@ -184,14 +205,16 @@ const ContentWriterProfile = () => {
 											Education
 										</h2>
 										<p className='text-lg text-font2'>
-											Degree Title:
+											Degree Title:{' '}
+											{instructor?.degreeTitle}
 										</p>
 										<p className='text-lg text-font2'>
-											Institution Name :
+											Institution Name :{' '}
+											{instructor?.institutionName}
 										</p>
 										<p className='text-lg text-font2'>
-											{' '}
-											Passing Year
+											Passing Year :{' '}
+											{instructor?.approxPassingYear}
 										</p>
 									</div>
 									{/* about */}
@@ -200,36 +223,7 @@ const ContentWriterProfile = () => {
 											About
 										</h2>
 										<p className='text-lg text-font2'>
-											Ricardo dave has a BS and MS in
-											Mechanical Engineering from Santa
-											Clara University and years of
-											experience as a professional
-											instructor and trainer for Data
-											Science and programming. He has
-											publications and patents in various
-											fields such as microfluidics,
-											materials science, and data science
-											technologies. Over the course of his
-											career he has developed a skill set
-											in analyzing data and he hopes to
-											use his experience in teaching and
-											data science to help other people
-											learn the power of programming the
-											ability to analyze data, as well as
-											present the data in clear and
-											beautiful visualizations. Currently
-											he works as the Head of Data Science
-											for Pierian Data Inc. and provides
-											in-person data science and python
-											programming training courses to
-											employees working at top companies,
-											including General Electric, Cigna,
-											The New York Times, Credit Suisse,
-											McKinsey and many more. Feel free to
-											contact him on LinkedIn for more
-											information on in-person training
-											sessions or group training sessions
-											in Las Vegas, NV.
+											{instructor?.aboutYou}
 										</p>
 									</div>
 									{/* skillset */}
@@ -238,16 +232,13 @@ const ContentWriterProfile = () => {
 											Skill Sets
 										</h2>
 										<div className='flex space-x-3 '>
-											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
-												Design Web
-											</p>
-											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
-												{' '}
-												Development
-											</p>
-											<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
-												Mobile Development
-											</p>
+											{instructor?.skillSets?.map(
+												(skill) => (
+													<p className='text-lg  bg-gray-200 rounded pt-2 px-3'>
+														{skill || ''}
+													</p>
+												)
+											)}
 										</div>
 									</div>
 								</section>

@@ -49,5 +49,6 @@ const deleteInstructor = async (req, res) => {
 module.exports = {
 	createInstructor,
 	updateInstructor,
+
 	deleteInstructor,
 };
