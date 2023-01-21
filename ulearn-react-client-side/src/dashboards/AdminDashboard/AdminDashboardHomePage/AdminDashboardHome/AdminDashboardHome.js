@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // components
-import DashboardSidebar from '../../../DashboardLayout/DashboardSidebar/DashboardSidebar';
-import DashboardHeader from '../../../DashboardLayout/DashboardHeader/DashboardHeader';
 import AdminRevenue from '../AdminDashboardHomeComponents/AdminRevenue/AdminRevenue';
 import CourseOverview from '../AdminDashboardHomeComponents/CourseOverview/CourseOverview';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
+import Loading from '../../../../components/layout/Loading/Loading';
 
 // third party components
-import { Outlet, Route, Routes } from 'react-router-dom';
-import { MdOutlineDashboard, MdOutlineSchool } from 'react-icons/md';
-import { Calendar } from 'antd';
+import { MdOutlineSchool } from 'react-icons/md';
+import { Calendar, Spin } from 'antd';
 import { BsBookHalf } from 'react-icons/bs';
 import { BiBookReader } from 'react-icons/bi';
 import { FaGetPocket } from 'react-icons/fa';
 import TopCourses from '../AdminDashboardHomeComponents/TopCourses/TopCourses';
+import axios from 'axios';
+import PendingCourses from '../AdminDashboardHomeComponents/PendingCourses/PendingCourses';
 
 const AdminDashboardHome = () => {
+	const [courseStats, setCourseStats] = useState(null);
+
+	useEffect(() => {
+		if(!courseStats) {
+			axios
+				.get('/courses/stats')
+				.then((response) => {
+					setCourseStats(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, []);
+
 	return (
 		<div className='min-h-screen grid grid-cols-12 gap-4'>
 			{/*****--------------dashboard home left panel---------------*****/}
@@ -30,7 +45,12 @@ const AdminDashboardHome = () => {
 						<div className='space-y-1'>
 							<p className='text-font2 m-0'>Total Courses</p>
 							<h2 className='font-medium text-xl m-0'>
-								40 Courses
+								{courseStats ? (
+									courseStats.totalCourses
+								) : (
+									<Spin size='small' />
+								)}{' '}
+								Courses
 							</h2>
 						</div>
 					</div>
@@ -42,7 +62,12 @@ const AdminDashboardHome = () => {
 						<div className='space-y-1'>
 							<p className='text-font2 m-0'>Total Students</p>
 							<h2 className='font-medium text-xl m-0'>
-								100 Learners
+								{courseStats ? (
+									courseStats.totalLearner
+								) : (
+									<Spin size='small' />
+								)}{' '}
+								Learners
 							</h2>
 						</div>
 					</div>
@@ -54,7 +79,12 @@ const AdminDashboardHome = () => {
 						<div className='space-y-1'>
 							<p className='text-font2 m-0'>Total Lessons</p>
 							<h2 className='font-medium text-xl m-0'>
-								250 Lessons
+								{courseStats ? (
+									courseStats.totalLesson
+								) : (
+									<Spin size='small' />
+								)}{' '}
+								Lessons
 							</h2>
 						</div>
 					</div>
@@ -64,9 +94,16 @@ const AdminDashboardHome = () => {
 							<FaGetPocket className='text-brand2' size={28} />
 						</div>
 						<div className='space-y-1'>
-							<p className='text-font2 m-0'>Total Enrollments</p>
+							<p className='text-font2 m-0'>
+								Total Content Writers
+							</p>
 							<h2 className='font-medium text-xl m-0'>
-								40 New Students
+								{courseStats ? (
+									courseStats.totalContentWriters
+								) : (
+									<Spin size='small' />
+								)}{' '}
+								Contributors
 							</h2>
 						</div>
 					</div>
@@ -85,7 +122,7 @@ const AdminDashboardHome = () => {
 							Pending Courses
 						</h4>
 						<div className='p-4'>
-							<TopCourses />
+							<PendingCourses />
 						</div>
 					</div>
 					<div className='bg-white w-full rounded-lg border-[0.5px] space-y-4'>
@@ -94,7 +131,7 @@ const AdminDashboardHome = () => {
 						</h4>
 						<div className='overview-wrapper h-full flex flex-col justify-start items-center'>
 							<div className='flex justify-center items-center'>
-								<CourseOverview />
+								<CourseOverview courseStats={courseStats}  />
 							</div>
 							<div className='flex justify-center items-center space-x-16'>
 								<div className='text-center'>
@@ -104,7 +141,13 @@ const AdminDashboardHome = () => {
 										primary='#121331'
 										secondary='#1CD767'
 									/>
-									<h4 className='text-brand2 text-xl'>100</h4>
+									<h4 className='text-brand2 text-xl'>
+										{courseStats ? (
+											courseStats.activeCourses
+										) : (
+											<Spin size='small' />
+										)}{' '}
+									</h4>
 									<p className='text-font2'>Active Courses</p>
 								</div>
 								<div className='text-center'>
@@ -114,7 +157,13 @@ const AdminDashboardHome = () => {
 										primary='#121331'
 										secondary='#FED81D'
 									/>
-									<h4 className='text-warning text-xl'>90</h4>
+									<h4 className='text-warning text-xl'>
+										{courseStats ? (
+											courseStats.pendingCourses
+										) : (
+											<Spin size='small' />
+										)}{' '}
+									</h4>
 									<p className='text-font2'>
 										Pending Courses
 									</p>

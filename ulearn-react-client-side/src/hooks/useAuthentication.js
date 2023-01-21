@@ -9,7 +9,7 @@ const useAuthentication = () => {
 	const [registerMsg, setRegisterMsg] = useState(false);
 
 	const [forgotPasswordMsg, setforgotPasswordMsg] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleRegister = async (data) => {
 		console.log(data);

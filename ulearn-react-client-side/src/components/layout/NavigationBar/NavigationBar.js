@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import { AiOutlineMenu, AiOutlineMenuFold } from 'react-icons/ai';
+import { AiOutlineMenuFold } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../../HeaderComponents/SideBar/SideBar';
 import logo from '../../../images/ULearn_Logo.png';
-import DropDownButton from '../../HeaderComponents/DropDownButton/DropDownButton';
-import SearchField from '../../HeaderComponents/SearchField/SearchField';
-import { MdEmail, MdNotificationsNone } from 'react-icons/md';
-import { FiShoppingBag } from 'react-icons/fi';
-import { Avatar, Button } from 'antd';
-import { Header } from 'antd/lib/layout/layout';
-import { LoginOutlined, DashboardTwoTone } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
-import { CgProfile } from 'react-icons/cg';
-import useAuthentication from '../../../hooks/useAuthentication';
+import { MdDashboard, MdLogout, MdPortrait } from 'react-icons/md';
+import { Avatar } from 'antd';
+import { Dropdown } from 'antd';
 import { RiDashboardLine } from 'react-icons/ri';
 import useAuth from '../../../hooks/useAuth';
 
@@ -35,60 +28,46 @@ const NavigationBar = () => {
 	const onClose = () => {
 		setOpen(false);
 	};
-	const onChange = (e) => {
-		setPlacement(e.target.value);
+
+	const menu = () => {
+		const role = user.role === 'instructor' ? 'content-creator' : 'admin';
+		return (
+			<div className='p-2 flex flex-col space-y-2 w-[200px] rounded-lg bg-white shadow-lg'>
+				<div className='flex flex-col justify-center items-center p-2'>
+					<Avatar size={45} src={user.avatarURL} />
+					<div className='text-base font-medium'>
+						<small className='underline'>{user?.name}</small>
+					</div>
+				</div>
+				{/* ----- conditional dashboard ----- */}
+				{user.role === 'admin' || user.role === 'instructor' ? (
+					<Link to={`/${role}/dashboard`}>
+						<button className='text-font1 p-2 border rounded-lg w-full flex items-center space-x-2'>
+							<MdDashboard
+								style={{ color: '#000000' }}
+								size={25}
+							/>
+							<span>Dashboard</span>
+						</button>
+					</Link>
+				) : null}
+				<Link to='/my-profile'>
+					<button className='text-font1 p-2 border rounded-lg w-full flex items-center space-x-2'>
+						<MdPortrait style={{ color: '#000000' }} size={25} />
+						<span>My Profile</span>
+					</button>
+				</Link>
+				<button
+					className='p-2 border rounded-lg w-full flex items-center space-x-2 bg-error text-white'
+					onClick={() => handleLogout(navigate)}
+				>
+					<MdLogout style={{ color: '#ffffff' }} size={25} />
+					<span>Logout</span>
+				</button>
+			</div>
+		);
 	};
-	const menu = (
-		<Menu
-			items={[
-				{
-					key: '1',
-					label: (
-						<Link
-							to='/admin/dashboard/'
-							className='text-lg font-medium'
-						>
-							Dashboard
-						</Link>
-					),
-					icon: (
-						<DashboardTwoTone
-							style={{ fontSize: '24px', color: '#08c' }}
-						/>
-					),
-				},
-				{
-					key: '2',
-					label: (
-						<Link to='/' className='text-lg font-medium'>
-							My Profile
-						</Link>
-					),
-					icon: (
-						<CgProfile
-							style={{ fontSize: '24px', color: '#08c' }}
-						/>
-					),
-				},
-				{
-					key: '3',
-					label: (
-						<div
-							className='text-lg font-medium'
-							onClick={() => handleLogout(navigate)}
-						>
-							Logout
-						</div>
-					),
-					icon: (
-						<LoginOutlined
-							style={{ fontSize: '24px', color: '#08c' }}
-						/>
-					),
-				},
-			]}
-		/>
-	);
+
 	return (
 		<>
 			<header className='sticky top-0 left-0 bg-white border-b z-50'>
@@ -110,7 +89,8 @@ const NavigationBar = () => {
 							<div className='hidden items-center space-x-6 md:block'>
 								{/*--------------------Categories-------------------------*/}
 								<button className='flex items-center space-x-2 bg-light px-3 py-2 text-base rounded-lg font-medium'>
-									<RiDashboardLine size={20} /><span>Categories</span>
+									<RiDashboardLine size={20} />
+									<span>Categories</span>
 								</button>
 							</div>
 							<ul className='p-0 m-0 hidden md:flex items-center space-x-1 capitalize'>
@@ -129,7 +109,6 @@ const NavigationBar = () => {
 						</div>
 
 						<div className='items-center space-x-4 justify-end pr-2 hidden md:flex '>
-
 							{/*-------------------avatar------------------------------*/}
 
 							<div className=''>
@@ -139,7 +118,10 @@ const NavigationBar = () => {
 											onClick={(e) => e.preventDefault()}
 											className='flex space-x-1 items-center'
 										>
-											<Avatar size={40} src={user.avatarURL} />
+											<Avatar
+												size={40}
+												src={user.avatarURL}
+											/>
 											<div className='text-base font-medium'>
 												<small>{user?.name}</small>
 											</div>

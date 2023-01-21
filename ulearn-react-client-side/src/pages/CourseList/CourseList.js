@@ -214,7 +214,7 @@ const CourseList = () => {
 							{/* ---------- Search Options ---------- */}
 							<Dropdown
 								overlay={
-									<div className='bg-white rounded-lg p-2 w-[440px] h-fit border overflow-y-auto'>
+									<div className='bg-white rounded-lg p-4 w-[440px] h-fit border overflow-y-auto'>
 										{isSearching ? (
 											<div className='w-full h-full flex justify-center items-center'>
 												<Loading />
@@ -232,17 +232,27 @@ const CourseList = () => {
 														/>
 													</div>
 												) : (
-													searchCourseList.map(
-														(course) => (
-															<CourseSearchItem
-																key={course._id}
-																course={course}
-																setSearchDropOpen={
-																	setSearchDropOpen
-																}
-															/>
-														)
-													)
+													<>
+														<h4 className='col-span-12 text-xs m-0'>
+															Search results:
+														</h4>
+														<hr className='col-span-12' />
+														{searchCourseList.map(
+															(course) => (
+																<CourseSearchItem
+																	key={
+																		course._id
+																	}
+																	course={
+																		course
+																	}
+																	setSearchDropOpen={
+																		setSearchDropOpen
+																	}
+																/>
+															)
+														)}
+													</>
 												)}
 											</div>
 										)}
