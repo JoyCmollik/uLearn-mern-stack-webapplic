@@ -1,5 +1,5 @@
-import { Spin } from 'antd';
 import React from 'react';
+import Loading from '../../../../components/layout/Loading/Loading';
 import Category from './Category';
 
 const CategoryList = ({ categories, handleDeleteCategory }) => {
@@ -9,7 +9,7 @@ const CategoryList = ({ categories, handleDeleteCategory }) => {
 			<div className='grid grid-cols-2 gap-4'>
 				{!categories ? (
 					<div className='col-span-2 flex justify-center items-center'>
-						<Spin />
+						<Loading />
 					</div>
 				) : (
 					<>

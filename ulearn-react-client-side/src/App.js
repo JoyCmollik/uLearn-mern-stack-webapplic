@@ -81,7 +81,7 @@ function App() {
 						element={<AdminDashboardComponent />}
 					>
 						<Route index element={<AdminDashboardHome />} />
-						<Route path='report/revenue' element={<Report />} />
+						{/* <Route path='report/revenue' element={<Report />} /> */}
 						<Route
 							path='manage-courses/*'
 							element={<CoursesComponent />}
@@ -92,7 +92,7 @@ function App() {
 								path='categories/*'
 								element={<CoursesCategory />}
 							/>
-							<Route path='coupons/*' element={<Coupons />} />
+							{/* <Route path='coupons/*' element={<Coupons />} /> */}
 							<Route path='edit/:id/*' element={<EditCourse />} />
 						</Route>
 						<Route

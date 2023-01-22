@@ -1,6 +1,30 @@
-import React from 'react';
+import { message } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import useAuth from '../../../hooks/useAuth';
 
 const ManageProfile = () => {
+	const [userProfile, setUserProfile] = useState();
+	const [isFetching, setIsFetching] = useState(true);
+	const { user } = useAuth();
+
+	useEffect(() => {
+		if (!userProfile) {
+			setIsFetching(true);
+			axios
+				.get(`/users/${user?.userId}`)
+				.then((response) => {
+					console.log(response.data.user)
+				})
+				.catch((error) => {
+					message.error(error.message);
+				})
+				.finally(() => {
+					setIsFetching(false);
+				});
+		}
+	}, []);
+
 	return (
 		<div className='bg-white min-h-screen rounded-lg p-4'>
 			{/*****--------------User Profile Banner ---------------*****/}

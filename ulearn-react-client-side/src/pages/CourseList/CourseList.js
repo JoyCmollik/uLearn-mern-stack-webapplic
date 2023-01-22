@@ -6,9 +6,7 @@ import {
 	message,
 	Pagination,
 	Rate,
-	Result,
 	Select,
-	Tag,
 } from 'antd';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
@@ -31,7 +29,7 @@ const CourseList = () => {
 	const [isFetching, setIsFetching] = useState(true);
 	const [isSearching, setIsSearching] = useState(false);
 	const [searchDropOpen, setSearchDropOpen] = useState(false);
-	const [filters, setFilters] = useState({});
+	const [filters, setFilters] = useState({sort: '-_id'});
 	const [query, setQuery] = useState('');
 	const [currentPage, setCurrentPage] = useState({ page: 1, limit: 2 });
 	const searchRef = useRef('');

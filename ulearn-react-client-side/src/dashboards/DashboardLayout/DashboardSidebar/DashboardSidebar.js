@@ -144,12 +144,12 @@ const DashboardSidebar = () => {
 					<FaUsersCog size={20} /> <span>Manage Learner </span>
 				</SideBarLink>
 
-				<SideBarLink to='/admin/certificate'>
+				{/* <SideBarLink to='/admin/certificate'>
 					<TbCertificate size={20} /> <span>Certificate</span>
 				</SideBarLink>
 				<SideBarLink to='/admin/settings'>
 					<AiOutlineSetting size={20} /> <span>Settings</span>
-				</SideBarLink>
+				</SideBarLink> */}
 				<SideBarLink to='/admin/dashboard/manage-profile'>
 					<MdOutlineManageAccounts size={20} />{' '}
 					<span>Manage Profile</span>

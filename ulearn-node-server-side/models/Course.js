@@ -112,7 +112,7 @@ CourseSchema.virtual('reviews', {
 */
 CourseSchema.pre('remove', async function (next) {
 	await this.model('Review').deleteMany({ course: this._id });
-
+	console.log('deleted reviews');
 	// next();
 });
 

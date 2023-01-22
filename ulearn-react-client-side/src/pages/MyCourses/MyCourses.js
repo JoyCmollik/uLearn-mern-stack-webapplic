@@ -34,7 +34,7 @@ const MyCourses = () => {
 	const handleUnenrollCourse = (courseId) => {
 		setIsEnrolling(true);
 		axios
-			.patch('/courses/users', { courseId, isAdd: true })
+			.patch('/courses/users', { courseId, isAdd: false })
 			.then((response) => {
 				console.log(response.data.currLearner);
 				message.success('Course is unenrolled successfully');
@@ -73,7 +73,7 @@ const MyCourses = () => {
 					{/* container */}
 					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 h-full'>
 						{/* ---------- My Courses Nav ---------- */}
-						<div className='col-span-4 rounded-lg p-4 bg-light space-y-4'>
+						<div className='col-span-4 border rounded-lg p-4 space-y-4'>
 							<div className='px-4 py-2 rounded-lg border bg-white'>
 								My Courses
 							</div>

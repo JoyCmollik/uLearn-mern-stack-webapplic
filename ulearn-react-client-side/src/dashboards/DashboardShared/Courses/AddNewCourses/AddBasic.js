@@ -54,7 +54,10 @@ const AddBasic = ({
 							size='large'
 						>
 							{categories.map((categoryItem) => (
-								<Select.Option value={categoryItem.category}>
+								<Select.Option
+									key={categoryItem._id}
+									value={categoryItem.category}
+								>
 									{categoryItem.category}
 								</Select.Option>
 							))}

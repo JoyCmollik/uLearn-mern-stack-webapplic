@@ -3,7 +3,7 @@ import React from 'react';
 const Loading = ({ size }) => {
 	let loadingSize = '170px';
 	if (size === 'medium') {
-		loadingSize = '50px';
+		loadingSize = '100px';
 	} else if (size === 'small') {
 		loadingSize = '25px';
 	}
