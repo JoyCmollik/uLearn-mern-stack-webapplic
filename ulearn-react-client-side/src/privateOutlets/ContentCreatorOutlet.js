@@ -5,13 +5,13 @@ import useAuth from '../hooks/useAuth';
 
 const ContentCreatorOutlet = () => {
 	const { user, loading } = useAuth();
-  if (loading && !user) {
+	if (loading && !user) {
 		return (
-			<div className='flex justify-center items-center h-screen'>
+			<div className='bg-white flex justify-center items-center h-screen'>
 				<Spin />
 			</div>
 		);
-  }
+	}
 	return user.role === 'instructor' ? <Outlet /> : <Navigate to='/' />;
 };
 

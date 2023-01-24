@@ -31,6 +31,8 @@ import MyCourses from './pages/MyCourses/MyCourses';
 import Testimonial from './pages/Testimonial/Testimonial';
 import BecomeContentWriter from './pages/BecomeContentWriter/BecomeContentWriter';
 import ContentWriterProfile from './pages/ContentWriterProfile/ContentWriterProfile';
+import PrivateRoute from './privateOutlets/PrivateRoute';
+import ContentCreatorOutlet from './privateOutlets/ContentCreatorOutlet';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -44,20 +46,46 @@ function App() {
 				{/*****--------------Course Content Show Routes---------------*****/}
 				<Route
 					path='course-content/:contentId/*'
-					element={<CourseContent />}
+					element={
+						<PrivateRoute>
+							<CourseContent />
+						</PrivateRoute>
+					}
 				/>
 
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
-				<Route path='my-courses' element={<MyCourses />} />
-				<Route path='testimonial' element={<Testimonial />} />
+				<Route
+					path='my-courses'
+					element={
+						<PrivateRoute>
+							<MyCourses />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					path='testimonial'
+					element={
+						<PrivateRoute>
+							<Testimonial />
+						</PrivateRoute>
+					}
+				/>
 				<Route
 					path='become-content-creator'
-					element={<BecomeContentWriter />}
+					element={
+						<PrivateRoute>
+							<BecomeContentWriter />
+						</PrivateRoute>
+					}
 				/>
 				<Route
 					path='content-writer-profile/:contentWriterId'
-					element={<ContentWriterProfile />}
+					element={
+						<PrivateRoute>
+							<ContentWriterProfile />
+						</PrivateRoute>
+					}
 				/>
 				<Route
 					path='course-list/:courseId'
@@ -129,22 +157,30 @@ function App() {
 				</Route>
 				{/*****--------------Instructor Dashboard Index Routes---------------*****/}
 				<Route
-					path='content-creator/dashboard/*'
-					element={<ContentCreatorDashboardComponent />}
+					path='content-creator'
+					element={<ContentCreatorOutlet />}
 				>
-					<Route index element={<ContentCreatorDashboardHome />} />
 					<Route
-						path='manage-courses/*'
-						element={<CoursesComponent />}
+						path='dashboard/*'
+						element={<ContentCreatorDashboardComponent />}
 					>
-						<Route index element={<ContentCreatorCourses />} />
-						<Route path='add' element={<AddNewCourse />} />
-						<Route path='edit/:id/*' element={<EditCourse />} />
+						<Route
+							index
+							element={<ContentCreatorDashboardHome />}
+						/>
+						<Route
+							path='manage-courses/*'
+							element={<CoursesComponent />}
+						>
+							<Route index element={<ContentCreatorCourses />} />
+							<Route path='add' element={<AddNewCourse />} />
+							<Route path='edit/:id/*' element={<EditCourse />} />
+						</Route>
+						<Route
+							path='manage-profile/*'
+							element={<ManageProfile />}
+						/>
 					</Route>
-					<Route
-						path='manage-profile/*'
-						element={<ManageProfile />}
-					/>
 				</Route>
 			</Routes>
 		</div>
