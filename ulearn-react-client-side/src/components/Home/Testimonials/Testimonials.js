@@ -10,7 +10,7 @@ import '../Instructors/instructor.css';
 // import required modules
 import { Pagination, Zoom } from 'swiper';
 import { Rate } from 'antd';
-const instructors = [
+const testimonials = [
 	{
 		id: 1001,
 		name: 'Ricardo Dave',
@@ -87,7 +87,7 @@ const Testimonials = () => {
 					className='mySwiper'
 					autoplay={{ delay: 2000 }}
 				>
-					{instructors.map((instructor) => {
+					{testimonials.map((instructor) => {
 						const { id, name, img, position, rating, review } =
 							instructor;
 

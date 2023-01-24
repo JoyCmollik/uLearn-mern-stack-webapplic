@@ -1,19 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const Categories = () => {
-	const [categories, setCategoires] = useState([]);
-	useEffect(() => {
-		axios
-			.get('/categories')
-			.then((response) => {
-				//console.log(response.data.categories);
-				setCategoires(response.data.categories);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+const Categories = ({ categories }) => {
 	return (
 		<section className='container mx-auto '>
 			{/*--------------- title ----------------------- */}

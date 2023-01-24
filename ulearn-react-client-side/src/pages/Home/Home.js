@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 
 import Hero from '../../components/Home/Hero/Hero';
@@ -12,18 +12,67 @@ import BestReviewedCourses from '../../components/Home/AllCourses/BestReviewedCo
 import Instructors from '../../components/Home/Instructors/Instructors';
 import Testimonials from '../../components/Home/Testimonials/Testimonials';
 import Categories from '../../components/Home/Categories/Categories';
+import axios from 'axios';
 
-const { Footer, Content } = Layout;
 const Home = () => {
+	const [categories, setCategoires] = useState(null);
+	const [newCourses, setNewCourses] = useState(null);
+	const [bestCourses, setBestCourses] = useState(null);
+	const [instructors, setInstructors] = useState(null);
+
+	useEffect(() => {
+		if (!categories) {
+			axios
+				.get('/categories')
+				.then((response) => {
+					//console.log(response.data.categories);
+					setCategoires(response.data.categories);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+		if (!newCourses) {
+			axios
+				.get('/courses?limit=4&sort=-_id')
+				.then((response) => {
+					setNewCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (!bestCourses) {
+			axios
+				.get('/courses?limit=1&averageRating[gte]=4')
+				.then((response) => {
+					setBestCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (!instructors) {
+			axios
+				.get('/users?role=instructor')
+				.then((response) => {
+					setInstructors(response.data.users);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, []);
+	console.log(newCourses);
 	return (
 		<>
 			<NavigationBar theme='light' />
 			<div className=' space-y-24'>
 				<Hero />
-				<Categories />
-				<NewestCourses />
-				<BestReviewedCourses />
-				<Instructors />
+				<Categories categories={categories} />
+				<NewestCourses newCourses={newCourses} />
+				<BestReviewedCourses bestCourses={bestCourses} />
+				<Instructors instructors={instructors} />
 				<Testimonials />
 				<Features />
 				<div style={{ background: '#040453' }}>
