@@ -75,7 +75,7 @@ const Home = () => {
 				<Instructors instructors={instructors} />
 				<Testimonials />
 				<Features />
-				<div style={{ background: '#040453' }}>
+				<div className='bg-blue-900 bg-center bg-cover'>
 					<FooterComponent />
 				</div>
 			</div>

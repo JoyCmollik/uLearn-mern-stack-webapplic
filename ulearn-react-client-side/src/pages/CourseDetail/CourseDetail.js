@@ -60,7 +60,7 @@ const CourseDetail = () => {
 				handleEnrollCourse={handleEnrollCourse}
 				isEnrolling={isEnrolling}
 			/>
-			<Footer style={{ background: '#040453' }}>
+			<Footer className='bg-background1 bg-center bg-cover'>
 				<FooterComponent />
 			</Footer>
 		</div>

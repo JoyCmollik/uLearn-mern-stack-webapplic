@@ -340,7 +340,7 @@ const BecomeContentWriter = () => {
 					</div>
 				</div>
 			</section>
-			<div style={{ background: '#040453' }}>
+			<div className='bg-background1 bg-center bg-cover'>
 				<FooterComponent />
 			</div>
 		</>
