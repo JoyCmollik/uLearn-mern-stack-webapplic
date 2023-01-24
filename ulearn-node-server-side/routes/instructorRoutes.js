@@ -14,11 +14,7 @@ const {
 router
 	.route('/')
 
-	.post(
-		authenticateUser,
-		authorizePermission('admin', 'instructor'),
-		createInstructor
-	);
+	.post(authenticateUser, createInstructor);
 
 router
 	.route('/:id')
