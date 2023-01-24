@@ -1,19 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import CourseCard from './CourseCard';
 
-const BestReviewedCourses = () => {
-	const [bestCourses, setBestCourses] = useState([]);
-	useEffect(() => {
-		axios
-			.get('/courses?limit=1&averageRating[gte]=4')
-			.then((response) => {
-				setBestCourses(response.data.courses);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, []);
+const BestReviewedCourses = ({ bestCourses }) => {
+	console.log(bestCourses);
 	return (
 		<section className=' container mx-auto  '>
 			{/*--------------- title ----------------------- */}

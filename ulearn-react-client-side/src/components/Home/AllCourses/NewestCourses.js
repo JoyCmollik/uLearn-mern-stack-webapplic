@@ -1,20 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import CourseCard from './CourseCard';
 
-const NewestCourses = () => {
-	const [newCourses, setNewCourses] = useState([]);
-	useEffect(() => {
-		axios
-			.get('/courses?limit=4&sort=-_id')
-			.then((response) => {
-				setNewCourses(response.data.courses);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, []);
-
+const NewestCourses = ({ newCourses }) => {
 	return (
 		<section className=' container mx-auto '>
 			{/*--------------- title ----------------------- */}

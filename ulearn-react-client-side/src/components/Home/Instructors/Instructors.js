@@ -60,19 +60,9 @@ import { Link } from 'react-router-dom';
 	},
 ];
  */
-const Instructors = () => {
+const Instructors = ({ instructors }) => {
 	const [value, setValue] = useState(3);
-	const [instructors, setInstructors] = useState([]);
-	useEffect(() => {
-		axios
-			.get('/users?role=instructor')
-			.then((response) => {
-				setInstructors(response.data.users);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, []);
+
 	SwiperCore.use([Autoplay]);
 	return (
 		<section className=' container mx-auto  '>
