@@ -260,7 +260,7 @@ const ContentWriterProfile = () => {
 					onChange={onChange}
 				/>
 			</div>
-			<Footer style={{ background: '#040453' }}>
+			<Footer className='bg-background1 bg-center bg-cover'>
 				<FooterComponent />
 			</Footer>
 		</section>

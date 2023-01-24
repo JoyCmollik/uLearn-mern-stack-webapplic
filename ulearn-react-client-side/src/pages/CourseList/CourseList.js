@@ -29,7 +29,7 @@ const CourseList = () => {
 	const [isFetching, setIsFetching] = useState(true);
 	const [isSearching, setIsSearching] = useState(false);
 	const [searchDropOpen, setSearchDropOpen] = useState(false);
-	const [filters, setFilters] = useState({sort: '-_id'});
+	const [filters, setFilters] = useState({ sort: '-_id' });
 	const [query, setQuery] = useState('');
 	const [currentPage, setCurrentPage] = useState({ page: 1, limit: 2 });
 	const searchRef = useRef('');
@@ -560,7 +560,7 @@ const CourseList = () => {
 					</div>
 				</div>
 			</section>
-			<div style={{ background: '#040453' }}>
+			<div className='bg-background1 bg-center bg-cover'>
 				<FooterComponent />
 			</div>
 		</>

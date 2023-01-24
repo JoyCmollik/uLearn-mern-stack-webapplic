@@ -65,7 +65,7 @@ const CourseDetail = () => {
 				isEnrolling={isEnrolling}
 				setTriggerFetch={setTriggerFetch}
 			/>
-			<Footer style={{ background: '#040453' }}>
+			<Footer className='bg-background1 bg-center bg-cover'>
 				<FooterComponent />
 			</Footer>
 		</div>

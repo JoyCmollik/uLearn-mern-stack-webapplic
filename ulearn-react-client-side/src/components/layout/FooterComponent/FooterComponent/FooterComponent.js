@@ -5,13 +5,11 @@ import {
 	AiFillLinkedin,
 } from 'react-icons/ai';
 import { FaPinterestSquare } from 'react-icons/fa';
-import FooterLink from '../FooterLink/FooterLink';
 import logo from '../../../../images/ULearn_Logo.png';
-import { MdEmail, MdLocationOn } from 'react-icons/md';
-import { HiPhone } from 'react-icons/hi2';
 import { Divider } from 'antd';
+import { SpaceContext } from 'antd/lib/space';
 
-const iconlist = [
+const iconlists = [
 	{ id: 51, icon: <AiFillFacebook className='text-2xl text-white' /> },
 	{ id: 52, icon: <AiFillTwitterSquare className='text-2xl text-white' /> },
 	{ id: 53, icon: <AiFillLinkedin className='text-2xl text-white' /> },
@@ -20,93 +18,71 @@ const iconlist = [
 
 const footerLinks = [
 	{
-		title: 'Company',
-		links: ['About', 'FAQ', 'Blog'],
+		title: 'About Us',
+		desc: 'ULearn is a fully-featured content based management system. This platform helps instructors to create professional education materials and helps students to learn from the best instructors',
+	},
+	{
+		title: 'Additional Links',
+		links: ['Login', 'Register', 'Becomes Instructor'],
+	},
+	{
+		title: 'Similar Business',
+		links: ['Udemy', 'Skillshare', 'Coursera'],
 	},
 
 	{
-		title: 'Support',
-		links: ['Contact', 'Support', 'Courses'],
-	},
-
-	{
-		title: 'Contact Info',
-		email: 'demo@mail.com',
-		phone: '(123-458-987254824185)',
-		location: `45/7 dreem street, albania   
-		 dnobod, USA`,
-		emailIcon: <MdEmail />,
-		locationIcon: <MdLocationOn />,
-		phoneIcon: <HiPhone />,
+		title: 'ULearn',
+		img: logo,
 	},
 ];
 
 const FooterComponent = () => {
 	return (
-		<section className='min-h-full container mx-auto'>
-			<div className='flex flex-row items-center pl-20 py-16 space-x-16'>
-				{/* --------------------- logo and title ------------------------*/}
-				<article className='flex flex-col justify-start items-start space-y-4 '>
-					<article className='flex items-center space-x-2 '>
-						<div className=''>
-							<img src={logo} alt='' />
+		<section className='min-h-full container mx-auto pt-10'>
+			<div className='grid grid-cols-4 items-center justify-center gap-4  space-y-2'>
+				{footerLinks.map((footerlink, index) => {
+					return (
+						<div key={index} className='mx-auto'>
+							<h2 className='text-white text-2xl tracking-wider'>
+								{footerlink?.title}
+							</h2>
+							<p className='text-lg text-white'>
+								{footerlink?.desc}
+							</p>
+							<div className='flex flex-col '>
+								{footerlink?.links?.map((link, index) => (
+									<p
+										key={index}
+										className='text-white text-lg'
+									>
+										{' '}
+										- {link}
+									</p>
+								))}
+							</div>
+							{footerlink?.img && (
+								<img
+									src={footerlink.img}
+									className='w-[120px] object-cover '
+									alt=''
+								/>
+							)}
 						</div>
-						<h2 className='font-bold text-2xl text-light'>
-							ULearn
-						</h2>
-					</article>
-					<article>
-						{/* --------------------- description  ------------------------*/}
-						<p className='text-base text-light'>
-							Mere tranquil existence, that I neglect <br /> my
-							talents. I should be incapable of <br /> drawing a
-							single stroke at the present
-						</p>
-						{/* ---------------------icon list------------------------*/}
-						<div className='flex space-x-2'>
-							{iconlist.map((list) => (
-								<span
-									key={list.id}
-									className='inline-block rounded-full'
-								>
-									{list.icon}
-								</span>
-							))}
-						</div>
-					</article>
-				</article>
-				{/*-----------------------footerLink---------------------------*/}
-				<article className='flex justify-between space-x-44'>
-					{footerLinks.map((footerLink) => (
-						<FooterLink
-							key={footerLink.title}
-							footerLinks={footerLink}
-						/>
-					))}
-				</article>
+					);
+				})}
 			</div>
-			<article className='px-16'>
-				<Divider style={{ background: 'white' }} />
-				<div className='flex flex-row items-center justify-between px-3'>
-					<div>
-						{/*-----------------------brandImg---------------------------*/}
-						<img
-							src='https://lmszai.zainikthemes.com/frontend/assets/img/payment-cards.png'
-							alt=''
-						/>
-					</div>
-					<div className='text-light'>
-						<p>© 2021 LMSZAI. All Rights Reserved.</p>
-					</div>
-					<div>
-						<ul className='flex flex-row space-x-3 font-semibold text-light'>
-							<li>Become Instructor</li>
-							<li>Privacy Policy</li>
-							<li>Cookie Policy</li>
-						</ul>
-					</div>
+			<Divider className='bg-white' />
+			<div className='flex justify-between items-center'>
+				<div className='flex items-center space-x-2'>
+					<img src={logo} alt='' srcset='' />
+					<h2 className='text-lg text-white'>ULearn</h2>
 				</div>
-			</article>
+				<div className='flex'>
+					{iconlists.map((iconlist) => (
+						<span key={iconlist?.id}>{iconlist?.icon}</span>
+					))}
+				</div>
+			</div>
 		</section>
 	);
 };
