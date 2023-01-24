@@ -5,7 +5,7 @@ import {
 	HiAcademicCap,
 	HiCheck,
 	HiCog,
-    HiOutlineInformationCircle,
+	HiOutlineInformationCircle,
 } from 'react-icons/hi2';
 import { message, Steps, Tabs } from 'antd';
 import { HiOutlineClipboardList } from 'react-icons/hi';
@@ -29,14 +29,13 @@ const { Step } = Steps;
 
 // step header
 const StepHeader = ({ title, step, currKey, icon, activeKey }) => {
-
 	return (
 		<div className='flex justify-between items-center space-x-2 '>
 			<div className='p-2 rounded-full flex justify-center items-center bg-light'>
 				{icon}
 			</div>
 			<div className={`${activeKey === currKey ? 'block' : 'hidden'}`}>
-				<p className='m-0 text-font2 text-xs'>Steps {step}/8</p>
+				<p className='m-0 text-font2 text-xs'>Steps {step}/5</p>
 				<h4 className='font-normal m-0 text-font1 '>{title}</h4>
 			</div>
 		</div>
@@ -47,11 +46,7 @@ const EditCourse = () => {
 	const [course, setCourse] = useState(null);
 	const [steps, setSteps] = useState();
 	const [tabActiveKey, setTabActiveKey] = useState('start');
-	const [requirement, setRequirement] = useState([]);
-	const [outcome, setOutcome] = useState([]);
-	const [courseThumb, setCourseThumb] = useState([]);
 	const [tags, setTags] = useState(['course', 'add more']);
-	const [editorContent, setEditorContent] = useState();
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	// third party library states
@@ -74,23 +69,24 @@ const EditCourse = () => {
 
 	const handleUpdateCourse = (newCourseData) => {
 		setIsUpdating(true);
-		axios.patch(`/courses/${courseId}`, newCourseData)
-			.then(response => {
+		axios
+			.patch(`/courses/${courseId}`, newCourseData)
+			.then((response) => {
 				setCourse(response.data.course);
 				message.success('Updated the course successfully!');
 			})
-			.catch(error => {
-				message.error(error.response.data.msg || error.message)
+			.catch((error) => {
+				message.error(error.response.data.msg || error.message);
 			})
 			.finally(() => {
 				setIsUpdating(false);
-			})
+			});
 	};
 
 	// -------------- ON COMPONENT MOUNT REQUESTS - FUNCTIONS --------------
 	useEffect(() => {
 		handleFetchSingleCourse();
-	}, [])
+	}, []);
 	// -------------- COMPONENT FEATURES - FUNCTIONS --------------
 
 	// functionality -> will update steps while tabs are opened
@@ -200,7 +196,7 @@ const EditCourse = () => {
 								isUpdating={isUpdating}
 							/>
 						</Tabs.TabPane>
-						<Tabs.TabPane
+						{/* <Tabs.TabPane
 							tab={
 								<StepHeader
 									title='Pricing'
@@ -217,38 +213,36 @@ const EditCourse = () => {
 								handleUpdateCourse={handleUpdateCourse}
 								isUpdating={isUpdating}
 							/>
-						</Tabs.TabPane>
+						</Tabs.TabPane> */}
 						<Tabs.TabPane
 							tab={
 								<StepHeader
 									title='Media'
 									icon={<MdOutlinePermMedia size={19} />}
+									step='5'
+									currKey='4'
+									activeKey={tabActiveKey}
+								/>
+							}
+							key='4'
+						>
+							<EditMedia
+								course={course}
+								handleUpdateCourse={handleUpdateCourse}
+								isUpdating={isUpdating}
+							/>
+						</Tabs.TabPane>
+						{/* <Tabs.TabPane
+							tab={
+								<StepHeader
+									title='Seo'
+									icon={<RiAdvertisementLine size={19} />}
 									step='6'
 									currKey='5'
 									activeKey={tabActiveKey}
 								/>
 							}
 							key='5'
-						>
-							<EditMedia
-								handleActiveTab={handleActiveTab}
-								control={control}
-								courseThumb={courseThumb}
-								setCourseThumb={setCourseThumb}
-								handleUpdateCourse={handleUpdateCourse}
-							/>
-						</Tabs.TabPane>
-						<Tabs.TabPane
-							tab={
-								<StepHeader
-									title='Seo'
-									icon={<RiAdvertisementLine size={19} />}
-									step='7'
-									currKey='6'
-									activeKey={tabActiveKey}
-								/>
-							}
-							key='6'
 						>
 							<EditSeo
 								handleActiveTab={handleActiveTab}
@@ -257,7 +251,7 @@ const EditCourse = () => {
 								setTags={setTags}
 								handleUpdateCourse={handleUpdateCourse}
 							/>
-						</Tabs.TabPane>
+						</Tabs.TabPane> */}
 					</Tabs>
 				</div>
 			</div>

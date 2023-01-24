@@ -4,17 +4,17 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 
 const ManageProfile = () => {
-	const [userProfile, setUserProfile] = useState();
+	const [userProfile, setUserProfile] = useState(null);
 	const [isFetching, setIsFetching] = useState(true);
 	const { user } = useAuth();
 
 	useEffect(() => {
-		if (!userProfile) {
+		if (!userProfile && user?.userId) {
 			setIsFetching(true);
 			axios
 				.get(`/users/${user?.userId}`)
 				.then((response) => {
-					console.log(response.data.user)
+					setUserProfile(response.data.user);
 				})
 				.catch((error) => {
 					message.error(error.message);
@@ -23,7 +23,7 @@ const ManageProfile = () => {
 					setIsFetching(false);
 				});
 		}
-	}, []);
+	}, [user]);
 
 	return (
 		<div className='bg-white min-h-screen rounded-lg p-4'>
@@ -35,11 +35,13 @@ const ManageProfile = () => {
 					<figure className='h-[125px] w-[125px] bg-white rounded-full flex justify-center items-center -mt-14'>
 						<img
 							className='object-cover h-[118px] w-[118px] rounded-full'
-							src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlkEbvwKY62YZm0I8Ic5Q-S-1hHAi32wjs5Q&usqp=CAU'
+							src={userProfile?.avatarURL}
 							alt='profile'
 						/>
 					</figure>
-					<h2 className='text-2xl font-bold'>Theresa</h2>
+					<h2 className='text-2xl font-bold'>
+						{userProfile?.name.split(' ')[0]}
+					</h2>
 				</div>
 				<button className='border px-8 py-2 text-font2 rounded-lg'>
 					Edit Profile
@@ -56,12 +58,14 @@ const ManageProfile = () => {
 						<div className='space-y-1'>
 							<h5 className='text-gray-400 m-0'>Full Name</h5>
 							<p className='m-0 font-normal text-font1'>
-								Theresa
+								{userProfile?.name}
 							</p>
 						</div>
 						<div className='space-y-1'>
 							<h5 className='text-gray-400 m-0'>Gender</h5>
-							<p className='m-0 font-normal text-font1'>Female</p>
+							<p className='m-0 font-normal text-font1'>
+								{userProfile?.gender}
+							</p>
 						</div>
 					</div>
 				</div>
@@ -73,75 +77,84 @@ const ManageProfile = () => {
 					<div className='grid grid-cols-4 items-center'>
 						<div className='space-y-1'>
 							<h5 className='text-gray-400 m-0'>Phone Number</h5>
-							<p className='m-0 font-normal text-font1'>
-								Theresa
-							</p>
+							<p className='m-0 font-normal text-font1'>NA</p>
 						</div>
 						<div className='space-y-1'>
 							<h5 className='text-gray-400 m-0'>Email</h5>
-							<p className='m-0 font-normal text-font1'>Female</p>
-						</div>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>Website</h5>
-							<p className='m-0 font-normal text-font1'>Female</p>
-						</div>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>Address</h5>
-							<p className='m-0 font-normal text-font1'>Female</p>
-						</div>
-					</div>
-				</div>
-				{/*****--------------Educational Information---------------*****/}
-				<div className='info-container'>
-					<h4 className='text-font1 font-medium text-lg'>
-						Educational Information
-					</h4>
-					<div className='grid grid-cols-4 items-center'>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>
-								Institution Type
-							</h5>
 							<p className='m-0 font-normal text-font1'>
-								University
-							</p>
-						</div>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>
-								Institution Name
-							</h5>
-							<p className='m-0 font-normal text-font1'>
-								University of Oxford
-							</p>
-						</div>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>Degree</h5>
-							<p className='m-0 font-normal text-font1'>
-								Computer Science
+								{userProfile?.email}
 							</p>
 						</div>
 					</div>
 				</div>
-				{/*****--------------Professional Information---------------*****/}
+				{user?.role === 'instructor' && (
+					<>
+						{/*****--------------Educational Information---------------*****/}
+						<div className='info-container'>
+							<h4 className='text-font1 font-medium text-lg'>
+								Educational Information
+							</h4>
+							<div className='grid grid-cols-4 items-center'>
+								<div className='space-y-1'>
+									<h5 className='text-gray-400 m-0'>
+										Institution Name
+									</h5>
+									<p className='m-0 font-normal text-font1'>
+										{
+											userProfile?.instructor
+												?.institutionName
+										}
+									</p>
+								</div>
+								<div className='space-y-1'>
+									<h5 className='text-gray-400 m-0'>
+										Degree
+									</h5>
+									<p className='m-0 font-normal text-font1'>
+										{userProfile?.instructor?.degreeTitle}
+									</p>
+								</div>
+								<div className='space-y-1'>
+									<h5 className='text-gray-400 m-0'>
+										Approx. Graduation
+									</h5>
+									<p className='m-0 font-normal text-font1'>
+										{
+											userProfile?.instructor
+												?.approxPassingYear
+										}
+									</p>
+								</div>
+							</div>
+						</div>
+					</>
+				)}
+				{/*****--------------More Information---------------*****/}
 				<div className='info-container'>
 					<h4 className='text-font1 font-medium text-lg'>
-						Professional Information
+						More Information
 					</h4>
 					<div className='grid grid-cols-4 items-center'>
 						<div className='space-y-1'>
 							<h5 className='text-gray-400 m-0'>Role</h5>
-							<p className='m-0 font-normal text-font1'>CEO</p>
+							<p className='m-0 font-normal text-font1'>
+								{user?.role}
+							</p>
 						</div>
-						<div className='space-y-1'>
-							<h5 className='text-gray-400 m-0'>Skills</h5>
-							<div className='flex items-center space-x-2'>
-								<div className='px-2 py-1 rounded-lg bg-light text-gray-400'>
-									Leadership
-								</div>
-								<div className='px-2 py-1 rounded-lg bg-light text-gray-400'>
-									Management
+						{userProfile?.role === 'instructor' && (
+							<div className='space-y-1'>
+								<h5 className='text-gray-400 m-0'>Skills</h5>
+								<div className='flex items-center space-x-2'>
+									{userProfile?.instructor?.skillSets?.map(
+										(skill) => (
+											<div className='px-2 py-1 rounded-lg bg-light text-gray-400'>
+												{skill}
+											</div>
+										)
+									)}
 								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>

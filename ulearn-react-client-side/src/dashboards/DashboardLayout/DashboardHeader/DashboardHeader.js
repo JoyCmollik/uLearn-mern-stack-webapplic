@@ -4,10 +4,15 @@ import { FiSearch } from 'react-icons/fi';
 import useAuth from '../../../hooks/useAuth';
 import { Dropdown } from 'antd';
 import { Link } from 'react-router-dom';
+import Loading from '../../../components/layout/Loading/Loading';
 
 const DashboardHeader = () => {
 	const { user } = useAuth();
-	const role = user.role === 'instructor' ? 'content-creator' : 'admin';
+	const role = user?.role === 'instructor' ? 'content-creator' : 'admin';
+
+	if(!user) return <div className='h-screen flex justify-center items-center'>
+		<Loading />
+	</div>
 
 	return (
 		<div className='flex justify-between items-center'>
@@ -26,8 +31,8 @@ const DashboardHeader = () => {
 					overlay={
 						<div className='bg-white rounded-lg p-4 w-[270px] h-fit grid grid-cols-1 gap-2 border overflow-y-auto'>
 							{/* ----- conditional dashboard ----- */}
-							{user.role === 'admin' ||
-							user.role === 'instructor' ? (
+							{user?.role === 'admin' ||
+							user?.role === 'instructor' ? (
 								<Link
 									to={`/${role}/dashboard/manage-courses/add`}
 								>
@@ -41,7 +46,7 @@ const DashboardHeader = () => {
 								</Link>
 							) : null}
 							{/* ----- conditional dashboard ----- */}
-							{user.role === 'admin' ? (
+							{user?.role === 'admin' ? (
 								<Link
 									to={`/${role}/dashboard/manage-courses/add`}
 								>

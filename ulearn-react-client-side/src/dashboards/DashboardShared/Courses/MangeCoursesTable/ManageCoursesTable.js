@@ -2,10 +2,10 @@ import React from 'react';
 
 // library components
 import { Popconfirm, Spin, Table, Tag } from 'antd';
-import { TfiMore } from 'react-icons/tfi';
 import { Link } from 'react-router-dom';
 import { MdDeleteOutline, MdModeEditOutline } from 'react-icons/md';
 import { HiCheck, HiOutlineEye } from 'react-icons/hi2';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const ManageCoursesTable = ({
 	courses,
@@ -144,11 +144,16 @@ const ManageCoursesTable = ({
 						cancelText='No'
 					>
 						<button className='text-error p-1 rounded-full border border-error'>
-							{loadingStatus?.isApproving &&
+							{loadingStatus?.isDeleting &&
 							loadingStatus.currCourse === data._id ? (
-								<Spin size='small' />
+								<LoadingOutlined
+									style={{
+										fontSize: 18,
+									}}
+									spin
+								/>
 							) : (
-								<MdDeleteOutline size={16} />
+								<MdDeleteOutline size={18} />
 							)}
 						</button>
 					</Popconfirm>

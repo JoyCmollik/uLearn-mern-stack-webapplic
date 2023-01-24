@@ -83,6 +83,9 @@ UserSchema.virtual('instructor', {
 	ref: 'Instructor',
 	localField: '_id',
 	foreignField: 'user',
+	get: function (instructor) {
+		return instructor ? instructor : false;
+	},
 });
 
 UserSchema.pre('save', async function () {

@@ -3,7 +3,7 @@ import React from 'react';
 const Loading = ({ size }) => {
 	let loadingSize = '170px';
 	if (size === 'medium') {
-		loadingSize = '100px';
+		loadingSize = '70px';
 	} else if (size === 'small') {
 		loadingSize = '25px';
 	}
@@ -12,7 +12,7 @@ const Loading = ({ size }) => {
 			autoplay
 			loop
 			background='transparent'
-			src='https://lottie.host/bc036bb5-0c9f-49f6-8d58-4bba13fafc54/p3jSw9gfoE.json'
+			src='https://assets4.lottiefiles.com/packages/lf20_rV2u164IHk.json'
 			style={{
 				width: loadingSize,
 				height: loadingSize,

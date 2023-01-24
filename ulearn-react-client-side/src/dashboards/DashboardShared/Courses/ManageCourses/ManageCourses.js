@@ -5,12 +5,10 @@ import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
 import CustomSelect from '../../../DashboardLayout/CustomSelect/CustomSelect';
 // icon imports
 import { HiPlus } from 'react-icons/hi2';
-import { Input, message, notification, Space, Spin } from 'antd';
+import { message, notification } from 'antd';
 import ManageCoursesTable from '../MangeCoursesTable/ManageCoursesTable';
 import axios from 'axios';
 import Loading from '../../../../components/layout/Loading/Loading';
-import { BsArrowCounterclockwise } from 'react-icons/bs';
-const { Search } = Input;
 
 const courseStatList = [
 	{
@@ -226,6 +224,7 @@ const ManageCourses = () => {
 			});
 	};
 
+	// functions - to delete a course
 	const handleDeleteCourse = (courseId) => {
 		setLoadingStatus((prevStatus) => {
 			return { ...prevStatus, isDeleting: true, currCourse: courseId };
@@ -343,7 +342,9 @@ const ManageCourses = () => {
 					<div className='space-y-1'>
 						<h5 className='text-font2 font-medium'>Language</h5>
 						<CustomSelect
-							onChange={(value) => handleFilters('language', value)}
+							onChange={(value) =>
+								handleFilters('language', value)
+							}
 							placeholder='select language'
 							options={[
 								{ value: '', label: 'All' },

@@ -10,6 +10,7 @@ import {
 	MdOutlineAdminPanelSettings,
 	MdOutlineManageAccounts,
 	MdPersonAddAlt,
+	MdHome,
 } from 'react-icons/md';
 import { BsWindowDock } from 'react-icons/bs';
 import { TbCertificate } from 'react-icons/tb';
@@ -32,15 +33,15 @@ const PanelHeader = ({ icon, title }) => {
 };
 
 const ContentCreatorSidebar = () => {
-    	const location = useLocation();
-		const [pathname, setPathName] = useState(location.pathname);
+	const location = useLocation();
+	const [pathname, setPathName] = useState(location.pathname);
 
-		useEffect(() => {
-			setPathName(window.location.pathname);
-		}, [location]);
+	useEffect(() => {
+		setPathName(window.location.pathname);
+	}, [location]);
 
-		console.log(pathname);
-  return (
+	console.log(pathname);
+	return (
 		<div className='space-y-10 sticky top-10'>
 			{/*****--------------logo---------------*****/}
 			<div className='logo-container rounded-lg bg-white text-center'>
@@ -56,43 +57,26 @@ const ContentCreatorSidebar = () => {
 				</SideBarLink>
 
 				{/*****--------------Course Links---------------*****/}
-				<CollapsedSideLinksContainer>
-					<Panel
-						header={
-							<PanelHeader
-								icon={<BsWindowDock size={20} />}
-								title='Courses'
-							/>
-						}
-						key='1'
-						style={{ padding: '0 !important' }}
-					>
-						<SideBarLink to='/content-creator/dashboard/manage-courses' end>
-							<FaUsersCog size={20} /> <span>My Courses</span>
-						</SideBarLink>
-						<SideBarLink to='/content-creator/dashboard/manage-courses/add'>
-							<MdPersonAddAlt size={20} />{' '}
-							<span>Add New Courses</span>
-						</SideBarLink>
-						<SideBarLink to='/content-creator/dashboard/manage-courses/coupons'>
-							<MdPersonAddAlt size={20} /> <span>Coupons</span>
-						</SideBarLink>
-					</Panel>
-				</CollapsedSideLinksContainer>
+				<SideBarLink to='/content-creator/dashboard/manage-courses' end>
+					<FaUsersCog size={20} /> <span>My Courses</span>
+				</SideBarLink>
+				<SideBarLink to='/content-creator/dashboard/manage-courses/add'>
+					<MdPersonAddAlt size={20} /> <span>Add New Courses</span>
+				</SideBarLink>
+				{/* <SideBarLink to='/content-creator/dashboard/manage-courses/coupons'>
+					<MdPersonAddAlt size={20} /> <span>Coupons</span>
+				</SideBarLink> */}
 
-				<SideBarLink to='/content-creator/certificate'>
-					<TbCertificate size={20} /> <span>Certificate</span>
-				</SideBarLink>
-				<SideBarLink to='/content-creator/settings'>
-					<AiOutlineSetting size={20} /> <span>Settings</span>
-				</SideBarLink>
-				<SideBarLink to='/admin/dashboard/manage-profile'>
+				<SideBarLink to='/content-creator/dashboard/manage-profile'>
 					<MdOutlineManageAccounts size={20} />{' '}
 					<span>Manage Profile</span>
 				</SideBarLink>
+				<SideBarLink to='/'>
+					<MdHome size={20} /> <span>Go Back Home</span>
+				</SideBarLink>
 			</div>
 		</div>
-  );
-}
+	);
+};
 
-export default ContentCreatorSidebar
+export default ContentCreatorSidebar;

@@ -13,7 +13,13 @@ const columns = [
 		title: 'Profile',
 		dataIndex: 'avatarURL',
 		key: 'avatarURL',
-		render: (img) => <img width={30} src={img} alt='img' />,
+		render: (img) => (
+			<img
+				className='w-10 h-10 rounded-full object-cover'
+				src={img}
+				alt='img'
+			/>
+		),
 	},
 	{
 		title: 'Name',
@@ -29,7 +35,7 @@ const columns = [
 		title: 'joining_time',
 		dataIndex: 'createdAt',
 		key: 'createdAt',
-		render: (createdAt) => <p>{moment(createdAt).fromNow()} </p>,
+		render: (createdAt) => <p>{moment(createdAt).format('LL')} </p>,
 	},
 	{
 		title: 'Action',

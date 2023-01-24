@@ -12,9 +12,11 @@ const CourseDetail = () => {
 	const { courseId } = useParams();
 	const [singleCourse, setSingleCourse] = useState({});
 	const [isEnrolling, setIsEnrolling] = useState(false);
+	const [triggerFetch, setTriggerFetch] = useState(true);
 
 	useEffect(() => {
 		if (courseId) {
+			setTriggerFetch(true);
 			axios
 				.get(`/courses/${courseId}`)
 				.then((response) => {
@@ -23,9 +25,11 @@ const CourseDetail = () => {
 				})
 				.catch((error) => {
 					console.log(error);
-				});
+				}).finally(() => {
+					setTriggerFetch(false);
+				})
 		}
-	}, [courseId]);
+	}, [courseId, triggerFetch]);
 
 	// function - to enrol user to the current course
 	const handleEnrollCourse = (courseId) => {
@@ -59,6 +63,7 @@ const CourseDetail = () => {
 				singleCourse={singleCourse}
 				handleEnrollCourse={handleEnrollCourse}
 				isEnrolling={isEnrolling}
+				setTriggerFetch={setTriggerFetch}
 			/>
 			<Footer style={{ background: '#040453' }}>
 				<FooterComponent />

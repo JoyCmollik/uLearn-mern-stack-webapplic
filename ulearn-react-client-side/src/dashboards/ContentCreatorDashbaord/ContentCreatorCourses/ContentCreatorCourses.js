@@ -1,53 +1,144 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { HiPlus } from 'react-icons/hi';
 import LordIcon from '../../../components/layout/LordIcon/LordIcon';
-import CustomSelect from '../../DashboardLayout/CustomSelect/CustomSelect';
-import { Input, Space } from 'antd';
-import ManageCoursesTable from '../../DashboardShared/Courses/MangeCoursesTable/ManageCoursesTable';
-const { Search } = Input;
-
-const courseStatList = [
-	{
-		icon: (
-			<LordIcon src='https://cdn.lordicon.com/jqeuwnmb.json' size={40} />
-		),
-		value: 14,
-		title: 'Active Courses',
-	},
-	{
-		icon: (
-			<LordIcon src='https://cdn.lordicon.com/kvsszuvz.json' size={40} />
-		),
-		value: 14,
-		title: 'Pending Courses',
-	},
-	{
-		icon: (
-			<LordIcon src='https://cdn.lordicon.com/cmrzxpzz.json' size={40} />
-		),
-		value: 14,
-		title: 'Free Courses',
-	},
-	{
-		icon: (
-			<LordIcon src='https://cdn.lordicon.com/qhviklyi.json' size={40} />
-		),
-		value: 14,
-		title: 'Paid Courses',
-	},
-];
+import ContentCreatorCourse from './ContentCreatorCourse';
+import axios from 'axios';
+import { message, notification } from 'antd';
+import Loading from '../../../components/layout/Loading/Loading';
+import useAuth from '../../../hooks/useAuth';
+import Lottie from '../../../components/layout/Lottie/Lottie';
+import { Link } from 'react-router-dom';
 
 const ContentCreatorCourses = () => {
-  return (
+	const [myCourses, setMyCourses] = useState([]);
+	const [isFetching, setIsFetching] = useState(true);
+	const [loadingStatus, setLoadingStatus] = useState({
+		isDeleting: false,
+	});
+	const { user } = useAuth();
+	// functions - on component mount
+	useEffect(() => {
+		if (!myCourses.length && user?.userId) {
+			setIsFetching(true);
+			axios
+				.get(`/courses?instructor=${user.userId}`)
+				.then((response) => {
+					setMyCourses(response.data.courses);
+				})
+				.catch((error) => {
+					message.error(error.message);
+				})
+				.finally(() => {
+					setIsFetching(false);
+				});
+		}
+	}, [user]);
+
+	const handleDeleteCourse = (courseId) => {
+		setLoadingStatus((prevStatus) => {
+			return { isDeleting: true, currCourse: courseId };
+		});
+		const key = 'deleting';
+		notification.info({
+			key,
+			message: 'Deleting course is ongoing!',
+		});
+
+		axios
+			.delete(`/courses/${courseId}`)
+			.then((response) => {
+				setMyCourses((prevCourses) => {
+					const newCourses = prevCourses.filter(
+						(course) => String(course._id) !== courseId
+					);
+					return newCourses;
+				});
+				notification.success({
+					key,
+					message: 'Success! Course has been deleted.',
+				});
+			})
+			.catch((error) => {
+				message.error(error.message);
+			})
+			.finally(() => {
+				setLoadingStatus((prevStatus) => {
+					return {
+						isDeleting: false,
+						currCourse: null,
+					};
+				});
+			});
+	};
+
+	const courseStatList = [
+		{
+			icon: (
+				<LordIcon
+					src='https://cdn.lordicon.com/jqeuwnmb.json'
+					size={40}
+				/>
+			),
+			value:
+				myCourses?.filter((course) => course.status === 'active')
+					.length || 0,
+			title: 'Active Courses',
+		},
+		{
+			icon: (
+				<LordIcon
+					src='https://cdn.lordicon.com/kvsszuvz.json'
+					size={40}
+				/>
+			),
+			value:
+				myCourses?.filter((course) => course.status === 'pending')
+					.length || 0,
+			title: 'Pending Courses',
+		},
+		{
+			icon: (
+				<LordIcon
+					src='https://cdn.lordicon.com/cmrzxpzz.json'
+					size={40}
+				/>
+			),
+			value:
+				myCourses?.reduce(
+					(accumulator, currentValue) =>
+						currentValue?.currLearners.length + accumulator,
+					0
+				) || 0,
+			title: 'Total Learners',
+		},
+		{
+			icon: (
+				<LordIcon
+					src='https://cdn.lordicon.com/qhviklyi.json'
+					size={40}
+				/>
+			),
+			value:
+				myCourses?.reduce(
+					(accumulator, currentValue) =>
+						currentValue?.numberOfReviews + accumulator,
+					0
+				) || 0,
+			title: 'Reviews Placed',
+		},
+	];
+	return (
 		<div className='space-y-8'>
 			{/*****--------------Courses Header---------------*****/}
 			<div className='flex justify-between items-center'>
 				{/* header */}
 				<h4 className='text-xl font-medium'>Courses</h4>
 				{/* add new course */}
-				<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
-					<HiPlus size={20} /> <span>Add New Course</span>
-				</button>
+				<Link to='add'>
+					<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
+						<HiPlus size={20} /> <span>Add New Course</span>
+					</button>
+				</Link>
 			</div>
 			{/*****--------------Course Stats---------------*****/}
 			<div className='grid grid-cols-4 gap-4'>
@@ -65,57 +156,44 @@ const ContentCreatorCourses = () => {
 				))}
 			</div>
 			{/*****--------------Course List---------------*****/}
-			<div className='space-y-8'>
+			<div className='space-y-4'>
 				<h4 className='font-medium uppercase'>Course list</h4>
 				{/*****--------------Course List -> Filter Options---------------*****/}
-				<div className='course-list-option-container grid grid-cols-5 gap-4'>
-					{/*****--------------Filter Options -> Option---------------*****/}
-					<div className='space-y-1'>
-						<h5 className='text-font2 font-medium'>Categories</h5>
-						<CustomSelect placeholder='select a category' />
-					</div>
-					<div className='space-y-1'>
-						<h5 className='text-font2 font-medium'>Status</h5>
-						<CustomSelect placeholder='select status' />
-					</div>
-					<div className='space-y-1'>
-						<h5 className='text-font2 font-medium'>Price</h5>
-						<CustomSelect placeholder='select price' />
-					</div>
-					<button className='px-4 h-[40px] rounded-lg bg-secondary text-white self-end'>
-						Filter
-					</button>
-				</div>
-			</div>
-			{/*****--------------Courses Table---------------*****/}
-			<div className='space-y-8'>
-				{/*****--------------Search && Show Entries ---------------*****/}
-				<div className='flex justify-between items-center'>
-					<div className='flex items-center space-x-2'>
-						<span>Show</span>
-						<span>
-							<CustomSelect defaultValue='25' />
-						</span>
-						<span>entries</span>
-					</div>
-					<Search
-						placeholder='input search text'
-						// onSearch={onSearch}
-						enterButton
-						size='large'
-						style={{
-							width: '25%',
-						}}
-					/>
-				</div>
-
-				{/*****--------------Courses Table---------------*****/}
-				<div className=''>
-					<ManageCoursesTable />
+				<div className='py-4'>
+					{isFetching ? (
+						<div className='h-[10vh] flex justify-center items-center'>
+							<Loading />
+						</div>
+					) : (
+						<div>
+							{!Boolean(myCourses.length) && (
+								<div className='p-4 flex justify-center items-center'>
+									<Lottie
+										src='https://assets10.lottiefiles.com/private_files/lf30_e3pteeho.json'
+										size={{ width: 400, height: 400 }}
+									/>
+								</div>
+							)}
+							{Boolean(myCourses.length) && (
+								<div className='space-y-4'>
+									{myCourses.map((courseItem) => (
+										<ContentCreatorCourse
+											key={courseItem._id}
+											courseItem={courseItem}
+											handleDeleteCourse={
+												handleDeleteCourse
+											}
+											loadingStatus={loadingStatus}
+										/>
+									))}
+								</div>
+							)}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
-  );
-}
+	);
+};
 
-export default ContentCreatorCourses
+export default ContentCreatorCourses;

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 // library components
-import { Table, Input, Spin } from 'antd';
+import { Table, Input, Spin, Tag, Popconfirm } from 'antd';
 import { TfiMore } from 'react-icons/tfi';
 import CustomSelect from '../../../DashboardLayout/CustomSelect/CustomSelect';
 import axios from 'axios';
 import Loading from '../../../../components/layout/Loading/Loading';
+import { HiCheck } from 'react-icons/hi2';
+import { MdDeleteOutline } from 'react-icons/md';
 const { Search } = Input;
 
 const columns = [
@@ -13,7 +15,13 @@ const columns = [
 		title: 'Profile',
 		dataIndex: 'avatarURL',
 		key: 'avatarURL',
-		render: (img) => <img width={30} src={img} alt='img' />,
+		render: (img) => (
+			<img
+				className='w-10 h-10 rounded-full object-cover'
+				src={img}
+				alt='img'
+			/>
+		),
 	},
 	{
 		title: 'Name',
@@ -26,18 +34,62 @@ const columns = [
 		key: 'email',
 	},
 	{
-		title: 'joining_time',
+		title: 'Joined On',
 		dataIndex: 'createdAt',
 		key: 'createdAt',
-		render: (createdAt) => <p>{moment(createdAt).fromNow()} </p>,
+		render: (createdAt) => <p>{moment(createdAt).format('LL')} </p>,
+	},
+	{
+		title: 'Status',
+		dataIndex: 'isVerified',
+		key: 'isVerified',
+		render: (isVerified) => (
+			<Tag color={isVerified ? 'green' : 'red'}>
+				{isVerified ? 'Verified' : 'Not Verified'}{' '}
+			</Tag>
+		),
 	},
 	{
 		title: 'Action',
 		key: 'action',
-		render: () => (
-			<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
-				<TfiMore size={18} />
-			</button>
+		dataIndex: '_id',
+		render: (_id, data) => (
+			<div className='flex items-center space-x-2 text-font2'>
+				<button
+					// onClick={() => handleApproveCourse(data)}
+					className='text-green-400 p-1 rounded-full border border-green-400'
+					// disabled={loadingStatus?.isApproving}
+				>
+					{/* {loadingStatus?.isApproving &&
+				loadingStatus.currCourse === data._id ? (
+					<Spin size='small' />
+				) : (
+					<HiCheck size={16} />
+				)} */}
+					<HiCheck size={16} />
+				</button>
+				<Popconfirm
+					title='Are you sure to delete this course?'
+					// onConfirm={() => handleDeleteCourse(data._id)}
+					okText='Yes'
+					cancelText='No'
+				>
+					<button className='text-error p-1 rounded-full border border-error'>
+						{/* {loadingStatus?.isDeleting &&
+						loadingStatus.currCourse === data._id ? (
+							<LoadingOutlined
+								style={{
+									fontSize: 18,
+								}}
+								spin
+							/>
+						) : (
+							<MdDeleteOutline size={18} />
+						)} */}
+						<MdDeleteOutline size={18} />
+					</button>
+				</Popconfirm>
+			</div>
 		),
 	},
 ];

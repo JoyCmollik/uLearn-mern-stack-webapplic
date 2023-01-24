@@ -1,9 +1,9 @@
 import React from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import moment from 'moment';
 import { MdDeleteOutline } from 'react-icons/md';
 import useAuth from '../../../../hooks/useAuth';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const parse = require('html-react-parser');
 

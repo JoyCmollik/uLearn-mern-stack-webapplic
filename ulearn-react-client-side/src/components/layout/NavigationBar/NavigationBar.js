@@ -109,8 +109,12 @@ const NavigationBar = () => {
 						</div>
 
 						<div className='items-center space-x-4 justify-end pr-2 hidden md:flex '>
+							{user && user.role === 'user' ? (
+								<button className='px-4 py-2 text-primary border border-primary font-medium drop-shadow rounded-lg'>
+									Become Content Creator
+								</button>
+							) : null}
 							{/*-------------------avatar------------------------------*/}
-
 							<div className=''>
 								{user ? (
 									<Dropdown overlay={menu} className='ml-3'>
@@ -137,7 +141,7 @@ const NavigationBar = () => {
 											Login
 										</Link>
 										<Link
-											to='/auth'
+											to='/auth/register/learner'
 											className='text-black text-base ml-3 hover:text-blue-600'
 										>
 											Register

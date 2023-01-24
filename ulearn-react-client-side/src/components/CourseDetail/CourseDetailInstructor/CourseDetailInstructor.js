@@ -7,17 +7,17 @@ import { TbCertificate2, TbSchool } from 'react-icons/tb';
 
 const CourseDetailInstructor = ({ instructor }) => {
 	const [user, setUser] = useState({});
-	useEffect(() => {
-		axios
-			.get(`/users/${instructor}`)
-			.then((response) => {
-				console.log(response.data.user);
-				setUser(response.data.user);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+	// useEffect(() => {
+	// 	axios
+	// 		.get(`/users/${instructor}`)
+	// 		.then((response) => {
+	// 			console.log(response.data.user);
+	// 			setUser(response.data.user);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// }, []);
 	return (
 		<div className='p-10'>
 			<h4 className='text-[21px] text-primary font-semibold capitalize'>

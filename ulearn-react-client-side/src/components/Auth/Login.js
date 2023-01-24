@@ -1,11 +1,14 @@
+import { Spin } from 'antd';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import useAuthentication from '../../hooks/useAuthentication';
+import useFramerMotion from '../../hooks/useFramerMotion';
 import authImg from '../../images/auth_vector.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Login = () => {
-	const { handleLogin } = useAuth();
+	const { loading, handleLogin } = useAuth();
+	const { containerVariants } = useFramerMotion();
 	const navigate = useNavigate();
 	const [person, setPerson] = useState({
 		email: '',
@@ -35,7 +38,7 @@ const Login = () => {
 	return (
 		<div className='grid grid-cols-12 min-h-screen'>
 			{/* left side of the page */}
-			<div className='col-span-5 bg-primary p-10 flex flex-col justify-between'>
+			<div className='col-span-5 bg-primary p-10 flex flex-col justify-between z-40'>
 				<div className='space-y-[48px]'>
 					{/* logo */}
 					<h2 className='font-semibold text-2xl'>
@@ -53,7 +56,13 @@ const Login = () => {
 			</div>
 			{/* right side of the page */}
 			<div className='col-span-7 p-10 flex justify-center items-center'>
-				<div className='w-7/12 space-y-8'>
+				<motion.div
+					initial='hidden'
+					animate='visible'
+					variants={containerVariants}
+					key='login'
+					className='w-7/12 space-y-8'
+				>
 					{/* title */}
 					<div className='space-y-2'>
 						<h4 className='text-2xl font-medium'>Sign In</h4>
@@ -108,13 +117,14 @@ const Login = () => {
 						</Link>
 						{/* submit button */}
 						<button
-							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
+							className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg disabled:bg-opacity-10'
 							type='submit'
+							disabled={loading}
 						>
-							Sign In
+							{loading ? <Spin size='middle' /> : 'Sign In'}
 						</button>
 					</form>
-				</div>
+				</motion.div>
 			</div>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -18,8 +18,12 @@ const useAuthentication = () => {
 			.post('/auth/register', data)
 			.then((response) => {
 				setRegisterMsg(response.data.msg);
-
 				console.log(response.data.msg);
+				notification.success({
+					message: 'You have been registered successfully!',
+					description:
+						'Please verify your email address from your gmail and login again.',
+				});
 			})
 			.catch((error) => {
 				console.log(error);
@@ -49,10 +53,14 @@ const useAuthentication = () => {
 				console.log(response.data.user);
 				navigate('/');
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error);
+				notification.error({
+					message: error.response.data.msg || error.message,
+				});
+			}).finally(() => {
+					setLoading(false);
 			});
-		setLoading(false);
 		/* try {
 			const response = await client.post('/auth/login', data);
 			setUser(response.data.user);
@@ -74,8 +82,10 @@ const useAuthentication = () => {
 			})
 			.catch((err) => {
 				console.log(err);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
-		setLoading(false);
 		/* 	try {
 			const response = await client.get('auth/logout');
 			setUser(() => null);
@@ -98,8 +108,10 @@ const useAuthentication = () => {
 			})
 			.catch((err) => {
 				console.log(err);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
-		setLoading(false);
 	};
 	const handleResetPassword = (data, navigate) => {
 		setLoading(true);
@@ -112,8 +124,10 @@ const useAuthentication = () => {
 			})
 			.catch((err) => {
 				console.log(err);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
-		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -142,6 +156,7 @@ const useAuthentication = () => {
 		handleRegister,
 		handleLogin,
 		registerMsg,
+		setRegisterMsg,
 		handleLogout,
 		handleForgotPassword,
 		loading,

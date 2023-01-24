@@ -21,7 +21,7 @@ const CourseSchema = new mongoose.Schema(
 		status: {
 			type: String,
 			enum: ['active', 'inactive', 'pending', 'rejected'],
-			default: 'pending'
+			default: 'pending',
 		},
 		category: {
 			type: {
@@ -69,7 +69,17 @@ const CourseSchema = new mongoose.Schema(
 			min: 0,
 			max: 5,
 		},
-		numberOfReviews: Number,
+		numberOfReviews: {
+			type: Number,
+			default: 0,
+		}, 
+		ratingCount: {
+			1: Number,
+			2: Number,
+			3: Number,
+			4: Number,
+			5: Number,
+		},
 		courseRequirements: {
 			type: [String],
 			required: [true, 'please provide course requirements'],
@@ -112,8 +122,13 @@ CourseSchema.virtual('reviews', {
 */
 CourseSchema.pre('remove', async function (next) {
 	await this.model('Review').deleteMany({ course: this._id });
+	// await this.model('Section').deleteMany({ course: this._id });
+	// await this.model('Review').deleteMany({ course: this._id });
+	// add course property in Section, Lesson Schema
 	console.log('deleted reviews');
-	// next();
+	// next(); 
+	// delete all topics associated with this course
+	// delete all sections + lessons -> associated with this course
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

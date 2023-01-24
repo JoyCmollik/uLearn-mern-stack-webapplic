@@ -35,6 +35,7 @@ const CourseDetailTabs = ({
 	singleCourse,
 	handleEnrollCourse,
 	isEnrolling,
+	setTriggerFetch,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { user } = useAuth();
@@ -227,6 +228,7 @@ const CourseDetailTabs = ({
 									<div>
 										<CourseDetailReview
 											singleCourse={singleCourse}
+											setTriggerFetch={setTriggerFetch}
 										/>
 									</div>
 								),

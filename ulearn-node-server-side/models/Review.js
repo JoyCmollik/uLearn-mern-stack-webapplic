@@ -37,7 +37,7 @@ ReviewSchema.statics.calculateAverageRating = async function (courseId) {
 		},
 		{
 			$group: {
-				_id: null,
+				_id: '$rating',
 				averageRating: {
 					$avg: '$rating',
 				},
@@ -50,17 +50,39 @@ ReviewSchema.statics.calculateAverageRating = async function (courseId) {
 	console.log(result);
 	try {
 		const averageRating = Math.ceil(result[0]?.averageRating || '0');
+		const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+		result.map(({ _id, numOfReviews }) => {
+			ratingCount[_id] = numOfReviews;
+		});
 		await this.model('Course').findOneAndUpdate(
 			{ _id: courseId },
 			{
 				averageRating: String(averageRating),
-				numOfReviews: result[0]?.numOfReviews || 0,
+				numberOfReviews: result.length,
+				ratingCount,
 			}
 		);
 	} catch (error) {
 		console.log(error);
 	}
 };
+// [
+//     {
+//         $facet: {
+//             totalReviews: [
+//                 { $count: "count" }
+//             ],
+//             ratingDistribution: [
+//                 {
+//                     $group: {
+//                         _id: "$rating",
+//                         count: { $sum: 1 }
+//                     }
+//                 }
+//             ]
+//         }
+//     }
+// ]
 ReviewSchema.post('save', async function () {
 	await this.constructor.calculateAverageRating(this.course);
 });

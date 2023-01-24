@@ -2,46 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Rate, Progress, Menu, message, Spin } from 'antd';
 import './CourseDetailReview.css';
 import axios from 'axios';
-import { Dropdown, Space } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
-import useAuthentication from '../../../hooks/useAuthentication';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
 import Loading from '../../layout/Loading/Loading';
-const progressBarReviews = [
-	{
-		id: 23,
-		reviews: 5,
-		progress: 5,
-		percent: 100,
-	},
-	{
-		id: 24,
-		reviews: 4,
-		progress: 4,
-		percent: 80,
-	},
-	{
-		id: 25,
-		reviews: 4,
-		progress: 3,
-		percent: 70,
-	},
-	{
-		id: 26,
-		reviews: 2,
-		progress: 2,
-		percent: 60,
-	},
-	{
-		id: 27,
-		reviews: 1,
-		progress: 1,
-		percent: 20,
-	},
-];
+import useAuth from '../../../hooks/useAuth';
 
-const CourseDetailReview = ({ singleCourse }) => {
-	const { user } = useAuthentication();
+const CourseDetailReview = ({ singleCourse, setTriggerFetch }) => {
+	const { user } = useAuth();
 	const [comment, setComment] = useState('');
 	const [updateComment, setUpdateComment] = useState('');
 	const [reviews, setReviews] = useState([]);
@@ -49,7 +14,6 @@ const CourseDetailReview = ({ singleCourse }) => {
 	const [updateValue, setUpdateValue] = useState(value);
 	const [loading, setLoading] = useState(false);
 	const [isDelete, setIsDelete] = useState(false);
-	const [triggerFetch, setTriggerFetch] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
 	//creating reviews
 	const handleSubmit = (e) => {
@@ -81,23 +45,10 @@ const CourseDetailReview = ({ singleCourse }) => {
 	};
 	//get single course
 	useEffect(() => {
-		if (triggerFetch) {
-			setLoading(true);
-			axios
-				.get(`/courses/${singleCourse._id}`)
-				.then((response) => {
-					//	console.log(response.data.course.reviews);
-					setReviews(response.data.course.reviews);
-					setTriggerFetch(false);
-				})
-				.catch((err) => {
-					console.log(err);
-				})
-				.finally(() => {
-					setLoading(false);
-				});
+		if (singleCourse) {
+			setReviews(singleCourse.reviews);
 		}
-	}, [triggerFetch]);
+	}, [singleCourse]);
 	//review update
 	const handleUpdateReview = (userId, reviewId) => {
 		//setIsEdit(true);
@@ -154,29 +105,83 @@ const CourseDetailReview = ({ singleCourse }) => {
 		}
 	};
 
+	const progressBarReviews = [
+		{
+			id: 0,
+			progress: singleCourse?.ratingCount
+				? singleCourse?.ratingCount[5]
+				: 0,
+			rating: 5,
+			percent: singleCourse?.ratingCount
+				? (Number(singleCourse?.ratingCount[5]) * 10) / 100
+				: 0,
+		},
+		{
+			id: 1,
+			progress: singleCourse?.ratingCount
+				? singleCourse?.ratingCount[4]
+				: 0,
+			rating: 4,
+			percent: singleCourse?.ratingCount
+				? (Number(singleCourse?.ratingCount[4]) * 100) / 10
+				: 0,
+		},
+		{
+			id: 2,
+			progress: singleCourse?.ratingCount
+				? singleCourse?.ratingCount[3]
+				: 0,
+			rating: 3,
+			percent: singleCourse?.ratingCount
+				? (Number(singleCourse?.ratingCount[3]) * 100) / 10
+				: 0,
+		},
+		{
+			id: 3,
+			progress: singleCourse?.ratingCount
+				? singleCourse?.ratingCount[2]
+				: 0,
+			rating: 2,
+			percent: singleCourse?.ratingCount
+				? (Number(singleCourse?.ratingCount[2]) * 100) / 10
+				: 0,
+		},
+		{
+			id: 4,
+			progress: singleCourse?.ratingCount
+				? singleCourse?.ratingCount[1]
+				: 0,
+			rating: 1,
+			percent: singleCourse?.ratingCount
+				? (Number(singleCourse?.ratingCount[1]) * 100) / 10
+				: 0,
+		},
+	];
+
 	return (
 		<section className='p-10'>
 			<div className='grid grid-cols-12'>
 				<div className='col-span-4'>
 					<span className='block text-[41px] text-[#040453] font-semibold '>
-						5.0
+						{singleCourse?.averageRating}
 					</span>
 					<span>
 						<Rate
 							disabled
-							defaultValue={5}
+							defaultValue={singleCourse?.averageRating}
 							style={{
 								fontSize: '13px',
 							}}
 						/>
 					</span>
-					<span className='block text-base pt-1'>1 Reviews</span>
+					<span className='block text-base pt-1'>
+						{singleCourse?.numberOfReviews} Reviews
+					</span>
 				</div>
 				{/* -------------------progress bar----------------------- */}
 				<div className='col-span-8 flex flex-col'>
 					{progressBarReviews.map((progressValue) => {
-						const { id, reviews, progress, percent } =
-							progressValue;
+						const { id, rating, progress, percent } = progressValue;
 						return (
 							<div
 								key={id}
@@ -184,9 +189,9 @@ const CourseDetailReview = ({ singleCourse }) => {
 							>
 								{' '}
 								<span className='block text-base  text-[#040453] font-semibold '>
-									{reviews}
+									{rating}
 								</span>
-								<Rate defaultValue={reviews} />
+								<Rate defaultValue={Number(rating)} disabled />
 								<Progress
 									className='course-review-progress-inner-color course-review-progress-outer-color'
 									percent={percent}

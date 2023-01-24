@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import AuthRoles from '../../components/Auth/AuthRoles';
@@ -12,7 +13,9 @@ const Auth = () => {
 				<Route path='login' element={<Login />} />
 				<Route path='register/:role' element={<Register />} />
 			</Routes>
-			<Outlet />
+			<AnimatePresence>
+				<Outlet />
+			</AnimatePresence>
 		</>
 	);
 };
