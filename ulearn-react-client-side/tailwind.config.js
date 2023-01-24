@@ -10,8 +10,10 @@ module.exports = {
 					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/cool-background1.png')",
 				bgContent:
 					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/bg-content.png')",
-				background2: "url('/src/images/cool-background2.png')",
+				background2:
+					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/cool-background2.png')",
 				backInstructor: "url('/src/images/become-instructor.jpg')",
+				myCourseBackImag: "url('/src/images/my-courses.png')",
 			},
 			colors: {
 				primary: '#1F53F3',

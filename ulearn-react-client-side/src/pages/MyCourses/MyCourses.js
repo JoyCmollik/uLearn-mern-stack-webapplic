@@ -7,14 +7,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Loading from '../../components/layout/Loading/Loading';
 import BreadcrumbComponents from '../../components/CourseList/Banner/BreadcrumbComponent/BreadcrumbComponents';
+import Lottie from '../../components/layout/Lottie/Lottie';
 
 const MyCourses = () => {
-	const [myCourseList, setMyCourseList] = useState([]);
+	const [myCourseList, setMyCourseList] = useState(null);
 	const [isFetching, setIsFetching] = useState(true);
 	const [isEnrolling, setIsEnrolling] = useState(false);
 
 	useEffect(() => {
-		setIsFetching(true);
 		axios
 			.get('/courses/users')
 			.then((response) => {
@@ -71,81 +71,84 @@ const MyCourses = () => {
 					style={{ minHeight: 'calc(75vh - 81px)' }}
 				>
 					{/* container */}
-					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 h-full'>
+					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 drop-shadow h-full'>
 						{/* ---------- My Courses Nav ---------- */}
-						<div className='col-span-4 border rounded-lg p-4 space-y-4'>
-							<div className='px-4 py-2 rounded-lg border bg-white'>
-								My Courses
-							</div>
-							<div className='p-4 bg-white rounded-lg'>
-								{/* <img
-									className='w-full h-[250px] object-fit'
-									src={courseImage}
-									alt='course-imgs'
-								/> */}
-								<lottie-player
-									autoplay
-									loop
-									background='white'
-									src='https://assets5.lottiefiles.com/packages/lf20_tb15abek.json'
-									style={{ width: '100%', height: '350px' }}
-								/>
-							</div>
-						</div>
+						<div className='col-span-4 rounded-lg space-y-4 bg-myCourseBackImag bg-cover bg-center bg-no-repeat' />
 						{/* ---------- My Courses List ---------- */}
 						<div className='col-span-8 p-4 space-y-4'>
 							<h4 className='text-xl font-medium'>My Courses</h4>
 							<hr />
 							<div className='grid grid-cols-3 gap-4 justify-between'>
-								{!myCourseList.length ? (
+								{isFetching && !myCourseList ? (
 									<div className='col-span-3 flex justify-center items-center'>
 										<Loading />
 									</div>
 								) : (
-									myCourseList.map((course) => {
-										return (
-											<>
-												{/* course */}
-												<article className='relative p-4 border rounded-lg flex flex-col justify-between space-y-2'>
-													<img
-														className='w-full h-[250px] rounded-lg border object-fit'
-														src={course.courseThumb}
-														alt='course-load'
-													/>
-													{/* course - body */}
-													<div>
-														<h5 className='text-lg'>
-															{course.courseTitle}
-														</h5>
-													</div>
-													{/* button */}
-													<Link
-														to={`/course-content/${course._id}`}
-													>
-														<button className='inline-block w-full py-2 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'>
-															Go To Content Page
-														</button>
-													</Link>
-													<Popconfirm
-														onConfirm={() =>
-															handleUnenrollCourse(
-																course._id
-															)
-														}
-														title='Are you sure？'
-														okText='Yes'
-														cancelText='No'
-													>
-														<button className='absolute top-1 right-1 p-0.5 text-error rounded-lg border border-error'>
-															<MdDeleteOutline
-																size={17}
+									<>
+										{!Boolean(myCourseList) && (
+											<div className='col-span-3 p-4 flex justify-center items-center'>
+												<Lottie
+													src='https://assets10.lottiefiles.com/private_files/lf30_e3pteeho.json'
+													size={{
+														width: 400,
+														height: 400,
+													}}
+												/>
+											</div>
+										)}
+										{Boolean(myCourseList) &&
+											myCourseList.map((course) => {
+												return (
+													<>
+														{/* course */}
+														<article className='relative p-4 border rounded-lg flex flex-col justify-between space-y-2'>
+															<img
+																className='w-full h-[250px] rounded-lg border object-fit'
+																src={
+																	course.courseThumb
+																}
+																alt='course-load'
 															/>
-														</button>
-													</Popconfirm>
-												</article>
-											</>
-										);
-									})
+															{/* course - body */}
+															<div>
+																<h5 className='text-lg'>
+																	{
+																		course.courseTitle
+																	}
+																</h5>
+															</div>
+															{/* button */}
+															<Link
+																to={`/course-content/${course._id}`}
+															>
+																<button className='inline-block w-full py-2 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'>
+																	Go To
+																	Content Page
+																</button>
+															</Link>
+															<Popconfirm
+																onConfirm={() =>
+																	handleUnenrollCourse(
+																		course._id
+																	)
+																}
+																title='Are you sure？'
+																okText='Yes'
+																cancelText='No'
+															>
+																<button className='absolute top-1 right-1 p-0.5 text-error rounded-lg border border-error'>
+																	<MdDeleteOutline
+																		size={
+																			17
+																		}
+																	/>
+																</button>
+															</Popconfirm>
+														</article>
+													</>
+												);
+											})}
+									</>
 								)}
 							</div>
 						</div>

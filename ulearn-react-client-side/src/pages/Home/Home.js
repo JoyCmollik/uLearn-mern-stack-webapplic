@@ -23,7 +23,7 @@ const Home = () => {
 	useEffect(() => {
 		if (!categories) {
 			axios
-				.get('/categories')
+				.get('/categories?limit=6&sort=_id')
 				.then((response) => {
 					//console.log(response.data.categories);
 					setCategoires(response.data.categories);

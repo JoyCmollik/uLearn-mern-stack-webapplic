@@ -23,7 +23,7 @@ const Categories = ({ categories }) => {
 								<div></div>
 							</div>
 							<p className='-mt-3 border  rounded-2xl mx-auto text-center text-lg py-2 px-6 bg-white inline-block capitalize hover:bg-primary hover:text-white hover:border-primary'>
-								1 Course
+								{item?.courses?.length} Course
 							</p>
 							<h2 className='text-xl text-center tracking-wider capitalize'>
 								{' '}

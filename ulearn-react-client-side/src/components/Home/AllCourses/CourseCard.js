@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BiTimeFive, BiNotepad } from 'react-icons/bi';
+import { BiNotepad } from 'react-icons/bi';
 import { Avatar, Divider, Rate } from 'antd';
 import { TbExternalLink } from 'react-icons/tb';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { HiOutlinePencil } from 'react-icons/hi2';
 const CourseCard = (props) => {
 	const navigate = useNavigate();
 	const handleDetailPage = (id) => {
@@ -13,7 +13,7 @@ const CourseCard = (props) => {
 		courseTitle,
 		instructor,
 		courseThumb,
-		lecture,
+		currLearners,
 		level,
 		averageRating,
 		sections,
@@ -32,7 +32,7 @@ const CourseCard = (props) => {
 				/>
 			</div>
 			<div className='px-5 py-3'>
-				<p className='text-xs text-left capitalize bg-primary text-white w-16 py-1 px-2 rounded-md'>
+				<p className='inline-block text-xs text-left capitalize border border-primary text-primary py-1 px-2 rounded-md'>
 					{level}
 				</p>
 				<h2 className='card-title text-base font-semibold text-dark'>
@@ -53,7 +53,12 @@ const CourseCard = (props) => {
 				</span>
 				{/*------------------------- avatar-------------------- */}
 				<div className='flex mt-3 justify-between'>
-					<Avatar src={instructor?.avatarURL} />
+					<div className='flex justify-center items-center space-x-2'>
+						<Avatar src={instructor?.avatarURL} />
+						<h4 className='m-0 font-medium'>
+							{instructor?.name.split(' ')[0]}
+						</h4>
+					</div>
 
 					<button
 						onClick={() => handleDetailPage(_id)}
@@ -66,12 +71,12 @@ const CourseCard = (props) => {
 				{/*-------------------------- card footer----------------------- */}
 				<div className='flex justify-between'>
 					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary'>
-						<BiTimeFive />
-						01:10:09 Hours
+						<HiOutlinePencil />
+						{currLearners?.length} Learner
 					</div>
 					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary capitalize'>
 						<BiNotepad />
-						{sections && sections?.length} sections
+						{sections && sections?.length} section
 					</div>
 				</div>
 			</div>
