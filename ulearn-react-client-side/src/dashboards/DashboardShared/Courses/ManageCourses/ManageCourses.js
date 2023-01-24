@@ -72,7 +72,7 @@ const ManageCourses = () => {
 		if (!courses) {
 			setIsFetching(true);
 			axios
-				.get('/courses')
+				.get('/courses?status=all')
 				.then((response) => {
 					setCourses(response.data.courses);
 					setDisplayCourses(response.data.courses);

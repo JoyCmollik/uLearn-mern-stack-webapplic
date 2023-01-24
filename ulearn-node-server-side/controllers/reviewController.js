@@ -46,6 +46,7 @@ const getSingleReview = async (req, res) => {
 	}
 	res.status(StatusCodes.OK).send({ review });
 };
+
 const updateReview = async (req, res) => {
 	const { id: reviewId } = req.params;
 	const { rating, title, comment } = req.body;

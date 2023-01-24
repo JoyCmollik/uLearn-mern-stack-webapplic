@@ -20,6 +20,7 @@ const getAllCategories = async (req, res) => {
 	const categories = await Category.find({})
 		.select(queries.fields)
 		.populate('user', 'name avatarURL')
+		.populate('courses', '_id')
 		.sort('-_id');
 
 	res.status(StatusCodes.OK).send({ categories, count: categories.length });

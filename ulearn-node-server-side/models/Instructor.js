@@ -36,11 +36,6 @@ const InstructorSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'Please provide about you.'],
 		},
-		status: {
-			type: String,
-			enum: ['pending', 'approved'],
-			default: 'pending',
-		},
 	},
 	{ timestamps: true }
 );
