@@ -84,7 +84,7 @@ UserSchema.virtual('instructor', {
 	localField: '_id',
 	foreignField: 'user',
 	get: function (instructor) {
-		return instructor ? instructor : false;
+		return instructor ? instructor : null;
 	},
 });
 

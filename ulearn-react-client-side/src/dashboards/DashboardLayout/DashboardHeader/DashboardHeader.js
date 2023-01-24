@@ -93,7 +93,7 @@ const DashboardHeader = () => {
 							{user?.name}
 						</p>
 						<small className='text-font2 m-0 text-xs capitalize'>
-							{user?.role}
+							{user?.role === 'instructor' ? 'content creator' : user?.role}
 						</small>
 					</div>
 				</button>

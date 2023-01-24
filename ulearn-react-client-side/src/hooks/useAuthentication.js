@@ -1,8 +1,6 @@
-import { message, notification } from 'antd';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import useAxios from './useAxios';
+import { notification } from 'antd';
+import axios from 'axios';
 
 const useAuthentication = () => {
 	const [user, setUser] = useState(null);
@@ -27,7 +25,9 @@ const useAuthentication = () => {
 			})
 			.catch((error) => {
 				console.log(error);
-				message.error(error.response.data.msg || error.message);
+				notification.error({
+					message: error.response.data.msg || error.message,
+				});
 			})
 			.finally(() => {
 				setLoading(false);
@@ -58,8 +58,9 @@ const useAuthentication = () => {
 				notification.error({
 					message: error.response.data.msg || error.message,
 				});
-			}).finally(() => {
-					setLoading(false);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 		/* try {
 			const response = await client.post('/auth/login', data);
@@ -80,8 +81,11 @@ const useAuthentication = () => {
 				console.log(response.msg);
 				navigate('/');
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error);
+				notification.error({
+					message: error.response.data.msg || error.message,
+				});
 			})
 			.finally(() => {
 				setLoading(false);
@@ -106,8 +110,11 @@ const useAuthentication = () => {
 				console.log(response.data.msg);
 				/* navigate('/'); */
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error);
+				notification.error({
+					message: error.response.data.msg || error.message,
+				});
 			})
 			.finally(() => {
 				setLoading(false);
@@ -122,8 +129,11 @@ const useAuthentication = () => {
 				console.log(response.data.msg);
 				navigate('/auth/login');
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error);
+				notification.error({
+					message: error.response.data.msg || error.message,
+				});
 			})
 			.finally(() => {
 				setLoading(false);

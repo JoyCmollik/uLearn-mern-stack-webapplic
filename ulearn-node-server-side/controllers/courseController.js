@@ -62,11 +62,18 @@ const getAllCourses = async (req, res) => {
 		filters.level = req.query.level.split(',');
 	}
 
+	// setting all courses active, if explicitly wanted, will send all
+	if (!req.query.status) {
+		filters.status = 'active';
+	} else if (req.query.status === 'all') {
+		delete filters['status'];
+	}
+
 	// search
 	if (req.query.search) {
 		filters.courseTitle = new RegExp(req.query.search, 'i');
 	}
- 
+
 	// final procedure
 	const courses = await Course.find(filters)
 		.skip(queries.skip)
@@ -132,11 +139,13 @@ const getSingleCourseSections = async (req, res) => {
 	res.status(StatusCodes.OK).json({ course });
 };
 
-const getCourseStats = async ( req, res ) => {
+const getCourseStats = async (req, res) => {
 	const totalCourses = await Course.countDocuments({});
 	const totalLesson = await Lesson.countDocuments({});
 	const totalLearner = await Lesson.countDocuments({ role: 'user' });
-	const totalContentWriters = await Lesson.countDocuments({ role: 'instructor' });
+	const totalContentWriters = await Lesson.countDocuments({
+		role: 'instructor',
+	});
 	const pendingCourses = await Course.countDocuments({ status: 'pending' });
 	const activeCourses = await Course.countDocuments({ status: 'active' });
 
@@ -148,7 +157,7 @@ const getCourseStats = async ( req, res ) => {
 		pendingCourses,
 		activeCourses,
 	});
-}
+};
 
 const updateCourse = async (req, res) => {
 	const { id: courseId } = req.params;
