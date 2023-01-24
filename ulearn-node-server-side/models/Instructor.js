@@ -45,4 +45,18 @@ const InstructorSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+InstructorSchema.post('save', async function () {
+	try {
+		const user = await this.model('User').findOneAndUpdate(
+			{ _id: this.user },
+			{
+				role: 'instructor',
+			}
+		);
+		console.log(user, 'joyc');
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 module.exports = mongoose.model('Instructor', InstructorSchema);
