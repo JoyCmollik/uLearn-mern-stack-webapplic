@@ -110,9 +110,11 @@ const NavigationBar = () => {
 
 						<div className='items-center space-x-4 justify-end pr-2 hidden md:flex '>
 							{user && user.role === 'user' ? (
-								<button className='px-4 py-2 text-primary border border-primary font-medium drop-shadow rounded-lg'>
-									Become Content Creator
-								</button>
+								<Link to='/become-content-creator'>
+									<button className='px-4 py-2 text-primary border-2 border-primary font-medium drop-shadow rounded-lg'>
+										Become Content Creator
+									</button>
+								</Link>
 							) : null}
 							{/*-------------------avatar------------------------------*/}
 							<div className=''>
