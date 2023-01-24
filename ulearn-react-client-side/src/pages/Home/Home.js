@@ -75,7 +75,7 @@ const Home = () => {
 				<Instructors instructors={instructors} />
 				<Testimonials />
 				<Features />
-				<div className='bg-background1 bg-center bg-cover'>
+				<div className='bg-background2 bg-center bg-cover'>
 					<FooterComponent />
 				</div>
 			</div>
