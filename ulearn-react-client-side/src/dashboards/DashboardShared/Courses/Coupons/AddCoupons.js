@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, DatePicker, Input, PageHeader } from 'antd';
-import addCategory from '../../../../images/add_category.svg';
+// import addCategory from '../../../../images/add_category.svg';
 
 const AddCoupons = () => {
     const onChange = (date, dateString) => {
@@ -45,11 +45,11 @@ const AddCoupons = () => {
 						</form>
 					</div>
 					<div className='col-span-7'>
-						<img
+						{/* <img
 							className='object-cover w-10/12 mx-auto'
 							src={addCategory}
 							alt='add-category'
-						/>
+						/> */}
 					</div>
 				</div>
 			</PageHeader>
