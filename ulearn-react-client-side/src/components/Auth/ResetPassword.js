@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAuthentication from '../../hooks/useAuthentication';
 
-import authImg from '../../images/auth_vector.svg';
+import authImg from '../../images/auth.png';
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);

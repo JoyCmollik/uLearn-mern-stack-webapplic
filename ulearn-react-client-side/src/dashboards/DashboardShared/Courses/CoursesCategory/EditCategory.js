@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Input, message, PageHeader, Result, Spin, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
-import addCategory from '../../../../images/add_category.svg';
+import addCategory from '../../../../images/add_document.png';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';

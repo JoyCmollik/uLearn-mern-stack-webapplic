@@ -1,30 +1,26 @@
 import React from 'react';
 import AuthNav from '../../components/Auth/AuthNav';
-import learnerImg from '../../images/auth-user.svg';
-import contentImg from '../../images/content_creator.svg';
-import clientImg from '../../images/client.svg';
-import { Link } from 'react-router-dom';
 
-const userRoles = [
-	{
-		title: 'Learner',
-		img: learnerImg,
-		desc: "Experience LearnDash from the learner's perspective.",
-		role: 'learner',
-	},
-	{
-		title: 'Content Creator',
-		img: contentImg,
-		desc: 'Flourish your creativity and talent with your creations by choosing us.',
-		role: 'content-creator',
-	},
-	{
-		title: 'Client',
-		img: clientImg,
-		desc: 'Make your business grow exponentially by our deals.',
-		role: 'client',
-	},
-];
+// const userRoles = [
+// 	{
+// 		title: 'Learner',
+// 		img: learnerImg,
+// 		desc: "Experience LearnDash from the learner's perspective.",
+// 		role: 'learner',
+// 	},
+// 	{
+// 		title: 'Content Creator',
+// 		img: contentImg,
+// 		desc: 'Flourish your creativity and talent with your creations by choosing us.',
+// 		role: 'content-creator',
+// 	},
+// 	{
+// 		title: 'Client',
+// 		img: clientImg,
+// 		desc: 'Make your business grow exponentially by our deals.',
+// 		role: 'client',
+// 	},
+// ];
 
 const AuthRoles = () => {
 	return (
@@ -42,7 +38,7 @@ const AuthRoles = () => {
 				</div>
 				{/* List of role cards */}
 				<div className='grid grid-cols-3 gap-8'>
-					{userRoles.map(({ title, img, desc, role }, roleIdx) => (
+					{/* {userRoles.map(({ title, img, desc, role }, roleIdx) => (
 						<article
 							key={roleIdx}
 							className='border border-gray-200 flex flex-col justify-between'
@@ -65,7 +61,7 @@ const AuthRoles = () => {
 								</Link>
 							</div>
 						</article>
-					))}
+					))} */}
 				</div>
 			</div>
 		</div>

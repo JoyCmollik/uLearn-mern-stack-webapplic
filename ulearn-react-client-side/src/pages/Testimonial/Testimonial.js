@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import authImg from '../../images/auth_vector.svg';
-
 import { message, Rate } from 'antd';
 
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';

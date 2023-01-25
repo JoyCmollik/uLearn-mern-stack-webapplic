@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Input, message, PageHeader, Spin, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
-import addCategory from '../../../../images/add_category.svg';
+import addCategory from '../../../../images/add_document.png';
 import { Controller, useForm } from 'react-hook-form';
 import Loading from '../../../../components/layout/Loading/Loading';
 

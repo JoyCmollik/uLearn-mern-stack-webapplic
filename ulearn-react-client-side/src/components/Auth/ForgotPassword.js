@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthentication from '../../hooks/useAuthentication';
-import useAxios from '../../hooks/useAxios';
-import authImg from '../../images/auth_vector.svg';
+import authImg from '../../images/auth.png';
 
 const ForgotPassword = () => {
 	const { handleForgotPassword, forgotPasswordMsg } = useAuthentication();

@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useFramerMotion from '../../hooks/useFramerMotion';
-import authImg from '../../images/auth_vector.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import Lottie from '../layout/Lottie/Lottie';
 
 const Login = () => {
 	const { loading, handleLogin } = useAuth();
@@ -52,7 +52,12 @@ const Login = () => {
 						and accuracy just for you.
 					</h5>
 				</div>
-				<img className='w-[70%] mx-auto' src={authImg} alt='login' />
+				<div className='flex justify-center items-center'>
+					<Lottie
+						src='https://assets9.lottiefiles.com/packages/lf20_ucbyrun5.json'
+						size={{ width: 450, height: 450 }}
+					/>
+				</div>
 			</div>
 			{/* right side of the page */}
 			<div className='col-span-7 p-10 flex justify-center items-center'>

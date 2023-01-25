@@ -20,7 +20,7 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [tempSectionTitle, setTempSectionTitle] = useState('');
 	const [isFetching, setIsFetching] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
-	const [triggerFetch, setTriggerFetch] = useState(false);
+	const [triggerFetch, setTriggerFetch] = useState(false)
 
 	// -------------- COMPONENT ON MOUNT FETCH --------------
 	useEffect(() => {

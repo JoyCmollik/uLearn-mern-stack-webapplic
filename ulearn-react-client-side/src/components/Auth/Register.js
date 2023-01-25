@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import authImg from '../../images/auth_vector.svg';
 import { message, Spin } from 'antd';
-
 import useAuth from '../../hooks/useAuth';
 import Lottie from '../layout/Lottie/Lottie';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -115,7 +113,12 @@ const Register = () => {
 						and accuracy just for you.
 					</h5>
 				</div>
-				<img className='w-[70%] mx-auto' src={authImg} alt='login' />
+				<div className='flex justify-center items-center'>
+					<Lottie
+						src='https://assets9.lottiefiles.com/packages/lf20_ucbyrun5.json'
+						size={{ width: 450, height: 450 }}
+					/>
+				</div>
 			</div>
 			{/*----------------------------------------right side of the page---------------------------------------------- */}
 
