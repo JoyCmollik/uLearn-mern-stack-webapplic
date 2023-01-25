@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Input, message, PageHeader, Select, Spin } from 'antd';
-import addCategory from '../../../../images/add_user.svg';
+import React, { useState } from 'react';
+import { Button, Input, message, PageHeader, Select } from 'antd';
+import addCategory from '../../../../images/add-user.png';
 import axios from 'axios';
 const AddAdmin = () => {
 	const [loading, setLoading] = useState(false);
