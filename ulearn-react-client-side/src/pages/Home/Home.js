@@ -13,12 +13,14 @@ import Instructors from '../../components/Home/Instructors/Instructors';
 import Testimonials from '../../components/Home/Testimonials/Testimonials';
 import Categories from '../../components/Home/Categories/Categories';
 import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
 
 const Home = () => {
 	const [categories, setCategoires] = useState(null);
 	const [newCourses, setNewCourses] = useState(null);
 	const [bestCourses, setBestCourses] = useState(null);
 	const [instructors, setInstructors] = useState(null);
+	const { user } = useAuth();
 
 	useEffect(() => {
 		if (!categories) {
@@ -52,7 +54,7 @@ const Home = () => {
 					console.log(error);
 				});
 		}
-		if (!instructors) {
+		if (user && !instructors) {
 			axios
 				.get('/users?role=instructor')
 				.then((response) => {
@@ -72,7 +74,7 @@ const Home = () => {
 				<Categories categories={categories} />
 				<NewestCourses newCourses={newCourses} />
 				<BestReviewedCourses bestCourses={bestCourses} />
-				<Instructors instructors={instructors} />
+				{user ? <Instructors instructors={instructors} /> : null}
 				<Testimonials />
 				<Features />
 				<div className='bg-background2 bg-center bg-cover'>

@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import authImg from '../../images/auth_vector.svg';
-import role_learner from '../../images/role_leaner.svg';
-import role_creator from '../../images/role_creator.svg';
-import { Button, message, Result, Space, Spin } from 'antd';
-import { Alert } from 'antd';
-import { Select } from 'antd';
+import { message, Spin } from 'antd';
+
 import useAuth from '../../hooks/useAuth';
 import Lottie from '../layout/Lottie/Lottie';
 import { AnimatePresence, motion } from 'framer-motion';
 import useFramerMotion from '../../hooks/useFramerMotion';
-const userRoles = [
-	{
-		title: 'Learner',
-		img: role_learner,
-		role: 'learner',
-	},
-	{
-		title: 'Content Creator',
-		img: role_creator,
-		role: 'content-creator',
-	},
-];
+
 const onClose = (e) => {
 	console.log(e, 'I was closed.');
 };
@@ -34,9 +20,9 @@ const Register = () => {
 	const [userRole, setUserRole] = useState(role);
 	const { containerVariants } = useFramerMotion();
 	// local functionalities
-	const handleUserRole = (role) => {
-		setUserRole((prevRole) => role);
-	};
+	// const handleUserRole = (role) => {
+	// 	setUserRole((prevRole) => role);
+	// };
 	const options = [
 		{
 			label: 'Male',
