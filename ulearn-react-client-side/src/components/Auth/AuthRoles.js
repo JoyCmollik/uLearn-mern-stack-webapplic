@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthNav from '../../components/Auth/AuthNav';
-import learnerImg from '../../images/learner.svg';
+import learnerImg from '../../images/auth-user.svg';
 import contentImg from '../../images/content_creator.svg';
 import clientImg from '../../images/client.svg';
 import { Link } from 'react-router-dom';
@@ -15,13 +15,13 @@ const userRoles = [
 	{
 		title: 'Content Creator',
 		img: contentImg,
-		desc: "Flourish your creativity and talent with your creations by choosing us.",
+		desc: 'Flourish your creativity and talent with your creations by choosing us.',
 		role: 'content-creator',
 	},
 	{
 		title: 'Client',
 		img: clientImg,
-		desc: "Make your business grow exponentially by our deals.",
+		desc: 'Make your business grow exponentially by our deals.',
 		role: 'client',
 	},
 ];
