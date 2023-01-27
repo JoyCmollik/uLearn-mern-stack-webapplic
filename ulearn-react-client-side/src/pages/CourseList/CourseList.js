@@ -398,7 +398,7 @@ const CourseList = () => {
 												animate='visible'
 												variants={list}
 											>
-												{courseList.courses.map(
+												{courseList?.courses?.map(
 													(course) => {
 														const {
 															courseThumb,
@@ -455,13 +455,13 @@ const CourseList = () => {
 																					45
 																				}
 																				src={
-																					instructor.avatarURL
+																					instructor?.avatarURL
 																				}
 																				alt='avatar'
 																			/>
 																			<h5 className='text-base m-0 text-font2 capitalize'>
 																				{
-																					instructor.name
+																					instructor?.name
 																				}
 																			</h5>
 																		</div>

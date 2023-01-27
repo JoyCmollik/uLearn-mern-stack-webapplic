@@ -6,6 +6,7 @@ import useFramerMotion from '../../hooks/useFramerMotion';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import AuthLeftCol from './AuthLeftCol';
+import { MdOutlineArrowBack } from 'react-icons/md';
 
 const Login = () => {
 	const { loading, handleLogin } = useAuth();
@@ -41,7 +42,17 @@ const Login = () => {
 			{/*---------------------------------------left side of the page---------------------------------------------- */}
 			<AuthLeftCol />
 			{/* right side of the page */}
-			<div className='col-span-7 p-10 flex justify-center items-center'>
+			<div className='col-span-7 p-10 relative flex justify-center items-center'>
+				{/*--------------back---------------------*/}
+				<div className='absolute top-[40px] right-[40px] flex justify-end'>
+					<button
+						onClick={() => navigate('/')}
+						className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center capitalize'
+					>
+						<MdOutlineArrowBack size={20} />{' '}
+						<span>Go back to home page</span>
+					</button>
+				</div>
 				<motion.div
 					initial='hidden'
 					animate='visible'

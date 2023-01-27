@@ -100,6 +100,7 @@ const getSingleCourse = async (req, res) => {
 			path: 'reviews',
 			populate: { path: 'user', select: ['name', 'avatarURL'] },
 		})
+		.populate('instructor', 'name avatarURL')
 		.populate({
 			path: 'sections',
 			select: 'sectionTitle',
@@ -142,8 +143,8 @@ const getSingleCourseSections = async (req, res) => {
 const getCourseStats = async (req, res) => {
 	const totalCourses = await Course.countDocuments({});
 	const totalLesson = await Lesson.countDocuments({});
-	const totalLearner = await Lesson.countDocuments({ role: 'user' });
-	const totalContentWriters = await Lesson.countDocuments({
+	const totalLearner = await User.countDocuments({ role: 'user' });
+	const totalContentWriters = await User.countDocuments({
 		role: 'instructor',
 	});
 	const pendingCourses = await Course.countDocuments({ status: 'pending' });

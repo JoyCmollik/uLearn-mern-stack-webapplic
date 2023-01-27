@@ -21,7 +21,7 @@ const ContentCreatorCourses = () => {
 		if (!myCourses.length && user?.userId) {
 			setIsFetching(true);
 			axios
-				.get(`/courses?instructor=${user.userId}`)
+				.get(`/courses?status=all&instructor=${user.userId}`)
 				.then((response) => {
 					setMyCourses(response.data.courses);
 				})

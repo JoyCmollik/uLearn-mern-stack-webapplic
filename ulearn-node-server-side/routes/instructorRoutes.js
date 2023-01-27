@@ -6,6 +6,8 @@ const {
 } = require('../middleware/authentication');
 
 const {
+	getAllInstructors,
+	getSingleInstructor,
 	createInstructor,
 	updateInstructor,
 	deleteInstructor,
@@ -13,12 +15,12 @@ const {
 
 router
 	.route('/')
-
+	.get(authenticateUser, getAllInstructors)
 	.post(authenticateUser, createInstructor);
 
 router
 	.route('/:id')
-
+	.get(authenticateUser, getSingleInstructor)
 	.patch(
 		authenticateUser,
 		authorizePermission('admin', 'instructor'),

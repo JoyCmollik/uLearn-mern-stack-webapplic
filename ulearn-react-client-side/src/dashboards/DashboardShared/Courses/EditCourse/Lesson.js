@@ -1,16 +1,22 @@
 import React, { useRef, useState } from 'react';
 import { Reorder, useDragControls } from 'framer-motion';
-import { MdDashboard, MdDelete, MdEdit } from 'react-icons/md';
+import { MdDashboard, MdDelete, MdDeleteOutline, MdEdit } from 'react-icons/md';
+import { LoadingOutlined } from '@ant-design/icons';
 import { HiPlus } from 'react-icons/hi2';
 import { BsArrowsMove, BsJournalMedical } from 'react-icons/bs';
 import { TbMinimize } from 'react-icons/tb';
 import { Controller, useForm } from 'react-hook-form';
-import { InputNumber, message, Select, Spin, Tag } from 'antd';
+import { InputNumber, message, Popconfirm, Select, Spin, Tag } from 'antd';
 import axios from 'axios';
 import DashTextEditor from '../../DashTextEditor/DashTextEditor';
 import Loading from '../../../../components/layout/Loading/Loading';
 
-const Lesson = ({ lesson, handleUpdateLesson }) => {
+const Lesson = ({
+	loadingStatus,
+	lesson,
+	handleUpdateLesson,
+	handleDeleteLesson,
+}) => {
 	const editor = useRef('');
 	const [editorContent, setEditorContent] = useState(lesson.lessonContent);
 	const [isEditing, setIsEditing] = useState(false);
@@ -107,12 +113,28 @@ const Lesson = ({ lesson, handleUpdateLesson }) => {
 							<MdEdit size={20} />
 						</button>
 					)}
-					<button className='p-2 border-[0.5px] bg-transparent text-font2 flex items-center rounded-full'>
-						<MdDelete size={20} />
-					</button>
-					<button className='p-2 border-[0.5px] bg-transparent text-font2 flex items-center rounded-full'>
-						<MdEdit size={20} />
-					</button>
+					<Popconfirm
+						title='Are you sure to delete this lesson?'
+						onConfirm={() =>
+							handleDeleteLesson(lesson.section, lesson._id)
+						}
+						okText='Yes'
+						cancelText='No'
+					>
+						<button className='p-2 border-[0.5px] border-error bg-transparent text-error flex items-center rounded-full'>
+							{loadingStatus?.isDeleting &&
+							loadingStatus.currLesson === lesson._id ? (
+								<LoadingOutlined
+									style={{
+										fontSize: 18,
+									}}
+									spin
+								/>
+							) : (
+								<MdDeleteOutline size={18} />
+							)}
+						</button>
+					</Popconfirm>
 					<button
 						onPointerDown={(e) => controls.start(e)}
 						className='p-2 border-[0.5px] bg-transparent text-font2 flex items-center rounded-full disabled:text-gray-200'

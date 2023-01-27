@@ -37,18 +37,30 @@ const InstructorSchema = new mongoose.Schema(
 			required: [true, 'Please provide about you.'],
 		},
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+		toJSON: { virtuals: true },
+		toObject: { virtuals: true },
+	}
 );
+// this is a virtual method, being used for getting all the reviews associated with one specified product
+InstructorSchema.virtual('courses', {
+	ref: 'Course',
+	localField: 'user',
+	foreignField: 'instructor',
+	justOne: false,
+	// match: { rating: 5 }
+});
+
 
 InstructorSchema.post('save', async function () {
 	try {
-		const user = await this.model('User').findOneAndUpdate(
+		await this.model('User').findOneAndUpdate(
 			{ _id: this.user },
 			{
 				role: 'instructor',
 			}
 		);
-		console.log(user, 'joyc');
 	} catch (error) {
 		console.log(error);
 	}

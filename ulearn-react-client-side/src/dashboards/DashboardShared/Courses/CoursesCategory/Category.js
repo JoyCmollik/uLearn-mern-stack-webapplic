@@ -40,13 +40,13 @@ const Category = ({ category, handleDeleteCategory }) => {
 				<div className='flex items-center space-x-1'>
 					<img
 						className='w-[34px] h-[34px] rounded-full object-cover'
-						src={category.user.avatarURL}
+						src={category?.user?.avatarURL}
 						alt=''
 					/>
 					<div className='flex flex-col justify-center'>
 						<small className='m-0 font-semibold'>
 							<span className='font-light mr-1'>created by</span>
-							{category.user.name}
+							{category?.user?.name}
 						</small>
 						<small className='m-0 font-light'>
 							{moment(category.createdAt).fromNow()}

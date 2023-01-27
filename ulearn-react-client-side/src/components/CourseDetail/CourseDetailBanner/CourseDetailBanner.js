@@ -14,7 +14,7 @@ const CourseDetailBanner = ({ singleCourse }) => {
 			className=' min-h-[55vh] border flex items-center  '
 		>
 			<div className=' grid grid-cols-2 container mx-auto h-full'>
-				<div className='text-white     '>
+				<div className='text-white space-y-4'>
 					{/*-------------------title-------------------------*/}
 					<h2 className='text-white text-5xl font-medium tracking-wider w-[400px]'>
 						{courseTitle || ''}
@@ -22,7 +22,6 @@ const CourseDetailBanner = ({ singleCourse }) => {
 
 					{courseShortDesc ? courseShortDesc : ''}
 
-					<p>Johnny Depp | Level 1</p>
 					{/* ------------------------rating-------------------- */}
 
 					<ul className='flex space-x-4 items-center'>

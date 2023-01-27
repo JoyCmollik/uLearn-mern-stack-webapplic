@@ -16,7 +16,6 @@ const CourseDetail = () => {
 
 	useEffect(() => {
 		if (courseId) {
-			setTriggerFetch(true);
 			axios
 				.get(`/courses/${courseId}`)
 				.then((response) => {
@@ -25,9 +24,11 @@ const CourseDetail = () => {
 				})
 				.catch((error) => {
 					console.log(error);
-				}).finally(() => {
-					setTriggerFetch(false);
+					message.error(error.response.data.msg || error.message);
 				})
+				.finally(() => {
+					setTriggerFetch(false);
+				});
 		}
 	}, [courseId, triggerFetch]);
 
@@ -65,9 +66,9 @@ const CourseDetail = () => {
 				isEnrolling={isEnrolling}
 				setTriggerFetch={setTriggerFetch}
 			/>
-			<Footer className='bg-background1 bg-center bg-cover'>
+			<div className='bg-background2 bg-center bg-cover'>
 				<FooterComponent />
-			</Footer>
+			</div>
 		</div>
 	);
 };

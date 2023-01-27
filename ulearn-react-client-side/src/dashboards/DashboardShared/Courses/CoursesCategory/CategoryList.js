@@ -13,8 +13,9 @@ const CategoryList = ({ categories, handleDeleteCategory }) => {
 					</div>
 				) : (
 					<>
-						{categories.map((category) => (
+						{categories.map((category, categoryIdx) => (
 							<Category
+								key={categoryIdx}
 								category={category}
 								handleDeleteCategory={handleDeleteCategory}
 							/>

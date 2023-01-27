@@ -72,7 +72,7 @@ const CourseSchema = new mongoose.Schema(
 		numberOfReviews: {
 			type: Number,
 			default: 0,
-		}, 
+		},
 		ratingCount: {
 			1: Number,
 			2: Number,
@@ -117,18 +117,27 @@ CourseSchema.virtual('reviews', {
 });
 
 /* 
-#problem - while removing any product, should also delete associated reviews
+#problem - while removing any product, should also delete associated reviews, sections, lessons, topics, comments
 #solution - can use remove hook here and access model Review to delete them
 */
 CourseSchema.pre('remove', async function (next) {
 	await this.model('Review').deleteMany({ course: this._id });
 	// await this.model('Section').deleteMany({ course: this._id });
-	// await this.model('Review').deleteMany({ course: this._id });
-	// add course property in Section, Lesson Schema
-	console.log('deleted reviews');
-	// next(); 
-	// delete all topics associated with this course
-	// delete all sections + lessons -> associated with this course
+	this.model('Section').find({ course: this._id }, function (err, sections) {
+		if(sections.length) {
+			for (let i = 0; i < sections.length; i++) {
+				sections[i].remove();
+			}
+		}
+	});
+	// await this.model('Topic').deleteMany({ course: this._id });
+	this.model('Topic').find({ course: this._id }, function (err, topics) {
+		if(topics.length) {
+			for (let i = 0; i < topics.length; i++) {
+				topics[i].remove();
+			}
+		}
+	});
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

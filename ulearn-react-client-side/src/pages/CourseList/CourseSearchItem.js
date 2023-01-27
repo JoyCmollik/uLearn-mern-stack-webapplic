@@ -51,11 +51,11 @@ const CourseSearchItem = ({ course, setSearchDropOpen }) => {
 								<div className='flex items-center space-x-1'>
 									<Avatar
 										size={15}
-										src={instructor.avatarURL}
+										src={instructor?.avatarURL}
 										alt='avatar'
 									/>
 									<h5 className='m-0 text-font2 capitalize'>
-										{instructor.name}
+										{instructor?.name}
 									</h5>
 								</div>
 								{/* stats */}

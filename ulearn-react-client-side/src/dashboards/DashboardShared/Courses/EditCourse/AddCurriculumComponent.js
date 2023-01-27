@@ -20,7 +20,11 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [tempSectionTitle, setTempSectionTitle] = useState('');
 	const [isFetching, setIsFetching] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
-	const [triggerFetch, setTriggerFetch] = useState(false)
+	const [triggerFetch, setTriggerFetch] = useState(false);
+	const [loadingStatus, setLoadingStatus] = useState({
+		isDeleting: false,
+		isCreating: false,
+	});
 
 	// -------------- COMPONENT ON MOUNT FETCH --------------
 	useEffect(() => {
@@ -72,25 +76,20 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	// - map sectionList, find the desired section, mutate it's lessons, return mutated section
 	// ! before returning update current section
 	// # finally close the modal and empty title string
-	const handleAddLesson = async (sectionId, newLesson) => {
+	const handleLessonLocally = (action, sectionId, newLesson) => {
 		let newSectionList = [];
-
-		const currSectionLessons = currSection.lessons.map(
-			(lesson) => lesson._id
-		);
-		let currSectionData = { ...currSection };
-		currSectionData.lessons = [...currSectionLessons, newLesson._id];
-
-		console.log(currSectionData, 'currSectionData');
-
-		const result = await handleUpdateSection(currSectionData);
-		console.log(result, 'result');
 
 		setSectionList((prevSectionList) => {
 			newSectionList = prevSectionList.map((section) => {
 				if (section._id === sectionId) {
 					const newSection = { ...section };
-					newSection.lessons = [...section.lessons, newLesson];
+					if (action === 'add') {
+						newSection.lessons = [...section.lessons, newLesson];
+					} else if (action === 'remove') {
+						newSection.lessons = newSection.lessons.filter(
+							(lesson) => lesson._id !== newLesson
+						);
+					}
 					setCurrSection(() => newSection);
 					return newSection;
 				}
@@ -112,10 +111,10 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	// -------------- API REQUESTS - FUNCTIONS --------------
 
 	// POST - create section | add section to section list | update course
-	const handleCreateSection = (sectionTitle) => {
+	const handleCreateSection = (courseId, sectionTitle) => {
 		setIsLoading(true);
 		axios
-			.post('/sections', { sectionTitle })
+			.post('/sections', { sectionTitle, course: courseId })
 			.then((response) => {
 				message.success('Created a new section!');
 				handleAddSection(response.data.section);
@@ -151,10 +150,10 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const handleCreateLesson = (sectionId, lessonTitle) => {
 		setIsLoading(true);
 		axios
-			.post('/lessons', { lessonTitle })
+			.post('/lessons', { lessonTitle, section: sectionId })
 			.then((response) => {
 				message.success('Created a new lesson!');
-				handleAddLesson(sectionId, response.data.lesson);
+				handleLessonLocally('add', sectionId, response.data.lesson);
 			})
 			.catch((error) => {
 				message.error(error.response.data.msg);
@@ -164,8 +163,59 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 			});
 	};
 
-	console.log(sectionList, 'sectionList');
-	console.log(currSection, 'currSection');
+	const handleDeleteSection = (sectionId) => {
+		setLoadingStatus({
+			...loadingStatus,
+			isDeleting: true,
+			currSection: sectionId,
+		});
+		axios
+			.delete(`/sections/${sectionId}`)
+			.then((response) => {
+				message.success('Deleted section!');
+				setSectionList((prevSectionList) => {
+					const newSectionList = prevSectionList.filter(
+						(section) => section._id !== sectionId
+					);
+					setCurrSection(newSectionList[0]);
+					return newSectionList;
+				});
+			})
+			.catch((error) => {
+				message.error(error.response.data.msg);
+			})
+			.finally(() => {
+				setLoadingStatus({
+					...loadingStatus,
+					isDeleting: false,
+					currSection: null,
+				});
+			});
+	};
+
+	const handleDeleteLesson = (sectionId, lessonId) => {
+		setLoadingStatus({
+			...loadingStatus,
+			isDeleting: true,
+			currLesson: lessonId,
+		});
+		axios
+			.delete(`/lessons/${lessonId}`)
+			.then((response) => {
+				message.success('Deleted lesson!');
+				handleLessonLocally('remove', sectionId, lessonId);
+			})
+			.catch((error) => {
+				message.error(error.response.data.msg);
+			})
+			.finally(() => {
+				setLoadingStatus({
+					...loadingStatus,
+					isDeleting: false,
+					currLesson: null,
+				});
+			});
+	};
 
 	return (
 		<div className='border-[0.5px] rounded-lg min-h-[70vh] grid grid-cols-12 gap-2 p-2'>
@@ -197,7 +247,10 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 								centered
 								open={sectionModalOpen}
 								onOk={() =>
-									handleCreateSection(tempSectionTitle)
+									handleCreateSection(
+										course?._id,
+										tempSectionTitle
+									)
 								}
 								onCancel={() => setSectionModalOpen(false)}
 								confirmLoading={isLoading}
@@ -226,7 +279,7 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 									onReorder={setSectionList}
 									className='space-y-0.5'
 								>
-									{sectionList.map((sectionItem) => (
+									{sectionList.map((sectionItem, sectionIdx) => (
 										<Reorder.Item
 											key={sectionItem?._id}
 											value={sectionItem}
@@ -235,8 +288,11 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 												key={sectionItem?._id}
 												data={{
 													sectionItem,
+													sectionIdx,
 													currSection,
 													handleCurrSection,
+													handleDeleteSection,
+													loadingStatus,
 												}}
 											/>
 										</Reorder.Item>
@@ -318,8 +374,14 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 													<Lesson
 														key={lesson._id}
 														lesson={lesson}
+														loadingStatus={
+															loadingStatus
+														}
 														handleUpdateLesson={
 															handleUpdateLesson
+														}
+														handleDeleteLesson={
+															handleDeleteLesson
 														}
 													/>
 												)

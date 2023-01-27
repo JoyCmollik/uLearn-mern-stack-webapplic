@@ -73,7 +73,9 @@ const MyCourses = () => {
 					{/* container */}
 					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 drop-shadow h-full'>
 						{/* ---------- My Courses Nav ---------- */}
-						<div className='col-span-4 rounded-lg space-y-4 bg-myCourseBackImag bg-cover bg-center bg-no-repeat' />
+						<div className='col-span-4 rounded-lg space-y-4 bg-[#2169AA] drop-shadow'>
+							<div className='w-full h-full bg-myCourseBackImag bg-cover bg-right bg-no-repeat' />
+						</div>
 						{/* ---------- My Courses List ---------- */}
 						<div className='col-span-8 p-4 space-y-4'>
 							<h4 className='text-xl font-medium'>My Courses</h4>

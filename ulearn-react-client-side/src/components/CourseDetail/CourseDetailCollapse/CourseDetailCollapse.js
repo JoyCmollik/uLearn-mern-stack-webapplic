@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 const CourseDetailCollapse = ({ sections }) => {
 	return (
 		<section className='p-3'>
-			{sections?.length &&
+			{sections?.length ?
 				sections.map((section) => {
 					const { _id, sectionTitle, lessons } = section;
 
@@ -74,7 +74,7 @@ const CourseDetailCollapse = ({ sections }) => {
 							</Panel>
 						</Collapse>
 					);
-				})}
+				}) : 'No Sections.'}
 		</section>
 	);
 };

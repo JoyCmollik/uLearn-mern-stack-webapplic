@@ -17,47 +17,22 @@ import axios from 'axios';
 const onChange = (key) => {
 	console.log(key);
 };
-const courses = [
-	{
-		_id: '31',
-		courseTitle: 'Wordpress for Beginners - Master Wordpress Quickly',
-		averageRating: '5',
-		instructor: '',
-		courseThumb: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
-		sections: ['1', '2'],
-		level: 'beginner',
-	},
-	{
-		_id: '32',
-		courseTitle: 'Wordpress for Beginners - Master Wordpress Quickly',
-		averageRating: '5',
-		instructor: '',
-		courseThumb: 'https://i.ibb.co/XYcMW7p/business-thumbnail.jpg',
-		sections: ['1', '2'],
-		level: 'beginner',
-	},
-];
 const backgroundImage = {
 	backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/1016/7.jpg')`,
 };
 const ContentWriterProfile = () => {
 	const { contentWriterId } = useParams();
-	const [user, setUser] = useState({});
-	const [value, setValue] = useState(4);
-	const [instructor, setInstructor] = useState([]);
+	const [instructor, setInstructor] = useState(null);
 	useEffect(() => {
 		if (contentWriterId) {
 			axios
-				.get(`/users/${contentWriterId}`)
+				.get(`/instructors/${contentWriterId}`)
 				.then((response) => {
-					setUser(response.data.user);
-					setInstructor(response.data.user.instructor);
-					console.log(response.data.user);
+					setInstructor(response.data.instructor);
 				})
 				.catch((err) => console.log(err));
 		}
 	}, []);
-	const [contentWriter] = instructor;
 	const details = [
 		{
 			id: 10,
@@ -106,7 +81,7 @@ const ContentWriterProfile = () => {
 					{/*------------------------------instructorImage--------------------------------------------*/}
 					<div className=''>
 						<img
-							src={user?.avatarURL}
+							src={instructor?.user?.avatarURL}
 							alt='instructor-img'
 							className='rounded-full w-[200px] h-[200px] object-cover'
 						/>
@@ -115,10 +90,10 @@ const ContentWriterProfile = () => {
 					<div className='space-y-2 '>
 						{/*--------------name-------------*/}
 						<h2 className='text-xl text-font1 font-bold tracking-wider capitalize'>
-							{user?.name}
+							{instructor?.user?.name}
 						</h2>
 						<p className='text-base text-font1  tracking-wider font-medium'>
-							{user?.email}
+							{instructor?.user?.email}
 						</p>
 						{/*--------------rating-------------*/}
 						<div>
@@ -126,11 +101,11 @@ const ContentWriterProfile = () => {
 								style={{
 									fontSize: '28px',
 								}}
-								value={value}
-								onChange={setValue}
+								value={instructor?.rating}
+								disabled
 							/>
 							<p className='bg-primary inline-block text-white px-2 rounded'>
-								4.58
+								{instructor?.rating}
 							</p>
 						</div>
 
@@ -195,19 +170,19 @@ const ContentWriterProfile = () => {
 										</h2>
 										<p className='text-lg text-font2'>
 											Degree Title:{' '}
-											{instructor?.length &&
-												contentWriter.degreeTitle}
+											{instructor &&
+												instructor.degreeTitle}
 										</p>
 										<p className='text-lg text-font2'>
 											Institution Name :
-											{instructor?.length &&
-												contentWriter.institutionName}
+											{instructor &&
+												instructor.institutionName}
 										</p>
 										<p className='text-lg text-font2'>
 											{' '}
 											Passing Year :{' '}
-											{instructor?.length &&
-												contentWriter.approxPassingYear}
+											{instructor &&
+												instructor.approxPassingYear}
 										</p>
 									</div>
 									{/* about */}
@@ -216,8 +191,7 @@ const ContentWriterProfile = () => {
 											About
 										</h2>
 										<p className='text-lg text-font2'>
-											{instructor?.length &&
-												contentWriter.aboutYou}
+											{instructor && instructor.aboutYou}
 										</p>
 									</div>
 									{/* skillset */}
@@ -226,8 +200,8 @@ const ContentWriterProfile = () => {
 											Skill Sets
 										</h2>
 										<div className='flex space-x-3 '>
-											{instructor?.length &&
-												contentWriter?.skillSets.map(
+											{instructor &&
+												instructor?.skillSets?.map(
 													(skill, index) => (
 														<p
 															key={index}
@@ -247,12 +221,16 @@ const ContentWriterProfile = () => {
 							key: '2',
 							children: (
 								<div className='p-4 mx-auto grid grid-cols-4  gap-4'>
-									{courses.map((course) => (
-										<CourseCard
-											course={course}
-											key={course._id}
-										/>
-									))}
+									{instructor?.courses?.length > 0 ? (
+										instructor?.courses?.map((course) => (
+											<CourseCard
+												key={course._id}
+												course={course}
+											/>
+										))
+									) : (
+										<div>No Courses.</div>
+									)}
 								</div>
 							),
 						},
@@ -260,9 +238,9 @@ const ContentWriterProfile = () => {
 					onChange={onChange}
 				/>
 			</div>
-			<Footer className='bg-background1 bg-center bg-cover'>
+			<div className='bg-background2 bg-center bg-cover'>
 				<FooterComponent />
-			</Footer>
+			</div>
 		</section>
 	);
 };
