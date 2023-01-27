@@ -156,11 +156,15 @@ const logout = async (req, res) => {
 
 	res.cookie('accessToken', 'logout', {
 		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
+		signed: true,
 		sameSite: 'none',
 		expires: new Date(Date.now()),
 	});
 	res.cookie('refreshToken', 'logout', {
 		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
+		signed: true,
 		sameSite: 'none',
 		expires: new Date(Date.now()),
 	});
