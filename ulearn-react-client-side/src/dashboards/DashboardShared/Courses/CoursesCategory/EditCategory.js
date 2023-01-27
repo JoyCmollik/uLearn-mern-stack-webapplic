@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Input, message, PageHeader, Result, Spin, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
-import addCategory from '../../../../images/add_document.png';
+// import addCategory from '../../../../images/add_document.png';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -182,11 +182,11 @@ const EditCategory = ({ isLoading, handleUpdateCategory }) => {
 									</form>
 								</div>
 								<div className='col-span-7'>
-									<img
+									{/* <img
 										className='object-cover w-10/12 mx-auto'
 										src={addCategory}
 										alt='add-category'
-									/>
+									/> */}
 								</div>
 							</div>
 						)}
