@@ -5,6 +5,9 @@ import 'antd/dist/antd.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthProvider from './contexts/AuthProvider';
+import axios from 'axios';
+
+axios.defaults.proxy.host = 'https://ulearn-knowledge.onrender.com/api/v1';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
