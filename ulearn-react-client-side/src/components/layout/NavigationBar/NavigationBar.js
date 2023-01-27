@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineMenuFold } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../../HeaderComponents/SideBar/SideBar';
-import ulearnLogo from '../../../images/ULearn_Logo.png';
+import ulearnLogo from '../../../images/logo.png';
 import { MdDashboard, MdLogout, MdPortrait } from 'react-icons/md';
 import { Avatar } from 'antd';
 import { Dropdown } from 'antd';

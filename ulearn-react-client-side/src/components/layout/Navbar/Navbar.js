@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../images/ULearn_Logo.png';
+import logo from '../../../images/logo.png';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 
 import DropDownMenu from '../../Home/DropDownMenu/DropDownMenu';

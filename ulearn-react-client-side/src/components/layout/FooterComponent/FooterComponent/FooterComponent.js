@@ -5,7 +5,7 @@ import {
 	AiFillLinkedin,
 } from 'react-icons/ai';
 import { FaPinterestSquare } from 'react-icons/fa';
-import logo from '../../../../images/ULearn_Logo.png';
+import logo from '../../../../images/logo.png';
 import { Divider } from 'antd';
 import { SpaceContext } from 'antd/lib/space';
 

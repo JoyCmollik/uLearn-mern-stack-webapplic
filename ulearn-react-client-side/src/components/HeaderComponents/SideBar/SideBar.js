@@ -2,7 +2,7 @@ import { Avatar, Button, Drawer, Dropdown, Menu, Space } from 'antd';
 import React from 'react';
 import DropDownButton from '../DropDownButton/DropDownButton';
 import SearchField from '../SearchField/SearchField';
-import logo from '../../../images/ULearn_Logo.png';
+import logo from '../../../images/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { MdNotificationsNone } from 'react-icons/md';
 import { FiShoppingBag } from 'react-icons/fi';
