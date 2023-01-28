@@ -83,6 +83,7 @@ UserSchema.virtual('instructor', {
 	ref: 'Instructor',
 	localField: '_id',
 	foreignField: 'user',
+	justOne: true,
 	get: function (instructor) {
 		return instructor ? instructor : null;
 	},

@@ -4,21 +4,20 @@ import { Avatar, Divider, Rate } from 'antd';
 import { TbExternalLink } from 'react-icons/tb';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiOutlinePencil } from 'react-icons/hi2';
-const CourseCard = (props) => {
+const CourseCard = ({course}) => {
 	const navigate = useNavigate();
 	const handleDetailPage = (id) => {
 		navigate(`/course-list/${id}`);
 	};
 	const {
 		courseTitle,
-		instructor,
 		courseThumb,
 		currLearners,
 		level,
 		averageRating,
 		sections,
 		_id,
-	} = props.course;
+	} = course;
 	const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 	const [value, setValue] = useState(averageRating);
 	return (
@@ -52,13 +51,7 @@ const CourseCard = (props) => {
 					)}
 				</span>
 				{/*------------------------- avatar-------------------- */}
-				<div className='flex mt-3 justify-between'>
-					<div className='flex justify-center items-center space-x-2'>
-						<Avatar src={instructor?.avatarURL} />
-						<h4 className='m-0 font-medium'>
-							{instructor?.name.split(' ')[0]}
-						</h4>
-					</div>
+				<div className='flex mt-3 justify-end'>
 
 					<button
 						onClick={() => handleDetailPage(_id)}
@@ -76,7 +69,7 @@ const CourseCard = (props) => {
 					</div>
 					<div className='text-sm flex items-center gap-2 text-dark hover:text-primary capitalize'>
 						<BiNotepad />
-						{sections && sections?.length} section
+						{sections ? sections?.length : 0} section
 					</div>
 				</div>
 			</div>

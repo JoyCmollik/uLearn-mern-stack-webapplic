@@ -163,6 +163,7 @@ const useAuthentication = () => {
 
 	return {
 		user,
+		setUser,
 		handleRegister,
 		handleLogin,
 		registerMsg,

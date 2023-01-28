@@ -29,6 +29,13 @@ const NavigationBar = () => {
 		setOpen(false);
 	};
 
+	const userProfile =
+		user?.role === 'admin'
+			? '/admin/dashboard/manage-profile'
+			: user?.role === 'instructor'
+			? '/content-creator/dashboard/manage-profile'
+			: 'user-profile';
+
 	const menu = () => {
 		const role = user.role === 'instructor' ? 'content-creator' : 'admin';
 		return (
@@ -51,7 +58,7 @@ const NavigationBar = () => {
 						</button>
 					</Link>
 				) : null}
-				<Link to='/my-profile'>
+				<Link to={userProfile}>
 					<button className='text-font1 p-2 border rounded-lg w-full flex items-center space-x-2'>
 						<MdPortrait style={{ color: '#000000' }} size={25} />
 						<span>My Profile</span>

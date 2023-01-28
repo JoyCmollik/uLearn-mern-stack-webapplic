@@ -4,7 +4,7 @@ const CustomError = require('../errors');
 const path = require('path');
 
 const getAllInstructors = async (req, res) => {
-	const instructors = await Instructor.find();
+	const instructors = await Instructor.find().populate('user', 'name avatarURL');
 	res.status(StatusCodes.OK).json({ instructors });
 };
 
@@ -13,7 +13,7 @@ const getSingleInstructor = async (req, res) => {
 
 	const instructor = await Instructor.findOne({ user: userId })
 		.populate('user', 'name avatarURL email')
-		.populate('courses', 'courseTitle averageRating courseThumb level currLearners');
+		.populate('courses', 'courseTitle averageRating courseThumb level currLearners numberOfReviews');
 	res.status(StatusCodes.OK).json({ instructor });
 };
 

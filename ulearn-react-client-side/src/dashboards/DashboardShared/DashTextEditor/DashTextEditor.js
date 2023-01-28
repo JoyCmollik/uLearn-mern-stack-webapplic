@@ -7,7 +7,6 @@ import { message } from 'antd';
 const DashTextEditor = ({
 	editorContent,
 	setEditorContent,
-	editor,
 	placeholder,
 	minHeight,
 }) => {

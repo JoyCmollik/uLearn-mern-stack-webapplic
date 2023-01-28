@@ -1,12 +1,20 @@
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import axios from 'axios';
+import { LayoutGroupContext } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { HiOutlineCamera } from 'react-icons/hi2';
+import Loading from '../../../components/layout/Loading/Loading';
 import useAuth from '../../../hooks/useAuth';
+import UploadImageModal from './UploadImageModal';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const ManageProfile = () => {
 	const [userProfile, setUserProfile] = useState(null);
 	const [isFetching, setIsFetching] = useState(true);
-	const { user } = useAuth();
+	const [isLoading, setIsLoading] = useState(false);
+	const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+	const [imgFile, setImgFile] = useState([]);
+	const { user, setUser } = useAuth();
 
 	useEffect(() => {
 		if (!userProfile && user?.userId) {
@@ -15,6 +23,7 @@ const ManageProfile = () => {
 				.get(`/users/${user?.userId}`)
 				.then((response) => {
 					setUserProfile(response.data.user);
+					console.log(response.data.user);
 				})
 				.catch((error) => {
 					message.error(error.message);
@@ -25,6 +34,60 @@ const ManageProfile = () => {
 		}
 	}, [user]);
 
+	if (isFetching) {
+		return (
+			<div className='bg-white min-h-screen rounded-lg p-4 flex justify-center items-center'>
+				<Loading />
+			</div>
+		);
+	}
+
+	const handleUpdateProfileImage = async () => {
+		if (imgFile.length) {
+			setIsLoading(true);
+			axios
+				.post('/images/uploadAvatar', {
+					file: imgFile[0].thumbUrl,
+					name: imgFile[0].name,
+				})
+				.then((response) => {
+					if (response.data.image.src) {
+						handleUpdateUser({
+							avatarURL: response.data.image.src,
+						});
+					}
+				})
+				.catch((error) => {
+					message.error(error.response.data.msg || error.message);
+					setIsLoading(false);
+					setIsUploadModalOpen(false);
+				});
+		}
+	};
+
+	const handleUpdateUser = async (data) => {
+		if (data) {
+			setIsLoading(true);
+			axios
+				.patch(`/users/updateUser`, {
+					...data,
+				})
+				.then((response) => {
+					message.success('user has been updated successfully!');
+					setUser(response.data.user);
+				})
+				.catch((error) => {
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setIsLoading(false);
+					setIsUploadModalOpen(false);
+					setImgFile([]);
+					setUserProfile({ ...userProfile, ...data });
+				});
+		}
+	};
+
 	return (
 		<div className='bg-white min-h-screen rounded-lg p-4'>
 			{/*****--------------User Profile Banner ---------------*****/}
@@ -32,12 +95,60 @@ const ManageProfile = () => {
 			{/*****--------------User Profile Picture Name ---------------*****/}
 			<div className='flex justify-between items-start px-8 py-4 border-b-[0.5px]'>
 				<div className='wrapper flex justify-between items-start space-x-4'>
-					<figure className='h-[125px] w-[125px] bg-white rounded-full flex justify-center items-center -mt-14'>
+					<figure className='h-[125px] w-[125px] bg-white rounded-full flex justify-center items-center -mt-14 relative'>
 						<img
-							className='object-cover h-[118px] w-[118px] rounded-full'
+							className='object-cover rounded-full'
 							src={userProfile?.avatarURL}
 							alt='profile'
 						/>
+						{/*****-------------- Change Image ---------------*****/}
+						<button
+							onClick={() => setIsUploadModalOpen(true)}
+							className='absolute bottom-1/4 left-0 bg-white drop-shadow rounded-full p-2 transform -translate-x-2/4 translate-y-1/4'
+						>
+							<HiOutlineCamera size={18} />
+						</button>
+						{/*****-------------- Image uploading modal ---------------*****/}
+						<Modal
+							style={{borderRadius: '8px', overflow: 'hidden'}}
+							bodyStyle={{padding: '16px'}}
+							open={isUploadModalOpen}
+							closable={false}
+							footer={
+								<div className='flex justify-end items-center space-x-2'>
+									<button
+										onClick={handleUpdateProfileImage}
+										className='px-4 py-2 border border-primary rounded-lg text-primary disabled:opacity-40'
+										disabled={isLoading || !imgFile.length}
+									>
+										{isLoading ? (
+											<span className='flex items-center space-x-2'>
+												<LoadingOutlined />
+												<span>Uploading</span>
+											</span>
+										) : (
+											'Upload'
+										)}
+									</button>
+									<button
+										onClick={() =>
+											setIsUploadModalOpen(false)
+										}
+										className='px-4 py-2 border border-error rounded-lg text-error disabled:opacity-40'
+										disabled={isLoading}
+									>
+										Cancel
+									</button>
+								</div>
+							}
+							centered
+						>
+							<UploadImageModal
+								imgFile={imgFile}
+								setImgFile={setImgFile}
+								limit='1'
+							/>
+						</Modal>
 					</figure>
 					<h2 className='text-2xl font-bold'>
 						{userProfile?.name.split(' ')[0]}
@@ -100,10 +211,7 @@ const ManageProfile = () => {
 										Institution Name
 									</h5>
 									<p className='m-0 font-normal text-font1'>
-										{
-											userProfile?.instructor
-												?.institutionName
-										}
+										{userProfile.instructor.institutionName}
 									</p>
 								</div>
 								<div className='space-y-1'>
