@@ -6,6 +6,7 @@ const {
 	attachCookiesToResponse,
 	checkPermissions,
 } = require('../utils');
+const { registerUserByAdmin } = require('./authController');
 
 const getAllUser = async (req, res) => {
 	const users = await User.find(req.query).select(
@@ -16,7 +17,7 @@ const getAllUser = async (req, res) => {
 };
 const getSingleUser = async (req, res) => {
 	const user = await User.findOne({ _id: req.params.id })
-		.select('-password')
+		.select('-password -verificationToken')
 		.populate({
 			path: 'instructor',
 		});
@@ -33,18 +34,25 @@ const showCurrentUser = async (req, res) => {
 };
 //update user with user.save()
 const UpdateUser = async (req, res) => {
-	const { email, name } = req.body;
-	if (!email || !name) {
-		throw new CustomError.BadRequestError('Please provide all values');
+	const { email, name, avatarURL } = req.body;
+	let user = await User.findOne({ _id: req.user.userId });
+	if (avatarURL) {
+		user.avatarURL = avatarURL;
 	}
-	const user = await User.findOne({ _id: req.user.userId });
-	user.email = email;
-	user.name = name;
+
+	if (email && name) {
+		user.email = email;
+		user.name = name;
+	}
 
 	await user.save();
+
 	const tokenUser = createTokenUser(user);
 	attachCookiesToResponse({ res, user: tokenUser });
-	res.status(StatusCodes.OK).json({ user: tokenUser });
+	res.status(StatusCodes.OK).json({
+		user: tokenUser,
+	});
+	return;
 };
 
 const UpdateUserPassword = async (req, res) => {

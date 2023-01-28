@@ -53,12 +53,17 @@ app.use(
 	})
 );
 app.use(helmet());
+<<<<<<< HEAD
 app.use(
 	cors({
 		origin: 'https://ulearn.onrender.com',
 		credentials: true,
 	})
 );
+=======
+
+app.use(cors());
+>>>>>>> dev-joy
 app.use(xss());
 app.use(mongoSanitize());
 

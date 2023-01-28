@@ -1,25 +1,24 @@
-import { Divider, Rate } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { Rate } from 'antd';
 import { FaFacebookSquare, FaLinkedin, FaTwitterSquare } from 'react-icons/fa';
 import './ContentWriterProfile.css';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import { Tabs } from 'antd';
 import CourseCard from '../../components/Home/AllCourses/CourseCard';
 import FooterComponent from '../../components/layout/FooterComponent/FooterComponent/FooterComponent';
-import { Footer } from 'antd/lib/layout/layout';
 import { useParams } from 'react-router-dom';
-import { IoSchoolOutline } from 'react-icons/io5';
 import { GoBook } from 'react-icons/go';
 import { VscPreview } from 'react-icons/vsc';
 import { MdOutlineCategory } from 'react-icons/md';
 
 import axios from 'axios';
+import BreadcrumbComponents from '../../components/CourseList/Banner/BreadcrumbComponent/BreadcrumbComponents';
+import { HiOutlineAcademicCap, HiOutlineCheck, HiOutlineUserGroup } from 'react-icons/hi2';
+import Loading from '../../components/layout/Loading/Loading';
 const onChange = (key) => {
 	console.log(key);
 };
-const backgroundImage = {
-	backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/1016/7.jpg')`,
-};
+
 const ContentWriterProfile = () => {
 	const { contentWriterId } = useParams();
 	const [instructor, setInstructor] = useState(null);
@@ -37,32 +36,51 @@ const ContentWriterProfile = () => {
 		{
 			id: 10,
 			icon: (
-				<IoSchoolOutline className='text-6xl text-[#ef9d69] p-1 mx-auto' />
+				<div className='p-3 border-2 border-[#ef9d69] rounded-lg drop-shadow '>
+					<HiOutlineAcademicCap
+						size={34}
+						className='text-[#ef9d69]'
+					/>
+				</div>
 			),
-			noOfStudents: 5,
+			noOfStudents: instructor?.courses?.length > 0
+				? instructor?.courses?.reduce((accumulator, currValue) => currValue?.currLearners?.length + accumulator,0)
+				: 0,
 			borderColor: 'border-[#ef9d69]',
 			title: 'students',
 		},
 		{
 			id: 11,
-			icon: <GoBook className='text-6xl text-[#00a1d9] p-1 mx-auto' />,
-			noOfCourse: 4,
+			icon: (
+				<div className='p-3 border-2 border-[#00a1d9] rounded-lg drop-shadow '>
+					<HiOutlineUserGroup size={34} className='text-[#00a1d9]' />
+				</div>
+			),
+			noOfCourse: instructor?.courses?.length
+				? instructor?.courses?.length
+				: 0,
 			borderColor: 'border-[#00a1d9]',
 			title: 'courses',
 		},
 		{
 			id: 12,
 			icon: (
-				<VscPreview className='text-6xl text-[#4fb949] p-1 mx-auto' />
+				<div className='p-3 border-2 border-[#4fb949] rounded-lg drop-shadow '>
+					<VscPreview size={34} className='text-[#4fb949]' />
+				</div>
 			),
-			noOfReviews: 3,
+			noOfReviews: instructor?.courses?.length > 0
+				? instructor?.courses?.reduce((accumulator, currValue) => currValue?.numberOfReviews + accumulator,0)
+				: 0,
 			borderColor: 'border-[#4fb949]',
 			title: 'Reviews',
 		},
 		{
 			id: 13,
 			icon: (
-				<MdOutlineCategory className='text-6xl text-[#a855ff] p-1 mx-auto' />
+				<div className='p-3 border-2 border-[#a855ff] rounded-lg drop-shadow '>
+					<MdOutlineCategory size={34} className='text-[#a855ff]' />
+				</div>
 			),
 			noOfReviews: 3,
 			borderColor: 'border-[#a855ff]',
@@ -74,169 +92,241 @@ const ContentWriterProfile = () => {
 			{/* navigation bar */}
 			<NavigationBar theme='light' />
 			{/*----------------------background image----------------------------------------------*/}
-			<div style={backgroundImage} className='min-h-[55vh]'></div>
-			{/*----------------------Instructor Details----------------------------------------------*/}
-			<div className='container mx-auto border rounded-lg -mt-60 bg-white shadow-md p-8 space-y-4'>
-				<div className='flex space-x-8 items-center mx-auto  '>
-					{/*------------------------------instructorImage--------------------------------------------*/}
-					<div className=''>
-						<img
-							src={instructor?.user?.avatarURL}
-							alt='instructor-img'
-							className='rounded-full w-[200px] h-[200px] object-cover'
-						/>
+			<div className='h-[34vh] bg-light relative'>
+				<div className='w-full h-full bg-profileBg bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
+					<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
+						<h3 className='text-2xl text-center text-white'>
+							Profile
+						</h3>
+						<BreadcrumbComponents />
 					</div>
-					{/*------------------------------instructorImage--------------------------------------------*/}
-					<div className='space-y-2 '>
-						{/*--------------name-------------*/}
-						<h2 className='text-xl text-font1 font-bold tracking-wider capitalize'>
-							{instructor?.user?.name}
-						</h2>
-						<p className='text-base text-font1  tracking-wider font-medium'>
-							{instructor?.user?.email}
-						</p>
-						{/*--------------rating-------------*/}
-						<div>
-							<Rate
-								style={{
-									fontSize: '28px',
-								}}
-								value={instructor?.rating}
-								disabled
-							/>
-							<p className='bg-primary inline-block text-white px-2 rounded'>
-								{instructor?.rating}
-							</p>
-						</div>
-
-						{/* social medial link */}
-						<div className='flex text-3xl text-primary space-x-2'>
-							<FaFacebookSquare />
-							<FaLinkedin />
-							<FaTwitterSquare />
-						</div>
-					</div>
-				</div>
-				<div className='grid grid-cols-4 gap-4 '>
-					{details.map((detail) => {
-						const {
-							icon,
-							id,
-							noOfCourse,
-							noOfReviews,
-
-							noOfStudents,
-							title,
-						} = detail;
-						return (
-							<div key={id}>
-								<div className='mx-auto border-[0.5px] rounded-lg shadow'>
-									<div>
-										<div className=' flex items-center justify-center'>
-											{icon}
-										</div>
-									</div>
-									<div className='text-center'>
-										<h4 className='text-font1 text-xl font-bold '>
-											{noOfCourse ||
-												noOfReviews ||
-												noOfStudents}
-										</h4>
-										<p className='text-font2 text-xl  capitalize'>
-											{title}
-										</p>
-									</div>
-								</div>
-							</div>
-						);
-					})}
 				</div>
 			</div>
-			{/*--------------------------tabs-----------------------------*/}
-			<div className='container mx-auto mt-10 border rounded-lg shadow-lg mb-20'>
-				<Tabs
-					className='instructorTabStyle instructor-detail-active-color instructor-detail-tabs-ink-bar instructor-detail-tabs-btn instructor-detail-tabs-nav-wrap instructor-detail-tabs-tab'
-					defaultActiveKey='1'
-					items={[
-						{
-							label: `About`,
-							key: '1',
-							children: (
-								<section className='p-4'>
-									{/* education */}
-									<div>
-										<h2 className='text-font1 text-xl font-semibold'>
-											Education
-										</h2>
-										<p className='text-lg text-font2'>
-											Degree Title:{' '}
-											{instructor &&
-												instructor.degreeTitle}
-										</p>
-										<p className='text-lg text-font2'>
-											Institution Name :
-											{instructor &&
-												instructor.institutionName}
-										</p>
-										<p className='text-lg text-font2'>
-											{' '}
-											Passing Year :{' '}
-											{instructor &&
-												instructor.approxPassingYear}
-										</p>
+			<div
+				className='bg-white'
+				style={{ minHeight: 'calc(75vh - 81px)' }}
+			>
+				{!instructor ? (
+					<div className='h-[40vh] flex justify-center items-center'>
+						<Loading />
+					</div>
+				) : (
+					<>
+						{/* container */}
+						<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg p-4 drop-shadow'>
+							{/*----------------------Instructor Details----------------------------------------------*/}
+							<div className='rounded-lg bg-white p-4 space-y-8'>
+								<div className='flex space-x-8 items-center mx-auto  '>
+									{/*------------------------------instructorImage--------------------------------------------*/}
+									<div className=''>
+										<img
+											src={instructor?.user?.avatarURL}
+											alt='instructor-img'
+											className='rounded-full w-[200px] h-[200px] object-cover'
+										/>
 									</div>
-									{/* about */}
-									<div>
-										<h2 className='text-font1 text-xl font-semibold'>
-											About
+									{/*------------------------------instructorImage--------------------------------------------*/}
+									<div className='space-y-2 '>
+										{/*--------------name-------------*/}
+										<h2 className='text-xl text-font1 font-bold tracking-wider capitalize'>
+											{instructor?.user?.name}
 										</h2>
-										<p className='text-lg text-font2'>
-											{instructor && instructor.aboutYou}
+										<p className='text-base text-font1  tracking-wider font-medium'>
+											{instructor?.user?.email}
 										</p>
-									</div>
-									{/* skillset */}
-									<div>
-										<h2 className='text-font1 text-xl font-semibold'>
-											Skill Sets
-										</h2>
-										<div className='flex space-x-3 '>
-											{instructor &&
-												instructor?.skillSets?.map(
-													(skill, index) => (
-														<p
-															key={index}
-															className='text-lg  bg-gray-200 rounded pt-2 px-3'
-														>
-															{skill}
-														</p>
-													)
-												)}
-										</div>
-									</div>
-								</section>
-							),
-						},
-						{
-							label: `Courses`,
-							key: '2',
-							children: (
-								<div className='p-4 mx-auto grid grid-cols-4  gap-4'>
-									{instructor?.courses?.length > 0 ? (
-										instructor?.courses?.map((course) => (
-											<CourseCard
-												key={course._id}
-												course={course}
+										{/*--------------rating-------------*/}
+										<div className='flex items-center space-x-4'>
+											<Rate
+												style={{
+													fontSize: '28px',
+												}}
+												value={instructor?.rating}
+												disabled
 											/>
-										))
-									) : (
-										<div>No Courses.</div>
-									)}
+											<div className='bg-primary text-white px-2 rounded m-0'>
+												{instructor?.rating}
+											</div>
+										</div>
+
+										{/* social medial link
+								<div className='flex text-3xl text-primary space-x-2'>
+									<FaFacebookSquare />
+									<FaLinkedin />
+									<FaTwitterSquare />
+								</div> */}
+									</div>
 								</div>
-							),
-						},
-					]}
-					onChange={onChange}
-				/>
+								<hr />
+								<div className='grid grid-cols-4 gap-4 '>
+									{details.map((detail) => {
+										const {
+											icon,
+											id,
+											noOfCourse,
+											noOfReviews,
+											noOfStudents,
+											title,
+										} = detail;
+										return (
+											<div
+												key={id}
+												className='flex flex-col justify-center items-center space-y-2'
+											>
+												<div className=' flex items-center justify-center'>
+													{icon}
+												</div>
+
+												<h4 className='text-font1 text-2xl font-medium p-0'>
+													{noOfCourse ||
+														noOfReviews ||
+														noOfStudents}
+												</h4>
+												<p className='text-font2 text-xl capitalize'>
+													{title}
+												</p>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+							{/*--------------------------tabs-----------------------------*/}
+							<div className='container mx-auto mt-10 border rounded-lg shadow-lg mb-20'>
+								<Tabs
+									className='instructorTabStyle instructor-detail-active-color instructor-detail-tabs-ink-bar instructor-detail-tabs-btn instructor-detail-tabs-nav-wrap instructor-detail-tabs-tab'
+									defaultActiveKey='1'
+									items={[
+										{
+											label: `About`,
+											key: '1',
+											children: (
+												<section className='p-4 space-y-4'>
+													{/* education */}
+													<div className='bg-light rounded-lg p-4 space-y-2'>
+														<h2 className='text-font1 text-xl font-semibold'>
+															Education
+														</h2>
+														<hr />
+														{/* degree */}
+														<div className='flex items-start space-x-2'>
+															<div className='p-0.5 border border-primary rounded-lg'>
+																<HiOutlineCheck
+																	className='text-primary'
+																	size={18}
+																/>
+															</div>
+															<span>
+																Currently
+																studying in
+															</span>
+															<span >
+																{instructor &&
+																	instructor.degreeTitle}
+															</span>
+														</div>
+														{/* institution */}
+														<div className='flex items-start space-x-2'>
+															<div className='p-0.5 border border-primary rounded-lg'>
+																<HiOutlineCheck
+																	className='text-primary'
+																	size={18}
+																/>
+															</div>
+															<span>At </span>
+															<span >
+																{instructor &&
+																	instructor.institutionName}
+															</span>
+														</div>
+														{/* Approx Passing Year */}
+														<div className='flex items-start space-x-2'>
+															<div className='p-0.5 border border-primary rounded-lg'>
+																<HiOutlineCheck
+																	className='text-primary'
+																	size={18}
+																/>
+															</div>
+															<span>
+																Graduation in
+															</span>
+															<span>
+																{instructor &&
+																	instructor.approxPassingYear}
+															</span>
+														</div>
+													</div>
+													{/* about */}
+													<div className='bg-light rounded-lg p-4 space-y-2'>
+														<h2 className='text-font1 text-xl font-semibold'>
+															About
+														</h2>
+														<hr />
+														<p className=''>
+															{instructor &&
+																instructor.aboutYou}
+														</p>
+													</div>
+													{/* skillset */}
+													<div className='bg-light rounded-lg p-4 space-y-2'>
+														<h2 className='text-font1 text-xl font-semibold'>
+															Skill Sets
+														</h2>
+														<hr />
+														<div className='flex space-x-3 '>
+															{instructor &&
+																instructor?.skillSets?.map(
+																	(
+																		skill,
+																		index
+																	) => (
+																		<p
+																			key={
+																				index
+																			}
+																			className='capitalize bg-gray-200 rounded px-4 py-2'
+																		>
+																			{
+																				skill
+																			}
+																		</p>
+																	)
+																)}
+														</div>
+													</div>
+												</section>
+											),
+										},
+										{
+											label: `Courses`,
+											key: '2',
+											children: (
+												<div className='p-4 mx-auto grid grid-cols-4  gap-4'>
+													{instructor?.courses
+														?.length > 0 ? (
+														instructor?.courses?.map(
+															(course) => (
+																<CourseCard
+																	key={
+																		course._id
+																	}
+																	course={
+																		course
+																	}
+																/>
+															)
+														)
+													) : (
+														<div>No Courses.</div>
+													)}
+												</div>
+											),
+										},
+									]}
+									onChange={onChange}
+								/>
+							</div>
+						</div>
+					</>
+				)}
 			</div>
 			<div className='bg-background2 bg-center bg-cover'>
 				<FooterComponent />

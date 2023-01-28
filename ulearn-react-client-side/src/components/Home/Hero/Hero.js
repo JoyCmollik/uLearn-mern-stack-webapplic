@@ -32,7 +32,7 @@ const Hero = () => {
 		<div className='pt-10'>
 			<section className='container mx-auto bg-primary bg-opacity-5 rounded-lg h-[50vh]'>
 				{/*---------------------------banner-------------------------------*/}
-				<div className='h-full p-[10vw] flex justify-between items-center font-lato'>
+				<div className='h-full p-[10vw] flex justify-between items-center overflow-hidden font-lato'>
 					<div className='space-y-4'>
 						<h1 className='text-2xl xl:text-4xl font-bold text-font1'>
 							Explore a community built <br /> for academics, with
