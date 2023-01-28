@@ -53,11 +53,14 @@ app.use(
 	})
 );
 app.use(helmet());
+// app.use(
+// 	cors({
+// 		origin: 'https://ulearn.onrender.com',
+// 		credentials: true,
+// 	})
+// );
 app.use(
-	cors({
-		origin: 'https://ulearn.onrender.com',
-		credentials: true,
-	})
+	cors()
 );
 app.use(xss());
 app.use(mongoSanitize());
