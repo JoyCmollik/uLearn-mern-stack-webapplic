@@ -61,6 +61,7 @@ const ManageProfile = () => {
 					message.error(error.response.data.msg || error.message);
 					setIsLoading(false);
 					setIsUploadModalOpen(false);
+					setImgFile([]);
 				});
 		}
 	};
@@ -110,8 +111,8 @@ const ManageProfile = () => {
 						</button>
 						{/*****-------------- Image uploading modal ---------------*****/}
 						<Modal
-							style={{borderRadius: '8px', overflow: 'hidden'}}
-							bodyStyle={{padding: '16px'}}
+							style={{ borderRadius: '8px', overflow: 'hidden' }}
+							bodyStyle={{ padding: '16px' }}
 							open={isUploadModalOpen}
 							closable={false}
 							footer={

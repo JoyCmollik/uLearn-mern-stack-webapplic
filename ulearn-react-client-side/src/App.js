@@ -33,6 +33,7 @@ import BecomeContentWriter from './pages/BecomeContentWriter/BecomeContentWriter
 import ContentWriterProfile from './pages/ContentWriterProfile/ContentWriterProfile';
 import PrivateRoute from './privateOutlets/PrivateRoute';
 import ContentCreatorOutlet from './privateOutlets/ContentCreatorOutlet';
+import MyProfile from './pages/MyProfile/MyProfile';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -60,6 +61,14 @@ function App() {
 					element={
 						<PrivateRoute>
 							<MyCourses />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					path='my-profile'
+					element={
+						<PrivateRoute>
+							<MyProfile />
 						</PrivateRoute>
 					}
 				/>
