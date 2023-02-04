@@ -114,9 +114,7 @@ const BecomeContentWriter = () => {
 				.post('/instructors', data)
 				.then((response) => {
 					console.log(response.data.instructor);
-					notification.success(
-						'instructor details successfully updated'
-					);
+					message.success('Congrats! You are a creator now. Please login again to refresh cookies.')
 					setPerson({
 						degreeTitle: '',
 						institutionName: '',

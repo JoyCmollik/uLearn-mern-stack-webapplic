@@ -15,7 +15,7 @@ const CourseContentHeader = ({ courseContent }) => {
 					<p className='text-font2 text-base font-normal w-8/12'>
 						{courseShortDesc ? courseShortDesc : ''}
 					</p>
-					{/*-----------------btn and progress bar---------------------*/}
+					{/* -----------------btn and progress bar---------------------
 					<div className='w-8/12 items-center'>
 						<div className='col-span-3'>
 							<Progress
@@ -33,7 +33,7 @@ const CourseContentHeader = ({ courseContent }) => {
 								<span>completion</span>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</article>
 				{/*-----------------course image---------------------*/}
 				<article className='self-end'>

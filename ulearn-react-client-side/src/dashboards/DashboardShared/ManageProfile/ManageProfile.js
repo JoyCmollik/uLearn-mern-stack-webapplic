@@ -97,11 +97,11 @@ const ManageProfile = () => {
 			<div className='flex justify-between items-start px-8 py-4 border-b-[0.5px]'>
 				<div className='wrapper flex justify-between items-start space-x-4'>
 					<figure className='h-[125px] w-[125px] bg-white rounded-full flex justify-center items-center -mt-14 relative'>
-						<img
-							className='object-cover rounded-full'
-							src={userProfile?.avatarURL}
-							alt='profile'
-						/>
+							<img
+								className='w-full h-full rounded-full object-cover'
+								src={userProfile?.avatarURL}
+								alt='profile'
+							/>
 						{/*****-------------- Change Image ---------------*****/}
 						<button
 							onClick={() => setIsUploadModalOpen(true)}

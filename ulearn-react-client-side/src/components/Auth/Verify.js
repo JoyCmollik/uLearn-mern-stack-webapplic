@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Loading from '../layout/Loading/Loading';
+import Lottie from '../layout/Lottie/Lottie';
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
@@ -32,9 +33,15 @@ const Verify = () => {
 
 	if (loading) {
 		return (
-			<Space size='middle'>
-				<Loading />
-			</Space>
+			<div className='flex flex-col justify-center items-center space-y-4'>
+				<Lottie
+					src='https://assets6.lottiefiles.com/packages/lf20_DTosIIqiu8.json'
+					size={{
+						width: '450',
+						height: '450',
+					}}
+				/>
+			</div>
 		);
 	}
 
@@ -56,20 +63,24 @@ const Verify = () => {
 		);
 	}
 	return (
-		<div className=' mx-auto '>
-			<Result
-				status='success'
-				title='Account Confirmed!'
-				subTitle=''
-				extra={[
-					<Link
-						to='/auth/login'
-						className='text-primary underline text-base'
-					>
+		<div className='h-screen flex flex-col justify-center items-center space-y-4'>
+			<div className='p-4 bg-white backdrop-filter rounded-lg'>
+				<Lottie
+					src='https://assets9.lottiefiles.com/packages/lf20_jbrw3hcz.json'
+					size={{
+						width: '450',
+						height: '450',
+					}}
+				/>
+				<Link
+					to='/auth/login'
+					className='text-primary underline text-base'
+				>
+					<button className='px-4 py-2 text-primary border border-primary'>
 						Please Login
-					</Link>,
-				]}
-			/>
+					</button>
+				</Link>
+			</div>
 		</div>
 	);
 };

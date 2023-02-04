@@ -12,7 +12,6 @@ import useAuth from '../../../hooks/useAuth';
 const navigation = [
 	{ id: 1, to: '/', name: 'Home' },
 	{ id: 2, to: '/course-list', name: 'Courses' },
-	{ id: 3, to: '/contact', name: 'Instructors' },
 	{ id: 4, to: '/my-courses', name: 'My Courses' },
 ];
 

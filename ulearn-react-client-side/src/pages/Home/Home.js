@@ -54,11 +54,12 @@ const Home = () => {
 					console.log(error);
 				});
 		}
-		if (user && !instructors) {
+		if (!instructors) {
 			axios
-				.get('/users?role=instructor')
+				.get('/instructors')
 				.then((response) => {
-					setInstructors(response.data.users);
+					console.log(response);
+					setInstructors(response.data.instructors);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -74,7 +75,7 @@ const Home = () => {
 				<Categories categories={categories} />
 				<NewestCourses newCourses={newCourses} />
 				<BestReviewedCourses bestCourses={bestCourses} />
-				{user ? <Instructors instructors={instructors} /> : null}
+				{user && instructors ? <Instructors instructors={instructors} /> : null}
 				<Testimonials />
 				<Features />
 				<div className='bg-background2 bg-center bg-cover'>

@@ -59,7 +59,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 							</h4>
 						</div>
 						{/*****--------------Section list---------------*****/}
-						<div>
+						<div className='relative'>
 							{!sectionList.length ? (
 								<Alert
 									style={{
@@ -76,7 +76,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 										axis='y'
 										values={sectionList}
 										onReorder={setSectionList}
-										className='space-y-0.5'
+										className='space-y-0.5 sticky top-[85px]'
 									>
 										{sectionList.map(
 											(sectionItem, sectionIdx) => (
@@ -124,7 +124,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 						</div>
 					</div>
 					{/*****--------------Lesson container---------------*****/}
-					<div className='col-span-9 bg-white rounded-lg p-2'>
+					<div className='col-span-9 bg-white rounded-lg'>
 						<Routes>
 							<Route
 								index
