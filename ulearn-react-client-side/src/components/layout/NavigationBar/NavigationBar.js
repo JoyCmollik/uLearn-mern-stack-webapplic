@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineMenuFold } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../../HeaderComponents/SideBar/SideBar';
-import ulearnLogo from '../../../images/logo.png';
+import ulearnLogo from '../../../images/ulearn_logo.png';
 import { MdDashboard, MdLogout, MdPortrait } from 'react-icons/md';
 import { Avatar } from 'antd';
 import { Dropdown } from 'antd';
@@ -33,7 +33,7 @@ const NavigationBar = () => {
 			? '/admin/dashboard/manage-profile'
 			: user?.role === 'instructor'
 			? '/content-creator/dashboard/manage-profile'
-			: 'user-profile';
+			: '/my-profile';
 
 	const menu = () => {
 		const role = user.role === 'instructor' ? 'content-creator' : 'admin';
@@ -84,13 +84,10 @@ const NavigationBar = () => {
 						<div className='flex items-center space-x-5'>
 							<div className=' flex items-center space-x-1'>
 								<img
-									className='w-[40px] object-cover'
+									className='w-[100px] h-[40px] object-cover'
 									src={ulearnLogo}
 									alt=''
 								/>
-								<h2 className='m-0 font-bold text-xl'>
-									ULearn
-								</h2>
 							</div>
 							<div className='hidden items-center space-x-6 md:block'>
 								{/*--------------------Categories-------------------------*/}

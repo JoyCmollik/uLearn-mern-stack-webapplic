@@ -20,9 +20,9 @@ const Instructors = ({ instructors }) => {
 	return (
 		<section className=' container mx-auto  '>
 			{/*--------------- title ----------------------- */}
-			<h2 className='text-2xl font-bold'>Instructors</h2>
+			<h2 className='text-2xl font-bold'>Content Creators</h2>
 			<p className='text-gray-500 text-base font-normal'>
-				#Learn from the experienced & skillful instructors
+				#Learn from the experienced & skillful content creators
 			</p>
 			<div className='grid grid-cols-1 gap-4 mx-auto items-center justify-center'>
 				<Swiper
@@ -72,7 +72,7 @@ const Instructors = ({ instructors }) => {
 												value={value}
 											/> */}
 											<Link
-												to={`/content-writer-profile/${_id}`}
+												to={`/content-writer-profile/${instructor?.user?._id}`}
 											>
 												<button className='text-primary border border-primary py-2 px-3 text-sm rounded-lg '>
 													View Profile

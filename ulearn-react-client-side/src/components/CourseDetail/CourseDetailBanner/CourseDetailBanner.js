@@ -1,17 +1,18 @@
 import { Rate } from 'antd';
 import { useState } from 'react';
+import banner from '../../../../src/images/profile-bg.png'
 
 const CourseDetailBanner = ({ singleCourse }) => {
-	const { courseTitle, courseShortDesc, courseMetaDesc } = singleCourse;
+	const { courseTitle, courseShortDesc, currLearners, averageRating, numberOfReviews } = singleCourse;
 	//console.log(singleCourse);
 	//rating
 	const [value, setValue] = useState(5);
 	return (
 		<section
 			style={{
-				backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://lms.rocket-soft.org/store/929/update_1.6_c.jpg')`,
+				background: ` linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(${banner}) center/cover no-repeat`,
 			}}
-			className=' min-h-[55vh] border flex items-center  '
+			className=' min-h-[55vh] border flex items-center'
 		>
 			<div className=' grid grid-cols-2 container mx-auto h-full'>
 				<div className='text-white space-y-4'>
@@ -26,22 +27,19 @@ const CourseDetailBanner = ({ singleCourse }) => {
 
 					<ul className='flex space-x-4 items-center'>
 						<li className='text-sm flex items-center'>
-							{value ? (
+							{averageRating ? (
 								<span className='ant-rate-text text-sm'>
-									{value}.0
+									{averageRating}
 								</span>
-							) : (
-								''
-							)}
+							) : null}
 							<Rate
-								onChange={setValue}
-								value={value}
+								value={Number(averageRating)}
 								style={{ fontSize: '13px' }}
 							/>
 						</li>
 
-						<li className='text-sm'> (1)</li>
-						<li className='text-sm'> 2 students</li>
+						<li className='text-sm'> ({numberOfReviews})</li>
+						<li className='text-sm'> {currLearners?.length} learner </li>
 					</ul>
 				</div>
 				<div className=' '></div>

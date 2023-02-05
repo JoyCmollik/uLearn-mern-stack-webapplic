@@ -44,7 +44,7 @@ const CourseDetailReview = ({ singleCourse, setTriggerFetch }) => {
 				});
 			setComment('');
 		} else {
-			message.warning('Please write a comment before posting.')
+			message.warning('Please write a comment before posting.');
 		}
 	};
 	//get single course
@@ -174,14 +174,14 @@ const CourseDetailReview = ({ singleCourse, setTriggerFetch }) => {
 					<span>
 						<Rate
 							disabled
-							defaultValue={singleCourse?.averageRating}
+							value={Number(singleCourse?.averageRating)}
 							style={{
 								fontSize: '13px',
 							}}
 						/>
 					</span>
 					<span className='block text-base pt-1'>
-						{singleCourse?.numberOfReviews} Reviews
+						{singleCourse?.numberOfReviews} Review
 					</span>
 				</div>
 				{/* -------------------progress bar----------------------- */}
@@ -264,7 +264,7 @@ const CourseDetailReview = ({ singleCourse, setTriggerFetch }) => {
 										<span className='ml-2'>Posting</span>
 									</span>
 								) : (
-									'Post Comment'
+									'Post Review'
 								)}
 							</button>
 						</form>

@@ -98,7 +98,7 @@ const ContentWriterProfile = () => {
 						<h3 className='text-2xl text-center text-white'>
 							Profile
 						</h3>
-						<BreadcrumbComponents />
+						<BreadcrumbComponents currLinkTitle='Creator Profile' />
 					</div>
 				</div>
 			</div>

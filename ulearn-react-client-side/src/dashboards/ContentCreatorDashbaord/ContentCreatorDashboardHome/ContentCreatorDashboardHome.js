@@ -9,6 +9,7 @@ import LordIcon from '../../../components/layout/LordIcon/LordIcon';
 import useAuth from '../../../hooks/useAuth';
 import CourseOverview from '../../AdminDashboard/AdminDashboardHomePage/AdminDashboardHomeComponents/CourseOverview/CourseOverview';
 import TopCourses from '../../AdminDashboard/AdminDashboardHomePage/AdminDashboardHomeComponents/TopCourses/TopCourses';
+import ContentCreatorPendingCourses from '../ContentCreatorCourses/ContentCreatorPendingCourses';
 
 const ContentCreatorDashboardHome = () => {
 	const [myCourses, setMyCourses] = useState(null);
@@ -132,10 +133,10 @@ const ContentCreatorDashboardHome = () => {
 				<div className='grid grid-cols-2 gap-4'>
 					<div className='bg-white w-full rounded-lg border-[0.5px]'>
 						<h4 className='text-base uppercase p-4 border-b-[0.5px]'>
-							Pending Courses
+							Your Pending Courses
 						</h4>
 						<div className='p-4'>
-							<TopCourses />
+							<ContentCreatorPendingCourses />
 						</div>
 					</div>
 					<div className='bg-white w-full rounded-lg border-[0.5px] space-y-4'>

@@ -5,7 +5,7 @@ import {
 	AiFillLinkedin,
 } from 'react-icons/ai';
 import { FaPinterestSquare } from 'react-icons/fa';
-import logo from '../../../../images/logo.png';
+import logo from '../../../../images/ulearn_logo.png';
 import { Divider } from 'antd';
 import { SpaceContext } from 'antd/lib/space';
 
@@ -31,7 +31,7 @@ const footerLinks = [
 	},
 
 	{
-		title: 'ULearn',
+		title: 'ULearn - Student-led Learning & Collaboration LMS',
 		img: logo,
 	},
 ];
@@ -74,7 +74,7 @@ const FooterComponent = () => {
 			<Divider className='bg-white' />
 			<div className='flex justify-between items-center'>
 				<div className='flex items-center space-x-2'>
-					<img src={logo} alt='' srcset='' />
+					<img className='w-[100px]' src={logo} alt='' srcset='' />
 					<h2 className='text-lg text-white'>ULearn</h2>
 				</div>
 				<div className='flex'>

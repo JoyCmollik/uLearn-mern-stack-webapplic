@@ -108,10 +108,10 @@ const AdminDashboardHome = () => {
 						</div>
 					</div>
 				</div>
-				{/*****--------------Admin Revenue This Year---------------*****/}
+				{/*****--------------Learners Growth This Year---------------*****/}
 				<div className='bg-white h-[40vh] w-full rounded-lg border-[0.5px] space-y-4'>
 					<h4 className='text-base uppercase p-4 border-b-[0.5px]'>
-						Admin Revenue This Year
+						Learners Growth This Year
 					</h4>
 					<AdminRevenue />
 				</div>
@@ -131,7 +131,7 @@ const AdminDashboardHome = () => {
 						</h4>
 						<div className='overview-wrapper h-full flex flex-col justify-start items-center'>
 							<div className='flex justify-center items-center'>
-								<CourseOverview courseStats={courseStats}  />
+								<CourseOverview courseStats={courseStats} />
 							</div>
 							<div className='flex justify-center items-center space-x-16'>
 								<div className='text-center'>

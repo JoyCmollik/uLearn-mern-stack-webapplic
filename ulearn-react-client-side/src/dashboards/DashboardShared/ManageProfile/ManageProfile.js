@@ -1,4 +1,4 @@
-import { message, Modal } from 'antd';
+import { message, Modal, Tag } from 'antd';
 import axios from 'axios';
 import { LayoutGroupContext } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
@@ -97,11 +97,11 @@ const ManageProfile = () => {
 			<div className='flex justify-between items-start px-8 py-4 border-b-[0.5px]'>
 				<div className='wrapper flex justify-between items-start space-x-4'>
 					<figure className='h-[125px] w-[125px] bg-white rounded-full flex justify-center items-center -mt-14 relative'>
-							<img
-								className='w-full h-full rounded-full object-cover'
-								src={userProfile?.avatarURL}
-								alt='profile'
-							/>
+						<img
+							className='w-full h-full rounded-full object-cover'
+							src={userProfile?.avatarURL}
+							alt='profile'
+						/>
 						{/*****-------------- Change Image ---------------*****/}
 						<button
 							onClick={() => setIsUploadModalOpen(true)}
@@ -253,12 +253,12 @@ const ManageProfile = () => {
 						{userProfile?.role === 'instructor' && (
 							<div className='space-y-1'>
 								<h5 className='text-gray-400 m-0'>Skills</h5>
-								<div className='flex items-center space-x-2'>
+								<div className='flex space-x-2'>
 									{userProfile?.instructor?.skillSets?.map(
 										(skill) => (
-											<div className='px-2 py-1 rounded-lg bg-light text-gray-400'>
+											<Tag style={{ padding: '4px 4px', borderRadius: '8px' }} >
 												{skill}
-											</div>
+											</Tag>
 										)
 									)}
 								</div>

@@ -31,7 +31,7 @@ const CourseList = () => {
 	const [searchDropOpen, setSearchDropOpen] = useState(false);
 	const [filters, setFilters] = useState({ sort: '-_id' });
 	const [query, setQuery] = useState('');
-	const [currentPage, setCurrentPage] = useState({ page: 1, limit: 2 });
+	const [currentPage, setCurrentPage] = useState({ page: 1, limit: 4 });
 	const searchRef = useRef('');
 
 	// hook constants
@@ -53,7 +53,7 @@ const CourseList = () => {
 		}
 		if (!courseList.length) {
 			axios
-				.get(`/courses?page=1&limit=2&sort=-_id`)
+				.get(`/courses?page=1&limit=${currentPage?.limit}&sort=-_id`)
 				.then((response) => {
 					//console.log(response.data.courses);
 					setCourseList(response.data);

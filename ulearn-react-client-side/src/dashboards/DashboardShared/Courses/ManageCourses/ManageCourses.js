@@ -9,6 +9,7 @@ import { message, notification } from 'antd';
 import ManageCoursesTable from '../MangeCoursesTable/ManageCoursesTable';
 import axios from 'axios';
 import Loading from '../../../../components/layout/Loading/Loading';
+import { Link } from 'react-router-dom';
 
 const courseStatList = [
 	{
@@ -272,9 +273,11 @@ const ManageCourses = () => {
 				{/* header */}
 				<h4 className='text-xl font-medium'>Courses</h4>
 				{/* add new course */}
-				<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
-					<HiPlus size={20} /> <span>Add New Course</span>
-				</button>
+				<Link to='add'>
+					<button className='px-4 py-2 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center'>
+						<HiPlus size={20} /> <span>Add New Course</span>
+					</button>
+				</Link>
 			</div>
 			{/*****--------------Course Stats---------------*****/}
 			<div className='grid grid-cols-4 gap-4'>

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Input, message, PageHeader, Spin, Upload } from 'antd';
 import LordIcon from '../../../../components/layout/LordIcon/LordIcon';
-// import addCategory from '../../../../images/add_document.png';
+import addCategory from '../../../../images/add_document.png';
 import { Controller, useForm } from 'react-hook-form';
 import Loading from '../../../../components/layout/Loading/Loading';
 
@@ -129,11 +129,11 @@ const AddCategory = ({ isLoading, handleCreateCategory }) => {
 						</form>
 					</div>
 					<div className='col-span-7'>
-						{/* <img
+						<img
 							className='object-cover w-10/12 mx-auto'
 							src={addCategory}
 							alt='add-category'
-						/> */}
+						/>
 					</div>
 				</div>
 			</PageHeader>

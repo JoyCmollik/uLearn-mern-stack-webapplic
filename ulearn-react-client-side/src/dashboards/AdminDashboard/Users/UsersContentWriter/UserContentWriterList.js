@@ -37,15 +37,15 @@ const columns = [
 		key: 'createdAt',
 		render: (createdAt) => <p>{moment(createdAt).format('LL')} </p>,
 	},
-	{
-		title: 'Action',
-		key: 'action',
-		render: () => (
-			<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
-				<TfiMore size={18} />
-			</button>
-		),
-	},
+	// {
+	// 	title: 'Action',
+	// 	key: 'action',
+	// 	render: () => (
+	// 		<button className='text-primary px-2 py-[0.5px] rounded-lg border border-primary'>
+	// 			<TfiMore size={18} />
+	// 		</button>
+	// 	),
+	// },
 ];
 const UserContentWriterList = () => {
 	const [data, setData] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HiCog, HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { Steps, Tabs } from 'antd';
+import { notification, Steps, Tabs } from 'antd';
 import {
 	AddBasic,
 	AddRequirement,
@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../../../hooks/useAuth';
 
 const { Step } = Steps;
 
@@ -36,13 +37,6 @@ const initialSteps = [
 		icon: <HiOutlineDocumentDuplicate />,
 		description: 'What things are going to be achieved upon completion?',
 	},
-	// {
-	// 	title: 'Pricing',
-	// 	currStatus: 'wait',
-	// 	icon: <HiOutlineDocumentDuplicate />,
-	// 	description:
-	// 		'Putting a good price increases chances of better performance',
-	// },
 	{
 		title: 'Media',
 		currStatus: 'wait',
@@ -76,6 +70,7 @@ const AddNewCourses = () => {
 
 	// third party library states
 	const { control, handleSubmit, reset } = useForm({});
+	const { user } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -100,9 +95,16 @@ const AddNewCourses = () => {
 		data.courseThumb = courseThumb;
 		data.seoTags = tags;
 		data.courseDesc = editorContent;
-		data.category = { name: data.category, categoryId: categories.find(item => item.category === data.category)._id }
-
-		console.log(data.category);
+		if (data.category) {
+			data.category = {
+				name: data.category,
+				categoryId: categories.find(
+					(item) => item.category === data.category
+				)._id,
+			};
+		} else {
+			data.category = { name: null, categoryId: null };
+		}
 		// POST - request to save course
 		axios
 			.post('/courses', data)
@@ -110,15 +112,30 @@ const AddNewCourses = () => {
 				console.log(response.data);
 				reset();
 				message.success('Your course has been uploaded successfully');
-				navigate('/admin/dashboard/manage-courses');
+				navigate(`/${user?.role === 'admin' ? 'admin' : 'content-creator'}/dashboard/manage-courses`);
 			})
 			.catch((error) => {
 				console.log(error);
-				message.error(error?.response?.data?.msg || error.response.message || error.message);
+				const errors = error?.response?.data?.msg?.split(',');
+				if (errors?.length > 1) {
+					errors?.map((error) =>
+						notification.error({
+							message: 'Input Error',
+							description: error,
+							style: { borderRadius: '8px' },
+						})
+					);
+				} else {
+					message.error(
+						error?.response?.data?.msg ||
+							error.response.message ||
+							error.message
+					);
+				}
 			})
 			.finally(() => {
 				setIsUploading(false);
-			})
+			});
 	};
 
 	// functionality -> will update steps while tabs are opened
@@ -126,19 +143,25 @@ const AddNewCourses = () => {
 		setTabActiveKey(() => receivedKey);
 		let currKey = Number(receivedKey);
 		// default termination
-		if (steps[currKey].currStatus === 'process') return;
+		if (steps[currKey - 1].currStatus === 'process') return;
 
 		let newSteps = [...steps];
+		console.log(newSteps, 'newSteps');
 
-		newSteps[currKey - 1].currStatus = 'process';
+		if (currKey == 6) {
+			newSteps[currKey - 1].currStatus = 'finish';
+		} else {
+			newSteps[currKey - 1].currStatus = 'process';
+		}
+		console.log('Changing status of ', newSteps[currKey - 1]);
 
 		setSteps(() => newSteps);
 	};
 
 	// functionality -> will change the current tab by click event on the button set explicitly
 	const handleActiveTab = (currKey) => {
-		handleSteps(currKey);
 		setTabActiveKey(() => currKey);
+		handleSteps(currKey);
 	};
 
 	return (
@@ -179,7 +202,7 @@ const AddNewCourses = () => {
 				</div>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
-					className=' col-span-9 '
+					className='col-span-9 h-full'
 				>
 					<Tabs
 						className='h-full'
@@ -232,7 +255,11 @@ const AddNewCourses = () => {
 							/>
 						</Tabs.TabPane>
 						<Tabs.TabPane tab='Finish' key='6'>
-							<AddFinishing handleActiveTab={handleActiveTab} isUploading={isUploading} setIsUploading={setIsUploading} />
+							<AddFinishing
+								handleActiveTab={handleActiveTab}
+								isUploading={isUploading}
+								setIsUploading={setIsUploading}
+							/>
 						</Tabs.TabPane>
 					</Tabs>
 				</form>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 import './BreadcrumbComponent.css';
-const BreadcrumbComponents = () => {
+const BreadcrumbComponents = ({ currLinkTitle }) => {
 	return (
 		<Breadcrumb
 			className='text-white'
@@ -14,7 +14,7 @@ const BreadcrumbComponents = () => {
 				</Link>
 			</Breadcrumb.Item>
 			<Breadcrumb.Item className='underline text-white'>
-				Courses
+				{currLinkTitle || window?.location.pathname}
 			</Breadcrumb.Item>
 		</Breadcrumb>
 	);

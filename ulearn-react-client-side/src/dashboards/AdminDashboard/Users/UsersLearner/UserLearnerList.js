@@ -49,49 +49,49 @@ const columns = [
 			</Tag>
 		),
 	},
-	{
-		title: 'Action',
-		key: 'action',
-		dataIndex: '_id',
-		render: (_id, data) => (
-			<div className='flex items-center space-x-2 text-font2'>
-				<button
-					// onClick={() => handleApproveCourse(data)}
-					className='text-green-400 p-1 rounded-full border border-green-400'
-					// disabled={loadingStatus?.isApproving}
-				>
-					{/* {loadingStatus?.isApproving &&
-				loadingStatus.currCourse === data._id ? (
-					<Spin size='small' />
-				) : (
-					<HiCheck size={16} />
-				)} */}
-					<HiCheck size={16} />
-				</button>
-				<Popconfirm
-					title='Are you sure to delete this course?'
-					// onConfirm={() => handleDeleteCourse(data._id)}
-					okText='Yes'
-					cancelText='No'
-				>
-					<button className='text-error p-1 rounded-full border border-error'>
-						{/* {loadingStatus?.isDeleting &&
-						loadingStatus.currCourse === data._id ? (
-							<LoadingOutlined
-								style={{
-									fontSize: 18,
-								}}
-								spin
-							/>
-						) : (
-							<MdDeleteOutline size={18} />
-						)} */}
-						<MdDeleteOutline size={18} />
-					</button>
-				</Popconfirm>
-			</div>
-		),
-	},
+	// {
+	// 	title: 'Action',
+	// 	key: 'action',
+	// 	dataIndex: '_id',
+	// 	render: (_id, data) => (
+	// 		<div className='flex items-center space-x-2 text-font2'>
+	// 			<button
+	// 				// onClick={() => handleApproveCourse(data)}
+	// 				className='text-green-400 p-1 rounded-full border border-green-400'
+	// 				// disabled={loadingStatus?.isApproving}
+	// 			>
+	// 				{/* {loadingStatus?.isApproving &&
+	// 			loadingStatus.currCourse === data._id ? (
+	// 				<Spin size='small' />
+	// 			) : (
+	// 				<HiCheck size={16} />
+	// 			)} */}
+	// 				<HiCheck size={16} />
+	// 			</button>
+	// 			<Popconfirm
+	// 				title='Are you sure to delete this course?'
+	// 				// onConfirm={() => handleDeleteCourse(data._id)}
+	// 				okText='Yes'
+	// 				cancelText='No'
+	// 			>
+	// 				<button className='text-error p-1 rounded-full border border-error'>
+	// 					{/* {loadingStatus?.isDeleting &&
+	// 					loadingStatus.currCourse === data._id ? (
+	// 						<LoadingOutlined
+	// 							style={{
+	// 								fontSize: 18,
+	// 							}}
+	// 							spin
+	// 						/>
+	// 					) : (
+	// 						<MdDeleteOutline size={18} />
+	// 					)} */}
+	// 					<MdDeleteOutline size={18} />
+	// 				</button>
+	// 			</Popconfirm>
+	// 		</div>
+	// 	),
+	// },
 ];
 const UserLearnerList = () => {
 	const [data, setData] = useState([]);

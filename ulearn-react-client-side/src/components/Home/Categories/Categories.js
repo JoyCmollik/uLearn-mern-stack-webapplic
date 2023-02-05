@@ -1,4 +1,5 @@
 import React from 'react';
+import CategorySkeleton from '../../layout/Skeleton/CategorySkeleton';
 
 const Categories = ({ categories }) => {
 	return (

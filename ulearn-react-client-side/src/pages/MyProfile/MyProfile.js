@@ -15,7 +15,7 @@ const MyProfile = () => {
 							<h3 className='text-2xl text-center text-white'>
 								My Profile
 							</h3>
-							<BreadcrumbComponents />
+							<BreadcrumbComponents currLink='/my-profile' currLinkTitle='Profile' />
 						</div>
 					</div>
 				</div>

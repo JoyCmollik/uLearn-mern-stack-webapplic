@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useAuthentication from '../../../hooks/useAuthentication';
 
 const Features = () => {
@@ -18,11 +19,13 @@ const Features = () => {
 						</h3>
 						{/*---------------button--------------------*/}
 
-						<button
-							className={`bg-[#0b5ed7] text-base capitalize font-normal px-6 py-2 text-light rounded-md`}
-						>
-							{user ? 'become instructor' : 'get started'}
-						</button>
+						<Link to='/become-content-creator'>
+							<button
+								className={`bg-transparent text-base capitalize font-normal px-6 py-2 text-primary border border-primary rounded-md`}
+							>
+								{user ? 'become instructor' : 'get started'}
+							</button>
+						</Link>
 					</div>
 					<div>
 						<img

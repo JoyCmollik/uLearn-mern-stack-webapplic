@@ -5,6 +5,7 @@ import { BsFilter } from 'react-icons/bs';
 import { Tabs } from 'antd';
 import CourseContentTabsDiscussionAll from './CourseContentTabsDiscussionAll';
 import { MdOutlineControlPointDuplicate } from 'react-icons/md';
+import CourseContentTabsDiscussionOwned from './CourseContentTabsDiscussionOwned';
 
 const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
 	const onChange = (key) => {
@@ -30,21 +31,6 @@ const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
 				</div>
 			</article>
 
-			{/*----------------------------------search-----------------------------*/}
-			<div className='flex items-center justify-between space-x-3 bg-white border border-gray-200  rounded-lg py-2 px-4'>
-				<div>
-					<AiOutlineSearch className='text-xl ml-3 inline-block text-gray-500 ' />
-					<input
-						type='text'
-						placeholder='Search discussions...'
-						className='text-base text-black focus:outline-none m-1 '
-					/>
-				</div>
-				<div className='flex items-center space-x-3'>
-					<BsFilter className='text-xl ml-3 inline-block text-black ' />
-					<button className='font-bold text-base'>Filters</button>
-				</div>
-			</div>
 			{/*----------------------------------Tabs-----------------------------*/}
 			<article className=' '>
 				<div className=' '>
@@ -68,7 +54,12 @@ const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
 							{
 								label: `Owned`,
 								key: '2',
-								children: `Content of Tab Pane 2`,
+								children: (
+									<CourseContentTabsDiscussionOwned
+										isLoading={isLoading}
+										courseTopics={courseTopics}
+									/>
+								),
 							},
 							// {
 							// 	label: `Bookmarks`,

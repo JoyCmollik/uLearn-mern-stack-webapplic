@@ -1,17 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import './CourseContentTabDiscussionListDetail.css';
 import { Dropdown, Menu } from 'antd';
 import DashTextEditor from '../../../dashboards/DashboardShared/DashTextEditor/DashTextEditor';
 import { Avatar, message, Progress, Spin } from 'antd';
 import axios from 'axios';
-import { MdOutlineArrowBack } from 'react-icons/md';
+import {
+	MdOutlineArrowBack,
+	MdOutlineDelete,
+	MdOutlineEdit,
+} from 'react-icons/md';
 import moment from 'moment';
 import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
 import CourseDiscussionCommentsComponent from './CourseDiscussionComments/CourseDiscussionCommentsComponent';
 import useAuth from '../../../hooks/useAuth';
 import { BsFillCaretUpFill } from 'react-icons/bs';
 import Loading from '../../layout/Loading/Loading';
+import { HiDotsVertical } from 'react-icons/hi';
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
 
 const parse = require('html-react-parser');
 
@@ -21,18 +29,16 @@ const initialStatus = {
 	updating: false,
 };
 
-const CourseContentTabsDiscussionListDetail = ({ vote }) => {
+const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 	const [topic, setTopic] = useState(null);
-	const [editorContent, setEditorContent] = useState();
 	const [isLoading, setIsLoading] = useState();
-	const [isOperating, setIsOperating] = useState();
 	const [status, setStatus] = useState({ ...initialStatus });
 	const [triggerFetching, setTriggerFetching] = useState(true);
 
 	// library constants
 	const { topicId } = useParams();
 	const { user: currUser } = useAuth();
-	const { handleUpVote, handleDownVote } = vote;
+	const { handleUpVote, handleDownVote, voteStatus, setVoteStatus } = vote;
 
 	// function - on component load
 	useEffect(() => {
@@ -53,6 +59,37 @@ const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 				});
 		}
 	}, [topicId, triggerFetching]);
+
+	// will manipulate vote count locally
+	useEffect(() => {
+		if (voteStatus?.upvoted) {
+			setTopic((prevTopic) => {
+				return {
+					...prevTopic,
+					votes: [...prevTopic?.votes, currUser?.userId],
+				};
+			});
+			setVoteStatus((prevStatus) => {
+				return { ...prevStatus, upvoted: false };
+			});
+		}
+
+		if (voteStatus?.downvoted) {
+			setTopic((prevTopic) => {
+				return {
+					...prevTopic,
+					votes: [
+						...prevTopic.votes.filter(
+							(vote) => String(vote) !== String(currUser?.userId)
+						),
+					],
+				};
+			});
+			setVoteStatus((prevStatus) => {
+				return { ...prevStatus, downvoted: false };
+			});
+		}
+	}, [voteStatus]);
 
 	// function - create a comment
 	const handleCreateComment = (commentBody) => {
@@ -78,7 +115,7 @@ const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 			});
 	};
 
-	// function - create a comment
+	// function - delete a comment
 	const handleDeleteComment = (commentId) => {
 		setStatus({
 			...status,
@@ -100,6 +137,22 @@ const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 					deleting: { _id: null, currStatus: false },
 				});
 			});
+	};
+
+	const showDeleteConfirm = () => {
+		confirm({
+			title: 'Are you sure delete this topic?',
+			icon: <ExclamationCircleOutlined />,
+			okText: 'Yes',
+			okType: 'danger',
+			cancelText: 'No',
+			onOk() {
+				handleDeleteTopic(topicId);
+			},
+			onCancel() {
+				console.log('Cancel');
+			},
+		});
 	};
 
 	return (
@@ -160,48 +213,103 @@ const CourseContentTabsDiscussionListDetail = ({ vote }) => {
 												).fromNow()}
 											</p>
 										</div>
-										{/*---------------------topic vote ----------------------------*/}
-										<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
-											<button
-												onClick={() =>
-													handleUpVote(topic._id)
-												}
-												className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
-												disabled={
-													!currUser ||
-													topic.votes.includes(
-														currUser?.userId
-													)
-												}
-											>
-												{topic.votes.includes(
-													currUser.userId
-												) ? (
-													<BsFillCaretUpFill
-														size={17}
-													/>
-												) : (
-													<BiUpArrow />
-												)}
-											</button>
-											<div className='text-base font-medium px-2'>
-												{topic.votes.length || 0}
+										{/*--------------------- vote and more options ----------------------------*/}
+										<div className='flex items-center space-x-2'>
+											{/*---------------------topic vote ----------------------------*/}
+											<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
+												<button
+													onClick={() =>
+														handleUpVote(topic._id)
+													}
+													className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+													disabled={
+														!currUser ||
+														topic.votes.includes(
+															currUser?.userId
+														)
+													}
+												>
+													{topic.votes.includes(
+														currUser.userId
+													) ? (
+														<BsFillCaretUpFill
+															size={17}
+														/>
+													) : (
+														<BiUpArrow />
+													)}
+												</button>
+												<div className='text-base font-medium px-2'>
+													{topic?.votes?.length || 0}
+												</div>
+												{/* ---------------- downvote ---------------- */}
+												<button
+													onClick={(e) =>
+														handleDownVote(
+															topic._id
+														)
+													}
+													disabled={
+														!currUser ||
+														!topic.votes.includes(
+															currUser?.userId
+														)
+													}
+													className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+												>
+													<BiDownArrow />
+												</button>
 											</div>
-											{/* ---------------- downvote ---------------- */}
-											<button
-												onClick={(e) =>
-													handleDownVote(topic._id)
-												}
-												disabled={
-													!currUser ||
-													!topic.votes.includes(
-														currUser?.userId
-													)
-												}
-												className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
-											>
-												<BiDownArrow />
-											</button>
+											{topic?.user?._id ===
+											currUser?.userId ? (
+												<>
+													{/* ---------------- More options ---------------- */}
+													<div className='flex items-center'>
+														<Dropdown
+															overlay={
+																<div className='p-2 bg-white drop-shadow rounded-lg flex flex-col space-y-2'>
+																	<Link
+																		to={`/course-content/${topic?.course}/discussions/editTopic/${topic._id}`}
+																	>
+																		<button className='w-full px-4 py-1 border border-primary rounded-lg text-primary flex items-center space-x-2'>
+																			<span>
+																				<MdOutlineEdit />
+																			</span>
+																			<span>
+																				Edit
+																				Topic
+																			</span>
+																		</button>
+																	</Link>
+																	<button
+																		onClick={
+																			showDeleteConfirm
+																		}
+																		className='w-full px-4 py-1 border border-error rounded-lg text-error flex items-center space-x-2'
+																	>
+																		<span>
+																			<MdOutlineDelete />
+																		</span>
+																		<span>
+																			Delete
+																			Topic
+																		</span>
+																	</button>
+																</div>
+															}
+															className='cursor-pointer'
+															placement='bottomLeft'
+															arrow={{
+																pointAtCenter: true,
+															}}
+														>
+															<HiDotsVertical
+																size={20}
+															/>
+														</Dropdown>
+													</div>
+												</>
+											) : null}
 										</div>
 									</div>
 									{/*---------------------topic content ----------------------------*/}

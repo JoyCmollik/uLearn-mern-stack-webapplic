@@ -67,7 +67,7 @@ const CourseDiscussionCommentsComponent = ({
 				<h2 className='pt-4 text-base font-normal text-font1'>
 					Comments <span> {`(${comments.length})`}</span>
 				</h2>
-				<div className='flex items-center mt-2'>
+				{/* <div className='flex items-center mt-2'>
 					<span className='pr-2'>Sort by</span>
 					<Dropdown
 						overlay={menu}
@@ -76,15 +76,32 @@ const CourseDiscussionCommentsComponent = ({
 						<a href='/xyz' onClick={(e) => e.preventDefault()}>
 							<div className='flex px-3 space-x-14 items-center justify-between pt-1'>
 								<h4 className='text-sm text-font2'>Hotness</h4>
-								{/* <CaretDownOutlined
+								<CaretDownOutlined
 									className='pb-1'
 									style={{ color: 'gray' }}
-								/> */}
+								/>
 							</div>
 						</a>
 					</Dropdown>
-				</div>
+				</div> */}
 			</div>
+			<hr />
+			<h2 className='text-base font-medium text-font1 text-center'>
+				All Comments
+			</h2>
+			<hr />
+			{/*--------------------- single comment card ----------------------*/}
+			{comments.length
+				? comments.map((comment) => (
+						<CourseDiscussionComment
+							key={comment._id}
+							comment={comment}
+							handleDeleteComment={handleDeleteComment}
+							status={status}
+						/>
+				  ))
+				: null}
+
 			{/*------------------------------ create a comment here ---------------------------------*/}
 			{user && (
 				<div className='grid grid-cols-12 gap-4 p-4 rounded-lg bg-light'>
@@ -130,21 +147,6 @@ const CourseDiscussionCommentsComponent = ({
 					</article>
 				</div>
 			)}
-			<hr />
-			<h2 className='text-base font-medium text-font1 text-center'>
-				All Comments
-			</h2>
-			<hr />
-			{/*--------------------- single comment card ----------------------*/}
-			{comments.length
-				? comments.map((comment) => (
-						<CourseDiscussionComment
-							comment={comment}
-							handleDeleteComment={handleDeleteComment}
-							status={status}
-						/>
-				  ))
-				: null}
 		</div>
 	);
 };

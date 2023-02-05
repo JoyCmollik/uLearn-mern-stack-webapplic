@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillCaretUpFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -9,30 +9,27 @@ import { motion } from 'framer-motion';
 import useFramerMotion from '../../../hooks/useFramerMotion';
 import Loading from '../../layout/Loading/Loading';
 import Lottie from '../../layout/Lottie/Lottie';
-import { AiOutlineSearch } from 'react-icons/ai';
 
-const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
-	const { handleUpVote, handleDownVote } = vote;
+const CourseContentTabsDiscussionOwned = ({ isLoading, courseTopics }) => {
+	const [ownedTopics, setOwnedTopics] = useState([]);
 	const { user: currUser } = useAuth();
 	const { list, item } = useFramerMotion();
+
+	useEffect(() => {
+		if (courseTopics?.length) {
+			setOwnedTopics(() => {
+				return courseTopics.filter(
+					(topic) => topic?.user?._id === currUser?.userId
+				);
+			});
+		}
+	}, [courseTopics]);
 	return (
 		<section className=''>
-			{/*----------------------------------search-----------------------------*/}
-			<div className='flex items-center justify-between space-x-3 bg-white border border-gray-200  rounded-lg py-2 px-4 mb-2'>
-				<di>
-					<AiOutlineSearch className='text-xl ml-3 inline-block text-gray-500 ' />
-					<input
-						type='text'
-						placeholder='Search discussions...'
-						className='text-base text-black focus:outline-none m-1 '
-					/>
-				</di>
-			</div>
 			{/*-------------------------all other topics----------------------------*/}
 			<div className='space-y-4'>
-				{isLoading ? (
+				{isLoading === 0 ? (
 					<div className='h-[35vh] flex justify-center items-center'>
-						{' '}
 						<Loading />{' '}
 					</div>
 				) : (
@@ -42,7 +39,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 						variants={list}
 					>
 						{/*------------------------- single topic ----------------------------*/}
-						{courseTopics.length === 0 ? (
+						{ownedTopics.length === 0 ? (
 							<div className='flex flex-col justify-center items-center space-y-4'>
 								<Lottie
 									src='https://assets8.lottiefiles.com/packages/lf20_dqTQu9NJiM.json'
@@ -56,7 +53,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 								</div>
 							</div>
 						) : (
-							courseTopics.map((topic) => {
+							ownedTopics.map((topic) => {
 								const {
 									_id,
 									topicTitle,
@@ -105,69 +102,21 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 											</div>
 										</Link>
 										{/* ---------------- topic right ---------------- */}
-										<div className='flex flex-col space-y-2 justify-center items-end'>
-											{/* ---------------- vote buttons ---------------- */}
-											<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
-												{/* ---------------- upvote ---------------- */}
-												<motion.button
-													onClick={() =>
-														handleUpVote(_id)
-													}
-													className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
-													disabled={
-														!currUser ||
-														votes.includes(
-															currUser?.userId
-														)
-													}
-													whileTap={{ scale: 0.8 }}
-													transition={{
-														type: 'spring',
-														stiffness: 400,
-														damping: 17,
-													}}
-												>
-													{votes.includes(
-														currUser?.userId
-													) ? (
-														<BsFillCaretUpFill
-															size={17}
-														/>
-													) : (
-														<BiUpArrow />
-													)}
-												</motion.button>
-												<div className='text-base font-medium px-2'>
-													{votes.length || 0}
-												</div>
-												{/* ---------------- downvote ---------------- */}
-												<motion.button
-													onClick={(e) =>
-														handleDownVote(_id)
-													}
-													disabled={
-														!currUser ||
-														!votes.includes(
-															currUser?.userId
-														)
-													}
-													className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
-													whileTap={{ scale: 0.8 }}
-													transition={{
-														type: 'spring',
-														stiffness: 400,
-														damping: 17,
-													}}
-												>
-													<BiDownArrow />
-												</motion.button>
+										<div className='flex space-x-2 justify-center items-center'>
+											{/* ---------------- votes stats ---------------- */}
+											<div className='text-font2'>
+												<span className='mr-1'>
+													{votes?.length || 0}
+												</span>
+												vote
 											</div>
+											<div className='p-0.5 rounded-lg bg-font2' />
 											{/* ---------------- comment stats ---------------- */}
 											<div className='text-font2'>
 												<span className='mr-1'>
-													{comments.length || 0}
+													{comments?.length || 0}
 												</span>
-												comments
+												comment
 											</div>
 										</div>
 									</motion.article>
@@ -181,4 +130,4 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 	);
 };
 
-export default CourseContentTabsDiscussionAll;
+export default CourseContentTabsDiscussionOwned;
