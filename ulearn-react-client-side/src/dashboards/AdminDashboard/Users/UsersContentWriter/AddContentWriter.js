@@ -3,15 +3,22 @@ import { Button, Input, message, PageHeader, Select, Spin } from 'antd';
 import addCategory from '../../../../images/add-user.png';
 
 import axios from 'axios';
+import TextArea from 'antd/lib/input/TextArea';
+import { useNavigate } from 'react-router-dom';
 const AddContentWriter = () => {
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	const [person, setPerson] = useState({
 		email: '',
 		name: '',
 		password: '',
-		gender: '',
+		gender: 'male',
 		role: 'instructor',
+		degreeTitle: '',
+		institutionName: '',
+		approxPassingYear: '',
+		aboutYou: '',
 	});
 	const handleGender = (value) => {
 		person.gender = value;
@@ -26,8 +33,14 @@ const AddContentWriter = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { email, name, password, gender, role } = person;
+		const { degreeTitle, aboutYou, institutionName, approxPassingYear } =
+			person;
 
-		if (email && name && password && role && gender) {
+		if (
+			(email && name && password && role && gender && degreeTitle,
+			aboutYou && institutionName && approxPassingYear)
+		) {
+			setLoading(true);
 			const data = {
 				name,
 				email,
@@ -35,7 +48,13 @@ const AddContentWriter = () => {
 				gender,
 				role,
 			};
-			setLoading(true);
+			data.instructor = {
+				degreeTitle,
+				aboutYou,
+				institutionName,
+				approxPassingYear,
+				skillSets: [],
+			};
 			axios
 				.post('/auth/admin/register', data)
 				.then((response) => {
@@ -45,9 +64,17 @@ const AddContentWriter = () => {
 					);
 					setPerson({
 						email: '',
-						name: ' ',
+						name: '',
 						password: '',
+						gender: 'male',
+						role: 'instructor',
+						degreeTitle: '',
+						institutionName: '',
+						approxPassingYear: '',
+						aboutYou: '',
 					});
+					console.log(response.data);
+					navigate('/admin/dashboard/manage-users/content-writer')
 				})
 				.catch((error) => {
 					console.log(error);
@@ -61,6 +88,7 @@ const AddContentWriter = () => {
 		}
 	};
 
+
 	return (
 		<div className='border-[0.5px] rounded-lg overflow-hidden '>
 			<PageHeader
@@ -70,7 +98,7 @@ const AddContentWriter = () => {
 				subTitle='if you go back, no changes are saved....'
 			>
 				<div className='grid grid-cols-12 min-h-[25vh] rounded-lg p-4'>
-					<div className='col-span-5 bg-white'>
+					<div className='col-span-8 bg-white'>
 						<form
 							className='grid grid-cols-12 gap-4 p-8 bg-light rounded-lg'
 							onSubmit={handleSubmit}
@@ -102,12 +130,50 @@ const AddContentWriter = () => {
 								/>
 							</div>
 							{/* input item */}
-							<div className='col-span-12 space-y-2 flex flex-col'>
+							<div className='col-span-7 space-y-2 flex flex-col'>
+								<label className='text-font2 uppercase'>
+									Degree Title
+								</label>
+								<Input
+									size='large'
+									name='degreeTitle'
+									placeholder='degreeTitle'
+									value={person.degreeTitle}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* input item */}
+							<div className='col-span-5 space-y-2 flex flex-col'>
+								<label className='text-font2 uppercase'>
+									Approximate Passing Year
+								</label>
+								<Input
+									size='large'
+									name='approxPassingYear'
+									placeholder='Passing Year'
+									value={person.approxPassingYear}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* input item */}
+							<div className='col-span-6 space-y-2 flex flex-col'>
+								<label className='text-font2 uppercase'>
+									Institution Name
+								</label>
+								<Input
+									size='large'
+									name='institutionName'
+									placeholder='institutionName'
+									value={person.institutionName}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* input item */}
+							<div className='col-span-6 space-y-2 flex flex-col'>
 								<label className='text-font2 uppercase'>
 									Gender
 								</label>
 								<Select
-									defaultValue='male'
 									style={{
 										width: '100%',
 									}}
@@ -132,6 +198,19 @@ const AddContentWriter = () => {
 							{/* input item */}
 							<div className='col-span-12 space-y-2 flex flex-col'>
 								<label className='text-font2 uppercase'>
+									About Content Writer
+								</label>
+								<TextArea
+									size='large'
+									name='aboutYou'
+									placeholder='institutionName'
+									value={person.aboutYou}
+									onChange={handleChange}
+								/>
+							</div>
+							{/* input item */}
+							<div className='col-span-12 space-y-2 flex flex-col'>
+								<label className='text-font2 uppercase'>
 									password
 								</label>
 								<Input
@@ -144,15 +223,16 @@ const AddContentWriter = () => {
 								/>
 							</div>
 							<Button
-								className='col-span-12 mt-4'
+								className='col-span-12 mt-4 disabled:opacity-40'
 								type='primary'
 								htmlType='submit'
+								disabled={loading}
 							>
 								Add Content Writer
 							</Button>
 						</form>
 					</div>
-					<div className='col-span-7'>
+					<div className='col-span-4 flex justify-center items-center'>
 						<img
 							className='object-cover w-10/12 mx-auto'
 							src={addCategory}

@@ -69,14 +69,14 @@ const UsersAdminList = () => {
 	return (
 		<div className='space-y-8'>
 			<div className='flex justify-between items-center'>
-				<div className='flex items-center space-x-2'>
+				{/* <div className='flex items-center space-x-2'>
 					<span>Show</span>
 					<span>
 						<CustomSelect defaultValue='25' />
 					</span>
 					<span>entries</span>
-				</div>
-				<Search
+				</div> */}
+				{/* <Search
 					placeholder='input search text'
 					// onSearch={onSearch}
 					enterButton
@@ -84,12 +84,14 @@ const UsersAdminList = () => {
 					style={{
 						width: '25%',
 					}}
-				/>
+				/> */}
 			</div>
 			{!loading ? (
 				<Table columns={columns} dataSource={data} />
 			) : (
-				<Loading />
+				<div className='h-[40vh] flex justify-center items-center'>
+					<Loading />
+				</div>
 			)}
 		</div>
 	);

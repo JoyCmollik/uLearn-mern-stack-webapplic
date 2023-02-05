@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Instructor = require('../models/Instructor');
 const Token = require('../models/Token');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
@@ -61,8 +62,7 @@ const register = async (req, res) => {
 };
 
 const registerUserByAdmin = async (req, res) => {
-	console.log(req.user);
-	let { email, name, password, role, gender } = req.body;
+	let { email, name, password, role, gender, instructor } = req.body;
 	const emailAlreadyExists = await User.findOne({ email });
 	if (emailAlreadyExists) {
 		throw new CustomError.BadRequestError('Email Already Exists');
@@ -79,12 +79,16 @@ const registerUserByAdmin = async (req, res) => {
 		verificationToken,
 	});
 
+	if(role==='instructor' && instructor) {
+		const newInstructor = await Instructor.create({...instructor, user: user?._id});
+	}
+
 	/* const tokenUser = createTokenUser(user);
 	attachCookiesToResponse({ res, user: tokenUser });
 	res.status(StatusCodes.CREATED).json({ user: tokenUser }); */
 
 	res.status(StatusCodes.CREATED).json({
-		msg: 'Success! user is created',
+		msg: 'Success! user is created'
 	});
 };
 

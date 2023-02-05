@@ -67,7 +67,7 @@ const UserContentWriterList = () => {
 	}, []);
 	return (
 		<div className='space-y-8'>
-			<div className='flex justify-between items-center'>
+			{/* <div className='flex justify-between items-center'>
 				<div className='flex items-center space-x-2'>
 					<span>Show</span>
 					<span>
@@ -84,11 +84,13 @@ const UserContentWriterList = () => {
 						width: '25%',
 					}}
 				/>
-			</div>
+			</div> */}
 			{!loading ? (
 				<Table columns={columns} dataSource={data} />
 			) : (
-				<Loading />
+				<div className='h-[40vh] flex justify-center items-center'>
+					<Loading />
+				</div>
 			)}
 		</div>
 	);

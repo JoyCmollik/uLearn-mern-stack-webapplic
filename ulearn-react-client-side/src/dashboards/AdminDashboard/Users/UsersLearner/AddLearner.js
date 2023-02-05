@@ -9,7 +9,7 @@ const AddLearner = () => {
 		email: '',
 		name: '',
 		password: '',
-		gender: '',
+		gender: 'male',
 		role: 'user',
 	});
 	const handleGender = (value) => {
@@ -141,11 +141,12 @@ const AddLearner = () => {
 								/>
 							</div>
 							<Button
-								className='col-span-12 mt-4'
+								className='col-span-12 mt-4 disabled:opacity-40'
 								type='primary'
 								htmlType='submit'
+								disabled={loading}
 							>
-								Add Learner
+								Add Content Writer
 							</Button>
 						</form>
 					</div>

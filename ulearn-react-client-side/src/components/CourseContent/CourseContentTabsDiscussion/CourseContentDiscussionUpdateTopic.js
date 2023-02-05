@@ -118,11 +118,7 @@ const CourseContentDiscussionUpdateTopic = ({
 						<button
 							onClick={() => updateTopic()}
 							className='px-4 py-1 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center capitalize disabled:opacity-10'
-							disabled={
-								isLoading ||
-								(topic?.topicTitle === title &&
-									editorContent === topic?.topicContent)
-							}
+							disabled={isLoading}
 						>
 							{isLoading ? (
 								<span className='flex items-center'>
