@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Input, Spin, Tag } from 'antd';
-import { Reorder } from 'framer-motion';
+import { Alert } from 'antd';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
-import Section from '../../../dashboards/DashboardShared/Courses/EditCourse/Section';
-
-import CourseContentDetail from '../../CourseContentDetailPage/CourseContentDetail/CourseContentDetail';
-import CourseContentMenu from '../CourseContentMenu/CourseContentMenu';
-
-import nodataImg from '../../../images/no_data.png';
-import { MdDashboard } from 'react-icons/md';
 import CourseContentLessons from './CourseContentLessons';
 import CourseContentLessonPage from './CourseContentLessonPage';
 import Loading from '../../layout/Loading/Loading';
@@ -16,7 +8,6 @@ import Loading from '../../layout/Loading/Loading';
 const CourseContentTabsCourse = ({ courseContent }) => {
 	const [sectionList, setSectionList] = useState([]);
 	const [currSection, setCurrSection] = useState([]);
-	const [currLesson, setCurrLesson] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	// library constants
@@ -51,7 +42,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 			) : (
 				<>
 					{/*****--------------Section container---------------*****/}
-					<div className='col-span-3 bg-light rounded-lg'>
+					<div className='col-span-3 bg-light overflow-hidden rounded-lg'>
 						{/*****--------------Section count add button---------------*****/}
 						<div className='flex justify-between items-center p-2'>
 							<h4 className='text-lg font-medium uppercase m-0'>
@@ -59,7 +50,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 							</h4>
 						</div>
 						{/*****--------------Section list---------------*****/}
-						<div className='relative'>
+						<div className='relative space-y-1'>
 							{!sectionList.length ? (
 								<Alert
 									style={{
@@ -72,53 +63,37 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 								/>
 							) : (
 								<>
-									<Reorder.Group
-										axis='y'
-										values={sectionList}
-										onReorder={setSectionList}
-										className='space-y-0.5 sticky top-[85px]'
-									>
-										{sectionList.map(
-											(sectionItem, sectionIdx) => (
-												<Reorder.Item
-													key={sectionItem?._id}
-													value={sectionItem}
-												>
-													<article
-														key={sectionItem?._id}
-														onClick={() => {
-															handleCurrSection(
-																sectionItem
-															);
-															navigate(
-																`/course-content/${courseContent._id}`
-															);
-														}}
-														className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
-															currSection._id ===
-															sectionItem._id
-																? 'border-l-primary'
-																: 'border-l-transparent'
-														}`}
-													>
-														<h5 className='text-lg font-light m-0'>
-															Section{' '}
-															{sectionIdx + 1} :{' '}
-															{
-																sectionItem.sectionTitle
-															}
-														</h5>
-														<p className='m-0 text-xs font-light text-font2'>
-															Total Lessons:{' '}
-															{sectionItem
-																?.lessons
-																?.length || 0}
-														</p>
-													</article>
-												</Reorder.Item>
-											)
-										)}
-									</Reorder.Group>
+									{sectionList.map(
+										(sectionItem, sectionIdx) => (
+											<article
+												key={sectionItem?._id}
+												onClick={() => {
+													handleCurrSection(
+														sectionItem
+													);
+													navigate(
+														`/course-content/${courseContent._id}`
+													);
+												}}
+												className={`block px-2 py-2 border-l-2 bg-primary cursor-pointer bg-opacity-5 ${
+													currSection._id ===
+													sectionItem._id
+														? 'border-l-primary'
+														: 'border-l-transparent'
+												}`}
+											>
+												<h5 className='text-lg font-normal m-0'>
+													Section {sectionIdx + 1} :{' '}
+													{sectionItem.sectionTitle}
+												</h5>
+												<p className='m-0 text-xs font-light text-font2'>
+													Total Lessons:{' '}
+													{sectionItem?.lessons
+														?.length || 0}
+												</p>
+											</article>
+										)
+									)}
 								</>
 							)}
 						</div>

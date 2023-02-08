@@ -14,19 +14,19 @@ import { AiOutlineSearch } from 'react-icons/ai';
 const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 	const { handleUpVote, handleDownVote } = vote;
 	const { user: currUser } = useAuth();
-	const { list, item } = useFramerMotion();
+	const { listContainerVariant, itemVariant } = useFramerMotion();
 	return (
 		<section className=''>
 			{/*----------------------------------search-----------------------------*/}
 			<div className='flex items-center justify-between space-x-3 bg-white border border-gray-200  rounded-lg py-2 px-4 mb-2'>
-				<di>
+				<div>
 					<AiOutlineSearch className='text-xl ml-3 inline-block text-gray-500 ' />
 					<input
 						type='text'
 						placeholder='Search discussions...'
 						className='text-base text-black focus:outline-none m-1 '
 					/>
-				</di>
+				</div>
 			</div>
 			{/*-------------------------all other topics----------------------------*/}
 			<div className='space-y-4'>
@@ -39,7 +39,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 					<motion.div
 						initial='hidden'
 						animate='visible'
-						variants={list}
+						variants={listContainerVariant}
 					>
 						{/*------------------------- single topic ----------------------------*/}
 						{courseTopics.length === 0 ? (
@@ -56,7 +56,7 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 								</div>
 							</div>
 						) : (
-							courseTopics.map((topic) => {
+							courseTopics.map((topic, topicIdx) => {
 								const {
 									_id,
 									topicTitle,
@@ -69,7 +69,8 @@ const CourseContentTabsDiscussionAll = ({ isLoading, courseTopics, vote }) => {
 									<motion.article
 										key={_id}
 										className='flex justify-between items-center border-b-2 p-4 hover:bg-light rounded-t-lg transition'
-										variants={item}
+										variants={itemVariant}
+										custom={(topicIdx+1)*0.1}
 										layout
 									>
 										{/* ---------------- topic left---------------- */}

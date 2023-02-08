@@ -8,7 +8,7 @@ import AuthProvider from './contexts/AuthProvider';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://ulearn-knowledge.onrender.com/api/v1';
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

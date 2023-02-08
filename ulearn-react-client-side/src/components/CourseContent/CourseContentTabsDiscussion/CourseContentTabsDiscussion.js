@@ -129,7 +129,7 @@ const CourseContentTabsDiscussion = ({ courseContent }) => {
 					),
 				];
 			}
-
+			console.log('targetTopic', targetTopic);
 			// now update the topics with new target topic keeping the order same
 			let newList = prevTopics.map((topic) => {
 				if (topic._id === topicId) return targetTopic;

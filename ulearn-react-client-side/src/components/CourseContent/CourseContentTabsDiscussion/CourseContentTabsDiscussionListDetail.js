@@ -43,7 +43,7 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 	// function - on component load
 	useEffect(() => {
 		if (topicId && triggerFetching) {
-			setIsLoading(true);
+			if(!topic) setIsLoading(true);
 			axios
 				.get(`/topics/${topicId}`)
 				.then((response) => {
@@ -62,19 +62,26 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 
 	// will manipulate vote count locally
 	useEffect(() => {
-		if (voteStatus?.upvoted) {
+		if (topic?.votes && voteStatus?.upvoted) {
 			setTopic((prevTopic) => {
-				return {
-					...prevTopic,
-					votes: [...prevTopic?.votes, currUser?.userId],
-				};
+				if (prevTopic?.votes && prevTopic?.votes?.length > 0) {
+					return {
+						...prevTopic,
+						votes: [...prevTopic?.votes, currUser?.userId],
+					};
+				} else {
+					return {
+						...prevTopic,
+						votes: [currUser?.userId],
+					};
+				}
 			});
 			setVoteStatus((prevStatus) => {
 				return { ...prevStatus, upvoted: false };
 			});
 		}
 
-		if (voteStatus?.downvoted) {
+		if (topic?.votes && voteStatus?.downvoted) {
 			setTopic((prevTopic) => {
 				return {
 					...prevTopic,
@@ -92,7 +99,7 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 	}, [voteStatus]);
 
 	// function - create a comment
-	const handleCreateComment = (commentBody) => {
+	const handleCreateComment = (commentBody, setEditorContent) => {
 		if (!commentBody.length) {
 			message.warning('Comment body can"t be empty.');
 			return;
@@ -104,6 +111,7 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 			.then((response) => {
 				console.log(response.data.comment);
 				message.success('Comment is added successfully');
+				setEditorContent('');
 				setTriggerFetching(true);
 			})
 			.catch((error) => {
@@ -334,7 +342,7 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 							</div>
 							{/*-------------------------------- topic comments -------------------------------*/}
 							<CourseDiscussionCommentsComponent
-								comments={topic.comments}
+								comments={topic?.comments}
 								handleCreateComment={handleCreateComment}
 								handleDeleteComment={handleDeleteComment}
 								status={status}

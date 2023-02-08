@@ -4,14 +4,24 @@ import moment from 'moment';
 import { MdDeleteOutline } from 'react-icons/md';
 import useAuth from '../../../../hooks/useAuth';
 import { LoadingOutlined } from '@ant-design/icons';
+import useFramerMotion from '../../../../hooks/useFramerMotion';
+import { motion } from 'framer-motion';
 
 const parse = require('html-react-parser');
 
 const CourseDiscussionComment = ({ comment, handleDeleteComment, status }) => {
 	const { user } = useAuth();
+	const { commentVariant } = useFramerMotion();
 
 	return (
-		<div className='grid grid-cols-12 gap-4 p-4 border-b'>
+		<motion.div
+			initial='hidden'
+			animate='visible'
+			exit='exit'
+			layoutId={comment?._id}
+			variants={commentVariant}
+			className='grid grid-cols-12 gap-4 p-4 border-b'
+		>
 			{/*--------------------- user ----------------------*/}
 			<div className='wrapper col-span-1 flex justify-end items-start'>
 				<div className='rounded-full outline outline-2 outline-primary border-4 border-white'>
@@ -60,7 +70,7 @@ const CourseDiscussionComment = ({ comment, handleDeleteComment, status }) => {
 					</div>
 				)}
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -5,6 +5,8 @@ import DashTextEditor from '../../../../dashboards/DashboardShared/DashTextEdito
 import useAuth from '../../../../hooks/useAuth';
 import CourseDiscussionComment from './CourseDiscussionComment';
 import Loading from '../../../layout/Loading/Loading';
+import { AnimatePresence, motion } from 'framer-motion';
+import useFramerMotion from '../../../../hooks/useFramerMotion';
 
 const menu = (
 	<Menu
@@ -57,6 +59,7 @@ const CourseDiscussionCommentsComponent = ({
 	status,
 }) => {
 	const [editorContent, setEditorContent] = useState('');
+	const { commentContainerVariant } = useFramerMotion();
 
 	// library constants
 	const { user } = useAuth();
@@ -86,21 +89,34 @@ const CourseDiscussionCommentsComponent = ({
 				</div> */}
 			</div>
 			<hr />
-			<h2 className='text-base font-medium text-font1 text-center'>
-				All Comments
-			</h2>
-			<hr />
+			{comments?.length ? (
+				<>
+					<h2 className='text-base font-medium text-font1 text-center'>
+						All Comments
+					</h2>
+					<hr />
+				</>
+			) : null}
 			{/*--------------------- single comment card ----------------------*/}
-			{comments.length
-				? comments.map((comment) => (
-						<CourseDiscussionComment
-							key={comment._id}
-							comment={comment}
-							handleDeleteComment={handleDeleteComment}
-							status={status}
-						/>
-				  ))
-				: null}
+			<motion.div
+				initial='hidden'
+				animate='visible'
+				variants={commentContainerVariant}
+				layout
+			>
+				<AnimatePresence>
+					{comments.length
+						? comments.map((comment) => (
+								<CourseDiscussionComment
+									key={comment._id}
+									comment={comment}
+									handleDeleteComment={handleDeleteComment}
+									status={status}
+								/>
+						  ))
+						: null}
+				</AnimatePresence>
+			</motion.div>
 
 			{/*------------------------------ create a comment here ---------------------------------*/}
 			{user && (
@@ -129,7 +145,10 @@ const CourseDiscussionCommentsComponent = ({
 							<button
 								onClick={(e) => {
 									e.preventDefault();
-									handleCreateComment(editorContent);
+									handleCreateComment(
+										editorContent,
+										setEditorContent
+									);
 								}}
 								className='px-4 py-1 rounded-lg border-[0.5px] border-primary text-primary flex space-x-2 items-center capitalize'
 								disabled={status.creating}

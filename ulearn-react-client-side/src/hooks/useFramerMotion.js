@@ -43,15 +43,19 @@ const useFramerMotion = () => {
 		},
 	};
 	const listContainerVariant = {
-		hidden: { opacity: 1, scale: 0 },
+		hidden: { opacity: 0.8, scale: 0.8 },
 		visible: {
 			opacity: 1,
 			scale: 1,
-			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.2,
-			},
 		},
+	};
+
+	const itemVariant = {
+		hidden: { opacity: 0 },
+		visible: (custom) => ({
+			opacity: 1,
+			transition: { delay: custom },
+		}),
 	};
 
 	const list = {
@@ -117,17 +121,18 @@ const useFramerMotion = () => {
 	};
 
 	const commentContainerVariant = {
-		hidden: {
-			x: 100,
-			opacity: 0,
-		},
 		visible: {
-			x: 0,
 			opacity: 1,
 			transition: {
-				duration: 0.4,
-				delayChildren: 0.3,
+				when: 'beforeChildren',
 				staggerChildren: 0.2,
+				delayChildren: 0.3,
+			},
+		},
+		hidden: {
+			opacity: 0,
+			transition: {
+				when: 'afterChildren',
 			},
 		},
 	};
@@ -151,6 +156,7 @@ const useFramerMotion = () => {
 		voteAnimation,
 		containerVariants,
 		listContainerVariant,
+		itemVariant,
 		errorMessageVariant,
 		list,
 		item,

@@ -73,7 +73,7 @@ const CourseList = () => {
 		sort = false
 	) => {
 		const page = newPage || currentPage.page;
-		const limit = currentPage.limit;
+		const limit = currentPage?.limit;
 		const currQuery = newQuery || query;
 		const sortBy = sort || filters.sort;
 		const fetchURL = `/courses?page=${page}&limit=${limit}&sort=${sortBy}${currQuery}`;
@@ -146,7 +146,7 @@ const CourseList = () => {
 
 	const handleQueryBuilder = (newFilter) => {
 		// resetting pagination
-		setCurrentPage({ page: 1, limit: 2 });
+		setCurrentPage({ page: 1, limit: 4 });
 		// adding category
 		let newQuery = newFilter?.category
 			? `&category=${newFilter.category}`
