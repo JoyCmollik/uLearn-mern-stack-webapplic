@@ -27,15 +27,17 @@ const ContentCreatorCourse = ({
 	return (
 		<>
 			{/*****-------------- single course ---------------*****/}
-			<article className='grid grid-cols-12 gap-4 rounded-lg bg-white drop-shadow overflow-hidden'>
+			<article className='grid grid-cols-12 gap-4 rounded-lg bg-white drop-shadow overflow-hidden  h-[250px]'>
 				{/*****-------------- course image ---------------*****/}
-				<img
-					className='col-span-3 object-cover'
-					src={courseThumb}
-					alt='course'
-				/>
+				<div className='col-span-3'>
+					<img
+						className='h-full w-full object-cover'
+						src={courseThumb}
+						alt='course'
+					/>
+				</div>
 				{/*****-------------- course content ---------------*****/}
-				<div className='col-span-9 p-4 flex flex-col justify-between'>
+				<div className='col-span-9 h-[250px] p-4 flex flex-col justify-between'>
 					{/*****-------------- course top ---------------*****/}
 					<div className=''>
 						<div className='flex justify-between items-center'>

@@ -34,16 +34,78 @@ import ContentWriterProfile from './pages/ContentWriterProfile/ContentWriterProf
 import PrivateRoute from './privateOutlets/PrivateRoute';
 import ContentCreatorOutlet from './privateOutlets/ContentCreatorOutlet';
 import MyProfile from './pages/MyProfile/MyProfile';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
 
 function App() {
+	const [categories, setCategoires] = useState(null);
+	const [newCourses, setNewCourses] = useState(null);
+	const [bestCourses, setBestCourses] = useState(null);
+	const [instructors, setInstructors] = useState(null);
+	useEffect(() => {
+		if (!categories) {
+			axios
+				.get('/categories?limit=6&sort=_id')
+				.then((response) => {
+					//console.log(response.data.categories);
+					setCategoires(response.data.categories);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+		if (!newCourses) {
+			axios
+				.get('/courses?limit=4&sort=-_id')
+				.then((response) => {
+					setNewCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (!bestCourses) {
+			axios
+				.get('/courses?limit=1&averageRating[gte]=4')
+				.then((response) => {
+					setBestCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (!instructors) {
+			axios
+				.get('/instructors')
+				.then((response) => {
+					console.log(response);
+					setInstructors(response.data.instructors);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, []);
 	return (
 		<div className='bg-white'>
 			<Routes>
 				{/*****--------------Home Routes---------------*****/}
-				<Route path='/*' element={<Home />}></Route>
+				<Route
+					path='/*'
+					element={
+						<Home
+							data={{
+								categories,
+								newCourses,
+								bestCourses,
+								instructors,
+							}}
+						/>
+					}
+				></Route>
 				{/*****--------------Course Content Show Routes---------------*****/}
 				<Route
 					path='course-content/:contentId/*'

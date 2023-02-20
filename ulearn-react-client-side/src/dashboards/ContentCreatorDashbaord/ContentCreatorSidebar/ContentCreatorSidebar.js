@@ -12,6 +12,7 @@ import {
 	MdPersonAddAlt,
 	MdHome,
 } from 'react-icons/md';
+import ulearnLogo from '../../../images/ulearn_logo.png'
 import { BsWindowDock } from 'react-icons/bs';
 import { TbCertificate } from 'react-icons/tb';
 import { AiOutlineSetting } from 'react-icons/ai';
@@ -45,10 +46,13 @@ const ContentCreatorSidebar = () => {
 		<div className='space-y-10 sticky top-10'>
 			{/*****--------------logo---------------*****/}
 			<div className='logo-container rounded-lg bg-white text-center'>
-				<h2 className='font-semibold text-2xl m-0'>
-					<span className='text-primary font-bold'>u</span>
-					<span className='text-brand font-bold'>L</span>earn
-				</h2>
+				<div className=' flex justify-center items-center space-x-1'>
+					<img
+						className='w-[100px] h-[40px] object-cover'
+						src={ulearnLogo}
+						alt=''
+					/>
+				</div>
 			</div>
 			{/*****--------------links---------------*****/}
 			<div className='space-y-2 pl-4 admin-dashboard-links'>

@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema(
 			required: [true, 'please provide email'],
 			minlength: 6,
 		},
+		phone: {
+			type: String,
+		},
 		about: {
 			type: String,
 		},

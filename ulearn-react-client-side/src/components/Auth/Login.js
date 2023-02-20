@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useFramerMotion from '../../hooks/useFramerMotion';
 import { AnimatePresence, motion } from 'framer-motion';
-
 import AuthLeftCol from './AuthLeftCol';
 import { MdOutlineArrowBack } from 'react-icons/md';
 

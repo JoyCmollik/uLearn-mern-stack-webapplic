@@ -38,7 +38,7 @@ const updateInstructor = async (req, res) => {
 
 	if (!instructor) {
 		throw new CustomError.NotFoundError(
-			`No comment with id: ${instructorId}`
+			`No instructor with id: ${instructorId}`
 		);
 	}
 
@@ -52,7 +52,7 @@ const deleteInstructor = async (req, res) => {
 
 	if (!instructor) {
 		throw new CustomError.NotFoundError(
-			`No comment with id: ${instructorId}`
+			`No instructor with id: ${instructorId}`
 		);
 	}
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './DashboardSidebar.css';
 // components
-import CollapsedSideLinksContainer from '../CollapsedSideLinksContainer/CollapsedSideLinksContainer';
+import ulearnLogo from '../../../images/ulearn_logo.png';
 import SideBarLink from '../SideBarLink/SideBarLink';
 // icons
 import {
@@ -21,7 +21,11 @@ import { FaUsersCog } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 // library components
 import { Collapse } from 'antd';
-import { HiOutlineDocumentAdd, HiOutlineHome, HiOutlinePaperClip } from 'react-icons/hi';
+import {
+	HiOutlineDocumentAdd,
+	HiOutlineHome,
+	HiOutlinePaperClip,
+} from 'react-icons/hi';
 const { Panel } = Collapse;
 
 // local component
@@ -47,10 +51,13 @@ const DashboardSidebar = () => {
 		<div className='space-y-10 sticky top-10'>
 			{/*****--------------logo---------------*****/}
 			<div className='logo-container rounded-lg bg-white text-center'>
-				<h2 className='font-semibold text-2xl m-0'>
-					<span className='text-primary font-bold'>u</span>
-					<span className='text-brand font-bold'>L</span>earn
-				</h2>
+				<div className=' flex justify-center items-center space-x-1'>
+					<img
+						className='w-[100px] h-[40px] object-cover'
+						src={ulearnLogo}
+						alt=''
+					/>
+				</div>
 			</div>
 			{/*****--------------links---------------*****/}
 			<div className='space-y-2 pl-4 admin-dashboard-links'>
@@ -64,10 +71,12 @@ const DashboardSidebar = () => {
 					<FaUsersCog size={20} /> <span>Manage Courses</span>
 				</SideBarLink>
 				<SideBarLink to='/admin/dashboard/manage-courses/add'>
-					<HiOutlineDocumentAdd size={20} /> <span>Add New Courses</span>
+					<HiOutlineDocumentAdd size={20} />{' '}
+					<span>Add New Courses</span>
 				</SideBarLink>
 				<SideBarLink to='/admin/dashboard/manage-courses/categories'>
-					<HiOutlinePaperClip size={20} /> <span>Course Category</span>
+					<HiOutlinePaperClip size={20} />{' '}
+					<span>Course Category</span>
 				</SideBarLink>
 				{/* <SideBarLink to='/admin/dashboard/manage-courses/coupons'>
 					<MdPersonAddAlt size={20} /> <span>Coupons</span>
@@ -155,8 +164,7 @@ const DashboardSidebar = () => {
 					<span>Manage Profile</span>
 				</SideBarLink>
 				<SideBarLink to='/'>
-					<HiOutlineHome size={20} />{' '}
-					<span>Go Back To Home</span>
+					<HiOutlineHome size={20} /> <span>Go Back To Home</span>
 				</SideBarLink>
 			</div>
 		</div>

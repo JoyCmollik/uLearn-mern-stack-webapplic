@@ -34,15 +34,16 @@ const showCurrentUser = async (req, res) => {
 };
 //update user with user.save()
 const UpdateUser = async (req, res) => {
-	const { email, name, avatarURL } = req.body;
+	const { name, gender, phone, avatarURL } = req.body;
 	let user = await User.findOne({ _id: req.user.userId });
 	if (avatarURL) {
 		user.avatarURL = avatarURL;
 	}
 
-	if (email && name) {
-		user.email = email;
+	if (name && gender && phone) {
 		user.name = name;
+		user.gender = gender;
+		user.phone = phone || 'NA';
 	}
 
 	await user.save();

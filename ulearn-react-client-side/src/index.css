@@ -14,3 +14,7 @@ body {
 .font-lato {
 	font-family: 'Lato', sans-serif !important;
 }
+
+.input-outline-style {
+	@apply outline-none py-2 border-b-2 border-b-light w-full focus-within:border-b-gray-400 focus-within:text-primary
+}

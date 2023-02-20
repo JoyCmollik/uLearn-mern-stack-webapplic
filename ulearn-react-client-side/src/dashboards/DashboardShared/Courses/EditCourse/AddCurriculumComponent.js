@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Input, message, Modal, Spin } from 'antd';
 import { HiPlus } from 'react-icons/hi2';
-import { MdEdit } from 'react-icons/md';
+import { MdClose, MdEdit } from 'react-icons/md';
+import { IoCheckmarkSharp } from 'react-icons/io5';
+import { LoadingOutlined } from '@ant-design/icons';
 import { Reorder, motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -18,6 +20,8 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 	const [lessonModalOpen, setLessonModalOpen] = useState(false);
 	const [lessonTitle, setLessonTitle] = useState('');
 	const [tempSectionTitle, setTempSectionTitle] = useState('');
+	const [isUpdatingSectionTitle, setIsUpdatingSectionTitle] = useState(false);
+	const [isTitleUpdating, setIsTitleUpdating] = useState(false);
 	const [isFetching, setIsFetching] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [triggerFetch, setTriggerFetch] = useState(false);
@@ -25,6 +29,7 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 		isDeleting: false,
 		isCreating: false,
 	});
+	const currSectionTitleRef = useRef();
 
 	// -------------- COMPONENT ON MOUNT FETCH --------------
 	useEffect(() => {
@@ -129,21 +134,30 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 
 	// POST - create section | add section to section list | update course
 	const handleUpdateSection = async (newSectionData) => {
-		let updated = false;
-		setIsLoading(true);
+		setIsTitleUpdating(true);
 		axios
 			.patch(`/sections/${newSectionData._id}`, { ...newSectionData })
 			.then((response) => {
-				message.success('updated section!');
-				updated = true;
+				setCurrSection(response.data.section)
+				setIsUpdatingSectionTitle(false);
 			})
 			.catch((error) => {
 				message.error(error.response.data.msg);
 			})
 			.finally(() => {
-				setIsLoading(false);
+				setIsTitleUpdating(false);
 			});
-		return updated;
+	};
+
+	// handle section title updating
+	const handleSectionTitleUpdate = () => {
+		const newSectionTitle = currSectionTitleRef.current.value;
+		if(currSection.sectionTitle === newSectionTitle) {
+			message.warning('Please change title before saving....');
+			return;
+		}
+		const newSection = { ...currSection, sectionTitle: newSectionTitle };
+		handleUpdateSection(newSection);
 	};
 
 	// POST - create lesson | add lesson to current section | update current section
@@ -279,24 +293,26 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 									onReorder={setSectionList}
 									className='space-y-0.5'
 								>
-									{sectionList.map((sectionItem, sectionIdx) => (
-										<Reorder.Item
-											key={sectionItem?._id}
-											value={sectionItem}
-										>
-											<Section
+									{sectionList.map(
+										(sectionItem, sectionIdx) => (
+											<Reorder.Item
 												key={sectionItem?._id}
-												data={{
-													sectionItem,
-													sectionIdx,
-													currSection,
-													handleCurrSection,
-													handleDeleteSection,
-													loadingStatus,
-												}}
-											/>
-										</Reorder.Item>
-									))}
+												value={sectionItem}
+											>
+												<Section
+													key={sectionItem?._id}
+													data={{
+														sectionItem,
+														sectionIdx,
+														currSection,
+														handleCurrSection,
+														handleDeleteSection,
+														loadingStatus,
+													}}
+												/>
+											</Reorder.Item>
+										)
+									)}
 								</Reorder.Group>
 							)}
 						</div>
@@ -315,15 +331,52 @@ const AddCurriculumComponent = ({ course = null, handleUpdateCourse }) => {
 							<>
 								{/*****--------------Section details---------------*****/}
 								<div className=' py-2 flex space-x-4 items-center'>
+									{/*****-------------- Update Title ---------------*****/}
 									<input
-										className='text-xl p-2 font-bold capitalize focus:outline-none bg-transparent border-b-[0.5px] w-[50%]'
-										value={currSection.sectionTitle}
-										disabled={true}
+										className='text-xl p-2 font-bold capitalize focus:outline-none bg-transparent border-b-[0.5px] w-[50%] focus-within:border-b-green-700'
+										defaultValue={currSection.sectionTitle}
+										ref={currSectionTitleRef}
+										disabled={!isUpdatingSectionTitle}
 										type='text'
 									/>
-									<button className='p-2 rounded-lg shadow'>
-										<MdEdit size={20} />
-									</button>
+									{isUpdatingSectionTitle ? (
+										<div className='space-x-2'>
+											<button
+												onClick={
+													handleSectionTitleUpdate
+												}
+												className='p-2 rounded-lg shadow bg-green-100 text-green-700'
+												disabled={isTitleUpdating}
+											>
+												{!isTitleUpdating ? (
+													<IoCheckmarkSharp
+														size={20}
+													/>
+												) : (
+													<LoadingOutlined size={24} />
+												)}
+											</button>
+											<button
+												onClick={() =>
+													setIsUpdatingSectionTitle(
+														false
+													)
+												}
+												className='p-2 bg-red-100  rounded-lg shadow text-red-700'
+											>
+												<MdClose size={20} />
+											</button>
+										</div>
+									) : (
+										<button
+											onClick={() =>
+												setIsUpdatingSectionTitle(true)
+											}
+											className='p-2 rounded-lg shadow'
+										>
+											<MdEdit size={20} />
+										</button>
+									)}
 								</div>
 								{/*****--------------lesson details---------------*****/}
 								<div className='py-2 space-y-4'>
