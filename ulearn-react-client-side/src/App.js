@@ -1,9 +1,9 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
 import Auth from './pages/Auth/Auth';
-
+import ulearnLogo from './images/ulearn_logo.png';
 import CourseDetail from './pages/CourseDetail/CourseDetail';
 import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardComponent/AdminDashboardComponent';
 import Report from './dashboards/AdminDashboard/Report/Report';
@@ -15,7 +15,6 @@ import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/Add
 import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 import CourseContent from './pages/CourseContent/CourseContent';
-
 import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ContentCreatorDashboardComponent from './dashboards/ContentCreatorDashbaord/ContentCreatorDashboardComponent/ContentCreatorDashboardComponent';
@@ -38,6 +37,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from './hooks/useAuth';
 import CourseListByCategory from './pages/CourseListByCategory/CourseListByCategory';
+import Lottie from './components/layout/Lottie/Lottie';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
@@ -108,6 +108,39 @@ function App() {
 			source?.cancel('Cancelling fetch request on unmount.');
 		};
 	}, []);
+
+	if (!categories) {
+		return (
+			<div className='min-h-screen flex flex-col bg-light'>
+				<div className=' flex justify-center items-center p-4 bg-white border-b'>
+					<img
+						className='w-[100px] h-[40px] object-cover'
+						src={ulearnLogo}
+						alt=''
+					/>
+				</div>
+				<div className='flex-grow flex justify-center items-center'>
+					<div className='flex flex-col justify-center items-center space-y-4 bg-white backdrop-filter rounded-lg p-8'>
+						<Lottie
+							src='https://assets1.lottiefiles.com/packages/lf20_uomCWjKFFp.json'
+							size={{
+								width: '450',
+								height: '450',
+							}}
+						/>
+						<h4 className='font-medium text-xl font-lato'>
+							Hold on. Waking up the server for you!
+						</h4>
+						<small className='text-font2'>
+							We're using free tiers of server hosting service,
+							for which it takes a few moment to gear it up.
+						</small>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className='bg-white'>
 			<Routes>
@@ -138,7 +171,10 @@ function App() {
 
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
-				<Route path='course-list/category/:categoryId' element={<CourseListByCategory />} />
+				<Route
+					path='course-list/category/:categoryId'
+					element={<CourseListByCategory />}
+				/>
 				<Route
 					path='my-courses'
 					element={
