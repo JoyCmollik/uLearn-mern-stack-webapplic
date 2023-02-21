@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineMenuFold } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import SideBar from '../../HeaderComponents/SideBar/SideBar';
@@ -8,6 +8,8 @@ import { Avatar } from 'antd';
 import { Dropdown } from 'antd';
 import { RiDashboardLine } from 'react-icons/ri';
 import useAuth from '../../../hooks/useAuth';
+import CategoriesOverlay from './CategoriesOverlay';
+import axios from 'axios';
 
 const navigation = [
 	{ id: 1, to: '/', name: 'Home' },
@@ -15,7 +17,7 @@ const navigation = [
 	{ id: 4, to: '/my-courses', name: 'My Courses' },
 ];
 
-const NavigationBar = () => {
+const NavigationBar = ({categories}) => {
 	const [open, setOpen] = useState(false);
 	const [placement, setPlacement] = useState('left');
 	const { user, handleLogout } = useAuth();
@@ -89,13 +91,24 @@ const NavigationBar = () => {
 									alt=''
 								/>
 							</div>
-							<div className='hidden items-center space-x-6 md:block'>
-								{/*--------------------Categories-------------------------*/}
-								<button className='flex items-center space-x-2 bg-light px-3 py-2 text-base rounded-lg font-medium'>
-									<RiDashboardLine size={20} />
-									<span>Categories</span>
-								</button>
-							</div>
+							{categories ? (
+								<div className='hidden items-center space-x-6 md:block'>
+									{/*--------------------Categories-------------------------*/}
+									<Dropdown
+										overlay={
+											<CategoriesOverlay
+												categories={categories}
+											/>
+										}
+										className='ml-3'
+									>
+										<button className='flex items-center space-x-2 bg-light px-3 py-2 text-base rounded-lg font-medium'>
+											<RiDashboardLine size={20} />
+											<span>Categories</span>
+										</button>
+									</Dropdown>
+								</div>
+							) : null}
 							<ul className='p-0 m-0 hidden md:flex items-center space-x-1 capitalize'>
 								{navigation.map((nav) => (
 									<li key={nav.id}>

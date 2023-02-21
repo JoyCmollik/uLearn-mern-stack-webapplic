@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CategorySkeleton from '../../layout/Skeleton/CategorySkeleton';
 
 const Categories = ({ categories }) => {
@@ -13,24 +14,29 @@ const Categories = ({ categories }) => {
 				{categories?.map((item) => {
 					const { _id, category, categoryURL } = item;
 					return (
-						<div key={_id} className='mx-auto text-center'>
-							<div>
-								<img
-									src={categoryURL}
-									alt=''
-									className='bg-secondary rounded-3xl '
-								/>
+						<Link
+							to={`/course-list/category/${_id}`}
+							key={_id}
+						>
+							<div key={_id} className='mx-auto text-center'>
+								<div>
+									<img
+										src={categoryURL}
+										alt=''
+										className='bg-secondary rounded-3xl '
+									/>
 
-								<div></div>
+									<div></div>
+								</div>
+								<p className='-mt-3 border  rounded-2xl mx-auto text-center text-lg py-2 px-6 bg-white inline-block capitalize hover:bg-primary hover:text-white hover:border-primary'>
+									{item?.courses?.length} Course
+								</p>
+								<h2 className='text-xl text-center tracking-wider capitalize'>
+									{' '}
+									{category}
+								</h2>
 							</div>
-							<p className='-mt-3 border  rounded-2xl mx-auto text-center text-lg py-2 px-6 bg-white inline-block capitalize hover:bg-primary hover:text-white hover:border-primary'>
-								{item?.courses?.length} Course
-							</p>
-							<h2 className='text-xl text-center tracking-wider capitalize'>
-								{' '}
-								{category}
-							</h2>
-						</div>
+						</Link>
 					);
 				})}
 			</div>

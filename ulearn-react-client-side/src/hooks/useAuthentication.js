@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import axios from 'axios';
 
 const useAuthentication = () => {
@@ -127,6 +127,7 @@ const useAuthentication = () => {
 			.then((response) => {
 				setforgotPasswordMsg(response.data.msg);
 				console.log(response.data.msg);
+				message.success('Your password has been updated successfully.');
 				navigate('/auth/login');
 			})
 			.catch((error) => {

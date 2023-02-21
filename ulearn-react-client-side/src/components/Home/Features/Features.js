@@ -4,6 +4,8 @@ import useAuthentication from '../../../hooks/useAuthentication';
 
 const Features = () => {
 	const { user } = useAuthentication();
+
+	if(user?.role === 'instructor' || user?.role === 'admin') return null;
 	return (
 		<section className='container mx-auto'>
 			{/*---------------feature container--------------*/}
@@ -13,7 +15,7 @@ const Features = () => {
 					{/*---------------title--------------------*/}
 					<div className=''>
 						<h3 className='whitespace-pre-line text-[28px] font-bold'>
-							{user
+							{user && user?.role === 'user'
 								? 'Become a new instructor'
 								: 'Join now to start learning'}
 						</h3>

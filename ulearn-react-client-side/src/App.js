@@ -36,22 +36,31 @@ import ContentCreatorOutlet from './privateOutlets/ContentCreatorOutlet';
 import MyProfile from './pages/MyProfile/MyProfile';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import useAuth from './hooks/useAuth';
+import CourseListByCategory from './pages/CourseListByCategory/CourseListByCategory';
 // import Login from './components/Auth/Login';
 // import Register from './components/Auth/Register';
 // import AuthRoles from './components/Auth/AuthRoles';
 
 function App() {
 	const [categories, setCategoires] = useState(null);
+	const [displayCategories, setDisplayCategories] = useState(null);
 	const [newCourses, setNewCourses] = useState(null);
 	const [bestCourses, setBestCourses] = useState(null);
 	const [instructors, setInstructors] = useState(null);
+	const { user } = useAuth();
+
 	useEffect(() => {
+		const source = axios.CancelToken.source();
 		if (!categories) {
 			axios
-				.get('/categories?limit=6&sort=_id')
+				.get('/categories?limit=6&sort=_id', {
+					cancelToken: source.token,
+				})
 				.then((response) => {
 					//console.log(response.data.categories);
 					setCategoires(response.data.categories);
+					setDisplayCategories(response.data.categories.slice(0, 7));
 				})
 				.catch((err) => {
 					console.log(err);
@@ -59,7 +68,9 @@ function App() {
 		}
 		if (!newCourses) {
 			axios
-				.get('/courses?limit=4&sort=-_id')
+				.get('/courses?limit=4&sort=-_id', {
+					cancelToken: source.token,
+				})
 				.then((response) => {
 					setNewCourses(response.data.courses);
 				})
@@ -69,7 +80,9 @@ function App() {
 		}
 		if (!bestCourses) {
 			axios
-				.get('/courses?limit=1&averageRating[gte]=4')
+				.get('/courses?limit=1&averageRating[gte]=4', {
+					cancelToken: source.token,
+				})
 				.then((response) => {
 					setBestCourses(response.data.courses);
 				})
@@ -77,9 +90,11 @@ function App() {
 					console.log(error);
 				});
 		}
-		if (!instructors) {
+		if (user && !instructors) {
 			axios
-				.get('/instructors')
+				.get('/instructors', {
+					cancelToken: source.token,
+				})
 				.then((response) => {
 					console.log(response);
 					setInstructors(response.data.instructors);
@@ -88,6 +103,10 @@ function App() {
 					console.log(error);
 				});
 		}
+
+		return () => {
+			source?.cancel('Cancelling fetch request on unmount.');
+		};
 	}, []);
 	return (
 		<div className='bg-white'>
@@ -98,6 +117,7 @@ function App() {
 					element={
 						<Home
 							data={{
+								displayCategories,
 								categories,
 								newCourses,
 								bestCourses,
@@ -118,6 +138,7 @@ function App() {
 
 				{/* <Route path='/*' element={<Home />}></Route> */}
 				<Route path='course-list' element={<CourseList />} />
+				<Route path='course-list/category/:categoryId' element={<CourseListByCategory />} />
 				<Route
 					path='my-courses'
 					element={

@@ -16,15 +16,20 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 
 const Home = ({data}) => {
-	const { categories, newCourses, bestCourses, instructors } = data;
+	const {
+		displayCategories, categories,
+		newCourses,
+		bestCourses,
+		instructors,
+	} = data;
 	const { user } = useAuth();
 
 	return (
 		<>
-			<NavigationBar theme='light' />
+			<NavigationBar categories={categories} theme='light' />
 			<div className=' space-y-24'>
 				<Hero />
-				<Categories categories={categories} />
+				<Categories categories={displayCategories} />
 				<NewestCourses newCourses={newCourses} />
 				<BestReviewedCourses bestCourses={bestCourses} />
 				{user && instructors ? (

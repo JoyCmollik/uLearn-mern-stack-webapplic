@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
 import { MdOutlineArrowBack } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuthentication from '../../hooks/useAuthentication';
 import Lottie from '../layout/Lottie/Lottie';
 import AuthLeftCol from './AuthLeftCol';
+import useAuth from '../../hooks/useAuth';
 
 const ForgotPassword = () => {
-	const { handleForgotPassword, forgotPasswordMsg } = useAuthentication();
+	const { handleForgotPassword, forgotPasswordMsg, loading } = useAuth();
 	const [email, setEmail] = useState('');
 	const navigate = useNavigate();
 
@@ -74,11 +75,20 @@ const ForgotPassword = () => {
 							</div>
 
 							{/* verify email */}
+							{/* verify email */}
 							<button
-								className='col-span-12 py-2 font-medium bg-primary text-white rounded-lg'
+								className='col-span-12 text-primary py-2 font-medium border border-primary rounded-lg'
 								type='submit'
+								disabled={loading}
 							>
-								Get Reset Password Link
+								{loading ? (
+									<>
+										<LoadingOutlined />
+										{' Requesting Reset Password Link'}
+									</>
+								) : (
+									'Get Reset Password Link'
+								)}
 							</button>
 						</form>
 						<p className='text-gray-500'>
@@ -93,9 +103,24 @@ const ForgotPassword = () => {
 				</div>
 			) : (
 				<div className='col-span-7 p-10 flex justify-center items-center'>
-					<p className='text-lg text-green-800 bg-emerald-200 px-4 py-3 rounded'>
-						{forgotPasswordMsg}
-					</p>
+					<div className='flex flex-col justify-center items-center space-y-4 bg-white backdrop-filter rounded-lg p-8'>
+						<Lottie
+							src='https://assets8.lottiefiles.com/packages/lf20_d3vw5gid.json'
+							size={{
+								width: '450',
+								height: '450',
+							}}
+						/>
+						<h4 className='text-xl text-success'>
+							{forgotPasswordMsg}
+						</h4>
+						<Link
+							to='/auth/login'
+							className='text-primary underline text-base'
+						>
+							Go Back To Login Page
+						</Link>
+					</div>
 				</div>
 			)}
 		</div>

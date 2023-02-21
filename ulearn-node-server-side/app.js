@@ -45,6 +45,8 @@ const testimonialRouter = require('./routes/testimonialRoutes');
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+console.log('origin', process.env.PRODUCTION);
+
 app.set('trust proxy', 1);
 app.use(
 	rateLimiter({
