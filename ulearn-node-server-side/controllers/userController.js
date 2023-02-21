@@ -40,9 +40,15 @@ const UpdateUser = async (req, res) => {
 		user.avatarURL = avatarURL;
 	}
 
-	if (name && gender && phone) {
+	if (name) {
 		user.name = name;
+	}
+
+	if(gender) {
 		user.gender = gender;
+	}
+
+	if(phone) {
 		user.phone = phone || 'NA';
 	}
 
