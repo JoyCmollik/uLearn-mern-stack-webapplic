@@ -58,7 +58,7 @@ app.use(helmet());
 app.use(
 	cors({
 		origin: process.env.ORIGIN,
-		credentials: process.env.PRODUCTION,
+		credentials: process.env.NODE_ENV === 'production' ? true : false,
 	})
 );
 app.use(xss());

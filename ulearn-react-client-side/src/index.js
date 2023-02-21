@@ -8,7 +8,7 @@ import AuthProvider from './contexts/AuthProvider';
 import axios from 'axios';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL;
-axios.defaults.withCredentials = process.env.REACT_APP_PRODUCTION;
+axios.defaults.withCredentials = process.env.REACT_APP_PRODUCTION === 'true'  ? true : false;
 
 console.log('from index', process.env.REACT_APP_PRODUCTION);
 
