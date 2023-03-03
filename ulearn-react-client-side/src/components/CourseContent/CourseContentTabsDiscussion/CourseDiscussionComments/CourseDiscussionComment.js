@@ -39,8 +39,8 @@ const CourseDiscussionComment = ({ comment, handleDeleteComment, status }) => {
 						<h2 className='text-base font-semibold text-font1 m-0 p-0'>
 							{comment?.user?.name}
 						</h2>
-						<div className='m-0 p-0 text-font2'>
-							Posted {moment(comment.createdAt).fromNow()}
+						<div className='m-0 p-0 text-font2 text-sm'>
+							Posted {moment(comment.createdAt).calendar()}
 						</div>
 					</div>
 					{/* comment body */}

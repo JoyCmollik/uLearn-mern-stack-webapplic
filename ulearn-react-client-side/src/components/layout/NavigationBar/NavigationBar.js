@@ -7,9 +7,12 @@ import { MdDashboard, MdLogout, MdPortrait } from 'react-icons/md';
 import { Avatar } from 'antd';
 import { Dropdown } from 'antd';
 import { RiDashboardLine } from 'react-icons/ri';
+import { HiOutlineBell } from 'react-icons/hi2';
 import useAuth from '../../../hooks/useAuth';
 import CategoriesOverlay from './CategoriesOverlay';
 import axios from 'axios';
+import NotificationComponent from '../../Notifications/NotificationComponent';
+import useSocket from '../../../hooks/useSocket';
 
 const navigation = [
 	{ id: 1, to: '/', name: 'Home' },
@@ -18,10 +21,90 @@ const navigation = [
 ];
 
 const NavigationBar = ({categories}) => {
+	const [notifications, setNotifications] = useState([]);
+	const [hasNewNotification, setHasNewNotification] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [placement, setPlacement] = useState('left');
 	const { user, handleLogout } = useAuth();
+	const { socket } = useSocket();
 	const navigate = useNavigate();
+
+	// ---------- user notifications ----------
+	useEffect(() => {
+		// function to run on unmount
+		const setReadNotification = () => {
+			axios.post('/notifications/read').catch((error) => {
+				console.log(error);
+			});
+		};
+
+		if (user) {
+			// fetching all the notifications
+			axios
+				.get('/notifications')
+				.then((response) => {
+					console.log(response.data);
+					setNotifications(response.data.notifications);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+
+		return () => {
+			if (user && notifications?.length) {
+				setReadNotification();
+			}
+		};
+	}, [user]);
+
+	useEffect(() => {
+		const socketInstance = socket.current;
+		if (socketInstance) {
+			// getting notifications
+			socketInstance.on('newNotificationReceived', (newNotification) => {
+				console.log(newNotification, 'new notification');
+				setNotifications((prevNotifications) => {
+					if (!prevNotifications || prevNotifications?.length === 0) {
+						return [newNotification];
+					} else if (prevNotifications.length > 0) {
+						const isDuplicate = prevNotifications
+							.map((n) => n._id.toString)
+							.indexOf(newNotification._id);
+						if (isDuplicate === -1) {
+							return [newNotification, ...prevNotifications];
+						} else {
+							return [...prevNotifications];
+						}
+					}
+				});
+				setHasNewNotification(true);
+			});
+
+			// removing notifications
+			socketInstance.on('removeNewNotification', ({ notificationId }) => {
+				console.log('remove', notificationId);
+
+				setNotifications((prevNotifications) => {
+					if (prevNotifications.length > 0) {
+						const updated = prevNotifications.filter(
+							(n) => String(n._id) !== String(notificationId)
+						);
+						return updated;
+					} else {
+						return [];
+					}
+				});
+			});
+		}
+
+		return () => {
+			if (socketInstance) {
+				socketInstance.off('newNotificationReceived');
+				socketInstance.off('removeNewNotification');
+			}
+		};
+	}, []);
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -135,20 +218,54 @@ const NavigationBar = ({categories}) => {
 							{/*-------------------avatar------------------------------*/}
 							<div className=''>
 								{user ? (
-									<Dropdown overlay={menu} className='ml-3'>
-										<button
-											onClick={(e) => e.preventDefault()}
-											className='flex space-x-1 items-center'
+									<div className='flex space-x-4 items-center'>
+										{/* ---------- notification ---------- */}
+										<Dropdown
+											overlay={
+												<NotificationComponent
+													notifications={
+														notifications
+													}
+												/>
+											}
+											placement='bottomRight'
+											onOpenChange={() =>
+												setHasNewNotification(false)
+											}
 										>
-											<Avatar
-												size={40}
-												src={user.avatarURL}
-											/>
-											<div className='text-base font-medium'>
-												<small>{user?.name}</small>
+											<div className='p-2 border rounded-lg cursor-pointer'>
+												<span className='relative'>
+													<HiOutlineBell size={20} />
+													{hasNewNotification && (
+														<>
+															<div className='animate-ping absolute top-[1px] right-[1px] w-[8px] h-[8px] rounded-full bg-orange-500' />
+															<div className='absolute top-[1px] right-[1px] w-[8px] h-[8px] rounded-full bg-orange-500' />
+														</>
+													)}
+												</span>
 											</div>
-										</button>
-									</Dropdown>
+										</Dropdown>
+										{/* ---------- user ---------- */}
+										<Dropdown
+											overlay={menu}
+											className='ml-3'
+										>
+											<button
+												onClick={(e) =>
+													e.preventDefault()
+												}
+												className='flex space-x-1 items-center'
+											>
+												<Avatar
+													size={40}
+													src={user.avatarURL}
+												/>
+												<div className='text-base font-medium'>
+													<small>{user?.name}</small>
+												</div>
+											</button>
+										</Dropdown>
+									</div>
 								) : (
 									<div className='flex'>
 										{/*-------------------login/---------------------*/}

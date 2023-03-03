@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import './CourseContentTabDiscussionListDetail.css';
 import { Dropdown, Menu } from 'antd';
-import DashTextEditor from '../../../dashboards/DashboardShared/DashTextEditor/DashTextEditor';
 import { Avatar, message, Progress, Spin } from 'antd';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import {
 	MdOutlineArrowBack,
@@ -19,6 +19,9 @@ import Loading from '../../layout/Loading/Loading';
 import { HiDotsVertical } from 'react-icons/hi';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import useFramerMotion from '../../../hooks/useFramerMotion';
+import useDiscussion from '../../../hooks/useDiscussion';
+import useSocket from '../../../hooks/useSocket';
 const { confirm } = Modal;
 
 const parse = require('html-react-parser');
@@ -29,25 +32,33 @@ const initialStatus = {
 	updating: false,
 };
 
-const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
+const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic }) => {
 	const [topic, setTopic] = useState(null);
+	const [topicVotes, setTopicVotes] = useState([]);
+	const [topicComments, setTopicComments] = useState([]);
 	const [isLoading, setIsLoading] = useState();
 	const [status, setStatus] = useState({ ...initialStatus });
 	const [triggerFetching, setTriggerFetching] = useState(true);
+	const { listContainerVariant, itemVariant } = useFramerMotion();
+	const [isTyping, setIsTyping] = useState(false);
+	const [isSomeoneTyping, setIsSomeoneTyping] = useState(false);
+	const { handleUpVoteTopic, handleDownVoteTopic } = useDiscussion();
 
 	// library constants
 	const { topicId } = useParams();
 	const { user: currUser } = useAuth();
-	const { handleUpVote, handleDownVote, voteStatus, setVoteStatus } = vote;
+	const { socket } = useSocket();
 
 	// function - on component load
 	useEffect(() => {
 		if (topicId && triggerFetching) {
-			if(!topic) setIsLoading(true);
+			if (!topic) setIsLoading(true);
 			axios
 				.get(`/topics/${topicId}`)
 				.then((response) => {
 					setTopic(response.data.topic);
+					setTopicVotes(response.data.topic?.votes);
+					setTopicComments(response.data.topic?.comments);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -60,43 +71,51 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 		}
 	}, [topicId, triggerFetching]);
 
-	// will manipulate vote count locally
 	useEffect(() => {
-		if (topic?.votes && voteStatus?.upvoted) {
-			setTopic((prevTopic) => {
-				if (prevTopic?.votes && prevTopic?.votes?.length > 0) {
-					return {
-						...prevTopic,
-						votes: [...prevTopic?.votes, currUser?.userId],
-					};
-				} else {
-					return {
-						...prevTopic,
-						votes: [currUser?.userId],
-					};
-				}
+		const socketInstance = socket.current;
+		if (socketInstance) {
+			socketInstance.emit('joinTopicRoom', topicId);
+
+			socketInstance.on('newComment', ({ comment }) => {
+				setTopicComments((prevComments) => [...prevComments, comment]);
 			});
-			setVoteStatus((prevStatus) => {
-				return { ...prevStatus, upvoted: false };
+
+			socketInstance.on('deletedComment', ({ commentId }) => {
+				setTopicComments((prevComments) =>
+					prevComments.filter((c) => c._id.toString() !== commentId)
+				);
 			});
 		}
 
-		if (topic?.votes && voteStatus?.downvoted) {
-			setTopic((prevTopic) => {
-				return {
-					...prevTopic,
-					votes: [
-						...prevTopic.votes.filter(
-							(vote) => String(vote) !== String(currUser?.userId)
-						),
-					],
-				};
-			});
-			setVoteStatus((prevStatus) => {
-				return { ...prevStatus, downvoted: false };
+		// cleanup
+		return () => {
+			if (socketInstance) {
+				socketInstance.emit('leaveTopicRoom', topicId);
+				socketInstance.off('newComment');
+			}
+		};
+	}, [topicId, socket]);
+
+	useEffect(() => {
+		const socketInstance = socket.current;
+		if (socketInstance) {
+			if (isTyping) {
+				socketInstance.emit('startedTyping', { topicId });
+			} else if (!isTyping) {
+				socketInstance.emit('stoppedTyping', { topicId });
+			}
+
+			socketInstance.on('setSomeoneTyping', ({ typing }) => {
+				setIsSomeoneTyping(typing);
 			});
 		}
-	}, [voteStatus]);
+
+		return () => {
+			if (socketInstance) {
+				socketInstance.off('setSomeoneTyping');
+			}
+		};
+	}, [isTyping]);
 
 	// function - create a comment
 	const handleCreateComment = (commentBody, setEditorContent) => {
@@ -105,22 +124,48 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 			return;
 		}
 		setStatus({ ...status, creating: true });
-		const comment = { commentBody, topic: topicId };
-		axios
-			.post('/comments', { ...comment })
-			.then((response) => {
-				console.log(response.data.comment);
-				message.success('Comment is added successfully');
-				setEditorContent('');
-				setTriggerFetching(true);
-			})
-			.catch((error) => {
-				console.log(error);
-				message.error(error.response.data.msg || error.message);
-			})
-			.finally(() => {
-				setStatus({ ...status, creating: false });
-			});
+		const comment = { commentBody, topic: topicId, user: currUser.userId };
+		if (socket.current) {
+			console.log('addComment socket');
+			socket.current.emit(
+				'addComment',
+				{
+					newComment: { ...comment },
+					sender: {
+						id: currUser?.userId,
+						name: currUser?.name,
+						avatarURL: currUser?.avatarURL,
+					},
+				},
+				({ success, error }) => {
+					if (success) {
+						message.success('Comment is added successfully');
+						setEditorContent('');
+					} else if (error) {
+						Object.keys(error).forEach((key) => {
+							message.error(error[key]?.message || 'error');
+						});
+					}
+					setStatus({ ...status, creating: false });
+				}
+			);
+		} else {
+			axios
+				.post('/comments', { ...comment })
+				.then((response) => {
+					console.log(response.data.comment);
+					message.success('Comment is added successfully');
+					setEditorContent('');
+					setTriggerFetching(true);
+				})
+				.catch((error) => {
+					console.log(error);
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setStatus({ ...status, creating: false });
+				});
+		}
 	};
 
 	// function - delete a comment
@@ -129,22 +174,40 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 			...status,
 			deleting: { _id: commentId, currStatus: true },
 		});
-		axios
-			.delete(`/comments/${commentId}`)
-			.then((response) => {
-				message.success('Comment is deleted successfully');
-				setTriggerFetching(true);
-			})
-			.catch((error) => {
-				console.log(error);
-				message.error(error.response.data.msg || error.message);
-			})
-			.finally(() => {
-				setStatus({
-					...status,
-					deleting: { _id: null, currStatus: false },
+		if (socket.current) {
+			console.log('removeComment socket');
+			socket.current.emit(
+				'removeComment',
+				{ commentId, userId: currUser?.userId, topicId, receiver: topic?.user?._id.toString() },
+				({ success, error }) => {
+					if (success) {
+						message.success('Comment is removed successfully');
+					} else if (error) {
+						Object.keys(error).forEach((key) => {
+							message.error(error[key]?.message || 'error');
+						});
+					}
+					setStatus({ ...status, creating: false });
+				}
+			);
+		} else {
+			axios
+				.delete(`/comments/${commentId}`)
+				.then((response) => {
+					message.success('Comment is deleted successfully');
+					setTriggerFetching(true);
+				})
+				.catch((error) => {
+					console.log(error);
+					message.error(error.response.data.msg || error.message);
+				})
+				.finally(() => {
+					setStatus({
+						...status,
+						deleting: { _id: null, currStatus: false },
+					});
 				});
-			});
+		}
 	};
 
 	const showDeleteConfirm = () => {
@@ -223,22 +286,32 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 										</div>
 										{/*--------------------- vote and more options ----------------------------*/}
 										<div className='flex items-center space-x-2'>
-											{/*---------------------topic vote ----------------------------*/}
+											{/* ---------------- vote buttons ---------------- */}
 											<div className='border border-font2 rounded-lg flex text-sm text-font1 overflow-hidden'>
-												<button
+												{/* ---------------- upvote ---------------- */}
+												<motion.button
 													onClick={() =>
-														handleUpVote(topic._id)
+														handleUpVoteTopic(
+															topic?._id,
+															setTopicVotes
+														)
 													}
 													className='block px-2 border-r border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
 													disabled={
 														!currUser ||
-														topic.votes.includes(
+														topicVotes.includes(
 															currUser?.userId
 														)
 													}
+													whileTap={{ scale: 0.8 }}
+													transition={{
+														type: 'spring',
+														stiffness: 400,
+														damping: 17,
+													}}
 												>
-													{topic.votes.includes(
-														currUser.userId
+													{topicVotes.includes(
+														currUser?.userId
 													) ? (
 														<BsFillCaretUpFill
 															size={17}
@@ -246,27 +319,34 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 													) : (
 														<BiUpArrow />
 													)}
-												</button>
+												</motion.button>
 												<div className='text-base font-medium px-2'>
-													{topic?.votes?.length || 0}
+													{topicVotes.length || 0}
 												</div>
 												{/* ---------------- downvote ---------------- */}
-												<button
+												<motion.button
 													onClick={(e) =>
-														handleDownVote(
-															topic._id
+														handleDownVoteTopic(
+															topic?._id,
+															setTopicVotes
 														)
 													}
 													disabled={
 														!currUser ||
-														!topic.votes.includes(
+														!topicVotes.includes(
 															currUser?.userId
 														)
 													}
 													className=' block px-2 border-l border-font2 disabled:bg-gray-200 disabled:cursor-not-allowed'
+													whileTap={{ scale: 0.8 }}
+													transition={{
+														type: 'spring',
+														stiffness: 400,
+														damping: 17,
+													}}
 												>
 													<BiDownArrow />
-												</button>
+												</motion.button>
 											</div>
 											{topic?.user?._id ===
 											currUser?.userId ? (
@@ -342,10 +422,12 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic, vote }) => {
 							</div>
 							{/*-------------------------------- topic comments -------------------------------*/}
 							<CourseDiscussionCommentsComponent
-								comments={topic?.comments}
+								comments={topicComments}
 								handleCreateComment={handleCreateComment}
 								handleDeleteComment={handleDeleteComment}
 								status={status}
+								setIsTyping={setIsTyping}
+								isSomeoneTyping={isSomeoneTyping}
 							/>
 						</div>
 					)}

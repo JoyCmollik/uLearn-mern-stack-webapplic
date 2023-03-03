@@ -6,13 +6,11 @@ import Auth from './pages/Auth/Auth';
 import ulearnLogo from './images/ulearn_logo.png';
 import CourseDetail from './pages/CourseDetail/CourseDetail';
 import AdminDashboardComponent from './dashboards/AdminDashboard/AdminDashboardComponent/AdminDashboardComponent';
-import Report from './dashboards/AdminDashboard/Report/Report';
 import AdminDashboardHome from './dashboards/AdminDashboard/AdminDashboardHomePage/AdminDashboardHome/AdminDashboardHome';
 import ManageProfile from './dashboards/DashboardShared/ManageProfile/ManageProfile';
 import ManageCourses from './dashboards/DashboardShared/Courses/ManageCourses/ManageCourses';
 import CoursesComponent from './dashboards/DashboardShared/Courses/CoursesComponent/CoursesComponent';
 import AddNewCourse from './dashboards/DashboardShared/Courses/AddNewCourses/AddNewCourses';
-import Coupons from './dashboards/DashboardShared/Courses/Coupons/Coupons';
 import CoursesCategory from './dashboards/DashboardShared/Courses/CoursesCategory/CoursesCategory';
 import CourseContent from './pages/CourseContent/CourseContent';
 import EditCourse from './dashboards/DashboardShared/Courses/EditCourse/EditCourse';
@@ -38,9 +36,6 @@ import axios from 'axios';
 import useAuth from './hooks/useAuth';
 import CourseListByCategory from './pages/CourseListByCategory/CourseListByCategory';
 import Lottie from './components/layout/Lottie/Lottie';
-// import Login from './components/Auth/Login';
-// import Register from './components/Auth/Register';
-// import AuthRoles from './components/Auth/AuthRoles';
 
 function App() {
 	const [categories, setCategoires] = useState(null);
@@ -66,43 +61,43 @@ function App() {
 					console.log(err);
 				});
 		}
-		if (!newCourses) {
-			axios
-				.get('/courses?limit=4&sort=-_id', {
-					cancelToken: source.token,
-				})
-				.then((response) => {
-					setNewCourses(response.data.courses);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
-		if (!bestCourses) {
-			axios
-				.get('/courses?limit=1&averageRating[gte]=4', {
-					cancelToken: source.token,
-				})
-				.then((response) => {
-					setBestCourses(response.data.courses);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
-		if (user && !instructors) {
-			axios
-				.get('/instructors', {
-					cancelToken: source.token,
-				})
-				.then((response) => {
-					console.log(response);
-					setInstructors(response.data.instructors);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
+		// if (!newCourses) {
+		// 	axios
+		// 		.get('/courses?limit=4&sort=-_id', {
+		// 			cancelToken: source.token,
+		// 		})
+		// 		.then((response) => {
+		// 			setNewCourses(response.data.courses);
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log(error);
+		// 		});
+		// }
+		// if (!bestCourses) {
+		// 	axios
+		// 		.get('/courses?limit=1&averageRating[gte]=4', {
+		// 			cancelToken: source.token,
+		// 		})
+		// 		.then((response) => {
+		// 			setBestCourses(response.data.courses);
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log(error);
+		// 		});
+		// }
+		// if (user && !instructors) {
+		// 	axios
+		// 		.get('/instructors', {
+		// 			cancelToken: source.token,
+		// 		})
+		// 		.then((response) => {
+		// 			console.log(response);
+		// 			setInstructors(response.data.instructors);
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log(error);
+		// 		});
+		// }
 
 		return () => {
 			source?.cancel('Cancelling fetch request on unmount.');

@@ -139,15 +139,17 @@ const useFramerMotion = () => {
 
 	const commentVariant = {
 		hidden: {
-			x: 100,
+			x: -140,
 			opacity: 0,
+			scale: 0.9,
 		},
 		visible: {
 			x: 0,
 			opacity: 1,
+			scale: 1,
 		},
 		exit: {
-			x: 100,
+			x: 50,
 			opacity: 0,
 		},
 	};

@@ -4,6 +4,8 @@ require('express-async-errors');
 
 const express = require('express');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, { cors: { origin: '*' } });
 // rest of the packages
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -23,6 +25,8 @@ cloudinary.config({
 
 // database
 const connectDB = require('./db/connect');
+// socket
+const socketServer = require('./socket/socket_server');
 
 //  routers
 const authRouter = require('./routes/authRoutes');
@@ -37,6 +41,7 @@ const topicRouter = require('./routes/topicRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const instructorRouter = require('./routes/instructorRoutes');
 const testimonialRouter = require('./routes/testimonialRoutes');
+const notificationRouter = require('./routes/notificationRoutes');
 
 // this is a list of routers
 // testing
@@ -97,6 +102,7 @@ app.use('/api/v1/topics', topicRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/instructors', instructorRouter);
 app.use('/api/v1/testimonials', testimonialRouter);
+app.use('/api/v1/notifications', notificationRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
@@ -105,7 +111,9 @@ const port = process.env.PORT || 5001;
 const start = async () => {
 	try {
 		await connectDB(process.env.MONGO_URI);
-		app.listen(port, () =>
+		await socketServer(io);
+
+		server.listen(port, () =>
 			console.log(`Server is listening on port ${port}...`)
 		);
 	} catch (error) {

@@ -1,10 +1,9 @@
-const Course = require('../models/Course');
 const Topic = require('../models/Topic');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
-const path = require('path');
-const { getSingleTopicComments } = require('./commentController');
+const { createNotification, removeNotification } = require('../controllers/notificationController');
 
+// [POST]
 const createTopic = async (req, res) => {
 	req.body.user = req.user.userId;
 
@@ -12,6 +11,7 @@ const createTopic = async (req, res) => {
 	res.status(StatusCodes.CREATED).json({ topic: topic });
 };
 
+// [GET]
 const getAllTopics = async (req, res) => {
 	const topic = await Topic.find({});
 
@@ -21,6 +21,7 @@ const getAllTopics = async (req, res) => {
 	});
 };
 
+// [GET]
 const getSingleTopics = async (req, res) => {
 	const { id: topicId } = req.params;
 
@@ -38,6 +39,7 @@ const getSingleTopics = async (req, res) => {
 	res.status(StatusCodes.OK).json({ topic: topic });
 };
 
+// [GET]
 const getSingleCourseTopics = async (req, res) => {
 	const { id: courseId } = req.params;
 
@@ -49,6 +51,7 @@ const getSingleCourseTopics = async (req, res) => {
 	res.status(StatusCodes.OK).json({ topics: topics, count: topics.length });
 };
 
+// [PATCH]
 const updateTopic = async (req, res) => {
 	const { id: topicId } = req.params;
 
@@ -64,6 +67,7 @@ const updateTopic = async (req, res) => {
 	res.status(StatusCodes.OK).json({ topic: topic });
 };
 
+// [PATCH]
 const updateTopicUpvote = async (req, res) => {
 	const { topicId } = req.body;
 	const topic = await Topic.findOne({ _id: topicId });
@@ -80,9 +84,35 @@ const updateTopicUpvote = async (req, res) => {
 	}
 
 	await topic.save();
+
+	// send user a notification
+	if(req.user.userId !== topic.user.toString()) {
+		const { error, success } = await createNotification({
+			type: 'newVote',
+			topic: {
+				id: topic._id.toString(),
+				topicTitle: topic.topicTitle,
+			},
+			sender: {
+				id: req.user.userId,
+				name: req.user.name,
+				avatarURL: req.user.avatarURL,
+			},
+			course: { id: topic.course.toString() },
+			receiver: topic.user.toString(),
+		});
+
+		if (error) {
+			throw new CustomError.BadRequestError(
+				`${error.message || error.msg || 'Something went wrong here'}`
+			);
+		}
+	}
+
 	res.status(StatusCodes.OK).json({ msg: 'upvoted' });
 };
 
+// [PATCH]
 const updateTopicDownvote = async (req, res) => {
 	const { topicId } = req.body;
 	const { userId } = req.user;
@@ -96,9 +126,27 @@ const updateTopicDownvote = async (req, res) => {
 	topic.votes = [...topic.votes.filter((voteId) => voteId != userId)];
 
 	await topic.save();
+
+	if(req.user.userId !== topic.user.toString()) {
+		// removing vote notification here
+		const { error, success } = await removeNotification({
+			type: 'newVote',
+			topicId: topic._id.toString(),
+			senderId: req.user.userId,
+			receiver: topic.user.toString(),
+		});
+
+		if (error) {
+			throw new CustomError.BadRequestError(
+				`${error.message || error.msg || 'Something went wrong here'}`
+			);
+		}
+	}
+
 	res.status(StatusCodes.OK).json({ msg : 'downvoted' });
 };
 
+// [DELETE]
 const deleteTopic = async (req, res) => {
 	const { id: topicId } = req.params;
 

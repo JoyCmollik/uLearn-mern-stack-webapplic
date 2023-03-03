@@ -5,7 +5,7 @@ import CourseContentLessons from './CourseContentLessons';
 import CourseContentLessonPage from './CourseContentLessonPage';
 import Loading from '../../layout/Loading/Loading';
 
-const CourseContentTabsCourse = ({ courseContent }) => {
+const CourseContentTabsCourse = ({ courseContent, scrollYProgress }) => {
 	const [sectionList, setSectionList] = useState([]);
 	const [currSection, setCurrSection] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -113,6 +113,7 @@ const CourseContentTabsCourse = ({ courseContent }) => {
 								path='lesson/:lessonId'
 								element={
 									<CourseContentLessonPage
+										scrollYProgress={scrollYProgress}
 										currSection={currSection}
 									/>
 								}

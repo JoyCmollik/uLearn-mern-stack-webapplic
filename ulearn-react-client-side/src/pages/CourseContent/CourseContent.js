@@ -7,10 +7,13 @@ import CourseContentHeader from '../../components/CourseContent/CourseContentHea
 import CourseContentTabs from '../../components/CourseContent/CourseContentTabs/CourseContentTabs';
 import NavigationBar from '../../components/layout/NavigationBar/NavigationBar';
 import { Footer } from 'antd/lib/layout/layout';
+import { motion, useScroll } from 'framer-motion';
 
 const CourseContent = () => {
 	const { contentId } = useParams();
 	const [courseContent, setCourseContent] = useState({});
+
+	const { scrollYProgress } = useScroll();
 
 	useEffect(() => {
 		if (contentId) {
@@ -33,7 +36,10 @@ const CourseContent = () => {
 				{courseContent && (
 					<>
 						<CourseContentHeader courseContent={courseContent} />
-						<CourseContentTabs courseContent={courseContent} />
+						<CourseContentTabs
+							courseContent={courseContent}
+							scrollYProgress={scrollYProgress}
+						/>
 					</>
 				)}
 			</div>

@@ -7,7 +7,7 @@ import CourseContentTabsDiscussionAll from './CourseContentTabsDiscussionAll';
 import { MdOutlineControlPointDuplicate } from 'react-icons/md';
 import CourseContentTabsDiscussionOwned from './CourseContentTabsDiscussionOwned';
 
-const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
+const CourseContentDiscussionList = ({ isLoading, courseTopics }) => {
 	const onChange = (key) => {
 		console.log(key);
 	};
@@ -46,7 +46,6 @@ const CourseContentDiscussionList = ({ isLoading, courseTopics, vote }) => {
 										<CourseContentTabsDiscussionAll
 											courseTopics={courseTopics}
 											isLoading={isLoading}
-											vote={vote}
 										/>
 									</div>
 								),

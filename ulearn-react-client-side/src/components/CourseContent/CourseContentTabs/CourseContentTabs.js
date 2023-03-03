@@ -9,7 +9,7 @@ const onChange = (key) => {
 	console.log(key);
 };
 
-const CourseContentTabs = ({ courseContent }) => {
+const CourseContentTabs = ({ courseContent, scrollYProgress }) => {
 	return (
 		<section className='space-y-2'>
 			<nav className='flex justify-start items-center border-b'>
@@ -51,6 +51,7 @@ const CourseContentTabs = ({ courseContent }) => {
 					element={
 						<CourseContentTabsCourse
 							courseContent={courseContent}
+							scrollYProgress={scrollYProgress}
 						/>
 					}
 				/>
