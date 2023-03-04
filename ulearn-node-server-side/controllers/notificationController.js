@@ -6,7 +6,9 @@ const getUserNotifications = async (req, res) => {
 	// TODO: add limit query later
 	const notifications = await Notification.find({
 		receiver: req.user.userId,
-	}).sort({ createdAt: -1 }).limit(40);
+	})
+		.sort({ createdAt: -1 })
+		.limit(40);
 
 	res.status(StatusCodes.OK).send({
 		notifications,
@@ -18,7 +20,7 @@ const getUserNotifications = async (req, res) => {
 const setUserNotificationsToRead = async (req, res) => {
 	const notifications = await Notification.updateMany(
 		{ receiver: req.user.userId, isRead: false },
-		{ read: true }
+		{ isRead: true }
 	);
 
 	res.status(StatusCodes.OK).send({ notifications });
@@ -88,7 +90,7 @@ const removeNotification = async ({
 
 	try {
 		const notification = await Notification.findOne(query);
-		if(notification) {
+		if (notification) {
 			let notificationId = notification?._id.toString();
 			await notification.remove();
 			return { success: true, notificationId };

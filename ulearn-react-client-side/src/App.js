@@ -61,43 +61,43 @@ function App() {
 					console.log(err);
 				});
 		}
-		// if (!newCourses) {
-		// 	axios
-		// 		.get('/courses?limit=4&sort=-_id', {
-		// 			cancelToken: source.token,
-		// 		})
-		// 		.then((response) => {
-		// 			setNewCourses(response.data.courses);
-		// 		})
-		// 		.catch((error) => {
-		// 			console.log(error);
-		// 		});
-		// }
-		// if (!bestCourses) {
-		// 	axios
-		// 		.get('/courses?limit=1&averageRating[gte]=4', {
-		// 			cancelToken: source.token,
-		// 		})
-		// 		.then((response) => {
-		// 			setBestCourses(response.data.courses);
-		// 		})
-		// 		.catch((error) => {
-		// 			console.log(error);
-		// 		});
-		// }
-		// if (user && !instructors) {
-		// 	axios
-		// 		.get('/instructors', {
-		// 			cancelToken: source.token,
-		// 		})
-		// 		.then((response) => {
-		// 			console.log(response);
-		// 			setInstructors(response.data.instructors);
-		// 		})
-		// 		.catch((error) => {
-		// 			console.log(error);
-		// 		});
-		// }
+		if (!newCourses) {
+			axios
+				.get('/courses?limit=4&sort=-_id', {
+					cancelToken: source.token,
+				})
+				.then((response) => {
+					setNewCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (!bestCourses) {
+			axios
+				.get('/courses?limit=1&averageRating[gte]=4', {
+					cancelToken: source.token,
+				})
+				.then((response) => {
+					setBestCourses(response.data.courses);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		if (user && !instructors) {
+			axios
+				.get('/instructors', {
+					cancelToken: source.token,
+				})
+				.then((response) => {
+					console.log(response);
+					setInstructors(response.data.instructors);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
 
 		return () => {
 			source?.cancel('Cancelling fetch request on unmount.');

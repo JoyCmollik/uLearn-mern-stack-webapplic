@@ -154,6 +154,54 @@ const useFramerMotion = () => {
 		},
 	};
 
+	const cardVariants = {
+		offscreen: {
+			x: '50vw',
+			rotate: -10,
+		},
+		onscreen: {
+			x: '0vw',
+			rotate: 0,
+			transition: {
+				type: 'Spring',
+				bounce: 0.4,
+				duration: 0.8,
+			},
+		},
+	};
+
+	const ariseVariants = {
+		offscreen: {
+			y: '25vh',
+			opacity: 0,
+		},
+		onscreen: {
+			y: '0vh',
+			opacity: 1,
+			transition: {
+				type: 'stiff',
+				velocity: 80,
+				duration: 0.55,
+			},
+		},
+	};
+
+	const titleVariants = {
+		offscreen: {
+			y: 100,
+			opacity: 0,
+		},
+		onscreen: {
+			y: 0,
+			opacity: 1,
+			transition: {
+				type: 'spring',
+				bounce: 0.4,
+				duration: 0.8,
+			},
+		},
+	};
+
 	return {
 		voteAnimation,
 		containerVariants,
@@ -166,6 +214,9 @@ const useFramerMotion = () => {
 		opacityVariant,
 		commentContainerVariant,
 		commentVariant,
+		cardVariants,
+		ariseVariants,
+		titleVariants,
 	};
 };
 

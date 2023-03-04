@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import './CourseContentTabDiscussionListDetail.css';
 import { Dropdown, Menu } from 'antd';
 import { Avatar, message, Progress, Spin } from 'antd';
-import { motion } from 'framer-motion';
+import { motion, useAnimation, transform } from 'framer-motion';
 import axios from 'axios';
 import {
 	MdOutlineArrowBack,
@@ -48,6 +48,7 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic }) => {
 	const { topicId } = useParams();
 	const { user: currUser } = useAuth();
 	const { socket } = useSocket();
+	const controls = useAnimation();
 
 	// function - on component load
 	useEffect(() => {
@@ -320,9 +321,24 @@ const CourseContentTabsDiscussionListDetail = ({ handleDeleteTopic }) => {
 														<BiUpArrow />
 													)}
 												</motion.button>
-												<div className='text-base font-medium px-2'>
+												<motion.div
+													animate={{
+														scale: 1,
+														transition: {
+															type: 'spring',
+															velocity: transform(
+																[0, 5],
+																[50, 0]
+															),
+															stiffness: 700,
+															damping: 80,
+														},
+													}}
+													key='topic_vote'
+													className='text-base font-medium px-2'
+												>
 													{topicVotes.length || 0}
-												</div>
+												</motion.div>
 												{/* ---------------- downvote ---------------- */}
 												<motion.button
 													onClick={(e) =>

@@ -1,23 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CategorySkeleton from '../../layout/Skeleton/CategorySkeleton';
+import { motion } from 'framer-motion';
+import useFramerMotion from '../../../hooks/useFramerMotion';
 
 const Categories = ({ categories }) => {
+	const { ariseVariants, titleVariants } = useFramerMotion();
 	return (
-		<section className='container mx-auto '>
+		<motion.section
+			initial='offscreen'
+			whileInView='onscreen'
+			viewport={{ once: true, amount: 0.8 }}
+			className='container mx-auto '
+		>
 			{/*--------------- title ----------------------- */}
-			<h2 className='text-2xl font-bold'>Trending Categories</h2>
-			<p className='text-gray-500 text-base font-normal'>
+			<motion.h2 variants={titleVariants} className='text-2xl font-bold'>
+				Trending Categories
+			</motion.h2>
+			<motion.p
+				variants={titleVariants}
+				className='text-gray-500 text-base font-normal'
+			>
 				#Browse trending & popular learning topics
-			</p>
-			<div className='grid grid-cols-6 mx-auto gap-4  w-85'>
+			</motion.p>
+			<motion.div
+				variants={ariseVariants}
+				className='grid grid-cols-6 mx-auto gap-4  w-85'
+			>
 				{categories?.map((item) => {
 					const { _id, category, categoryURL } = item;
 					return (
-						<Link
-							to={`/course-list/category/${_id}`}
-							key={_id}
-						>
+						<Link to={`/course-list/category/${_id}`} key={_id}>
 							<div key={_id} className='mx-auto text-center'>
 								<div>
 									<img
@@ -39,8 +51,8 @@ const Categories = ({ categories }) => {
 						</Link>
 					);
 				})}
-			</div>
-		</section>
+			</motion.div>
+		</motion.section>
 	);
 };
 

@@ -59,7 +59,7 @@ const MyCourses = () => {
 		<>
 			<NavigationBar theme='light' />
 			<section>
-				<div className='h-[34vh] bg-light relative'>
+				<div className='h-[34vh] bg-primary relative'>
 					<div className='w-full h-full bg-background1 bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
 						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
 							<h3 className='text-2xl text-center text-white'>
@@ -76,18 +76,18 @@ const MyCourses = () => {
 					{/* container */}
 					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 gap-4 drop-shadow h-full'>
 						{/* ---------- My Courses Nav ---------- */}
-						<div className='col-span-4 rounded-lg space-y-4 bg-[#2169AA] drop-shadow overflow-hidden'>
+						<div className='col-span-4 rounded-lg space-y-4 bg-[#2169AA] drop-shadow overflow-hidden h-[70vh]'>
 							<div className='w-full h-full bg-myCourseBackImag bg-cover bg-right bg-no-repeat' />
 						</div>
 						{/* ---------- My Courses List ---------- */}
-						<div className='col-span-8 p-4 space-y-4'>
+						<div className='col-span-8 p-4 space-y-4 overflow-y-auto'>
 							<h4 className='text-xl font-medium'>My Courses</h4>
 							<hr />
 							<motion.div
 								initial='hidden'
 								animate='visible'
 								variants={list}
-								className='grid grid-cols-1 gap-4 justify-between'
+								className='grid grid-cols-2 gap-4 justify-between'
 							>
 								{isFetching ? (
 									<div className='col-span-1 flex justify-center items-center'>
@@ -116,10 +116,10 @@ const MyCourses = () => {
 																	course?._id
 																}
 																variants={item}
-																className='relative border rounded-lg grid grid-cols-12 space-x-4 h-[250px]'
+																className='relative border rounded-lg grid grid-cols-12 space-x-4 h-[170px] overflow-hidden'
 															>
 																{/* left */}
-																<div className='col-span-4 text-center h-[250px] bg-light overflow-hidden'>
+																<div className='col-span-4 text-center h-[170px] bg-light'>
 																	<img
 																		className='w-full h-full object-cover'
 																		src={
@@ -132,16 +132,16 @@ const MyCourses = () => {
 																<div className='col-span-8 p-4 flex flex-col justify-between'>
 																	{/* course - body */}
 																	<div>
-																		<h5 className='text-lg'>
+																		<h5 className='text-base'>
 																			{
 																				course?.courseTitle
 																			}
 																		</h5>
-																		<p className='text-font2'>
+																		{/* <p className='text-font2'>
 																			{
 																				course?.courseShortDesc
 																			}
-																		</p>
+																		</p> */}
 																		<div className='flex items-center space-x-1'>
 																			<Tag
 																				style={{
@@ -171,7 +171,7 @@ const MyCourses = () => {
 																	<Link
 																		to={`/course-content/${course?._id}`}
 																	>
-																		<button className='inline-block w-full py-2 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'>
+																		<button className='inline-block w-full py-1 border border-primary rounded-lg text-primary drop-shadow hover:bg-primary hover:text-white'>
 																			Go
 																			To
 																			Content

@@ -9,7 +9,7 @@ const MyProfile = () => {
 		<>
 			<NavigationBar theme='light' />
 			<section>
-				<div className='h-[34vh] bg-light relative'>
+				<div className='h-[34vh] bg-primary relative'>
 					<div className='w-full h-full bg-background1 bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
 						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
 							<h3 className='text-2xl text-center text-white'>

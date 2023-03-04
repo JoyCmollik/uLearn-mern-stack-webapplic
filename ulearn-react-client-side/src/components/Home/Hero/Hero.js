@@ -75,19 +75,19 @@ const Hero = () => {
 				<div className='transform -translate-y-2/4 mx-auto bg-white w-[35vw] border-b-4 border-primary rounded-lg grid grid-cols-3 shadow-md'>
 					<div className='flex flex-col justify-center items-center border-r p-4'>
 						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
-							40
+							40+
 						</h4>
 						<p className='m-0 p-0 text-font2'>Courses</p>
 					</div>
 					<div className='flex flex-col justify-center items-center border-r p-4'>
 						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
-							55
+							55+
 						</h4>
 						<p className='m-0 p-0 text-font2'>Content Creators</p>
 					</div>
 					<div className='flex flex-col justify-center items-center p-4'>
 						<h4 className='text-xl xl:text-2xl font-semibold text-primary m-0'>
-							90
+							90+
 						</h4>
 						<p className='m-0 p-0 text-font2'>Learners</p>
 					</div>

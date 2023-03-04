@@ -5,15 +5,15 @@ module.exports = {
 		extend: {
 			backgroundImage: {
 				background:
-					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/cool-background.png')",
+					"url('/src/images/cool-background.png')",
 				background1:
-					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/cool-background1.png')",
+					"url('/src/images/cool-background1.png')",
 				bgContent:
-					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/bg-content.png')",
+					"url('/src/images/bg-content.png')",
 				background2:
-					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/cool-background2.png')",
+					"url('/src/images/cool-background2.png')",
 				gradient:
-					"linear-gradient(to right, rgba(0, 0, 0, .19), rgba(0, 0, 0, .19)),url('/src/images/gradient.jpg')",
+					"url('/src/images/gradient.jpg')",
 				backInstructor: "url('/src/images/become-instructor.jpg')",
 				myCourseBackImag: "url('/src/images/bags.png')",
 				profileBg: "url('/src/images/profile-bg.png')",

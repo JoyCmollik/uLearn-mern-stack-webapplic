@@ -10,6 +10,9 @@ import '../Instructors/instructor.css';
 // import required modules
 import { Pagination, Zoom } from 'swiper';
 import { Rate } from 'antd';
+import { motion } from 'framer-motion';
+import useFramerMotion from '../../../hooks/useFramerMotion';
+
 const testimonials = [
 	{
 		id: 1001,
@@ -63,9 +66,17 @@ const testimonials = [
 ];
 const Testimonials = () => {
 	const [value, setValue] = useState(3);
+	const { ariseVariants } = useFramerMotion();
+
 	SwiperCore.use([Autoplay]);
 	return (
-		<section className=' container mx-auto '>
+		<motion.section
+			initial='offscreen'
+			whileInView='onscreen'
+			viewport={{ once: true, amount: 0.8 }}
+			variants={ariseVariants}
+			className=' container mx-auto '
+		>
 			{/*--------------- title ----------------------- */}
 			<h2 className='text-2xl font-bold text-center'>Testimonials</h2>
 			<p className='text-gray-500 text-base font-normal text-center'>
@@ -122,7 +133,7 @@ const Testimonials = () => {
 					})}
 				</Swiper>
 			</div>
-		</section>
+		</motion.section>
 	);
 };
 
