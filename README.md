@@ -37,9 +37,8 @@ Whether you're a student struggling to find study materials or someone knowledge
 ## Demo 🎥
 Have a quick overview of the site in this screen recording: 
 
-[Take a Look](https://lnkd.in/gfVgKmZm)
+[Take a Look](https://drive.google.com/file/d/1HA4_55UnKGz57ZX-fi2K45iNoIAJChlH/view)
 
 ## Credits 
-Our hearty thanks to Shahida Mahtab for her collaboration and to our supervisor Md. Mushtaq Shahriyar Rafee for his invaluable guidance.
+Our hearty thanks to [Shahida Mahtab](https://github.com/ShahidaMahtab) for her collaboration and to our supervisor [Md. Mushtaq Shahriyar Rafee](https://github.com/MushtaqShahriyarRafee) for his invaluable guidance.
 
-uLearn is an open-source project under the [MIT](https://choosealicense.com/licenses/mit/) license. We always welcome contributions and are always ready to offer necessary assistance.
