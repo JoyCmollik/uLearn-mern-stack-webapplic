@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./ulearn-react-client-side
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./ulearn-node-server-side
+      dockerfile: Dockerfile.prod
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-prod-data:/data/db
+
+volumes:
+  mongo-prod-data:

@@ -1,11 +1,16 @@
 require('dotenv').config();
 require('express-async-errors');
 // express
+require("./instrument.js");
 
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: '*' } });
+
+// sentry
+const Sentry = require("@sentry/node");
+
 // rest of the packages
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -103,6 +108,8 @@ app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/instructors', instructorRouter);
 app.use('/api/v1/testimonials', testimonialRouter);
 app.use('/api/v1/notifications', notificationRouter);
+
+Sentry.setupExpressErrorHandler(app);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

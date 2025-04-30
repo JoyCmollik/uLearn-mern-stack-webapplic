@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  client-dev:
+    build:
+      context: ./ulearn-react-client-side
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./ulearn-react-client-side:/app
+      - /app/node_modules
+    env_file:
+      - ./ulearn-react-client-side/.env.local
+    depends_on:
+      - server-dev
+
+  server-dev:
+    build:
+      context: ./ulearn-node-server-side
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./ulearn-node-server-side:/app
+      - /app/node_modules
+    env_file:
+      - ./ulearn-node-server-side/.env.local
+    depends_on:
+      - mongo-dev
+
+  mongo-dev:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-dev-data:/data/db
+
+volumes:
+  mongo-dev-data:
