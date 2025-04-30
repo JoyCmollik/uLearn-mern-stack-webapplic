@@ -7,14 +7,14 @@ const Features = () => {
 
 	if(user?.role === 'instructor' || user?.role === 'admin') return null;
 	return (
-		<section className='container mx-auto'>
+		<section className='container mx-auto rounded-lg border border-gray-200'>
 			{/*---------------feature container--------------*/}
 
-			<div className=' '>
-				<div className='bg-[#E6F0F9] flex justify-around items-center space-y-4'>
+			<div className='bg-red-500 rounded-lg'>
+				<div className='bg-[#E6F0F9] flex justify-start items-center space-y-4 rounded-lg px-12 py-4'>
 					{/*---------------title--------------------*/}
 					<div className=''>
-						<h3 className='whitespace-pre-line text-[28px] font-bold'>
+						<h3 className='whitespace-pre-line text-[20px] font-bold'>
 							{user && user?.role === 'user'
 								? 'Become a new instructor'
 								: 'Join now to start learning'}
