@@ -98,9 +98,9 @@ const CourseListByCategory = () => {
 			<NavigationBar theme='light' />
 			<section>
 				<div className='h-[34vh] bg-light relative'>
-					<div className='w-full h-full bg-gradient bg-cover bg-top bg-no-repeat pt-[8vh] flex justify-center items-start'>
+					<div className='w-full h-full flex bg-primary justify-center items-start'>
 						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
-							<h3 className='capitalize text-2xl text-center text-white'>
+							<h3 className='capitalize text-base text-center text-white'>
 								{categoryName}{' '}
 								Courses
 							</h3>
@@ -116,10 +116,10 @@ const CourseListByCategory = () => {
 				</div>
 				<div
 					className='bg-white'
-					style={{ minHeight: 'calc(75vh - 81px)' }}
+					style={{ minHeight: 'calc(85vh - 81px)' }}
 				>
 					{/* container */}
-					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
+					<div className='transform -translate-y-[24vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
 						{/* ---------- Courses List ---------- */}
 						<div className='col-span-12 rounded-lg space-y-4'>
 							{isFetching ? (
