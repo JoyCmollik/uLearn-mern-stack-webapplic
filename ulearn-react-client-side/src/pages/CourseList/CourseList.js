@@ -177,7 +177,7 @@ const CourseList = () => {
 			<NavigationBar theme='light' />
 			<section>
 				<div className='h-[34vh] bg-primary relative'>
-					<div className='w-full h-full bg-background bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
+					<div className='w-full h-full flex justify-center items-start'>
 						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
 							<h3 className='text-2xl text-center text-white'>
 								Courses
@@ -188,10 +188,10 @@ const CourseList = () => {
 				</div>
 				<div
 					className='bg-white'
-					style={{ minHeight: 'calc(75vh - 81px)' }}
+					style={{ minHeight: 'calc(85vh - 81px)' }}
 				>
 					{/* container */}
-					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
+					<div className='transform -translate-y-[24vh] container mx-auto bg-white rounded-lg grid grid-cols-12 gap-8 p-4 h-full'>
 						{/* ---------- More Options ---------- */}
 						<div className='col-span-12 p-4 border rounded-lg flex bg-white justify-between items-center'>
 							{/* filter options - newest oldest */}
@@ -296,7 +296,7 @@ const CourseList = () => {
 							</Dropdown>
 						</div>
 						{/* ---------- All Courses Filters, Queries ---------- */}
-						<div className='col-span-4 p-4 space-y-4 border rounded-lg h-fit'>
+						<div className='col-span-3 p-4 space-y-4 border rounded-lg h-fit'>
 							{/* filter - Categories */}
 							<div className='space-y-4'>
 								<div className='space-y-2'>
@@ -381,7 +381,7 @@ const CourseList = () => {
 							</button>
 						</div>
 						{/* ---------- Courses List ---------- */}
-						<div className='col-span-8 rounded-lg space-y-4'>
+						<div className='col-span-9 rounded-lg space-y-4'>
 							{isFetching ? (
 								<div className='flex justify-center items-center w-full min-h-[40vh]'>
 									<Loading />
