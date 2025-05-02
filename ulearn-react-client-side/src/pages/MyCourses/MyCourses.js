@@ -60,7 +60,7 @@ const MyCourses = () => {
 			<NavigationBar theme='light' />
 			<section>
 				<div className='h-[34vh] bg-primary relative'>
-					<div className='w-full h-full bg-background1 bg-cover bg-center bg-no-repeat pt-[8vh] flex justify-center items-start'>
+					<div className='w-full h-full bg-primary flex justify-center items-start'>
 						<div className='backdrop-blur-2xl text-center text-primary flex flex-col justify-center items-center w-2/12 p-2 rounded-lg'>
 							<h3 className='text-2xl text-center text-white'>
 								My Courses
@@ -74,13 +74,13 @@ const MyCourses = () => {
 					style={{ minHeight: 'calc(75vh - 81px)' }}
 				>
 					{/* container */}
-					<div className='transform -translate-y-[10vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 gap-4 drop-shadow h-full'>
+					<div className='transform -translate-y-[24vh] container mx-auto bg-white rounded-lg grid grid-cols-12 p-4 gap-4 drop-shadow h-full'>
 						{/* ---------- My Courses Nav ---------- */}
-						<div className='col-span-4 rounded-lg space-y-4 bg-[#2169AA] drop-shadow overflow-hidden h-[70vh]'>
+						<div className='col-span-3 rounded-lg space-y-4 bg-[#2169AA] drop-shadow overflow-hidden h-[70vh]'>
 							<div className='w-full h-full bg-myCourseBackImag bg-cover bg-right bg-no-repeat' />
 						</div>
 						{/* ---------- My Courses List ---------- */}
-						<div className='col-span-8 p-4 space-y-4 overflow-y-auto'>
+						<div className='col-span-9 p-4 space-y-4 overflow-y-auto'>
 							<h4 className='text-xl font-medium'>My Courses</h4>
 							<hr />
 							<motion.div
