@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import CourseList from './pages/CourseList/CourseList';
 import Auth from './pages/Auth/Auth';
@@ -36,6 +36,30 @@ import axios from 'axios';
 import useAuth from './hooks/useAuth';
 import CourseListByCategory from './pages/CourseListByCategory/CourseListByCategory';
 import Lottie from './components/layout/Lottie/Lottie';
+import routes from './routes/routes';
+
+// Helper to recursively render routes
+import { Fragment } from 'react';
+
+function renderRoutes(routeList, parentProps = {}) {
+	return routeList.map((route, idx) => {
+		const Element = route.element;
+		let element = <Element {...(route.props ? parentProps : {})} />;
+		if (route.private) {
+			// Wrap with PrivateRoute if needed
+			const PrivateRoute = require('./privateOutlets/PrivateRoute').default;
+			element = <PrivateRoute>{element}</PrivateRoute>;
+		}
+		if (route.children) {
+			return (
+				<Route key={route.path + idx} path={route.path} element={element}>
+					{renderRoutes(route.children, parentProps)}
+				</Route>
+			);
+		}
+		return <Route key={route.path + idx} path={route.path} element={element} />;
+	});
+}
 
 function App() {
 	const [categories, setCategoires] = useState(null);
@@ -53,7 +77,6 @@ function App() {
 					cancelToken: source.token,
 				})
 				.then((response) => {
-					//console.log(response.data.categories);
 					setCategoires(response.data.categories);
 					setDisplayCategories(response.data.categories.slice(0, 7));
 				})
@@ -136,176 +159,17 @@ function App() {
 		);
 	}
 
+	const homeData = {
+		displayCategories,
+		categories,
+		newCourses,
+		bestCourses,
+		instructors,
+	};
+
 	return (
 		<div className='bg-white'>
-			<Routes>
-				{/*****--------------Home Routes---------------*****/}
-				<Route
-					path='/*'
-					element={
-						<Home
-							data={{
-								displayCategories,
-								categories,
-								newCourses,
-								bestCourses,
-								instructors,
-							}}
-						/>
-					}
-				></Route>
-				{/*****--------------Course Content Show Routes---------------*****/}
-				<Route
-					path='course-content/:contentId/*'
-					element={
-						<PrivateRoute>
-							<CourseContent />
-						</PrivateRoute>
-					}
-				/>
-
-				{/* <Route path='/*' element={<Home />}></Route> */}
-				<Route path='course-list' element={<CourseList />} />
-				<Route
-					path='course-list/category/:categoryId'
-					element={<CourseListByCategory />}
-				/>
-				<Route
-					path='my-courses'
-					element={
-						<PrivateRoute>
-							<MyCourses />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='my-profile'
-					element={
-						<PrivateRoute>
-							<MyProfile />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='testimonial'
-					element={
-						<PrivateRoute>
-							<Testimonial />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='become-content-creator'
-					element={
-						<PrivateRoute>
-							<BecomeContentWriter />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='content-writer-profile/:contentWriterId'
-					element={
-						<PrivateRoute>
-							<ContentWriterProfile />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					path='course-list/:courseId'
-					element={<CourseDetail />}
-				/>
-				{/*****--------------Authentication Routes---------------*****/}
-				<Route path='auth/*' element={<Auth />} />
-				<Route
-					path='auth/forgot-password'
-					element={<ForgotPassword />}
-				/>
-				<Route path='/user/verify-email' element={<Verify />} />
-				<Route
-					path='/user/reset-password'
-					element={<ResetPassword />}
-				/>
-				{/*****--------------Admin Dashboard Index Routes---------------*****/}
-				<Route path='admin/*' element={<AdminOutlet />}>
-					<Route
-						path='dashboard/*'
-						element={<AdminDashboardComponent />}
-					>
-						<Route index element={<AdminDashboardHome />} />
-						{/* <Route path='report/revenue' element={<Report />} /> */}
-						<Route
-							path='manage-courses/*'
-							element={<CoursesComponent />}
-						>
-							<Route index element={<ManageCourses />} />
-							<Route path='add' element={<AddNewCourse />} />
-							<Route
-								path='categories/*'
-								element={<CoursesCategory />}
-							/>
-							{/* <Route path='coupons/*' element={<Coupons />} /> */}
-							<Route path='edit/:id/*' element={<EditCourse />} />
-						</Route>
-						<Route
-							path='manage-users/*'
-							element={<CoursesComponent />}
-						>
-							<Route path='admin/*' element={<UsersAdmin />} />
-							<Route
-								path='content-writer/*'
-								element={<UsersContentWriter />}
-							/>
-							<Route
-								path='learner/*'
-								element={<UsersLearner />}
-							/>
-						</Route>
-						<Route
-							path='manage-profile/*'
-							element={<ManageProfile />}
-						/>
-					</Route>
-					<Route path='manage-users/*' element={<CoursesComponent />}>
-						<Route path='admin/*' element={<UsersAdmin />} />
-						<Route
-							path='content-writer/*'
-							element={<UsersContentWriter />}
-						/>
-						<Route path='learner/*' element={<UsersLearner />} />
-					</Route>
-					<Route
-						path='manage-profile/*'
-						element={<ManageProfile />}
-					/>
-				</Route>
-				{/*****--------------Instructor Dashboard Index Routes---------------*****/}
-				<Route
-					path='content-creator'
-					element={<ContentCreatorOutlet />}
-				>
-					<Route
-						path='dashboard/*'
-						element={<ContentCreatorDashboardComponent />}
-					>
-						<Route
-							index
-							element={<ContentCreatorDashboardHome />}
-						/>
-						<Route
-							path='manage-courses/*'
-							element={<CoursesComponent />}
-						>
-							<Route index element={<ContentCreatorCourses />} />
-							<Route path='add' element={<AddNewCourse />} />
-							<Route path='edit/:id/*' element={<EditCourse />} />
-						</Route>
-						<Route
-							path='manage-profile/*'
-							element={<ManageProfile />}
-						/>
-					</Route>
-				</Route>
-			</Routes>
+			<Routes>{renderRoutes(routes, { data: homeData })}</Routes>
 		</div>
 	);
 }
